@@ -93,36 +93,46 @@ public class Jugador {
 		switch (direccion) {
 		case "quieto":
 			sprite.setTexture(texturas[0]);
+			/*
 			sprite.setTexture(texturas[1]);
 			sprite.setTexture(texturas[2]);
 			sprite.setTexture(texturas[3]);
+			*/
 			break;
 
 		case "arriba":
 			sprite.setTexture(texturas[4]);
+			/*
 			sprite.setTexture(texturas[5]);
 			sprite.setTexture(texturas[6]);
 			sprite.setTexture(texturas[7]);
+			*/
 			break;
 		case "abajo":
 			sprite.setTexture(texturas[8]);
+			/*
 			sprite.setTexture(texturas[9]);
 			sprite.setTexture(texturas[10]);
 			sprite.setTexture(texturas[11]);
+			*/
 			break;
 			
 		case "izq":
 			sprite.setTexture(texturas[12]);
+			/*
 			sprite.setTexture(texturas[13]);
 			sprite.setTexture(texturas[14]);
 			sprite.setTexture(texturas[15]);
+			*/
 			break;
 		
 		case "der":
 			sprite.setTexture(texturas[16]);
+			/*
 			sprite.setTexture(texturas[17]);
 			sprite.setTexture(texturas[18]);
 			sprite.setTexture(texturas[19]);
+			*/
 			break;
 		}
 	}
