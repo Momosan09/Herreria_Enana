@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,24 +13,36 @@ public class Jugador {
 	private Sprite sprite;
 	private Vector2 posicion;
 	private float velocidad = 100f;
+	
 
 	private Texture[] texturas;
+	public OrthographicCamera camara;
 	
 	public Jugador(Texture tex){
 		
 		sprite = new Sprite(tex);
-		posicion = new Vector2(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
-		sprite.setPosition(posicion.x/2 , posicion.y/2);
+		posicion = new Vector2(Gdx.graphics.getWidth()/2 - (sprite.getWidth()/2), Gdx.graphics.getHeight()/2 - (sprite.getHeight()/2));	//posicion inicial
+		sprite.setPosition(posicion.x, posicion.y);
 
 		texturas = new Texture[20];
 		cargarTexturas();
+		
+	    camara = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	    camara.setToOrtho(false);
+
 	}
 	
 	public void draw(SpriteBatch batch) {
-		sprite.draw(batch);
-		update();
+	    batch.setProjectionMatrix(camara.combined);
 
+	    sprite.draw(batch);
+
+
+	    update();
 	}
+
+
+
 	
 	public void update() {
 		movimiento(Gdx.graphics.getDeltaTime());
@@ -54,6 +67,13 @@ public class Jugador {
 		}
 		//alternarSprites("quieto", deltaTime);
 		sprite.setPosition(posicion.x, posicion.y);//actualizar posicion del sprite
+		movimientoCamara();
+	}
+	
+	public void movimientoCamara() {
+	    camara.position.set(posicion.x + sprite.getWidth() / 2, posicion.y + sprite.getHeight() / 2, 0);
+	    camara.update();
+
 	}
 	
 	
