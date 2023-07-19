@@ -11,6 +11,6 @@
     - Creada una clase "Recursos.java" donde las rutas se almacenan en constantes
     - Creada una clase "Config.java" a la que no le doy ningun uso
     - Creada una clase "Texto.java" para imprimir texto en la pantalla del juego con mayor facilidad
-    - Se cambio la fuente "Arial" por defecto de Libgdx por [Cardinal](https://www.dafont.com/es/cardinal.font) (Uso provisorio)
+    - Se cambio la fuente "Arial" por defecto de Libgdx por [Cardinal](https://www.dafont.com/es/cardinal.font) 
     - Se agrego un archivo "Pendiente.md" donde voy a poner las cosas que dejo para despues
     
