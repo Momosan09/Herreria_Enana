@@ -6,3 +6,4 @@
 
 ## 19 JUL
     - Primer intento de multiples pantallas
+    - La pantalla del menu tiene un Viewport el cual permite redimensionar la ventana manteniendo la relacion de aspecto
