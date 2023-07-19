@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.pantallas.PantallaMenu;
+import com.mygdx.utiles.Render;
 
 public class Principal extends Game {
 	public SpriteBatch batch;
@@ -20,6 +21,7 @@ public class Principal extends Game {
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
+		Render.batch = batch; // nose si tendria que borrar el batch de arriba
 		font = new BitmapFont();
 		
 	    this.setScreen(new PantallaMenu(this));
@@ -37,16 +39,17 @@ public class Principal extends Game {
 	public void render() {
 	    ScreenUtils.clear(0, 0, 0, 1);
 	    super.render();
-	    batch.begin();
+
+	    Render.batch.begin();
 	    //jugador.draw(batch);
-	    batch.end();
+	    Render.batch.end();
 	}
 
 
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
+		Render.batch.dispose();
 		font.dispose();
 	}
 }
