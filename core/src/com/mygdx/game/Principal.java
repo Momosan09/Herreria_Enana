@@ -1,25 +1,34 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.pantallas.PantallaMenu;
 
-public class Principal extends ApplicationAdapter {
-	SpriteBatch batch;
+public class Principal extends Game {
+	public SpriteBatch batch;
+	public BitmapFont font;
+	
 	Texture jugadorT;
 	
 	Jugador jugador;
 	
 	@Override
 	public void create() {
-	    batch = new SpriteBatch();
+		batch = new SpriteBatch();
+		font = new BitmapFont();
+		
+	    this.setScreen(new PantallaMenu(this));
+	    /*
 	    jugadorT = new Texture("Jugador/quieto_0.png");
 	    jugador = new Jugador(jugadorT);
-
+	     */
 	    // Configurar la cámara
-	    jugador.camara.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	    //jugador.camara.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
 
@@ -27,8 +36,9 @@ public class Principal extends ApplicationAdapter {
 	@Override
 	public void render() {
 	    ScreenUtils.clear(0, 0, 0, 1);
+	    super.render();
 	    batch.begin();
-	    jugador.draw(batch);
+	    //jugador.draw(batch);
 	    batch.end();
 	}
 
@@ -37,6 +47,6 @@ public class Principal extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
-
+		font.dispose();
 	}
 }
