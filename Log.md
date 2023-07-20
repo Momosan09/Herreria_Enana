@@ -18,3 +18,4 @@
     - ¡Maldita sea! despues de tanto incordio pude solucionar el tema de los textos del menu, ¡Y era una pavada!
     - Cuando pasas del menu a la pantalla del juego ahora aparece el jugador.
     - Agregada una melodia temporal para le menu principal (El audio debe ser reemplazado por uno creado por YO)
+    - Se agrego un efecto de sondio al apretar cualquier tecla (la idea es despues usar ese efecto para los sonidos al navegar por el menu).
