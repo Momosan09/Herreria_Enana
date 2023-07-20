@@ -3,6 +3,7 @@ package com.mygdx.pantallas;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -21,7 +22,9 @@ public class PantallaMenu implements Screen {
     OrthographicCamera camara;
     final Principal game;
     private Viewport vwp;
-    Texto titulo, textoDelMenu, tocaCualquierLetra;
+    
+    private Texto titulo, textoDelMenu, tocaCualquierLetra;
+    private Music musicaMenu;
 
     public PantallaMenu(final Principal game) {
         this.game = game;
@@ -40,6 +43,9 @@ public class PantallaMenu implements Screen {
     	textoDelMenu = new Texto(Recursos.FUENTE_TEMPORAL, 32, Color.WHITE, false);
     	tocaCualquierLetra = new Texto(Recursos.FUENTE_TEMPORAL, 30, Color.YELLOW, false);
     	
+    	musicaMenu = Gdx.audio.newMusic(Gdx.files.internal(Recursos.MUSICA_MENU_TEMPORAL));
+
+    	
     	titulo.setTexto("Herreria Enana");
     	titulo.setPosicion((Gdx.graphics.getWidth()/2) - (titulo.getAncho()/2) , (Gdx.graphics.getHeight()) - (titulo.getAlto()*2)); //arreglado, por alguna razon estaba dividiendo por 2 los parametros que le paso a la camara y al viewport y por eso pasaba cualquier cosa
         
@@ -48,11 +54,15 @@ public class PantallaMenu implements Screen {
     
     	tocaCualquierLetra.setTexto("Toca cualquier tecla para continuar");
     	tocaCualquierLetra.setPosicion((Gdx.graphics.getWidth()/2) - (tocaCualquierLetra.getAncho()/2),tocaCualquierLetra.getAlto()*2);
+    	
+  
     }
 
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
+    	musicaMenu.setLooping(true);
+    	musicaMenu.play();
 
         camara.update();
         Render.batch.setProjectionMatrix(camara.combined);
@@ -96,6 +106,8 @@ public class PantallaMenu implements Screen {
 	@Override
 	public void dispose() {
 		game.font.dispose();
+		musicaMenu.pause();
+		musicaMenu.dispose();
 		
 	}
 

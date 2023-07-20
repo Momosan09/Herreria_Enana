@@ -16,4 +16,5 @@
 
 ## 20 JUL
     - ¡Maldita sea! despues de tanto incordio pude solucionar el tema de los textos del menu, ¡Y era una pavada!
-    - Cuando pasas del menu a la pantalla del juego ahora aparece el jugador
+    - Cuando pasas del menu a la pantalla del juego ahora aparece el jugador.
+    - Agregada una melodia temporal para le menu principal (El audio debe ser reemplazado por uno creado por YO)
