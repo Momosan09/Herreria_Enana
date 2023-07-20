@@ -16,3 +16,4 @@
 
 ## 20 JUL
     - ¡Maldita sea! despues de tanto incordio pude solucionar el tema de los textos del menu, ¡Y era una pavada!
+    - Cuando pasas del menu a la pantalla del juego ahora aparece el jugador
