@@ -64,7 +64,7 @@ public class Texto {
 		return layout.width;
 	}
 
-	public float getHeight() {
+	public float getAlto() {
 		return layout.height;
 	}
 

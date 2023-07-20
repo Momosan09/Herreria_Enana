@@ -1,5 +1,5 @@
 # Resolver en la proxima sentada
-    - [ ] Alinear y agregar textos en la pantalla del menu
+    - [x] Alinear y agregar textos en la pantalla del menu
 
 
 # Resolver a futuro

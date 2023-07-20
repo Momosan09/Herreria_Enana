@@ -21,14 +21,14 @@ public class PantallaMenu implements Screen {
     OrthographicCamera camara;
     final Principal game;
     private Viewport vwp;
-    Texto t;
+    Texto titulo, textoDelMenu, tocaCualquierLetra;
 
     public PantallaMenu(final Principal game) {
         this.game = game;
         camara = new OrthographicCamera();
-        camara.setToOrtho(false, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+        camara.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        vwp = new ExtendViewport(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, camara);
+        vwp = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camara);
         
         // Inicializar la instancia de SpriteBatch en Render con la del juego
         Render.batch = game.batch;
@@ -36,10 +36,18 @@ public class PantallaMenu implements Screen {
 
     @Override
     public void show() {
-        t = new Texto(Recursos.FUENTE_TEMPORAL, 40, Color.WHITE, false);
-        t.setTexto("Herreria Enana");
-        t.setPosicion((Gdx.graphics.getWidth()/2) - t.getAncho(), 200); //arreglar la puta madre
- 
+    	titulo = new Texto(Recursos.FUENTE_TEMPORAL, 40, Color.WHITE, false);
+    	textoDelMenu = new Texto(Recursos.FUENTE_TEMPORAL, 32, Color.WHITE, false);
+    	tocaCualquierLetra = new Texto(Recursos.FUENTE_TEMPORAL, 30, Color.YELLOW, false);
+    	
+    	titulo.setTexto("Herreria Enana");
+    	titulo.setPosicion((Gdx.graphics.getWidth()/2) - (titulo.getAncho()/2) , (Gdx.graphics.getHeight()) - (titulo.getAlto()*2)); //arreglado, por alguna razon estaba dividiendo por 2 los parametros que le paso a la camara y al viewport y por eso pasaba cualquier cosa
+        
+    	textoDelMenu.setTexto("Menu Principal");
+    	textoDelMenu.setPosicion((Gdx.graphics.getWidth()/2) - (textoDelMenu.getAncho()/2) , titulo.getPosicionY() -(textoDelMenu.getAlto()*2));
+    
+    	tocaCualquierLetra.setTexto("Toca cualquier tecla para continuar");
+    	tocaCualquierLetra.setPosicion((Gdx.graphics.getWidth()/2) - (tocaCualquierLetra.getAncho()/2),tocaCualquierLetra.getAlto()*2);
     }
 
     @Override
@@ -50,8 +58,9 @@ public class PantallaMenu implements Screen {
         Render.batch.setProjectionMatrix(camara.combined);
         Render.batch.begin();
 
-        t.dibujar(); // Dibujar el texto utilizando la misma instancia de SpriteBatch
-
+        titulo.dibujar(); // Dibujar el texto utilizando la misma instancia de SpriteBatch
+        textoDelMenu.dibujar();
+        tocaCualquierLetra.dibujar();
         Render.batch.end();
 
         if (Gdx.input.isKeyPressed(-1)) { // "-1" = cualquier tecla
@@ -63,8 +72,6 @@ public class PantallaMenu implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		vwp.update(width, height);
-		System.out.println(Gdx.graphics.getWidth());
-
 
 	}
 

@@ -13,4 +13,7 @@
     - Creada una clase "Texto.java" para imprimir texto en la pantalla del juego con mayor facilidad
     - Se cambio la fuente "Arial" por defecto de Libgdx por [Cardinal](https://www.dafont.com/es/cardinal.font) (Uso provisorio)
     - Se agrego un archivo "Pendiente.md" donde voy a poner las cosas que dejo para despues
+
+## 20 JUL
+    - ¡Maldita sea! despues de tanto incordio pude solucionar el tema de los textos del menu, ¡Y era una pavada!
     
