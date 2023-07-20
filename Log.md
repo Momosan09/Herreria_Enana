@@ -11,9 +11,13 @@
     - Creada una clase "Recursos.java" donde las rutas se almacenan en constantes
     - Creada una clase "Config.java" a la que no le doy ningun uso
     - Creada una clase "Texto.java" para imprimir texto en la pantalla del juego con mayor facilidad
-    - Se cambio la fuente "Arial" por defecto de Libgdx por [Cardinal](https://www.dafont.com/es/cardinal.font) (Uso provisorio)
+    - Se cambio la fuente "Arial" por defecto de Libgdx por [Cardinal](https://www.dafont.com/es/cardinal.font) 
     - Se agrego un archivo "Pendiente.md" donde voy a poner las cosas que dejo para despues
+<<<<<<< HEAD
 
 ## 20 JUL
     - ¡Maldita sea! despues de tanto incordio pude solucionar el tema de los textos del menu, ¡Y era una pavada!
     
+=======
+    
+>>>>>>> d7968a7ca4756c80607ec667a7ea16e99c827c35
