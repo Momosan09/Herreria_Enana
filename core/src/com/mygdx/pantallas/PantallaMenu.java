@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Principal;
+import com.mygdx.io.Entradas;
 import com.mygdx.utiles.Config;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
@@ -25,8 +26,9 @@ public class PantallaMenu implements Screen {
 	OrthographicCamera camara;
 	final Principal game;
 	private Viewport vwp;
+	Entradas entradas  = new Entradas();
 
-	private Texto titulo, textoDelMenu, tocaCualquierLetra;
+	private Texto titulo, textoDelMenu, textoJugar, textoConfig, tocaCualquierLetra;
 	private Music musicaMenu;
 	private Sound efectoSonidoTeclas;
 	private boolean isSoundPlaying = false;
@@ -38,6 +40,8 @@ public class PantallaMenu implements Screen {
 		camara.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		vwp = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camara);
+		
+		Gdx.input.setInputProcessor(entradas);
 
 		// Inicializar la instancia de SpriteBatch en Render con la del juego
 		Render.batch = game.batch;
@@ -48,6 +52,7 @@ public class PantallaMenu implements Screen {
 	public void show() {
 		titulo = new Texto(Recursos.FUENTE_TEMPORAL, 40, Color.WHITE, false);
 		textoDelMenu = new Texto(Recursos.FUENTE_TEMPORAL, 32, Color.WHITE, false);
+		textoConfig = new Texto(Recursos.FUENTE_TEMPORAL, 32, Color.WHITE, false);
 		tocaCualquierLetra = new Texto(Recursos.FUENTE_TEMPORAL, 30, Color.YELLOW, false);
 
 		musicaMenu = Gdx.audio.newMusic(Gdx.files.internal(Recursos.MUSICA_MENU_TEMPORAL));
@@ -60,13 +65,15 @@ public class PantallaMenu implements Screen {
 																		// y al viewport y por eso pasaba cualquier cosa
 
 		textoDelMenu.setTexto("Menu Principal");
-		textoDelMenu.setPosicion((Gdx.graphics.getWidth() / 2) - (textoDelMenu.getAncho() / 2),
-				titulo.getPosicionY() - (textoDelMenu.getAlto() * 2));
-
+		textoDelMenu.setPosicion((Gdx.graphics.getWidth() / 2) - (textoDelMenu.getAncho() / 2), titulo.getPosicionY() - (textoDelMenu.getAlto() * 2));
+		
+		textoConfig.setTexto("Configuracion");
+		textoConfig.setPosicion((Gdx.graphics.getWidth()/2) - (textoConfig.getAncho()/2), 200);
+/*
 		tocaCualquierLetra.setTexto("Presione la tecla Enter para continuar");
 		tocaCualquierLetra.setPosicion((Gdx.graphics.getWidth() / 2) - (tocaCualquierLetra.getAncho() / 2),
 				tocaCualquierLetra.getAlto() * 2);
-
+*/
 	}
 
 	@Override
@@ -82,8 +89,13 @@ public class PantallaMenu implements Screen {
 
 		titulo.dibujar(); // Dibujar el texto utilizando la misma instancia de SpriteBatch
 		textoDelMenu.dibujar();
+		textoConfig.dibujar();
 		tocaCualquierLetra.dibujar();
 		Render.batch.end();
+		
+		if(entradas.isAbajo()) {
+			
+		}
 
 
 	    // Reproducir el efecto de sonido si se ha presionado alguna tecla

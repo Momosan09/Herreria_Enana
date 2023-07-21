@@ -1,6 +1,8 @@
 package com.mygdx.utiles;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -9,7 +11,7 @@ import com.mygdx.game.Principal;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
-public class Texto {
+public class Texto{
 
 	BitmapFont fuente;
 	private Vector2 posicion;
@@ -31,6 +33,7 @@ public class Texto {
 		}
 		fuente = generador.generateFont(parametros);
 		layout = new GlyphLayout();
+
 	}
 
 	public void dibujar() {
@@ -59,6 +62,10 @@ public class Texto {
 		layout.setText(fuente, texto);
 
 	}
+	
+	public void setColor(Color color) {
+		fuente.setColor(color);
+	}
 
 	public float getAncho() {
 		return layout.width;
@@ -75,4 +82,6 @@ public class Texto {
 	public Vector2 getPosicion() {
 		return new Vector2(posicion.x, posicion.y);
 	}
+	
+
 }
