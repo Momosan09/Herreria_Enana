@@ -24,3 +24,4 @@
     - Cambie el codigo de los textos en el menu
     - Agrege las opciones "jugar" y "configuracion" al menu
     - El ahora en el maldito menu se puede seleccionar una de las opciones "jugar" o "configuraciones", la seleccion se muestra con otro color y al presionar la tecla Enter cambia la pantalla (diferenciada)
+    - Viewport y un texto para la pantalla de Configuracion

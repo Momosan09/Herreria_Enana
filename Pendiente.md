@@ -1,7 +1,9 @@
 # Resolver en la proxima sentada
     - [x] Alinear y agregar textos en la pantalla del menu
+    - [ ] Agregar algunas configuraciones **FUNCIONALES** a la pantalla de configuracion
 
 # Resolver a futuro
     - [ ] Crear una fuente para el juego "Canario gotico" [ver](https://www.youtube.com/watch?v=ucUv1_SF4tg)
     - [ ] Crear musica para el menu principal
     - [x] Hacer que al apretar enter en el menu principal suene el sonidito
+    - [ ] Voy a tener que poner una opcion para elegir si jugar multijugador o no, nose si ponerlo al apretar la opcion de jugar y que ahi salga una pantalla para elegir o en las configuraciones
