@@ -26,21 +26,21 @@ public class PantallaMenu implements Screen {
 	OrthographicCamera camara;
 	final Principal game;
 	private Viewport vwp;
-	Entradas entradas  = new Entradas();
+	Entradas entradas = new Entradas();
 
 	private Texto titulo, textoDelMenu, textoJugar, textoConfig, tocaCualquierLetra;
+	private Texto[] textos;
 	private Music musicaMenu;
-	private Sound efectoSonidoTeclas;
-	private boolean isSoundPlaying = false;
-	private boolean isSoundPlayed = false;
-	
+
+	private int cont = 2;
+
 	public PantallaMenu(final Principal game) {
 		this.game = game;
 		camara = new OrthographicCamera();
 		camara.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		vwp = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camara);
-		
+
 		Gdx.input.setInputProcessor(entradas);
 
 		// Inicializar la instancia de SpriteBatch en Render con la del juego
@@ -50,30 +50,32 @@ public class PantallaMenu implements Screen {
 
 	@Override
 	public void show() {
-		titulo = new Texto(Recursos.FUENTE_TEMPORAL, 40, Color.WHITE, false);
-		textoDelMenu = new Texto(Recursos.FUENTE_TEMPORAL, 32, Color.WHITE, false);
-		textoConfig = new Texto(Recursos.FUENTE_TEMPORAL, 32, Color.WHITE, false);
-		tocaCualquierLetra = new Texto(Recursos.FUENTE_TEMPORAL, 30, Color.YELLOW, false);
+		textos = new Texto[5];
+		textos[0] = new Texto(Recursos.FUENTE_TEMPORAL, 42, Color.WHITE, false);
+		textos[1] = new Texto(Recursos.FUENTE_TEMPORAL, 32, Color.WHITE, false);
+		textos[2] = new Texto(Recursos.FUENTE_TEMPORAL, 32, Color.WHITE, false);
+		textos[3] = new Texto(Recursos.FUENTE_TEMPORAL, 32, Color.WHITE, false);
+		textos[4] = new Texto(Recursos.FUENTE_TEMPORAL, 30, Color.SALMON, false);
 
 		musicaMenu = Gdx.audio.newMusic(Gdx.files.internal(Recursos.MUSICA_MENU_TEMPORAL));
-		efectoSonidoTeclas = Gdx.audio.newSound(Gdx.files.internal(Recursos.EFECTO_TECLA_MENU));
 
-		titulo.setTexto("Herreria Enana");
-		titulo.setPosicion((Gdx.graphics.getWidth() / 2) - (titulo.getAncho() / 2),
-				(Gdx.graphics.getHeight()) - (titulo.getAlto() * 2)); // arreglado, por alguna razon estaba dividiendo
-																		// por 2 los parametros que le paso a la camara
-																		// y al viewport y por eso pasaba cualquier cosa
 
-		textoDelMenu.setTexto("Menu Principal");
-		textoDelMenu.setPosicion((Gdx.graphics.getWidth() / 2) - (textoDelMenu.getAncho() / 2), titulo.getPosicionY() - (textoDelMenu.getAlto() * 2));
-		
-		textoConfig.setTexto("Configuracion");
-		textoConfig.setPosicion((Gdx.graphics.getWidth()/2) - (textoConfig.getAncho()/2), 200);
-/*
-		tocaCualquierLetra.setTexto("Presione la tecla Enter para continuar");
-		tocaCualquierLetra.setPosicion((Gdx.graphics.getWidth() / 2) - (tocaCualquierLetra.getAncho() / 2),
-				tocaCualquierLetra.getAlto() * 2);
-*/
+		textos[0].setTexto("Herreria Enana");
+		textos[0].setPosicion((Gdx.graphics.getWidth() / 2) - (textos[0].getAncho() / 2), Gdx.graphics.getHeight());
+
+		textos[1].setTexto("Menu Principal");
+		textos[1].setPosicion((Gdx.graphics.getWidth() / 2) - (textos[1].getAncho() / 2),
+				(Gdx.graphics.getHeight()) - (textos[1].getAlto() * 2));
+
+		textos[2].setTexto("Jugar");
+		textos[2].setPosicion((Gdx.graphics.getWidth() / 2) - (textos[2].getAncho() / 2), 250);
+
+		textos[3].setTexto("Configuracion");
+		textos[3].setPosicion((Gdx.graphics.getWidth() / 2) - (textos[3].getAncho() / 2), 200);
+
+		textos[4].setTexto("El videojuego de herreria por combinacion");
+		textos[4].setPosicion((Gdx.graphics.getWidth() / 2) - (textos[4].getAncho() / 2), textos[4].getAlto() * 2);
+
 	}
 
 	@Override
@@ -87,30 +89,12 @@ public class PantallaMenu implements Screen {
 		Render.batch.setProjectionMatrix(camara.combined);
 		Render.batch.begin();
 
-		titulo.dibujar(); // Dibujar el texto utilizando la misma instancia de SpriteBatch
-		textoDelMenu.dibujar();
-		textoConfig.dibujar();
-		tocaCualquierLetra.dibujar();
-		Render.batch.end();
-		
-		if(entradas.isAbajo()) {
-			
+		for (int i = 0; i < textos.length; i++) {
+			textos[i].dibujar();
 		}
+		Render.batch.end();
+		seleccionarOpcion();
 
-
-	    // Reproducir el efecto de sonido si se ha presionado alguna tecla
-	    reproducirEfectoSonido();
-
-	    // Verificar si se ha presionado la tecla Enter para cambiar la pantalla
-	    if (Gdx.input.isKeyPressed(Keys.ENTER)) {
-	        if(!isSoundPlayed) {
-	        	reproducirEfectoSonido(); // Reproducir el efecto de sonido antes de cambiar la pantalla	     
-	        	isSoundPlayed = true;
-	        }else {
-	        	game.setScreen(new Juego(game));
-	        	dispose();	        	
-	        }//NO ANDA
-	    }
 	}
 
 	@Override
@@ -142,19 +126,36 @@ public class PantallaMenu implements Screen {
 		game.font.dispose();
 		musicaMenu.pause();
 		musicaMenu.dispose();
-		efectoSonidoTeclas.dispose();
 
 	}
-	
-	private void reproducirEfectoSonido() {
-        if (Gdx.input.isKeyPressed(-1)) { // "-1" = cualquier tecla  - cambiar por las teclas que defina despues
-            if (!isSoundPlaying) {
-                efectoSonidoTeclas.play();
-                isSoundPlaying = true;
-            }
-        } else {
-            isSoundPlaying = false;
-        }
+
+
+
+	private void seleccionarOpcion() {// Tengo mis dudas sobre la eficiencia de este metodo por el for que blanquea todos los textos
+
+		if (entradas.isAbajo() && cont < 3) {
+			cont++;
+		}
+		if (entradas.isArriba() && cont > 2) {
+			cont--;
+		}
+
+		for (int i = 0; i < textos.length; i++) {
+			textos[i].setColor(Color.WHITE);
+		} 
+		textos[cont].setColor(Color.YELLOW);
+		
+
+		if(entradas.isEnter()) {
+			if(cont == 2) {
+				game.setScreen(new Juego(game));
+				dispose();
+			}else if(cont == 3) {
+				game.setScreen(new Configs());
+				dispose();
+			}
+		}
+		
 	}
 
 }
