@@ -28,7 +28,6 @@ public class PantallaMenu implements Screen {
 	private Viewport vwp;
 	Entradas entradas = new Entradas();
 
-	private Texto titulo, textoDelMenu, textoJugar, textoConfig, tocaCualquierLetra;
 	private Texto[] textos;
 	private Music musicaMenu;
 
@@ -58,7 +57,6 @@ public class PantallaMenu implements Screen {
 		textos[4] = new Texto(Recursos.FUENTE_TEMPORAL, 30, Color.SALMON, false);
 
 		musicaMenu = Gdx.audio.newMusic(Gdx.files.internal(Recursos.MUSICA_MENU));
-
 
 		textos[0].setTexto("Herreria Enana");
 		textos[0].setPosicion((Gdx.graphics.getWidth() / 2) - (textos[0].getAncho() / 2), Gdx.graphics.getHeight());
@@ -94,6 +92,7 @@ public class PantallaMenu implements Screen {
 		}
 		Render.batch.end();
 		seleccionarOpcion();
+		// entradas.seleccionarOpcion(textos,2,3);
 
 	}
 
@@ -124,39 +123,27 @@ public class PantallaMenu implements Screen {
 	@Override
 	public void dispose() {
 		game.font.dispose();
+		entradas.efectoSonidoTeclas.dispose();
 		musicaMenu.pause();
 		musicaMenu.dispose();
 
 	}
 
+	private void seleccionarOpcion() {
 
+		int seleccion = entradas.seleccionarOpcion(textos, 2, 3);
 
-	private void seleccionarOpcion() {// Tengo mis dudas sobre la eficiencia de este metodo por el for que blanquea todos los textos
+		if (seleccion == 2) {
+			game.setScreen(new Juego(game));
+			dispose();
+		} else if (seleccion == 3) {
+			game.setScreen(new Configs(game));
+			dispose();
 
-		if (entradas.isAbajo() && cont < 3) {
-			cont++;
 		}
-		if (entradas.isArriba() && cont > 2) {
-			cont--;
-		}
+		if (seleccion == -1) {
 
-		for (int i = 0; i < textos.length; i++) {
-			textos[i].setColor(Color.WHITE);
-		} 
-		textos[cont].setColor(Color.YELLOW);
-		
-
-		if(entradas.isEnter()) {
-			if(cont == 2) {
-				game.setScreen(new Juego(game));
-				dispose();
-			}else if(cont == 3) {
-				game.setScreen(new Configs());
-				dispose();
-			}
 		}
-		
 	}
-	
 
 }

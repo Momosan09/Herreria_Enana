@@ -15,9 +15,6 @@ public class Principal extends Game {
 	public SpriteBatch batch;
 	public BitmapFont font;
 	
-	Texture jugadorT;
-	
-	Jugador jugador;
 	
 	@Override
 	public void create() {
@@ -25,11 +22,7 @@ public class Principal extends Game {
 		Render.batch = batch; // nose si tendria que borrar el batch de arriba
 		font = new BitmapFont();
 		
-	    this.setScreen(new Juego(this));
-	    /*
-	    jugadorT = new Texture("Jugador/quieto_0.png");
-	    jugador = new Jugador(jugadorT);
-	     */
+	    this.setScreen(new PantallaMenu(this));
 	    // Configurar la cámara
 	    //jugador.camara.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
@@ -41,9 +34,6 @@ public class Principal extends Game {
 	    ScreenUtils.clear(0, 0, 0, 1);
 	    super.render();
 
-	    Render.batch.begin();
-	    //jugador.draw(batch);
-	    Render.batch.end();
 	}
 
 

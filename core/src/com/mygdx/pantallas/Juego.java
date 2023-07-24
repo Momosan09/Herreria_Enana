@@ -13,10 +13,9 @@ import com.mygdx.utiles.Render;
 
 public class Juego implements Screen{
 	
-	Jugador jugador;
-	Texture jugadorTextura;
-	public OrthographicCamera camara;
-	public  OrthogonalTiledMapRenderer renderer;
+	private Jugador jugador;
+	private Texture jugadorTextura;
+	private OrthographicCamera camara;
 
 	public Juego(final Principal game) {
 
@@ -24,12 +23,14 @@ public class Juego implements Screen{
 
 	@Override
 	public void show() {
+		//camara
 	    camara = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	    camara.setToOrtho(false);
 	 
-	    
-		renderer = new OrthogonalTiledMapRenderer(Recursos.MAPA);
+	    //render
+		Render.tiledMapRenderer = new OrthogonalTiledMapRenderer(Recursos.MAPA);
 		
+		//jugador
 		jugadorTextura = new Texture(Recursos.JUGADOR_TEXTURA);
 		jugador = new Jugador(jugadorTextura, camara);
 
@@ -37,13 +38,13 @@ public class Juego implements Screen{
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0,0,0,1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		Render.batch.setProjectionMatrix(camara.combined);
 		Render.batch.begin();
-		renderer.setView(camara);
-		renderer.render();
+		
+		//mapa
+		Render.tiledMapRenderer.setView(camara);
+		Render.tiledMapRenderer.render();
 		
 		jugador.draw(Render.batch);
 		Render.batch.end();
@@ -55,13 +56,11 @@ public class Juego implements Screen{
 		camara.viewportHeight = height;
 		camara.update();
 		
-		
-		
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
+
 		
 	}
 
@@ -73,13 +72,14 @@ public class Juego implements Screen{
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
+		dispose();
 		
 	}
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		Render.tiledMapRenderer.dispose();
+		Recursos.MAPA.dispose();
 		
 	}
 }

@@ -31,3 +31,5 @@
 
 ## 24 JUL 
     - Mapa cargado!
+    - Ya se puede volver del menu de configuracion a el menu principal
+    - Creado un metodo para poder implementar una navegacion por los textos mas facilmente (Entradas.java seleccionarOpcion(Texto[],int indiceMin,int indiceMax))
