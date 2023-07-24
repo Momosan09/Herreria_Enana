@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Principal;
 import com.mygdx.io.Entradas;
+import com.mygdx.utiles.Config;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 import com.mygdx.utiles.Texto;
@@ -35,7 +36,7 @@ public class Configs implements Screen{
 	@Override
 	public void show() {
 
-		textos = new Texto[2];
+		textos = new Texto[3];
 		textos[0] = new Texto(Recursos.FUENTE_TEMPORAL, 40, Color.WHITE, false);
 		
 		textos[0].setTexto("Configuracion");
@@ -44,6 +45,10 @@ public class Configs implements Screen{
 		textos[1] = new Texto(Recursos.FUENTE_TEMPORAL, 24, Color.WHITE, false);
 		textos[1].setTexto("Volver a menu principal");
 		textos[1].setPosicion(10, Gdx.graphics.getHeight());
+		
+		textos[2] = new Texto(Recursos.FUENTE_TEMPORAL, 24, Color.WHITE,false);
+		textos[2].setTexto("Pantalla Completa");
+		textos[2].setPosicion(20, (Config.alto/2) + textos[2].getAlto()*6);
 		
 	}
 
@@ -93,12 +98,17 @@ public class Configs implements Screen{
 	}
 	
 	public void seleccionarOpcion() {
-		int seleccion = entradas.seleccionarOpcion(textos, 1, 1);
+		int seleccion = entradas.seleccionarOpcion(textos, 1, 2);
 		
 		if(seleccion == 1) {
 			game.setScreen(new PantallaMenu(game));
 			dispose();
 		}
+		/*if(seleccion == 2) {
+			String aux;
+			aux = (Config.pantallaCompleta)? " Si": " No";
+			textos[2].setTexto("Pantalla completa" + aux);
+		}*/
 	}
 
 }

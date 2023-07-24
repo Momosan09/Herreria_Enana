@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.pantallas.Configs;
 import com.mygdx.pantallas.Juego;
 import com.mygdx.pantallas.PantallaMenu;
 import com.mygdx.utiles.Render;

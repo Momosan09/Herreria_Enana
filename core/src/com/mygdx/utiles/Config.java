@@ -4,4 +4,7 @@ public class Config {
 
 	public static float ancho =  1280;
 	public static float alto = 768;
+	
+	
+	public static boolean pantallaCompleta = false;
 }

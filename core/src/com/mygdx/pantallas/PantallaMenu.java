@@ -50,11 +50,11 @@ public class PantallaMenu implements Screen {
 	@Override
 	public void show() {
 		textos = new Texto[5];
-		textos[0] = new Texto(Recursos.FUENTE_TEMPORAL, 42, Color.WHITE, false);
-		textos[1] = new Texto(Recursos.FUENTE_TEMPORAL, 32, Color.WHITE, false);
-		textos[2] = new Texto(Recursos.FUENTE_TEMPORAL, 32, Color.WHITE, false);
-		textos[3] = new Texto(Recursos.FUENTE_TEMPORAL, 32, Color.WHITE, false);
-		textos[4] = new Texto(Recursos.FUENTE_TEMPORAL, 30, Color.SALMON, false);
+		textos[0] = new Texto(Recursos.FUENTE_TEMPORAL, 62, Color.WHITE, false);
+		textos[1] = new Texto(Recursos.FUENTE_TEMPORAL, 42, Color.WHITE, false);
+		textos[2] = new Texto(Recursos.FUENTE_TEMPORAL, 38, Color.WHITE, false);
+		textos[3] = new Texto(Recursos.FUENTE_TEMPORAL, 38, Color.WHITE, false);
+		textos[4] = new Texto(Recursos.FUENTE_TEMPORAL, 36, Color.SALMON, false);
 
 		musicaMenu = Gdx.audio.newMusic(Gdx.files.internal(Recursos.MUSICA_MENU));
 
@@ -66,13 +66,14 @@ public class PantallaMenu implements Screen {
 				(Gdx.graphics.getHeight()) - (textos[1].getAlto() * 2));
 
 		textos[2].setTexto("Jugar");
-		textos[2].setPosicion((Gdx.graphics.getWidth() / 2) - (textos[2].getAncho() / 2), 250);
+		textos[2].setPosicion((Gdx.graphics.getWidth() / 2) - (textos[2].getAncho() / 2), (Config.alto/2) + textos[2].getAlto()*3);
 
 		textos[3].setTexto("Configuracion");
-		textos[3].setPosicion((Gdx.graphics.getWidth() / 2) - (textos[3].getAncho() / 2), 200);
+		textos[3].setPosicion((Gdx.graphics.getWidth() / 2) - (textos[3].getAncho() / 2), (Config.alto/2) + textos[3].getAlto());
 
 		textos[4].setTexto("El videojuego de herreria por combinacion");
 		textos[4].setPosicion((Gdx.graphics.getWidth() / 2) - (textos[4].getAncho() / 2), textos[4].getAlto() * 2);
+
 
 	}
 
