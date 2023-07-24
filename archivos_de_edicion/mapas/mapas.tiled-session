@@ -1,0 +1,23 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+    },
+    "last.exportedFilePath": "P:/MisJuegos/ProyectoEscuela/HerreriaEnana/assets/mapas",
+    "last.imagePath": "P:/MisJuegos/ProyectoEscuela/HerreriaEnana/assets/mapas",
+    "map.height": 5,
+    "map.lastUsedExportFilter": "All Files (*)",
+    "map.width": 5,
+    "openFiles": [
+    ],
+    "project": "mapas.tiled-project",
+    "recentFiles": [
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}

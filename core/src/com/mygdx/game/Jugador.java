@@ -18,7 +18,7 @@ public class Jugador {
 	private Texture[] texturas;
 	public OrthographicCamera camara;
 	
-	public Jugador(Texture tex){
+	public Jugador(Texture tex, OrthographicCamera camara){
 		
 		sprite = new Sprite(tex);
 		posicion = new Vector2(Gdx.graphics.getWidth()/2 - (sprite.getWidth()/2), Gdx.graphics.getHeight()/2 - (sprite.getHeight()/2));	//posicion inicial
@@ -27,16 +27,12 @@ public class Jugador {
 		texturas = new Texture[20];
 		cargarTexturas();
 		
-	    camara = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-	    camara.setToOrtho(false);
+		this.camara = camara;
 
 	}
 	
 	public void draw(SpriteBatch batch) {
-	    batch.setProjectionMatrix(camara.combined);
-
 	    sprite.draw(batch);
-
 
 	    update();
 	}

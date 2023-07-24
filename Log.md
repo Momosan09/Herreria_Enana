@@ -27,4 +27,7 @@
     - Viewport y un texto para la pantalla de Configuracion
 
 ## 22 JUL 
-    -Hice mi musiquita para el menu!
+    - Hice mi musiquita para el menu!
+
+## 24 JUL 
+    - Mapa cargado!

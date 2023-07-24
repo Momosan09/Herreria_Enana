@@ -57,7 +57,7 @@ public class PantallaMenu implements Screen {
 		textos[3] = new Texto(Recursos.FUENTE_TEMPORAL, 32, Color.WHITE, false);
 		textos[4] = new Texto(Recursos.FUENTE_TEMPORAL, 30, Color.SALMON, false);
 
-		musicaMenu = Gdx.audio.newMusic(Gdx.files.internal(Recursos.MUSICA_MENU_TEMPORAL));
+		musicaMenu = Gdx.audio.newMusic(Gdx.files.internal(Recursos.MUSICA_MENU));
 
 
 		textos[0].setTexto("Herreria Enana");

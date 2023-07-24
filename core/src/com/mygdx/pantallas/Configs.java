@@ -24,11 +24,15 @@ public class Configs implements Screen{
 
 		vwp = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camara);
 		
-		textos = new Texto[1];
+		textos = new Texto[2];
 		textos[0] = new Texto(Recursos.FUENTE_TEMPORAL, 40, Color.WHITE, false);
 		
 		textos[0].setTexto("Configuracion");
 		textos[0].setPosicion((Gdx.graphics.getWidth()/2) - (textos[0].getAncho()/2), Gdx.graphics.getHeight());
+		
+		textos[1] = new Texto(Recursos.FUENTE_TEMPORAL, 24, Color.WHITE, false);
+		textos[1].setTexto("Volver a menu principal");
+		textos[1].setPosicion(10, Gdx.graphics.getHeight());
 		
 	}
 

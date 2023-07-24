@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.pantallas.Juego;
 import com.mygdx.pantallas.PantallaMenu;
 import com.mygdx.utiles.Render;
 
@@ -24,7 +25,7 @@ public class Principal extends Game {
 		Render.batch = batch; // nose si tendria que borrar el batch de arriba
 		font = new BitmapFont();
 		
-	    this.setScreen(new PantallaMenu(this));
+	    this.setScreen(new Juego(this));
 	    /*
 	    jugadorT = new Texture("Jugador/quieto_0.png");
 	    jugador = new Jugador(jugadorT);
@@ -49,6 +50,7 @@ public class Principal extends Game {
 	
 	@Override
 	public void dispose () {
+		super.dispose();
 		Render.batch.dispose();
 		font.dispose();
 	}
