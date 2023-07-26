@@ -15,13 +15,14 @@ public class Entradas implements InputProcessor {
 	private boolean isSoundPlaying = false;
 	private int cont = 0;
 
-	private void reproducirEfectoSonido() {
-
+	private void reproducirEfectoSonido() {// ademas de reproducir el sonido, lo que hace es que no se toman las teclas que no tienen sonido, es decir que si deja el la tecla apretada no se va a escuchar miles de veces, solo cuando se levante y se vuelva a presionar va a volver a sonar
 		if (!isSoundPlaying) {
 			efectoSonidoTeclas.play();
 			isSoundPlaying = true;
+			System.out.println("play" + isSoundPlaying);
 		} else {
 			isSoundPlaying = false;
+			System.out.println(isSoundPlaying);
 		}
 	}
 
@@ -55,10 +56,10 @@ public class Entradas implements InputProcessor {
 	}
 
 	@Override
-	public boolean keyUp(int keycode) {
+	public boolean keyUp(int keycode) { // si no llamo a reproducirEfectoSonido() cuando se levanta la tecla, isSoundPlaying queda en true y hay que presionar otra vez para que recien a la siguiente se reproduzca			
 		if (keycode == Keys.W) {
 			arriba = false;
-			reproducirEfectoSonido();
+			reproducirEfectoSonido();	//llamar aca tambien a este metodo lo que hace es setear la variable en false cuando la tecla se levanta
 		}
 		if (keycode == Keys.S) {
 			reproducirEfectoSonido();
@@ -107,7 +108,7 @@ public class Entradas implements InputProcessor {
 		return false;
 	}
 	
-	public int seleccionarOpcion(Texto[] textos,int textoMinNro, int textoTopeNro) {// Tengo mis dudas sobre la eficiencia de este metodo, por el for que blanquea todos los textos
+	public int seleccionarOpcion(Texto[] textos, int textoMinNro, int textoTopeNro) {// Tengo mis dudas sobre la eficiencia de este metodo, por el for que blanquea todos los textos
 		if(cont < textoMinNro) cont = textoMinNro;
 		
 		if (isAbajo() && cont < textoTopeNro) {

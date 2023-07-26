@@ -44,7 +44,7 @@ public class Jugador {
 		movimiento(Gdx.graphics.getDeltaTime());
 	}
 	
-	public void movimiento(float deltaTime) {
+	public void movimiento(float deltaTime) { //tendria que usar la clase Entradas para esto?
 		if(Gdx.input.isKeyPressed(Keys.W)) {
 			posicion.y += velocidad*deltaTime;
 			alternarSprites("arriba", deltaTime);

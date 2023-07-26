@@ -5,4 +5,5 @@
 2. El input processor se asigna asi por que es de referencia?
 ```Gdx.input.setInputProcessor(entradas);```
 
-3. 
+3. Tendria que usar la clase entradas para el movimiento del jugador?
+    1. ¿y como hago para que no suene el sonido que tiene la clase entradas?
