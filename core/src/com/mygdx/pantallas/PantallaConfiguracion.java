@@ -104,11 +104,12 @@ public class PantallaConfiguracion implements Screen{
 			game.setScreen(new PantallaMenu(game));
 			dispose();
 		}
-		/*if(seleccion == 2) {
+		if(seleccion == 2) {
 			String aux;
 			aux = (Config.pantallaCompleta)? " Si": " No";
 			textos[2].setTexto("Pantalla completa" + aux);
-		}*/
+			Gdx.graphics.setWindowedMode(1920, 1080);
+		}
 	}
 
 }

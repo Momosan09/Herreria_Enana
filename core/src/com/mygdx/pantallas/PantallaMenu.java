@@ -34,8 +34,8 @@ public class PantallaMenu implements Screen {
 	private int cont = 2;
 	
     private float fondoPosX;
-    private float offSet;
-
+    private float offSetX;
+    
 	public PantallaMenu(final Principal game) {
 		this.game = game;
 		camara = new OrthographicCamera();
@@ -80,7 +80,7 @@ public class PantallaMenu implements Screen {
 		textos[4].setTexto("El videojuego de herreria por combinacion");
 		textos[4].setPosicion((Gdx.graphics.getWidth() / 2) - (textos[4].getAncho() / 2), textos[4].getAlto() * 2);
 
-		fondo.setPosition(0, -200);
+		fondo.setPosition(0, vwp.getWorldHeight() - 200); // creo que el segundo parametro lo hace una medida mas relativa, nose, investigar
 
 	}
 
@@ -112,8 +112,7 @@ public class PantallaMenu implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		vwp.update(width, height);
-		offSet = fondoImg.getWidth() - camara.viewportWidth; //usa el ancho de la textura porque este va a ser siempre constante, en el caso de que modifique el tamaño del sprite aca no deberia haber cambios
-		
+		offSetX = fondoImg.getWidth() - camara.viewportWidth; //usa el ancho de la textura porque este va a ser siempre constante, en el caso de que modifique el tamaño del sprite aca no deberia haber cambios
 	}
 
 	@Override
@@ -160,11 +159,11 @@ public class PantallaMenu implements Screen {
 		}
 	}
     private void fondoEnMovimiento(float delta) {
-    	float velocidadDesplazamiento = 20;
+    	float velocidadDesplazamiento = 30;
     	
         fondo.draw(Render.batch);
         fondoPosX -= velocidadDesplazamiento * delta;
-        if (fondoPosX <= offSet*-1) {
+        if (fondoPosX <= offSetX*-1) {
             fondoPosX = 0;
             fondo.setX(0);//aca tengo que poner la imagen en el 0X para solucionar el problema de que se veia el fondo de la ventana cuando se reinicaba el recorrido
             //sin fondo.setX(0) hasta que sale del if se sigue modificando la posicion del fondo y solo se seteea al final del metodo dando un espacio "negro" en la imagen que se mueve

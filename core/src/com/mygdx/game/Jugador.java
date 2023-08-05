@@ -28,7 +28,6 @@ public class Jugador {
 		cargarTexturas();
 		
 		this.camara = camara;
-
 	}
 	
 	public void draw(SpriteBatch batch) {

@@ -37,3 +37,4 @@
 ## 5 AGO
     - Imagen para el menu principal
     - Animacion para la imagen del menu principal!
+    - Mapa nuevo
