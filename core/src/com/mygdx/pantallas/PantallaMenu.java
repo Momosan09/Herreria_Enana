@@ -1,18 +1,15 @@
 package com.mygdx.pantallas;
 
-import com.badlogic.gdx.Game;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Music.OnCompletionListener;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Principal;
 import com.mygdx.io.Entradas;
@@ -27,16 +24,25 @@ public class PantallaMenu implements Screen {
 	final Principal game;
 	private Viewport vwp;
 	Entradas entradas = new Entradas();
+	
+	private Texture fondoImg;
+	private Sprite fondo;
 
 	private Texto[] textos;
 	private Music musicaMenu;
 
 	private int cont = 2;
+	
+    private float fondoPosX;
+    private float offSet;
 
 	public PantallaMenu(final Principal game) {
 		this.game = game;
 		camara = new OrthographicCamera();
 		camara.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
+		fondoImg = new Texture(Recursos.FONDO_MENU);
+		fondo = new Sprite(fondoImg);
 
 		vwp = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camara);
 
@@ -74,6 +80,7 @@ public class PantallaMenu implements Screen {
 		textos[4].setTexto("El videojuego de herreria por combinacion");
 		textos[4].setPosicion((Gdx.graphics.getWidth() / 2) - (textos[4].getAncho() / 2), textos[4].getAlto() * 2);
 
+		fondo.setPosition(0, -200);
 
 	}
 
@@ -81,12 +88,17 @@ public class PantallaMenu implements Screen {
 	public void render(float delta) {
 		ScreenUtils.clear(0, 0, 0.2f, 1);
 
+
 		musicaMenu.setLooping(true);
 		musicaMenu.play();
 
 		camara.update();
 		Render.batch.setProjectionMatrix(camara.combined);
 		Render.batch.begin();
+		
+		fondoEnMovimiento(delta);
+
+
 
 		for (int i = 0; i < textos.length; i++) {
 			textos[i].dibujar();
@@ -100,7 +112,8 @@ public class PantallaMenu implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		vwp.update(width, height);
-
+		offSet = fondoImg.getWidth() - camara.viewportWidth; //usa el ancho de la textura porque este va a ser siempre constante, en el caso de que modifique el tamaño del sprite aca no deberia haber cambios
+		
 	}
 
 	@Override
@@ -138,7 +151,7 @@ public class PantallaMenu implements Screen {
 			game.setScreen(new Juego(game));
 			dispose();
 		} else if (seleccion == 3) {
-			game.setScreen(new Configs(game));
+			game.setScreen(new PantallaConfiguracion(game));
 			dispose();
 
 		}
@@ -146,5 +159,20 @@ public class PantallaMenu implements Screen {
 
 		}
 	}
+    private void fondoEnMovimiento(float delta) {
+    	float velocidadDesplazamiento = 20;
+    	
+        fondo.draw(Render.batch);
+        fondoPosX -= velocidadDesplazamiento * delta;
+        if (fondoPosX <= offSet*-1) {
+            fondoPosX = 0;
+            fondo.setX(0);//aca tengo que poner la imagen en el 0X para solucionar el problema de que se veia el fondo de la ventana cuando se reinicaba el recorrido
+            //sin fondo.setX(0) hasta que sale del if se sigue modificando la posicion del fondo y solo se seteea al final del metodo dando un espacio "negro" en la imagen que se mueve
+        }
+
+        fondo.setX(fondoPosX);
+    }
+
+
 
 }
