@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.utiles.Animator;
+import com.mygdx.utiles.Recursos;
 
 public class Jugador {
 
@@ -18,6 +20,8 @@ public class Jugador {
 	private Texture[] texturas;
 	public OrthographicCamera camara;
 	
+	Animator animador;
+	
 	public Jugador(Texture tex, OrthographicCamera camara){
 		
 		sprite = new Sprite(tex);
@@ -28,12 +32,16 @@ public class Jugador {
 		cargarTexturas();
 		
 		this.camara = camara;
+		
+		animador = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion);
+		animador.create();
+		
 	}
 	
 	public void draw(SpriteBatch batch) {
-	    sprite.draw(batch);
-
+	    //sprite.draw(batch);
 	    update();
+	    animador.render();
 	}
 
 
@@ -71,6 +79,9 @@ public class Jugador {
 
 	}
 	
+	public Vector2 getPosicion() {
+		return posicion;
+	}
 	
 	public void cargarTexturas() {
 		String aux = "Jugador/";
