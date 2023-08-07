@@ -22,6 +22,7 @@ public class Jugador {
 	private Texture[] texturas;
 	public OrthographicCamera camara;
 	
+	Animator animador;
 	
 	public Jugador(Texture tex, OrthographicCamera camara){
 		
@@ -34,13 +35,15 @@ public class Jugador {
 
 		this.camara = camara;
 
+		animador = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion); 
+		animador.create();
 		
 	}
 	
 	public void draw(SpriteBatch batch) {
-	    sprite.draw(batch);
+	    //sprite.draw(batch);
 	    update();
-
+	    animador.render(); //da problemas
 	}
 
 
