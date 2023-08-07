@@ -6,10 +6,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Jugador;
 import com.mygdx.game.Principal;
-import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 
@@ -18,8 +16,6 @@ public class Juego implements Screen{
 	private Jugador jugador;
 	private Texture jugadorTextura;
 	private OrthographicCamera camara;
-	private Animator animator;
-
 
 	public Juego(final Principal game) {
 
@@ -37,15 +33,10 @@ public class Juego implements Screen{
 		//jugador
 		jugadorTextura = new Texture(Recursos.JUGADOR_TEXTURA);
 		jugador = new Jugador(jugadorTextura, camara);
-		
-	    animator = new Animator(Recursos.JUGADOR_SPRITESHEET, jugador.getPosicion()); // Aquí puedes pasar la posición del jugador
-	    animator.create();
-		
-		
 
 	}
 
-	@Override
+
 	public void render(float delta) {
 		
 		Render.batch.setProjectionMatrix(camara.combined);
@@ -54,8 +45,6 @@ public class Juego implements Screen{
 		//mapa
 		Render.tiledMapRenderer.setView(camara);
 		Render.tiledMapRenderer.render();
-		
-		animator.render();
 		
 		jugador.draw(Render.batch);
 		Render.batch.end();

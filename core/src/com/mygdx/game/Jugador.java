@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.Recursos;
@@ -20,7 +22,6 @@ public class Jugador {
 	private Texture[] texturas;
 	public OrthographicCamera camara;
 	
-	Animator animador;
 	
 	public Jugador(Texture tex, OrthographicCamera camara){
 		
@@ -30,18 +31,16 @@ public class Jugador {
 
 		texturas = new Texture[20];
 		cargarTexturas();
-		
+
 		this.camara = camara;
-		
-		animador = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion);
-		animador.create();
+
 		
 	}
 	
 	public void draw(SpriteBatch batch) {
-	    //sprite.draw(batch);
+	    sprite.draw(batch);
 	    update();
-	    animador.render();
+
 	}
 
 
@@ -49,6 +48,7 @@ public class Jugador {
 	
 	public void update() {
 		movimiento(Gdx.graphics.getDeltaTime());
+
 	}
 	
 	public void movimiento(float deltaTime) { //tendria que usar la clase Entradas para esto?
@@ -89,6 +89,7 @@ public class Jugador {
 			if(i >= 0 && i <= 3) {
 				int j = 0;
 				texturas[i] = new Texture(aux + "quieto_"+j+".png");
+
 				j++;
 			}
 			if(i > 3 && i <= 7) {
@@ -162,4 +163,7 @@ public class Jugador {
 			break;
 		}
 	}
+	
+
+
 }
