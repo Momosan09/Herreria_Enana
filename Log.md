@@ -38,3 +38,6 @@
     - Imagen para el menu principal
     - Animacion para la imagen del menu principal!
     - Mapa nuevo
+
+## 8 AGO
+    - ANIMACIONES (era una tonteria y no me estaba dando cuenta)

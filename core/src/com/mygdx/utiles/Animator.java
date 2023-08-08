@@ -18,21 +18,15 @@ public class Animator implements ApplicationListener {
 	// Objects used
 	Animation<TextureRegion> animacion; // Must declare frame type (TextureRegion)
 	Texture spriteSheet;
-	SpriteBatch spriteBatch;
-	
+	String rutaSpriteSheet;
 	
 	Vector2 posicion;
-	String rutaSpriteSheet;
 	
 	// A variable for tracking elapsed time for the animation
 	float stateTime;
 	
 	public Animator(String rutaSpriteSheet, Vector2 posicion) {
 		this.rutaSpriteSheet = rutaSpriteSheet;
-		
-		spriteBatch = new SpriteBatch();
-		this.spriteBatch = Render.batch;
-		
 		this.posicion = posicion;
 	}
 
@@ -51,38 +45,39 @@ public class Animator implements ApplicationListener {
 
 		// Place the regions into a 1D array in the correct order, starting from the top
 		// left, going across first. The Animation constructor requires a 1D array.
-		TextureRegion[] walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+		TextureRegion[] Frames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index = 0;
 		for (int i = 0; i < FRAME_ROWS; i++) {
 			for (int j = 0; j < FRAME_COLS; j++) {
-				walkFrames[index++] = tmp[i][j];
+				Frames[index++] = tmp[i][j];
 			}
 		}
 
 		// Initialize the Animation with the frame interval and array of frames
-		animacion = new Animation<TextureRegion>(1f, walkFrames);
+		animacion = new Animation<TextureRegion>(.7f, Frames);
 
-		// Instantiate a SpriteBatch for drawing and reset the elapsed animation
+
 		// time to 0
-		spriteBatch = new SpriteBatch();
 		stateTime = 0f;
 	}
 
 	@Override
 	public void render() {
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear screen
+		//Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // El problema que tenia de las animaciones era que en render limpiaba toda la pantalla
 		stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
 
 		// Get current frame of animation for the current stateTime
 		TextureRegion currentFrame = animacion.getKeyFrame(stateTime, true);
-		spriteBatch.begin();
-		spriteBatch.draw(currentFrame, posicion.x, posicion.y); // Draw current frame at (50, 50)
-		spriteBatch.end();
+		Render.batch.draw(currentFrame, posicion.x, posicion.y); // Draw current frame at (50, 50)
+
+	}
+	
+	public void reset() {
+		stateTime = 0f;
 	}
 
 	@Override
-	public void dispose() { // SpriteBatches and Textures must always be disposed
-		spriteBatch.dispose();
+	public void dispose() {
 		spriteSheet.dispose();
 	}
 
