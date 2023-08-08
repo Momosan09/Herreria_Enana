@@ -42,3 +42,4 @@
 ## 8 AGO
     - ANIMACIONES (era una tonteria y no me estaba dando cuenta)
     - Enum para las direcciones del jugador ¡No mas Strings!
+    - Dada una textura de NxN dimensiones ahora puedo elegir que fila se va a renderizar sin la necesidad de separarlo en distintas imagenes

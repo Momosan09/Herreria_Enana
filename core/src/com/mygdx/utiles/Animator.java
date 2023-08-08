@@ -13,7 +13,8 @@ public class Animator implements ApplicationListener {
 
 	//https://libgdx.com/wiki/graphics/2d/2d-animation
 	// Constant rows and columns of the sprite sheet
-	private static final int FRAME_COLS = 5, FRAME_ROWS = 1;
+	private static final int FRAME_COLS = 5, FRAME_ROWS = 5;
+	private int filaDelSpriteSheet;
 
 	// Objects used
 	Animation<TextureRegion> animacion; // Must declare frame type (TextureRegion)
@@ -25,36 +26,36 @@ public class Animator implements ApplicationListener {
 	// A variable for tracking elapsed time for the animation
 	float stateTime;
 	
-	public Animator(String rutaSpriteSheet, Vector2 posicion) {
+	public Animator(String rutaSpriteSheet, Vector2 posicion, int filaDelSpriteSheet) {
 		this.rutaSpriteSheet = rutaSpriteSheet;
+		this.filaDelSpriteSheet = filaDelSpriteSheet;
 		this.posicion = posicion;
 	}
 
 	@Override
 	public void create() {
-
+		
 		// Load the sprite sheet as a Texture
 		spriteSheet = new Texture(rutaSpriteSheet);
+		int frameWidth = spriteSheet.getWidth() / FRAME_COLS;
+		int frameHeight = spriteSheet.getHeight() / FRAME_ROWS;
 
 		// Use the split utility method to create a 2D array of TextureRegions. This is
 		// possible because this sprite sheet contains frames of equal size and they are
 		// all aligned.
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet,
-				spriteSheet.getWidth() / FRAME_COLS,
-				spriteSheet.getHeight() / FRAME_ROWS);
+		 TextureRegion[][] tmp = TextureRegion.split(spriteSheet, frameWidth, frameHeight);
 
 		// Place the regions into a 1D array in the correct order, starting from the top
 		// left, going across first. The Animation constructor requires a 1D array.
-		TextureRegion[] Frames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-		int index = 0;
-		for (int i = 0; i < FRAME_ROWS; i++) {
+		TextureRegion[] frames = new TextureRegion[FRAME_COLS];
+
 			for (int j = 0; j < FRAME_COLS; j++) {
-				Frames[index++] = tmp[i][j];
+				frames[j] = tmp[filaDelSpriteSheet][j];
 			}
-		}
+		
 
 		// Initialize the Animation with the frame interval and array of frames
-		animacion = new Animation<TextureRegion>(.7f, Frames);
+		animacion = new Animation<TextureRegion>(.7f, frames);
 
 
 		// time to 0
@@ -73,7 +74,7 @@ public class Animator implements ApplicationListener {
 	}
 	
 	public void reset() {
-		stateTime = 0f;
+		stateTime = 0;
 	}
 
 	@Override

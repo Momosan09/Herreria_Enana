@@ -66,14 +66,13 @@ public class Jugador {
 			alternarSprites(Direcciones.DERECHA);
 		}
 
-		sprite.setPosition(posicion.x, posicion.y);// actualizar posicion del sprite
+		//sprite.setPosition(posicion.x, posicion.y);// actualizar posicion del sprite
 		movimientoCamara();
 	}
 
 	public void movimientoCamara() {
 		camara.position.set(posicion.x + sprite.getWidth() / 2, posicion.y + sprite.getHeight() / 2, 0);
 		camara.update();
-
 	}
 
 	public Vector2 getPosicion() {
@@ -82,45 +81,44 @@ public class Jugador {
 
 	public void alternarSprites(Direcciones direccion) {
 		switch (direccion) {
-		case QUIETO:
-			animacionQuieto.render();
+		case ABAJO:
+			animacionAbajo.render();
 			break;
 		case ARRIBA:
 			animacionArriba.render();
 			break;
-		case ABAJO:
-			animacionAbajo.render();
-			break;
 		case IZQUIERDA:
 			animacionIzquierda.render();
 			break;
-
 		case DERECHA:
 			animacionDerecha.render();
+			break;
+		case QUIETO:
+			animacionQuieto.render();
 			break;
 		}
 	}
 
 	private void crearAnimaciones() {
-		animacionQuieto = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion);
-		animacionAbajo = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion);
-		animacionArriba = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion);
-		animacionIzquierda = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion);
-		animacionDerecha = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion);
+		animacionAbajo = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion, 0);
+		animacionArriba = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion, 1);
+		animacionIzquierda = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion, 2);
+		animacionDerecha = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion, 3);
+		animacionQuieto = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion, 4);
 
-		animacionQuieto.create();
 		animacionAbajo.create();
 		animacionArriba.create();
 		animacionIzquierda.create();
 		animacionDerecha.create();
+		animacionQuieto.create();
 	}
 
 	private void resetearAnimaciones() {
-		animacionQuieto.reset();
 		animacionAbajo.reset();
 		animacionArriba.reset();
 		animacionIzquierda.reset();
 		animacionDerecha.reset();
+		animacionQuieto.reset();
 	}
 
 }
