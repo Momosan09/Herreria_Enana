@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.enums.Direcciones;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.Recursos;
 
@@ -17,6 +18,7 @@ public class Jugador {
 	private Sprite sprite;
 	private Vector2 posicion;
 	private float velocidad = 100f;
+	private Direcciones direccion;
 
 	public OrthographicCamera camara;
 
@@ -49,19 +51,19 @@ public class Jugador {
 	public void movimiento(float deltaTime) { // tendria que usar la clase Entradas para esto?
 		if (Gdx.input.isKeyPressed(Keys.W)) {
 			posicion.y += velocidad * deltaTime;
-			alternarSprites("arriba");
+			alternarSprites(Direcciones.ARRIBA);
 		}
 		if (Gdx.input.isKeyPressed(Keys.S)) {
 			posicion.y -= velocidad * deltaTime;
-			alternarSprites("abajo");
+			alternarSprites(Direcciones.ABAJO);
 		}
 		if (Gdx.input.isKeyPressed(Keys.A)) {
 			posicion.x -= velocidad * deltaTime;
-			alternarSprites("izq");
+			alternarSprites(Direcciones.IZQUIERDA);
 		}
 		if (Gdx.input.isKeyPressed(Keys.D)) {
 			posicion.x += velocidad * deltaTime;
-			alternarSprites("der");
+			alternarSprites(Direcciones.DERECHA);
 		}
 
 		sprite.setPosition(posicion.x, posicion.y);// actualizar posicion del sprite
@@ -78,22 +80,22 @@ public class Jugador {
 		return posicion;
 	}
 
-	public void alternarSprites(String direccion) {
+	public void alternarSprites(Direcciones direccion) {
 		switch (direccion) {
-		case "quieto":
+		case QUIETO:
 			animacionQuieto.render();
 			break;
-		case "arriba":
+		case ARRIBA:
 			animacionArriba.render();
 			break;
-		case "abajo":
+		case ABAJO:
 			animacionAbajo.render();
 			break;
-		case "izq":
+		case IZQUIERDA:
 			animacionIzquierda.render();
 			break;
 
-		case "der":
+		case DERECHA:
 			animacionDerecha.render();
 			break;
 		}

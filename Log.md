@@ -41,3 +41,4 @@
 
 ## 8 AGO
     - ANIMACIONES (era una tonteria y no me estaba dando cuenta)
+    - Enum para las direcciones del jugador ¡No mas Strings!
