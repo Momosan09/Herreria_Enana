@@ -49,8 +49,8 @@ public class Animator implements ApplicationListener {
 		// left, going across first. The Animation constructor requires a 1D array.
 		TextureRegion[] frames = new TextureRegion[FRAME_COLS];
 
-			for (int j = 0; j < FRAME_COLS; j++) {
-				frames[j] = tmp[filaDelSpriteSheet][j];
+			for(int j = 0; j < FRAME_COLS; j++) {
+				frames[j] = tmp[filaDelSpriteSheet][j];//Con filaDelSpriteSheet puedo elegir por constructor que fila es la que se va a utilizar
 			}
 		
 
