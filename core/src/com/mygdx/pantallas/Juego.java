@@ -31,8 +31,7 @@ public class Juego implements Screen{
 		Render.tiledMapRenderer = new OrthogonalTiledMapRenderer(Recursos.MAPA);
 		
 		//jugador
-		jugadorTextura = new Texture(Recursos.JUGADOR_TEXTURA);
-		jugador = new Jugador(jugadorTextura, camara);
+		jugador = new Jugador(camara);
 
 	}
 

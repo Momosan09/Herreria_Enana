@@ -46,4 +46,7 @@
 
 ## 9 AGO 
     - Ya anda el Fat Jar
-    - Creada una carpeta con archivos ."bat" para ejecutar comandos que necesite
+    - Creada una carpeta "comandos" con archivos ."bat" para ejecutar comandos que necesite
+
+## 10 AGO
+    - Mejoras en el movimiento del jugador

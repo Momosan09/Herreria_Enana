@@ -15,22 +15,18 @@ import com.mygdx.utiles.Recursos;
 
 public class Jugador {
 
-	private Sprite sprite;
 	private Vector2 posicion;
 	private float velocidad = 100f;
-	private Direcciones direccion;
 
 	public OrthographicCamera camara;
 
+	private int tamañoPersonaje = 32;
+	
 	Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
 
-	public Jugador(Texture tex, OrthographicCamera camara) {
+	public Jugador(OrthographicCamera camara) {
 
-		sprite = new Sprite(tex);
-		posicion = new Vector2(Gdx.graphics.getWidth() / 2 - (sprite.getWidth() / 2),
-				Gdx.graphics.getHeight() / 2 - (sprite.getHeight() / 2)); // posicion inicial
-		sprite.setPosition(posicion.x, posicion.y);
-
+		posicion = new Vector2(Gdx.graphics.getWidth() / 2 - (tamañoPersonaje/ 2),Gdx.graphics.getHeight() / 2 - (tamañoPersonaje/ 2)); // posicion inicial
 		this.camara = camara;
 
 		crearAnimaciones();
@@ -49,29 +45,58 @@ public class Jugador {
 	}
 
 	public void movimiento(float deltaTime) { // tendria que usar la clase Entradas para esto?
-		if (Gdx.input.isKeyPressed(Keys.W)) {
-			posicion.y += velocidad * deltaTime;
-			alternarSprites(Direcciones.ARRIBA);
+		boolean estaEnMovimiento=false;	//para saber si esta quieto
+
+		if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S) != Gdx.input.isKeyPressed(Keys.A) != Gdx.input.isKeyPressed(Keys.D)) {
+			estaEnMovimiento=false;
+
+		
+		if (Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) { //para evitar que se mueva si toca al mismo tiempo las teclas opuestas
+			if(Gdx.input.isKeyPressed(Keys.W)) {
+				estaEnMovimiento=true;
+				posicion.y += velocidad * deltaTime;
+				alternarSprites(Direcciones.ARRIBA);				
+			}else {
+				animacionArriba.reset();//resetea la animacion para que la proxima vez que se toce la tecla, la animacion empieze de cero
+			}
+			if (Gdx.input.isKeyPressed(Keys.S)) {
+				estaEnMovimiento=true;
+				posicion.y -= velocidad * deltaTime;
+				alternarSprites(Direcciones.ABAJO);
+			}else {
+				animacionAbajo.reset();
+			}
 		}
-		if (Gdx.input.isKeyPressed(Keys.S)) {
-			posicion.y -= velocidad * deltaTime;
-			alternarSprites(Direcciones.ABAJO);
+		
+		if(Gdx.input.isKeyPressed(Keys.A) != Gdx.input.isKeyPressed(Keys.D)) {
+			if (Gdx.input.isKeyPressed(Keys.A)) {
+				estaEnMovimiento=true;
+				posicion.x -= velocidad * deltaTime;
+				alternarSprites(Direcciones.IZQUIERDA);
+			}else {
+				animacionIzquierda.reset();
+			}
+			if (Gdx.input.isKeyPressed(Keys.D)) {
+				estaEnMovimiento=true;
+				posicion.x += velocidad * deltaTime;
+				alternarSprites(Direcciones.DERECHA);
+			}else {
+				animacionDerecha.reset();
+			}
 		}
-		if (Gdx.input.isKeyPressed(Keys.A)) {
-			posicion.x -= velocidad * deltaTime;
-			alternarSprites(Direcciones.IZQUIERDA);
-		}
-		if (Gdx.input.isKeyPressed(Keys.D)) {
-			posicion.x += velocidad * deltaTime;
-			alternarSprites(Direcciones.DERECHA);
+		
+		if(!estaEnMovimiento) {
+			alternarSprites(Direcciones.QUIETO);
+			resetearAnimaciones(animacionArriba, animacionAbajo, animacionDerecha, animacionIzquierda);
+		}else {
+			animacionQuieto.reset();
 		}
 
-		//sprite.setPosition(posicion.x, posicion.y);// actualizar posicion del sprite
 		movimientoCamara();
 	}
 
 	public void movimientoCamara() {
-		camara.position.set(posicion.x + sprite.getWidth() / 2, posicion.y + sprite.getHeight() / 2, 0);
+		camara.position.set(posicion.x + tamañoPersonaje / 2, posicion.y + tamañoPersonaje / 2, 0);
 		camara.update();
 	}
 
@@ -113,12 +138,11 @@ public class Jugador {
 		animacionQuieto.create();
 	}
 
-	private void resetearAnimaciones() {
-		animacionAbajo.reset();
-		animacionArriba.reset();
-		animacionIzquierda.reset();
-		animacionDerecha.reset();
-		animacionQuieto.reset();
+	private void resetearAnimaciones(Animator ... animaciones) {	//varargs, ya que nose cuantas animaciones voy a usar
+	    for (Animator animacion : animaciones) { // for each: tipo del elemento, nombre del elemento, coleccion a recorrer;
+	        animacion.reset();
+	    }
+
 	}
 
 }
