@@ -49,6 +49,7 @@ public class Jugador {
         float movimientoX = 0;
         float movimientoY = 0;
 
+        if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) {
         if (Gdx.input.isKeyPressed(Keys.W)) {
             movimientoY += velocidad;
             direccionActual = Direcciones.ARRIBA;
@@ -56,7 +57,11 @@ public class Jugador {
             movimientoY -= velocidad;
             direccionActual = Direcciones.ABAJO;
         }
+        }else {
+        	resetearAnimaciones(animacionQuieto);
+        }
 
+        if(Gdx.input.isKeyPressed(Keys.A) != Gdx.input.isKeyPressed(Keys.D)) {
         if (Gdx.input.isKeyPressed(Keys.A)) {
             movimientoX -= velocidad;
             direccionActual = Direcciones.IZQUIERDA;
@@ -64,10 +69,14 @@ public class Jugador {
             movimientoX += velocidad;
             direccionActual = Direcciones.DERECHA;
         }
+        }else {
+        	resetearAnimaciones(animacionQuieto);
+        }
 
         if (movimientoX != 0 && movimientoY != 0) {
             movimientoX *= 0.7071f;
             movimientoY *= 0.7071f;
+            //Esta es la velocidad que tiene cuando se mueva diagonalmente, ya que, sino su velocidad diagonal seria mayor que la horizontal o vertical
         }
 
         posicion.x += movimientoX * deltaTime;
