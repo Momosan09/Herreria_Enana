@@ -50,3 +50,7 @@
 
 ## 10 AGO
     - Mejoras en el movimiento del jugador
+
+## 18 AGO
+    - Hace un mes que empeze el juego!
+    - Mejoras en el movimiento del jugador(sigo)

@@ -21,7 +21,8 @@ public class Jugador {
 	public OrthographicCamera camara;
 
 	private int tamañoPersonaje = 32;
-	
+    
+	private Direcciones direccionActual = Direcciones.QUIETO;
 	Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
 
 	public Jugador(OrthographicCamera camara) {
@@ -44,56 +45,44 @@ public class Jugador {
 
 	}
 
-	public void movimiento(float deltaTime) { // tendria que usar la clase Entradas para esto?
-		boolean estaEnMovimiento=false;	//para saber si esta quieto
+	public void movimiento(float deltaTime) {
+        float movimientoX = 0;
+        float movimientoY = 0;
 
-		if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S) != Gdx.input.isKeyPressed(Keys.A) != Gdx.input.isKeyPressed(Keys.D)) {
-			estaEnMovimiento=false;
+        if (Gdx.input.isKeyPressed(Keys.W)) {
+            movimientoY += velocidad;
+            direccionActual = Direcciones.ARRIBA;
+        } else if (Gdx.input.isKeyPressed(Keys.S)) {
+            movimientoY -= velocidad;
+            direccionActual = Direcciones.ABAJO;
+        }
 
-		
-		if (Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) { //para evitar que se mueva si toca al mismo tiempo las teclas opuestas
-			if(Gdx.input.isKeyPressed(Keys.W)) {
-				estaEnMovimiento=true;
-				posicion.y += velocidad * deltaTime;
-				alternarSprites(Direcciones.ARRIBA);				
-			}else {
-				animacionArriba.reset();//resetea la animacion para que la proxima vez que se toce la tecla, la animacion empieze de cero
-			}
-			if (Gdx.input.isKeyPressed(Keys.S)) {
-				estaEnMovimiento=true;
-				posicion.y -= velocidad * deltaTime;
-				alternarSprites(Direcciones.ABAJO);
-			}else {
-				animacionAbajo.reset();
-			}
-		}
-		
-		if(Gdx.input.isKeyPressed(Keys.A) != Gdx.input.isKeyPressed(Keys.D)) {
-			if (Gdx.input.isKeyPressed(Keys.A)) {
-				estaEnMovimiento=true;
-				posicion.x -= velocidad * deltaTime;
-				alternarSprites(Direcciones.IZQUIERDA);
-			}else {
-				animacionIzquierda.reset();
-			}
-			if (Gdx.input.isKeyPressed(Keys.D)) {
-				estaEnMovimiento=true;
-				posicion.x += velocidad * deltaTime;
-				alternarSprites(Direcciones.DERECHA);
-			}else {
-				animacionDerecha.reset();
-			}
-		}
-		
-		if(!estaEnMovimiento) {
-			alternarSprites(Direcciones.QUIETO);
-			resetearAnimaciones(animacionArriba, animacionAbajo, animacionDerecha, animacionIzquierda);
-		}else {
-			animacionQuieto.reset();
-		}
+        if (Gdx.input.isKeyPressed(Keys.A)) {
+            movimientoX -= velocidad;
+            direccionActual = Direcciones.IZQUIERDA;
+        } else if (Gdx.input.isKeyPressed(Keys.D)) {
+            movimientoX += velocidad;
+            direccionActual = Direcciones.DERECHA;
+        }
 
-		movimientoCamara();
-	}
+        if (movimientoX != 0 && movimientoY != 0) {
+            movimientoX *= 0.7071f;
+            movimientoY *= 0.7071f;
+        }
+
+        posicion.x += movimientoX * deltaTime;
+        posicion.y += movimientoY * deltaTime;
+
+        // Actualizar animaciones y cámaras
+        if (movimientoX != 0 || movimientoY != 0) {
+            alternarSprites(direccionActual);
+        } else {
+            alternarSprites(Direcciones.QUIETO);
+            resetearAnimaciones(animacionArriba, animacionAbajo, animacionIzquierda, animacionDerecha);
+        }
+
+        movimientoCamara();
+    }
 
 	public void movimientoCamara() {
 		camara.position.set(posicion.x + tamañoPersonaje / 2, posicion.y + tamañoPersonaje / 2, 0);
