@@ -59,3 +59,4 @@
 ## 23
     - Segunda consigna
     - Hice la base del HUD
+    - Minimas modificaciones al HUD

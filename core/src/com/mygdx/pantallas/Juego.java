@@ -85,6 +85,7 @@ public class Juego implements Screen{
 		camaraJuego.viewportHeight = height;
 		camaraHud.viewportWidth = width;
 		camaraHud.viewportHeight = height;
+		
 		camaraJuego.update();
 		camaraHud.update();		
 	    System.out.println("X =" +Gdx.graphics.getWidth() + "\n Y =" + Gdx.graphics.getHeight());

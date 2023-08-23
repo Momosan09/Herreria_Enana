@@ -23,6 +23,7 @@ public class DesktopLauncher {
 		config.setIdleFPS(0);
 		config.setDecorated(true);
 		config.setWindowedMode(1280, 768);
+		config.setWindowSizeLimits(1280, 768, 1920, 1080);
 
 
 
