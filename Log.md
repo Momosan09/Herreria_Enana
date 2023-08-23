@@ -54,4 +54,8 @@
 ## 18 AGO
     - Hace un mes que empeze el juego!
     - Mejoras en el movimiento del jugador (La logica que cree yo funcionaba exactamemente como lo planeaba, el problema se daba en las animaciones verticales, las cuales eran reemplazadas por al animacion de estar quieto. Esta nueva logica, la cual yo no hice, hace que las animaciones funcionen correctamente pero me obliga a sacrificar el movimiento que me gustaba).
-    (Ademas ya me harto este maldito movimiento del demonio)(Ver commit inmediatamante anterior para la logica de movimiento mia )
+    (Ademas ya me harto este maldito movimiento del demonio)(Ver commit inmediatamante anterior para la logica de movimiento mia)
+
+## 23
+    - Segunda consigna
+    - Hice la base del HUD

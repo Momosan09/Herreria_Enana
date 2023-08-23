@@ -19,4 +19,7 @@ public class Recursos {
 	//Mapas
 	public static final TiledMap MAPA = new TmxMapLoader().load("mapas/mapa.tmx");
 	
+	//HUD
+	public static final String HUD_0 = "HUD/Untitled.png";
+	
 }

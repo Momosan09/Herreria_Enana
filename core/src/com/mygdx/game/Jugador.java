@@ -10,13 +10,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.enums.Direcciones;
+import com.mygdx.hud.HUD;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.Render;
 
 public class Jugador {
 
 	private Vector2 posicion;
-	private float velocidad = 100f;
+	private float velocidad = 120f;
 
 	public OrthographicCamera camara;
 
@@ -24,12 +26,11 @@ public class Jugador {
     
 	private Direcciones direccionActual = Direcciones.QUIETO;
 	Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
-
+	
 	public Jugador(OrthographicCamera camara) {
 
 		posicion = new Vector2(Gdx.graphics.getWidth() / 2 - (tamañoPersonaje/ 2),Gdx.graphics.getHeight() / 2 - (tamañoPersonaje/ 2)); // posicion inicial
 		this.camara = camara;
-
 		crearAnimaciones();
 
 	}
@@ -40,12 +41,13 @@ public class Jugador {
 
 	}
 
-	public void update() {
+	private void update() {
 		movimiento(Gdx.graphics.getDeltaTime());
+
 
 	}
 
-	public void movimiento(float deltaTime) {
+	private void movimiento(float deltaTime) {
         float movimientoX = 0;
         float movimientoY = 0;
 
@@ -93,7 +95,7 @@ public class Jugador {
         movimientoCamara();
     }
 
-	public void movimientoCamara() {
+	private void movimientoCamara() {
 		camara.position.set(posicion.x + tamañoPersonaje / 2, posicion.y + tamañoPersonaje / 2, 0);
 		camara.update();
 	}
@@ -102,7 +104,7 @@ public class Jugador {
 		return posicion;
 	}
 
-	public void alternarSprites(Direcciones direccion) {
+	private void alternarSprites(Direcciones direccion) {
 		switch (direccion) {
 		case ABAJO:
 			animacionAbajo.render();

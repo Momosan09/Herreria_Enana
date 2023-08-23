@@ -20,12 +20,11 @@ public class Principal extends Game {
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-		Render.batch = batch; // nose si tendria que borrar el batch de arriba
+		Render.batch = batch;
 		font = new BitmapFont();
 		
-	    this.setScreen(new PantallaMenu(this));
-	    // Configurar la cámara
-	    //jugador.camara.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	    this.setScreen(new Juego(this));
+
 	}
 
 
