@@ -4,14 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.utiles.Recursos;
 
 
@@ -22,32 +22,47 @@ public class HUD{
 
 	private Texture Dinero_Tex;
 	private Stage stage;
-	private Image dinero;
+	private Table hud;
+	private Table dineroTable;
+	private Sprite dineroImgSpr;
 	private Label dineroLbl;
+	private Label[] monedas;
+	private Label centroLbl;
+	private Label derechaLbl;
+	private Label barraAbajoLbl;
 	private Label.LabelStyle labelStyle;
 	
     public HUD() {
     	cargarTexturas();
-
-        create();
+		generarFuente();
+    	crearActores();
+    	crearTablas();
     }
 	
-	public void create () {
-		generarFuente();
+	public void crearTablas () {
 
 		stage = new Stage();
 		//Gdx.input.setInputProcessor(stage);
-
+		hud = new Table();
+		hud.setFillParent(true);
+		hud.debug();
 		
-		dinero = new Image(Dinero_Tex);//96x32
+		dineroTable = new Table();
+		dineroTable.setFillParent(false);
+		dineroTable.debug();
+		
 
-        dinero.setPosition(20, Gdx.graphics.getHeight()-dinero.getHeight()); // Posición fija en la parte superior izquierda
-        dineroLbl = new Label("Dinero", labelStyle);
-        dineroLbl.setPosition(dinero.getX()-10, dinero.getY()-10);
 
-        
-        stage.addActor(dinero);
-        stage.addActor(dineroLbl);
+		dineroTable.setBackground(new SpriteDrawable(dineroImgSpr));
+		dineroTable.add(dineroLbl).row();;
+		dineroTable.row();
+		dineroTable.add(monedas[0], monedas[1], monedas[2]);
+		
+		hud.add(dineroTable);
+		hud.add(centroLbl).expand();
+
+        stage.addActor(hud);
+
 
 	}
 	
@@ -57,14 +72,25 @@ public class HUD{
 	
 	public void draw(SpriteBatch batch) {
 		stage.act(Gdx.graphics.getDeltaTime());
-		System.out.println("stage viewport ventana =" + (stage.getViewport().getCamera().viewportWidth = Gdx.graphics.getWidth()));
-		
-reescalar(dinero);
+
 		stage.draw();
 	}
 	
 	private void cargarTexturas() {
 		Dinero_Tex = new Texture(Recursos.DINERO_HUD);
+		dineroImgSpr = new Sprite(Dinero_Tex);
+	}
+	
+	private void crearActores() {
+		dineroLbl = new Label("Dinero", labelStyle);
+		monedas = new Label[3];
+		monedas[0] = new Label("Au: ", labelStyle);
+		monedas[1] = new Label("Ag: ", labelStyle);
+		monedas[2] = new Label("Cu: ", labelStyle);
+		
+		centroLbl = new Label("Centro", labelStyle);
+		derechaLbl = new Label("Hora", labelStyle);
+		barraAbajoLbl = new Label("Barra De items", labelStyle);
 	}
 	
 	private void generarFuente() {
@@ -82,17 +108,6 @@ reescalar(dinero);
 	    labelStyle = new Label.LabelStyle();
 	    labelStyle.font = font24;
 	}
-	private void reescalar(Image imagen) {
-		//medidas de ejemplo
-        float relacionDeAspecto = imagen.getWidth()/imagen.getHeight();// 96/32 = 3
-        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());//reajustar el tamaño del viewport de la stage con el tamaño de la ventana    
-        float ancho = stage.getViewport().getWorldWidth();//conseguir el nuevo ancho
-        float anchoHUD = ancho*0.16f;// 1280 * 0.16 = 204.8px
-        
-        float altoHUD = anchoHUD / relacionDeAspecto;// 204.8/3 = 68.266px.
-        imagen.setSize(anchoHUD, altoHUD);//204.8 x 68.266
-        imagen.setPosition(2, stage.getViewport().getWorldHeight() - altoHUD-2);
 
-	}
-	
+	//adios ;( ...
 }
