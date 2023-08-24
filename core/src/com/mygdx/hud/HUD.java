@@ -41,10 +41,9 @@ public class HUD{
 		
 		dinero = new Image(Dinero_Tex);//96x32
 
-		
-        dinero.setPosition(20, Gdx.graphics.getHeight()-dinero.getHeight()*4); // Posición fija en la parte superior izquierda
+        dinero.setPosition(20, Gdx.graphics.getHeight()-dinero.getHeight()); // Posición fija en la parte superior izquierda
         dineroLbl = new Label("Dinero", labelStyle);
-        dineroLbl.setPosition(dinero.getX(), dinero.getY()+dineroLbl.getHeight()-2);
+        dineroLbl.setPosition(dinero.getX()-10, dinero.getY()-10);
 
         
         stage.addActor(dinero);
@@ -86,13 +85,13 @@ reescalar(dinero);
 	private void reescalar(Image imagen) {
 		//medidas de ejemplo
         float relacionDeAspecto = imagen.getWidth()/imagen.getHeight();// 96/32 = 3
-        float ancho = stage.getViewport().getCamera().viewportWidth = Gdx.graphics.getWidth();//reajustar el tamaño del viewport de la stage con el tamaño de la ventana    
-        stage.getViewport().getCamera().viewportHeight = Gdx.graphics.getHeight();//reajustar el tamaño del viewport de la stage con el tamaño de la ventana 
+        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());//reajustar el tamaño del viewport de la stage con el tamaño de la ventana    
+        float ancho = stage.getViewport().getWorldWidth();//conseguir el nuevo ancho
         float anchoHUD = ancho*0.16f;// 1280 * 0.16 = 204.8px
         
         float altoHUD = anchoHUD / relacionDeAspecto;// 204.8/3 = 68.266px.
         imagen.setSize(anchoHUD, altoHUD);//204.8 x 68.266
-        //imagen.setPosition(ancho-ancho, 200); // Posición fija en la parte superior izquierda
+        imagen.setPosition(2, stage.getViewport().getWorldHeight() - altoHUD-2);
 
 	}
 	

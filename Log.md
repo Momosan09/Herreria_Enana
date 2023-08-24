@@ -63,3 +63,4 @@
 
 ## 24 AGO
     - Logre hacer que el HUD se reescale pero ahora el problema es su posicion. Cuando se reescala la ventana, la imagen tambien lo hace, pero al parecer las posciones del viewport no y estas no se reacomodan
+    - AAAAAAA lo logre! por fin despues de tanto incordio, el HUD se reescala y se mantiene en la poscion relativa a la ventana!! [dios](https://stackoom.com/en/question/3rhx7)
