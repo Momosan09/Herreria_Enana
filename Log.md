@@ -56,7 +56,10 @@
     - Mejoras en el movimiento del jugador (La logica que cree yo funcionaba exactamemente como lo planeaba, el problema se daba en las animaciones verticales, las cuales eran reemplazadas por al animacion de estar quieto. Esta nueva logica, la cual yo no hice, hace que las animaciones funcionen correctamente pero me obliga a sacrificar el movimiento que me gustaba).
     (Ademas ya me harto este maldito movimiento del demonio)(Ver commit inmediatamante anterior para la logica de movimiento mia)
 
-## 23
+## 23 AGO
     - Segunda consigna
     - Hice la base del HUD
     - Minimas modificaciones al HUD
+
+## 24 AGO
+    - Logre hacer que el HUD se reescale pero ahora el problema es su posicion. Cuando se reescala la ventana, la imagen tambien lo hace, pero al parecer las posciones del viewport no y estas no se reacomodan

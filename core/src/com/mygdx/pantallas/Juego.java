@@ -69,8 +69,8 @@ public class Juego implements Screen{
 	    Render.batch.end();
 
 	    //Renderiza el HUD
-	    camaraHud.update();
-	    Render.batch.setProjectionMatrix(camaraHud.combined);//Una vez que renderiza el juego, se inicia el batch para la camara del HUD y lo dibuja
+	    //camaraHud.update();
+	    //Render.batch.setProjectionMatrix(camaraHud.combined);//Una vez que renderiza el juego, se inicia el batch para la camara del HUD y lo dibuja
 	    Render.batch.begin();
 
 	    hud.draw(Render.batch);
@@ -83,11 +83,8 @@ public class Juego implements Screen{
 	public void resize(int width, int height) {
 		camaraJuego.viewportWidth = width;
 		camaraJuego.viewportHeight = height;
-		camaraHud.viewportWidth = width;
-		camaraHud.viewportHeight = height;
+		camaraJuego.update();	
 		
-		camaraJuego.update();
-		camaraHud.update();		
 	    System.out.println("X =" +Gdx.graphics.getWidth() + "\n Y =" + Gdx.graphics.getHeight());
 	}
 
