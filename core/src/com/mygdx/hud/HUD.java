@@ -20,13 +20,15 @@ import com.mygdx.utiles.Recursos;
  */
 public class HUD{
 
-	private Texture Dinero_Tex;
+	private Texture dinero_Tex;
+	private Texture reloj_Tex;
+	private Image reloj;
 	private Stage stage;
 	private Table hud;
 	private Table dineroTable;
 	private Sprite dineroImgSpr;
 	private Label dineroLbl;
-	private Label[] monedas;
+	private Label[][] monedas;
 	private Label centroLbl;
 	private Label derechaLbl;
 	private Label barraAbajoLbl;
@@ -50,16 +52,17 @@ public class HUD{
 		dineroTable = new Table();
 		dineroTable.setFillParent(false);
 		dineroTable.debug();
-		
 
-
-		dineroTable.setBackground(new SpriteDrawable(dineroImgSpr));
-		dineroTable.add(dineroLbl).row();;
+		dineroTable.setBackground(new SpriteDrawable(dineroImgSpr));//para poner sprite de fondo
+		dineroTable.add(dineroLbl);
 		dineroTable.row();
-		dineroTable.add(monedas[0], monedas[1], monedas[2]);
+		dineroTable.add(monedas[0][0], monedas[0][1], monedas[1][0], monedas[1][1], monedas[2][0], monedas[2][1]);
 		
-		hud.add(dineroTable);
+		hud.add(dineroTable).top();
 		hud.add(centroLbl).expand();
+		
+		hud.add(reloj);
+		hud.add(derechaLbl);
 
         stage.addActor(hud);
 
@@ -77,16 +80,24 @@ public class HUD{
 	}
 	
 	private void cargarTexturas() {
-		Dinero_Tex = new Texture(Recursos.DINERO_HUD);
-		dineroImgSpr = new Sprite(Dinero_Tex);
+		dinero_Tex = new Texture(Recursos.DINERO_HUD);
+		dineroImgSpr = new Sprite(dinero_Tex);
+		
+		reloj_Tex = new Texture(Recursos.RELOJ_HUD);
+		reloj = new Image(reloj_Tex);
 	}
 	
 	private void crearActores() {
-		dineroLbl = new Label("Dinero", labelStyle);
-		monedas = new Label[3];
-		monedas[0] = new Label("Au: ", labelStyle);
-		monedas[1] = new Label("Ag: ", labelStyle);
-		monedas[2] = new Label("Cu: ", labelStyle);
+		dineroLbl = new Label("Dinero ", labelStyle);
+		monedas = new Label[3][2];
+		monedas[0][0] = new Label("Au: ", labelStyle);
+		monedas[0][1] = new Label("2", labelStyle);
+		monedas[1][0] = new Label("Ag: ", labelStyle);
+		monedas[1][1] = new Label("45", labelStyle);
+		monedas[2][0] = new Label("Cu: ", labelStyle);
+		monedas[2][1] = new Label("60", labelStyle);
+		
+
 		
 		centroLbl = new Label("Centro", labelStyle);
 		derechaLbl = new Label("Hora", labelStyle);
@@ -98,7 +109,6 @@ public class HUD{
 	    FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 	    parameter.size = 30;
 	    parameter.borderWidth = 1;
-	    parameter.color = Color.YELLOW;
 	    parameter.shadowOffsetX = 3;
 	    parameter.shadowOffsetY = 3;
 

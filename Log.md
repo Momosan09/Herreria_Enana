@@ -65,3 +65,6 @@
     - Logre hacer que el HUD se reescale pero ahora el problema es su posicion. Cuando se reescala la ventana, la imagen tambien lo hace, pero al parecer las posciones del viewport no y estas no se reacomodan
     - AAAAAAA lo logre! por fin despues de tanto incordio, el HUD se reescala y se mantiene en la poscion relativa a la ventana!! [dios](https://stackoom.com/en/question/3rhx7)
     - Viste todos los commits sobre el HUD, en especial el que decia algo asi como "Iaaajuuu"? Bueno ni bien termine con eso descubri algo llamado "Table" de scene2d.ui lo cual era justo lo que necesitaba, asique borre todo lo anterior y ahora de nuevo con el HUD
+
+## 25 AGO
+    - Un poco de HUD

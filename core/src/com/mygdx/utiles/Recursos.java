@@ -21,5 +21,6 @@ public class Recursos {
 	
 	//HUD
 	public static final String DINERO_HUD = "HUD/Dinero.png";
+	public static final String RELOJ_HUD = "HUD/hora.png";
 	
 }
