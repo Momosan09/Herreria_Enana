@@ -63,7 +63,10 @@ public class HUD{
 		
 		hud.add(reloj);
 		hud.add(derechaLbl);
-
+		
+		hud.row();
+		hud.add();
+		hud.add(barraAbajoLbl).expandX().center();
         stage.addActor(hud);
 
 
