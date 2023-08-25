@@ -19,7 +19,6 @@ public class Jugador {
 
 	private Vector2 posicion;
 	private float velocidad = 120f;
-
 	public OrthographicCamera camara;
 
 	private int tamañoPersonaje = 32;
@@ -28,7 +27,7 @@ public class Jugador {
 	Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
 	
 	public Jugador(OrthographicCamera camara) {
-
+		
 		posicion = new Vector2(Gdx.graphics.getWidth() / 2 - (tamañoPersonaje/ 2),Gdx.graphics.getHeight() / 2 - (tamañoPersonaje/ 2)); // posicion inicial
 		this.camara = camara;
 		crearAnimaciones();
@@ -38,7 +37,6 @@ public class Jugador {
 	public void draw(SpriteBatch batch) {
 		// sprite.draw(batch);
 		update();
-
 	}
 
 	private void update() {

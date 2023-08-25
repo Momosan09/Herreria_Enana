@@ -30,14 +30,23 @@ public class HUD{
 	private Table hud;
 	private Table dineroTable;
 	private Table ultimasBatallasTable;
+	private Table siguienteBatalla;
+	private Table pedidosTable;
+	private Table hudIzq, hudCen, hudDer;
+	
 	private Sprite dineroImgSpr;
 	private Label dineroLbl;
 	private Label[][] monedas;
 	private Label[] ultimaBatalla;
 	private Label verBatallasAnteriores;
-	private TextButton verBatallasAnterioresClick;
+	private TextButton verBatallasAnterioresBtn;
+	private TextButton pedidoBtn;
+	private Label siguienteBatallaLbl;
+	private Label nombreSiguienteBatalla;
+	private Label siguienteBatallaDetalles;
 	private Label centroLbl;
-	private Label derechaLbl;
+	private Label diaLbl;
+	private Label pedidoLbl;
 	private Label barraAbajoLbl;
 	private Label.LabelStyle labelStyle;
 
@@ -57,35 +66,78 @@ public class HUD{
 		hud.setFillParent(true);
 		hud.debug();
 		
+		//Izquierda
+		hudIzq = new Table();
+
+		
+			//Dinero
 		dineroTable = new Table();
 		dineroTable.setFillParent(false);
 		dineroTable.debug();
-
 		dineroTable.setBackground(new SpriteDrawable(dineroImgSpr));//para poner sprite de fondo
 		dineroTable.add(dineroLbl);
-		
 		dineroTable.row();
 		dineroTable.add(monedas[0][0], monedas[0][1], monedas[1][0], monedas[1][1], monedas[2][0], monedas[2][1]);
 		
-		hud.add(dineroTable).top();
-		hud.add(centroLbl).expand();
-		hud.add(reloj);
+		hudIzq.add(dineroTable).left();
 		
-		hud.row();
-		
+		hudIzq.row().spaceTop(20);
+			//Ultimas batallas
 		ultimasBatallasTable = new Table();
-		ultimasBatallasTable.setFillParent(false);
+		ultimasBatallasTable.debug();
 		ultimasBatallasTable.add(ultimaBatalla[0], ultimaBatalla[1]);
 		ultimasBatallasTable.row();
 		ultimasBatallasTable.add(verBatallasAnteriores);
+		hudIzq.add(ultimasBatallasTable);
 		
-		hud.add(ultimasBatallasTable).center();
+			//Siguiente batalla
+		siguienteBatalla = new Table();
+		siguienteBatalla.debug();
+		
+		hudIzq.row().spaceTop(20);
+		
+		siguienteBatalla.add(siguienteBatallaLbl);
+		siguienteBatalla.add(nombreSiguienteBatalla);
+		siguienteBatalla.row();
+		siguienteBatalla.add(siguienteBatallaDetalles).left();
+		
+		hudIzq.add(siguienteBatalla).left();
+		
+		
+		//Centro
+		
+		hudCen = new Table();
+		hudCen.debug();
 
-		hud.add(derechaLbl);
 		
+		hudCen.add(centroLbl).expand();
+		
+		//Derecha
+		hudDer = new Table();
+		hudDer.debug();
+		pedidosTable = new Table();
+		pedidosTable.debug();
+		
+			//pedidos
+		pedidosTable.add(pedidoLbl);
+		//pedidosTable.add(pedidoBtn);
+		
+		hudDer.add(reloj);
+		hudDer.row();
+		hudDer.add(diaLbl);
+		hudDer.row();
+		hudDer.add(pedidosTable).bottom();
+
+		
+	
+		//Gral
+		hud.add(hudIzq).top();
+		hud.add(hudCen).expand();
+		hud.add(hudDer).size(200, 200).top();
 		hud.row();
-		hud.add();
-		hud.add(barraAbajoLbl).expandX().center();
+
+		hud.add(barraAbajoLbl).colspan(3);
+
         stage.addActor(hud);
 
 
@@ -108,8 +160,10 @@ public class HUD{
 		reloj_Tex = new Texture(Recursos.RELOJ_HUD);
 		reloj = new Image(reloj_Tex);
 	}
-	
+
 	private void crearActores() {
+		
+		//IZQUIERDA
 		dineroLbl = new Label("Dinero ", labelStyle);
 		monedas = new Label[3][2];
 		monedas[0][0] = new Label("Au: ", labelStyle);
@@ -124,17 +178,26 @@ public class HUD{
 		ultimaBatalla[1] = new Label("Aca mostrar resultado", labelStyle);
 		verBatallasAnteriores = new Label("Ver Anteriores", labelStyle);
 		//verBatallasAnterioresClick = new TextButton("Click", skin);
+		siguienteBatallaLbl = new Label("Siguiente batalla: ", labelStyle);
+		nombreSiguienteBatalla = new Label("Nombre-de-Batalla", labelStyle);
+		siguienteBatallaDetalles = new Label("Ver detalles", labelStyle);
 		
-		
+		//CENTRO
 		centroLbl = new Label("Centro", labelStyle);
-		derechaLbl = new Label("Luns", labelStyle);
+		
+		//DERECHA
+		diaLbl = new Label("Luns", labelStyle);
+		pedidoLbl = new Label("Ver Pedido", labelStyle);
+		//pedidoBtn = new TextButton("",skin);
+		
+		//ABAJO
 		barraAbajoLbl = new Label("Barra De items", labelStyle);
 	}
 	
 	private void generarFuente() {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Recursos.FUENTE_TEMPORAL));
 	    FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-	    parameter.size = 30;
+	    parameter.size = 22;
 	    parameter.borderWidth = 1;
 	    parameter.shadowOffsetX = 3;
 	    parameter.shadowOffsetY = 3;
@@ -145,6 +208,4 @@ public class HUD{
 	    labelStyle = new Label.LabelStyle();
 	    labelStyle.font = font24;
 	}
-
-	//adios ;( ...
 }
