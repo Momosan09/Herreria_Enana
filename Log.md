@@ -68,3 +68,4 @@
 
 ## 25 AGO
     - Un poco de HUD
+    - Un poco mas de HUD, creo que este codigo esta creciendo mucho...

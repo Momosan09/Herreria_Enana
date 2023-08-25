@@ -8,10 +8,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.utiles.Recursos;
 
 
@@ -26,13 +29,18 @@ public class HUD{
 	private Stage stage;
 	private Table hud;
 	private Table dineroTable;
+	private Table ultimasBatallasTable;
 	private Sprite dineroImgSpr;
 	private Label dineroLbl;
 	private Label[][] monedas;
+	private Label[] ultimaBatalla;
+	private Label verBatallasAnteriores;
+	private TextButton verBatallasAnterioresClick;
 	private Label centroLbl;
 	private Label derechaLbl;
 	private Label barraAbajoLbl;
 	private Label.LabelStyle labelStyle;
+
 	
     public HUD() {
     	cargarTexturas();
@@ -55,13 +63,24 @@ public class HUD{
 
 		dineroTable.setBackground(new SpriteDrawable(dineroImgSpr));//para poner sprite de fondo
 		dineroTable.add(dineroLbl);
+		
 		dineroTable.row();
 		dineroTable.add(monedas[0][0], monedas[0][1], monedas[1][0], monedas[1][1], monedas[2][0], monedas[2][1]);
 		
 		hud.add(dineroTable).top();
 		hud.add(centroLbl).expand();
-		
 		hud.add(reloj);
+		
+		hud.row();
+		
+		ultimasBatallasTable = new Table();
+		ultimasBatallasTable.setFillParent(false);
+		ultimasBatallasTable.add(ultimaBatalla[0], ultimaBatalla[1]);
+		ultimasBatallasTable.row();
+		ultimasBatallasTable.add(verBatallasAnteriores);
+		
+		hud.add(ultimasBatallasTable).center();
+
 		hud.add(derechaLbl);
 		
 		hud.row();
@@ -100,10 +119,15 @@ public class HUD{
 		monedas[2][0] = new Label("Cu: ", labelStyle);
 		monedas[2][1] = new Label("60", labelStyle);
 		
-
+		ultimaBatalla = new Label[2];
+		ultimaBatalla[0] = new Label("Ultima Batalla: ", labelStyle);
+		ultimaBatalla[1] = new Label("Aca mostrar resultado", labelStyle);
+		verBatallasAnteriores = new Label("Ver Anteriores", labelStyle);
+		//verBatallasAnterioresClick = new TextButton("Click", skin);
+		
 		
 		centroLbl = new Label("Centro", labelStyle);
-		derechaLbl = new Label("Hora", labelStyle);
+		derechaLbl = new Label("Luns", labelStyle);
 		barraAbajoLbl = new Label("Barra De items", labelStyle);
 	}
 	
