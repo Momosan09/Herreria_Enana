@@ -9,8 +9,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -30,19 +32,16 @@ public class PantallaMenu implements Screen {
 	//Stage trae su propio viewport, no es necesario crear uno
 	
 	private Stage stage;
-	private Table menu;
+	private Table interfaz;
 	private Table opciones;
 	private Label[] interfazTexto;
 	private Label.LabelStyle tituloEstilo, subTituloEstilo, opcionEstilo, selccionadoEstilo, bottomEstilo;
 	private EstiloFuente estiloFuente;
-	
-	
 	Entradas entradas = new Entradas();
 	
 	private Texture fondoImg;
 	private Sprite fondo;
 
-	private Texto[] textos;
 	private Music musicaMenu;
 
 	private int cont = 2;
@@ -57,12 +56,9 @@ public class PantallaMenu implements Screen {
 		camara.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		//Stage trae su propio viewport, no es necesario crear uno
 		
-		crearInterfaz();
-		
 		fondoImg = new Texture(Recursos.FONDO_MENU);
 		fondo = new Sprite(fondoImg);
-
-
+		crearInterfaz();
 
 		Gdx.input.setInputProcessor(entradas);
 
@@ -74,57 +70,26 @@ public class PantallaMenu implements Screen {
 	@Override
 	public void show() {
 		musicaMenu = Gdx.audio.newMusic(Gdx.files.internal(Recursos.MUSICA_MENU));
-		/*
-		textos = new Texto[5];
-		textos[0] = new Texto(Recursos.FUENTE_TEMPORAL, 62, Color.WHITE, false);
-		textos[1] = new Texto(Recursos.FUENTE_TEMPORAL, 42, Color.WHITE, false);
-		textos[2] = new Texto(Recursos.FUENTE_TEMPORAL, 38, Color.WHITE, false);
-		textos[3] = new Texto(Recursos.FUENTE_TEMPORAL, 38, Color.WHITE, false);
-		textos[4] = new Texto(Recursos.FUENTE_TEMPORAL, 36, Color.SALMON, false);
 
-
-		textos[0].setTexto("Herreria Enana");
-		textos[0].setPosicion((Gdx.graphics.getWidth() / 2) - (textos[0].getAncho() / 2), Gdx.graphics.getHeight());
-
-		textos[1].setTexto("Menu Principal");
-		textos[1].setPosicion((Gdx.graphics.getWidth() / 2) - (textos[1].getAncho() / 2),
-				(Gdx.graphics.getHeight()) - (textos[1].getAlto() * 2));
-
-		textos[2].setTexto("Jugar");
-		textos[2].setPosicion((Gdx.graphics.getWidth() / 2) - (textos[2].getAncho() / 2), (Config.alto/2) + textos[2].getAlto()*3);
-
-		textos[3].setTexto("Configuracion");
-		textos[3].setPosicion((Gdx.graphics.getWidth() / 2) - (textos[3].getAncho() / 2), (Config.alto/2) + textos[3].getAlto());
-
-		textos[4].setTexto("El videojuego de herreria por combinacion");
-		textos[4].setPosicion((Gdx.graphics.getWidth() / 2) - (textos[4].getAncho() / 2), textos[4].getAlto() * 2);
-	*/
-		fondo.setPosition(0, stage.getViewport().getWorldHeight() - 200); // creo que el segundo parametro lo hace una medida mas relativa, nose, investigar
+		fondo.setPosition(0, stage.getViewport().getWorldHeight() - fondoImg.getHeight()); // creo que el segundo parametro lo hace una medida mas relativa, nose, investigar
 
 	}
 
 	@Override
 	public void render(float delta) {
 		ScreenUtils.clear(0, 0, 0.2f, 1);
-
-		stage.draw();
 		musicaMenu.setLooping(true);
-		//musicaMenu.play();
+		musicaMenu.play();
 
 		camara.update();
 		Render.batch.setProjectionMatrix(camara.combined);
 		Render.batch.begin();
-		
-		//fondoEnMovimiento(delta);
+		fondoEnMovimiento(delta);
 
-
-/*
-		for (int i = 0; i < textos.length; i++) {
-			textos[i].dibujar();
-		}*/
 		Render.batch.end();
+		stage.draw();
+		animacionRespirar();
 		seleccionarOpcion();
-		// entradas.seleccionarOpcion(textos,2,3);
 
 	}
 
@@ -171,12 +136,12 @@ public class PantallaMenu implements Screen {
 	}
 	
 	private void crearInterfaz() {
-		crearEstilosDeLabel();
+		crearEstilosDeLabel();	
 		stage = new Stage();
 		
-		menu = new Table();
-		menu.setFillParent(true);
-		menu.debug();
+		interfaz = new Table();
+		interfaz.setFillParent(true);
+		interfaz.debug();
 		
 		interfazTexto = new Label[5];
 		
@@ -190,22 +155,22 @@ public class PantallaMenu implements Screen {
 		interfazTexto[2] = new Label("Jugar", opcionEstilo);
 		interfazTexto[3] = new Label("Configuraciones", opcionEstilo);
 		
-		menu.add(interfazTexto[0]);
-		menu.row();
-		menu.add(interfazTexto[1]);
-		menu.row();
+		interfaz.add(interfazTexto[0]);
+		interfaz.row();
+		interfaz.add(interfazTexto[1]);
+		interfaz.row();
 		
 		//opciones
 			opciones.add(interfazTexto[2]);
 			opciones.row();
 			opciones.add(interfazTexto[3]);
 		
-		menu.add(opciones).expand();
-		menu.row();
-		menu.add(interfazTexto[4]).bottom().padBottom(20);
+		interfaz.add(opciones).expand();
+		interfaz.row();
+		interfaz.add(interfazTexto[4]).bottom().padBottom(20);
 		
 		
-		stage.addActor(menu);
+		stage.addActor(interfaz);
 	}
 
 	private void seleccionarOpcion() {
@@ -228,7 +193,7 @@ public class PantallaMenu implements Screen {
     private void fondoEnMovimiento(float delta) {
     	float velocidadDesplazamiento = 30;
     	
-        fondo.draw(Render.batch);
+    	fondo.draw(Render.batch);
         fondoPosX -= velocidadDesplazamiento * delta;
         if (fondoPosX <= offSetX*-1) {
             fondoPosX = 0;
@@ -239,6 +204,9 @@ public class PantallaMenu implements Screen {
         fondo.setX(fondoPosX);
     }
 
+    private void animacionRespirar() {
+    	interfazTexto[4].setColor(255, 000, 000, 000);
+    }
 
 
 }

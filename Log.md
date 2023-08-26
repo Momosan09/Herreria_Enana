@@ -75,3 +75,4 @@
     - "Terminado" el HUD del juego (Faltan los botones y las imagenes pero despues lo hago)
     - Creada una clase "EstiloFuente" que devuelve un LabelStyle para poder tener distintos estilos de fuente en las interfaces que haga, reemplaza la clase "Texto" y esta sera eliminada cuando todas las interfaces que hay hasta el momento dejen de usar esta clase
     - Esqueleto del menu principal
+    - La pantalla configuraciones ahora esta bajo las fuerzas Table. ¡Larga vida Table!
