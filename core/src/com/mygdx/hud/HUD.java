@@ -2,6 +2,7 @@ package com.mygdx.hud;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -15,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.mygdx.utiles.Colores;
+import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.Recursos;
 
 
@@ -49,11 +52,14 @@ public class HUD{
 	private Label pedidoLbl;
 	private Label barraAbajoLbl;
 	private Label.LabelStyle labelStyle;
+	private Label.LabelStyle labelMonedasStyle[];
+	EstiloFuente estiloFuente;
 
 	
     public HUD() {
+
     	cargarTexturas();
-		generarFuente();
+    	crearFuentes();
     	crearActores();
     	crearTablas();
     }
@@ -161,11 +167,11 @@ public class HUD{
 		dineroLbl = new Label("Dinero ", labelStyle);
 		monedas = new Label[3][2];
 		monedas[0][0] = new Label("Au: ", labelStyle);
-		monedas[0][1] = new Label("2", labelStyle);
+		monedas[0][1] = new Label("2", labelMonedasStyle[0]);
 		monedas[1][0] = new Label("Ag: ", labelStyle);
-		monedas[1][1] = new Label("45", labelStyle);
+		monedas[1][1] = new Label("45", labelMonedasStyle[1]);
 		monedas[2][0] = new Label("Cu: ", labelStyle);
-		monedas[2][1] = new Label("60", labelStyle);
+		monedas[2][1] = new Label("60", labelMonedasStyle[2]);
 		
 		ultimaBatalla = new Label[2];
 		ultimaBatalla[0] = new Label("Ultima Batalla: ", labelStyle);
@@ -188,6 +194,15 @@ public class HUD{
 		barraAbajoLbl = new Label("Barra De items", labelStyle);
 	}
 	
+	public void crearFuentes() {
+		estiloFuente = new EstiloFuente(); 
+    	labelStyle = estiloFuente.generarFuente(22, Colores.BLANCO, false);
+    	labelMonedasStyle = new Label.LabelStyle[3];
+    	labelMonedasStyle[0] = estiloFuente.generarFuente(16, Colores.AU, false); 
+    	labelMonedasStyle[1] = estiloFuente.generarFuente(16, Colores.AG, false); 
+    	labelMonedasStyle[2] = estiloFuente.generarFuente(16, Colores.CU, false); 
+	}
+	/*
 	private void generarFuente() {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Recursos.FUENTE_TEMPORAL));
 	    FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -201,5 +216,5 @@ public class HUD{
 	 
 	    labelStyle = new Label.LabelStyle();
 	    labelStyle.font = font24;
-	}
+	}*/
 }
