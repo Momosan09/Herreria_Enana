@@ -76,3 +76,4 @@
     - Creada una clase "EstiloFuente" que devuelve un LabelStyle para poder tener distintos estilos de fuente en las interfaces que haga, reemplaza la clase "Texto" y esta sera eliminada cuando todas las interfaces que hay hasta el momento dejen de usar esta clase
     - Esqueleto del menu principal
     - La pantalla configuraciones ahora esta bajo las fuerzas Table. ¡Larga vida Table!
+    - Chau clase Texto! Cumpliste tu funcion, pero a la larga me ibas a dar problemas

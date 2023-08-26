@@ -5,7 +5,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.utiles.Recursos;
-import com.mygdx.utiles.Texto;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 
