@@ -70,3 +70,7 @@
     - Un poco de HUD
     - Un poco mas de HUD, creo que este codigo esta creciendo mucho...
     - Mas HUD, ya casi esta terminado el esqueleto
+
+## 26 AGO
+    - "Terminado" el HUD del juego (Faltan los botones y las imagenes pero despues lo hago)
+    

@@ -64,7 +64,7 @@ public class HUD{
 		//Gdx.input.setInputProcessor(stage);
 		hud = new Table();
 		hud.setFillParent(true);
-		hud.debug();
+		//hud.debug();
 		
 		//Izquierda
 		hudIzq = new Table();
@@ -73,7 +73,6 @@ public class HUD{
 			//Dinero
 		dineroTable = new Table();
 		dineroTable.setFillParent(false);
-		dineroTable.debug();
 		dineroTable.setBackground(new SpriteDrawable(dineroImgSpr));//para poner sprite de fondo
 		dineroTable.add(dineroLbl);
 		dineroTable.row();
@@ -84,7 +83,6 @@ public class HUD{
 		hudIzq.row().spaceTop(20);
 			//Ultimas batallas
 		ultimasBatallasTable = new Table();
-		ultimasBatallasTable.debug();
 		ultimasBatallasTable.add(ultimaBatalla[0], ultimaBatalla[1]);
 		ultimasBatallasTable.row();
 		ultimasBatallasTable.add(verBatallasAnteriores);
@@ -92,7 +90,6 @@ public class HUD{
 		
 			//Siguiente batalla
 		siguienteBatalla = new Table();
-		siguienteBatalla.debug();
 		
 		hudIzq.row().spaceTop(20);
 		
@@ -107,16 +104,13 @@ public class HUD{
 		//Centro
 		
 		hudCen = new Table();
-		hudCen.debug();
 
 		
-		hudCen.add(centroLbl).expand();
+		hudCen.add().expand();
 		
 		//Derecha
 		hudDer = new Table();
-		hudDer.debug();
 		pedidosTable = new Table();
-		pedidosTable.debug();
 		
 			//pedidos
 		pedidosTable.add(pedidoLbl);
