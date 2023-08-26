@@ -98,7 +98,7 @@ public class PantallaConfiguracion implements Screen{
 	}
 	
 	public void seleccionarOpcion() {
-		int seleccion = entradas.seleccionarOpcion(textos, 1, 2);
+		/*int seleccion = entradas.seleccionarOpcion(textos, 1, 2);
 		
 		if(seleccion == 1) {
 			game.setScreen(new PantallaMenu(game));
@@ -109,7 +109,7 @@ public class PantallaConfiguracion implements Screen{
 			aux = (Config.pantallaCompleta)? " Si": " No";
 			textos[2].setTexto("Pantalla completa" + aux);
 			Gdx.graphics.setWindowedMode(1920, 1080);
-		}
+		}*/
 	}
 
 }

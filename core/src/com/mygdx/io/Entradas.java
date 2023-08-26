@@ -3,6 +3,7 @@ package com.mygdx.io;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Texto;
 import com.badlogic.gdx.Gdx;
@@ -108,20 +109,20 @@ public class Entradas implements InputProcessor {
 		return false;
 	}
 	
-	public int seleccionarOpcion(Texto[] textos, int textoMinNro, int textoTopeNro) {// Tengo mis dudas sobre la eficiencia de este metodo, por el for que blanquea todos los textos
-		if(cont < textoMinNro) cont = textoMinNro;
+	public int seleccionarOpcion(Label[] labels, int textoMinNro, int textoTopeNro) {// Tengo mis dudas sobre la eficiencia de este metodo, por el for que blanquea todos los textos
+		if(cont < textoMinNro) cont = textoMinNro;//setea la posicion inicial en la primera label
 		
-		if (isAbajo() && cont < textoTopeNro) {
+		if (isAbajo() && cont < textoTopeNro) {//para que no se pase a un label inferior no seleccionable
 			cont++;
 		}
-		if (isArriba() && cont > textoMinNro) {
+		if (isArriba() && cont > textoMinNro) {//para que no se pase a un label superior no seleccionable
 			cont--;
 		}
 
-		for (int i = 0; i < textos.length; i++) {
-			textos[i].setColor(Color.WHITE);
+		for (int i = 0; i < labels.length; i++) {
+			labels[i].setColor(Color.WHITE);
 		} 
-		textos[cont].setColor(Color.YELLOW);
+		labels[cont].setColor(Color.YELLOW);
 		
 		if(isEnter()) {
 			return cont;	
