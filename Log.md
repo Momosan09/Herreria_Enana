@@ -77,3 +77,8 @@
     - Esqueleto del menu principal
     - La pantalla configuraciones ahora esta bajo las fuerzas Table. ¡Larga vida Table!
     - Chau clase Texto! Cumpliste tu funcion, pero a la larga me ibas a dar problemas
+
+## 27 AGO
+    - Internacionalizacion y localizacion del juego (posibilidad de multiples lenguajes y variantes del mismo lenguaje por region).
+    - Mira te explico, me di cuenta que es muy tedioso editar todos los archivos .properties para agregar los distintos idiomas ya que tenian que estar todas las keys iguales y era molesto copiar todo y ademas que coincida con la key que le puse en el codigo. Entonces hice un programita para que me escriba las keys automaticamente y solo tener que ponerle los valores nada mas, funciona pero deberia modificarlo un poco mas y ahora para usarlo tengo que modificarle la ruta en la que lee el archivo y volver a compilar, ademas que sobreescribe todo lo que ya haya escrito en el archivo. 
+    Ademas lo hice ahora porque me parecio que cuando ya tenga los dialogos de todos los npc y lo que falte iba a ser mucho mas complicado.

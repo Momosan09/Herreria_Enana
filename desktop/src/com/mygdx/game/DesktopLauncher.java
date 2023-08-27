@@ -22,6 +22,7 @@ public class DesktopLauncher {
 		config.setTitle("HerreriaEnana");
 		config.setIdleFPS(0);
 		config.setDecorated(true);
+		//config.setMaximized(true);
 		config.setWindowedMode(1280, 768);
 		config.setWindowSizeLimits(1280, 768, 1920, 1080);
 

@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -163,31 +164,34 @@ public class HUD{
 
 	private void crearActores() {
 		
+		//archivo de traduccion
+		I18NBundle bundle = I18NBundle.createBundle(Gdx.files.internal("locale/locale"));
+		
 		//IZQUIERDA
-		dineroLbl = new Label("Dinero ", labelStyle);
+		dineroLbl = new Label(bundle.get("hud.dinero"), labelStyle);
 		monedas = new Label[3][2];
 		monedas[0][0] = new Label("Au: ", labelStyle);
-		monedas[0][1] = new Label("2", labelMonedasStyle[0]);
+		monedas[0][1] = new Label("0", labelMonedasStyle[0]);
 		monedas[1][0] = new Label("Ag: ", labelStyle);
-		monedas[1][1] = new Label("45", labelMonedasStyle[1]);
+		monedas[1][1] = new Label("0", labelMonedasStyle[1]);
 		monedas[2][0] = new Label("Cu: ", labelStyle);
-		monedas[2][1] = new Label("60", labelMonedasStyle[2]);
+		monedas[2][1] = new Label("0", labelMonedasStyle[2]);
 		
 		ultimaBatalla = new Label[2];
-		ultimaBatalla[0] = new Label("Ultima Batalla: ", labelStyle);
+		ultimaBatalla[0] = new Label(bundle.get("hud.ultimaBatalla"), labelStyle);
 		ultimaBatalla[1] = new Label("Aca mostrar resultado", labelStyle);
-		verBatallasAnteriores = new Label("Ver Anteriores", labelStyle);
+		verBatallasAnteriores = new Label(bundle.get("hud.verAnteriores"), labelStyle);
 		//verBatallasAnterioresClick = new TextButton("Click", skin);
-		siguienteBatallaLbl = new Label("Siguiente batalla: ", labelStyle);
+		siguienteBatallaLbl = new Label(bundle.get("hud.siguienteBatalla"), labelStyle);
 		nombreSiguienteBatalla = new Label("Nombre-de-Batalla", labelStyle);
-		siguienteBatallaDetalles = new Label("Ver detalles", labelStyle);
+		siguienteBatallaDetalles = new Label(bundle.get("hud.verDetalles"), labelStyle);
 		
 		//CENTRO
 		centroLbl = new Label("Centro", labelStyle);
 		
 		//DERECHA
 		diaLbl = new Label("Luns", labelStyle);
-		pedidoLbl = new Label("Ver Pedido", labelStyle);
+		pedidoLbl = new Label(bundle.get("hud.verPedidos"), labelStyle);
 		//pedidoBtn = new TextButton("",skin);
 		
 		//ABAJO

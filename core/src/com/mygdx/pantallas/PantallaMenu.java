@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Principal;
 import com.mygdx.io.Entradas;
@@ -78,7 +79,6 @@ public class PantallaMenu implements Screen {
 		Render.batch.setProjectionMatrix(camara.combined);
 		Render.batch.begin();
 		fondoEnMovimiento(delta);
-
 		Render.batch.end();
 		stage.draw();
 		animacionRespirar();
@@ -132,6 +132,9 @@ public class PantallaMenu implements Screen {
 		crearEstilosDeLabel();	
 		stage = new Stage();
 		
+		//archivo de traduccion
+		I18NBundle bundle = I18NBundle.createBundle(Gdx.files.internal("locale/locale"));
+		
 		interfaz = new Table();
 		interfaz.setFillParent(true);
 		interfaz.debug();
@@ -139,14 +142,14 @@ public class PantallaMenu implements Screen {
 		interfazTexto = new Label[5];
 		
 		interfazTexto[0] = new Label("Herreria Enana", tituloEstilo);
-		interfazTexto[1] = new Label("Menu Principal", subTituloEstilo);
-		interfazTexto[4] = new Label("El videojuego de herreria por combinacion", bottomEstilo);
+		interfazTexto[1] = new Label(bundle.get("menuPrincipal.menuPrincipal"), subTituloEstilo);
+		interfazTexto[4] = new Label(bundle.get("menuPrincipal.textoRespira"), bottomEstilo);
 		
 		//Opciones
 		opciones = new Table();
 		opciones.debug();
-		interfazTexto[2] = new Label("Jugar", opcionEstilo);
-		interfazTexto[3] = new Label("Configuraciones", opcionEstilo);
+		interfazTexto[2] = new Label(bundle.get("menuPrincipal.jugar"), opcionEstilo);
+		interfazTexto[3] = new Label(bundle.get("menuPrincipal.configuraciones"), opcionEstilo);
 		
 		interfaz.add(interfazTexto[0]);
 		interfaz.row();

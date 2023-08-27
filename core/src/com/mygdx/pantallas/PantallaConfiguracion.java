@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Principal;
 import com.mygdx.io.Entradas;
@@ -50,14 +51,13 @@ public class PantallaConfiguracion implements Screen{
 		Render.batch.begin();
 		stage.draw();
 		seleccionarOpcion();
-		
 		Render.batch.end();
 		
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		
+
 	}
 
 	@Override
@@ -89,13 +89,16 @@ public class PantallaConfiguracion implements Screen{
 		stage = new Stage();
 		interfazTextos = new Label[3];
 		
+		//archivo de traduccion
+		I18NBundle bundle = I18NBundle.createBundle(Gdx.files.internal("locale/locale"));
+		
 		interfaz = new Table();
 		interfaz.setFillParent(true);
 		interfaz.debug();
 		
-		interfazTextos[0] = new Label("Volver al menu principal", estiloLabel);
-		interfazTextos[1] = new Label("Configuraciones", tituloEstilo);
-		interfazTextos[2] = new Label("Pantalla completa: " + (Config.pantallaCompleta?"Si":"No") , estiloLabel);
+		interfazTextos[0] = new Label(bundle.get("pantallaConfiguracion.volverMenuPrincipal"), estiloLabel);
+		interfazTextos[1] = new Label(bundle.get("pantallaConfiguracion.titulo"), tituloEstilo);
+		interfazTextos[2] = new Label(bundle.get("pantallaConfiguracion.pantallaCompleta")+" "+ (Config.pantallaCompleta?bundle.get("si"):bundle.get("no")) , estiloLabel);
 		
 		interfaz.add(interfazTextos[0]);
 		interfaz.add(interfazTextos[1]).expand();
