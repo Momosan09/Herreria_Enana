@@ -19,6 +19,13 @@ public class Recursos {
 	//Mapas
 	public static final TiledMap MAPA = new TmxMapLoader().load("mapas/mapa.tmx");
 	
+	//NPC
+	public static final String VIEJO = "objetosDelMundo/npc/viejo/viejo.png";
+	
+	//Objetos del mapa
+	public static final String YUNQUE = "objetosDelMundo/inanimados/interactuables/yunque.png";
+	
+	
 	//HUD
 	public static final String DINERO_HUD = "HUD/Dinero.png";
 	public static final String RELOJ_HUD = "HUD/hora.png";

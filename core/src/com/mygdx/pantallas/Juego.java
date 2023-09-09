@@ -6,9 +6,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.Jugador;
+import com.mygdx.entidades.Entidad;
+import com.mygdx.entidades.Jugador;
+import com.mygdx.entidades.Npc;
+import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.game.Principal;
 import com.mygdx.hud.HUD;
 import com.mygdx.utiles.Recursos;
@@ -17,6 +21,8 @@ import com.mygdx.utiles.Render;
 public class Juego implements Screen{
 	
 	private Jugador jugador;
+	private Entidad viejo;
+	private Entidad yunque;
 	private Texture jugadorTextura;
 	private OrthographicCamera camaraJuego, camaraHud;
 	
@@ -47,8 +53,12 @@ public class Juego implements Screen{
 		
 		//jugador
 		jugador = new Jugador(camaraJuego);
-		
+				
+		//Npc
+		viejo = new Npc(500,500,Recursos.VIEJO);
 
+		//objetos del mapa
+		yunque = new ObjetoDelMapa(532,532,Recursos.YUNQUE);
 	}
 
 	@Override
@@ -65,7 +75,11 @@ public class Juego implements Screen{
 	    Render.tiledMapRenderer.render();
 
 	    jugador.draw(Render.batch);
-
+	    
+	    viejo.draw(Render.batch);
+	    viejo.detectarJugador(jugador);
+	    
+		yunque.draw(Render.batch);
 	    Render.batch.end();
 
 	    //Renderiza el HUD
@@ -86,6 +100,7 @@ public class Juego implements Screen{
 		camaraJuego.update();	
 		
 	    System.out.println("X =" +Gdx.graphics.getWidth() + "\n Y =" + Gdx.graphics.getHeight());
+	    hud.reescalar(width, height);
 	}
 
 	@Override

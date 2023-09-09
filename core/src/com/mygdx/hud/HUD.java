@@ -144,6 +144,9 @@ public class HUD{
 
 	}
 	
+	public void reescalar(int width, int height) {
+		stage.getViewport().update(width, height);
+	}
 	public void dispose() {
 		stage.dispose();
 	}

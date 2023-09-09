@@ -89,6 +89,7 @@ public class PantallaMenu implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		offSetX = fondoImg.getWidth() - camara.viewportWidth; //usa el ancho de la textura porque este va a ser siempre constante, en el caso de que modifique el tamaño del sprite aca no deberia haber cambios
+		stage.getViewport().update(width, height);
 	}
 
 	@Override
