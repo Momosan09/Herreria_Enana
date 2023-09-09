@@ -13,6 +13,8 @@ import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.ObjetoDelMapa;
+import com.mygdx.entidades.ObjetosDelMapa.Yunque;
+import com.mygdx.entidades.npcs.Viejo;
 import com.mygdx.game.Principal;
 import com.mygdx.hud.HUD;
 import com.mygdx.utiles.Recursos;
@@ -21,8 +23,8 @@ import com.mygdx.utiles.Render;
 public class Juego implements Screen{
 	
 	private Jugador jugador;
-	private Entidad viejo;
-	private Entidad yunque;
+	private Npc viejo;
+	private ObjetoDelMapa yunque;
 	private Texture jugadorTextura;
 	private OrthographicCamera camaraJuego, camaraHud;
 	
@@ -55,10 +57,10 @@ public class Juego implements Screen{
 		jugador = new Jugador(camaraJuego);
 				
 		//Npc
-		viejo = new Npc(500,500,Recursos.VIEJO);
+		viejo = new Viejo(500,500,Recursos.VIEJO);
 
 		//objetos del mapa
-		yunque = new ObjetoDelMapa(532,532,Recursos.YUNQUE);
+		yunque = new Yunque(532,532,Recursos.YUNQUE);
 	}
 
 	@Override
@@ -78,6 +80,8 @@ public class Juego implements Screen{
 	    
 	    viejo.draw(Render.batch);
 	    viejo.detectarJugador(jugador);
+	    viejo.say();
+	    viejo.interaccion(jugador);
 	    
 		yunque.draw(Render.batch);
 	    Render.batch.end();

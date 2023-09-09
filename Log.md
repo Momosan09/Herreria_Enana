@@ -86,3 +86,4 @@
 
 ## 9 SEP
     - Primer acercamiento a los npc
+    - Un poco mas de Npcs

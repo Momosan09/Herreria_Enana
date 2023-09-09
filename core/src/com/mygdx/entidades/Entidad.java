@@ -10,11 +10,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 
-public class Entidad {
+public abstract class Entidad {
 
-	private Vector2 posicion;
+	protected Vector2 posicion;
 	Texture textura;
 	Sprite sprite;
+	protected boolean jugadorEnRango = false;
 
 	private int distanciaInteraccion = 64;
 	
@@ -35,13 +36,17 @@ public class Entidad {
 	
 	public void detectarJugador(Jugador jugador) {
 		if(((jugador.getPosicion().x - this.posicion.x) < distanciaInteraccion && (jugador.getPosicion().x - this.posicion.x) > -distanciaInteraccion) && ((jugador.getPosicion().y - this.posicion.y) < distanciaInteraccion && (jugador.getPosicion().y - this.posicion.y) > -distanciaInteraccion)){
-			System.out.println("Cerca");
-			
+			jugadorEnRango = true;
+			if(jugador.isKeyPressed()) {
+				System.out.println("apretaste");
+			}
 			
 		}
 	}
 	
-
+	public void pene() {
+		
+	}
 	
 	public Vector2 getPosicion() {
 		return posicion;

@@ -142,5 +142,13 @@ public class Jugador {
 	    }
 
 	}
+	
+	public boolean isKeyPressed() {
+		if(Gdx.input.isKeyPressed(Keys.E)) {
+			System.out.println("E");
+			return true;
+		}
+		return false;
+	}
 
 }
