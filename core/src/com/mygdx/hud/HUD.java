@@ -153,7 +153,6 @@ public class HUD{
 	
 	public void draw(SpriteBatch batch) {
 		stage.act(Gdx.graphics.getDeltaTime());
-
 		stage.draw();
 	}
 	

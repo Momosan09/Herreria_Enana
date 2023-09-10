@@ -20,7 +20,8 @@ public class Recursos {
 	public static final TiledMap MAPA = new TmxMapLoader().load("mapas/mapa.tmx");
 	
 	//NPC
-	public static final String VIEJO = "objetosDelMundo/npc/viejo/viejo.png";
+	public static final String VIEJO = "objetosDelMundo/npc/viejo/viejoAnimacion.png";
+	public static final String VENDEDOR = "objetosDelMundo/npc/vendedor/vendedorAnimacion.png";
 	
 	//Objetos del mapa
 	public static final String YUNQUE = "objetosDelMundo/inanimados/interactuables/yunque.png";

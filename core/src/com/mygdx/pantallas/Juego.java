@@ -11,11 +11,14 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
+import com.mygdx.entidades.NPCManager;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.entidades.ObjetosDelMapa.Yunque;
+import com.mygdx.entidades.npcs.Vendedor;
 import com.mygdx.entidades.npcs.Viejo;
 import com.mygdx.game.Principal;
+import com.mygdx.hud.Dialogo;
 import com.mygdx.hud.HUD;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
@@ -23,10 +26,12 @@ import com.mygdx.utiles.Render;
 public class Juego implements Screen{
 	
 	private Jugador jugador;
-	private Npc viejo;
+	private Npc viejo, vendedor;
 	private ObjetoDelMapa yunque;
 	private Texture jugadorTextura;
 	private OrthographicCamera camaraJuego, camaraHud;
+	private Dialogo dialogo;
+	private NPCManager npcManager;
 	
 	private HUD hud;
 
@@ -47,9 +52,6 @@ public class Juego implements Screen{
 		camaraHud.setToOrtho(false); 
 		camaraHud.zoom = .1f;
 		
-		//HUD
-		hud = new HUD();
-		
 	    //render
 		Render.tiledMapRenderer = new OrthogonalTiledMapRenderer(Recursos.MAPA);
 		
@@ -57,10 +59,29 @@ public class Juego implements Screen{
 		jugador = new Jugador(camaraJuego);
 				
 		//Npc
-		viejo = new Viejo(500,500,Recursos.VIEJO);
+		viejo = new Viejo(32*10,32*15,Recursos.VIEJO, "Viejito");
+		viejo.agregarDialogo("soy el viejito");
+		viejo.agregarDialogo("pipas");
+		vendedor = new Vendedor(32*20,32*5,Recursos.VENDEDOR, "Vendedor");
+		vendedor.agregarDialogo("Soy el vendedor");
+		vendedor.agregarDialogo("compre compre!");
+		
+		
+		
+		npcManager = new NPCManager();
+		npcManager.agregarEntidad(viejo);
+		npcManager.agregarEntidad(vendedor);
+	    npcManager.crearDialogos();
 
 		//objetos del mapa
 		yunque = new Yunque(532,532,Recursos.YUNQUE);
+		
+		//HUD
+		hud = new HUD();
+		
+
+
+
 	}
 
 	@Override
@@ -78,16 +99,19 @@ public class Juego implements Screen{
 
 	    jugador.draw(Render.batch);
 	    
-	    viejo.draw(Render.batch);
-	    viejo.detectarJugador(jugador);
-	    viejo.say();
-	    viejo.interaccion(jugador);
+	    npcManager.renderizar(Render.batch);
+	    npcManager.detectarJugador(jugador);
 	    
-		yunque.draw(Render.batch);
+
+	    
+
 	    Render.batch.end();
+	    
+	    npcManager.mostrarDialogo(Render.batch,1);
+	    
 
 	    //Renderiza el HUD
-	    //camaraHud.update();
+	    camaraHud.update();
 	    //Render.batch.setProjectionMatrix(camaraHud.combined);//Una vez que renderiza el juego, se inicia el batch para la camara del HUD y lo dibuja
 	    Render.batch.begin();
 

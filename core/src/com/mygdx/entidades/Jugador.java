@@ -143,7 +143,7 @@ public class Jugador {
 
 	}
 	
-	public boolean isKeyPressed() {
+	public boolean isEPressed() {
 		if(Gdx.input.isKeyPressed(Keys.E)) {
 			System.out.println("E");
 			return true;

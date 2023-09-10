@@ -15,7 +15,7 @@ public abstract class Entidad {
 	protected Vector2 posicion;
 	Texture textura;
 	Sprite sprite;
-	protected boolean jugadorEnRango = false;
+	protected boolean jugadorEnRango = false, apretoE = false;
 
 	private int distanciaInteraccion = 64;
 	
@@ -34,18 +34,21 @@ public abstract class Entidad {
 
 	}
 	
+	
 	public void detectarJugador(Jugador jugador) {
 		if(((jugador.getPosicion().x - this.posicion.x) < distanciaInteraccion && (jugador.getPosicion().x - this.posicion.x) > -distanciaInteraccion) && ((jugador.getPosicion().y - this.posicion.y) < distanciaInteraccion && (jugador.getPosicion().y - this.posicion.y) > -distanciaInteraccion)){
 			jugadorEnRango = true;
-			if(jugador.isKeyPressed()) {
-				System.out.println("apretaste");
+			if(jugador.isEPressed()) {
+				apretoE = true;
 			}
-			
+		}else {
+			jugadorEnRango = false;
+			apretoE = false;
 		}
 	}
 	
-	public void pene() {
-		
+	public boolean getJugadorEnRango() {
+		return jugadorEnRango;
 	}
 	
 	public Vector2 getPosicion() {
