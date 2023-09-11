@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
@@ -59,19 +60,8 @@ public class Juego implements Screen{
 		jugador = new Jugador(camaraJuego);
 				
 		//Npc
-		viejo = new Viejo(32*10,32*15,Recursos.VIEJO, "Viejito");
-		viejo.agregarDialogo("soy el viejito");
-		viejo.agregarDialogo("pipas");
-		vendedor = new Vendedor(32*20,32*5,Recursos.VENDEDOR, "Vendedor");
-		vendedor.agregarDialogo("Soy el vendedor");
-		vendedor.agregarDialogo("compre compre!");
-		
-		
-		
-		npcManager = new NPCManager();
-		npcManager.agregarEntidad(viejo);
-		npcManager.agregarEntidad(vendedor);
-	    npcManager.crearDialogos();
+		crearNPCs();
+		managerConfig();
 
 		//objetos del mapa
 		yunque = new Yunque(532,532,Recursos.YUNQUE);
@@ -100,10 +90,7 @@ public class Juego implements Screen{
 	    jugador.draw(Render.batch);
 	    
 	    npcManager.renderizar(Render.batch);
-	    npcManager.detectarJugador(jugador);
-	    
-
-	    
+	    npcManager.detectarJugador(jugador); 
 
 	    Render.batch.end();
 	    
@@ -154,5 +141,26 @@ public class Juego implements Screen{
 		Render.tiledMapRenderer.dispose();
 		Recursos.MAPA.dispose();
 		
+	}
+	
+	public void crearNPCs() {
+		//archivo de traduccion
+		I18NBundle bundle = I18NBundle.createBundle(Gdx.files.internal("locale/locale"));
+		
+		viejo = new Viejo(32*10,32*15,Recursos.VIEJO, "Viejito");
+		viejo.agregarDialogo(bundle.get("viejo_Dialogo_1"));
+		viejo.agregarDialogo(bundle.get("viejo_Dialogo_2"));
+		vendedor = new Vendedor(32*20,32*5,Recursos.VENDEDOR, "Vendedor");
+		vendedor.agregarDialogo(bundle.get("vendedor_Dialogo_1"));
+		vendedor.agregarDialogo(bundle.get("vendedor_Dialogo_2"));
+		
+		
+	}
+	
+	public void managerConfig() {
+		npcManager = new NPCManager();
+		npcManager.agregarEntidad(viejo);
+		npcManager.agregarEntidad(vendedor);
+	    npcManager.crearDialogos();
 	}
 }

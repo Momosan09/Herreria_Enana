@@ -90,3 +90,4 @@
 
 ## 10 SEP
     - POR UN DEMONIO! ya puedo poner todos los npc que quiera, con animaciones y cada uno con su distinto set de dialogos. Hice un NPC manger para manegear a todos los npc. Sobre los dialogos: por ahora lo hice que los cargo en la clase Juego, tengo que hacer que se puedan traducir (en el proximo commit)
+    - Ahora si, los dialogos estan traducidos
