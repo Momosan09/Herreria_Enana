@@ -55,7 +55,7 @@ public class Animator implements ApplicationListener {
 		
 
 		// Initialize the Animation with the frame interval and array of frames
-		animacion = new Animation<TextureRegion>(.7f, frames);
+		animacion = new Animation<TextureRegion>(.1f, frames);
 
 
 		// time to 0

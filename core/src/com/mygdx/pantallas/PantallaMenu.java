@@ -4,6 +4,7 @@ package com.mygdx.pantallas;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -40,8 +41,7 @@ public class PantallaMenu implements Screen {
 
 	private int cont = 2;
 	
-    private float fondoPosX;
-    private float offSetX;
+    private float fondoPosX, offSetX, transparencia=0;
     
 	public PantallaMenu(final Principal game) {
 		this.game = game;
@@ -81,7 +81,7 @@ public class PantallaMenu implements Screen {
 		fondoEnMovimiento(delta);
 		Render.batch.end();
 		stage.draw();
-		animacionRespirar();
+		animacionRespirar(delta);
 		seleccionarOpcion();
 
 	}
@@ -201,8 +201,15 @@ public class PantallaMenu implements Screen {
         fondo.setX(fondoPosX);
     }
 
-    private void animacionRespirar() {
-    	interfazTexto[4].setColor(255, 000, 000, 000);
+    private void animacionRespirar(float delta) {
+    	Gdx.gl.glEnable(GL30.GL_BLEND);		//Esto para que funcione el canal alpha de figuraMenu.setColor();
+    	
+
+    	
+    	interfazTexto[4].setColor(250, 90, 120, transparencia++*delta);
+    	if(transparencia == 255) {
+    		transparencia=0;
+    	}
     }
 
 

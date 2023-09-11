@@ -14,7 +14,7 @@ public class Recursos {
 	
 	//Jugador
 	public static final String JUGADOR_TEXTURA = "Jugador/quieto_0.png";
-	public static final String JUGADOR_SPRITESHEET = "Jugador/spriteSheet.png";
+	public static final String JUGADOR_SPRITESHEET = "Jugador/jugadorSpriteSheet1.png";
 	
 	//Mapas
 	public static final TiledMap MAPA = new TmxMapLoader().load("mapas/mapa.tmx");
