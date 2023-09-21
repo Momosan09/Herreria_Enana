@@ -18,6 +18,7 @@ import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.entidades.ObjetosDelMapa.Yunque;
 import com.mygdx.entidades.npcs.Vendedor;
 import com.mygdx.entidades.npcs.Viejo;
+import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.game.Principal;
 import com.mygdx.hud.Dialogo;
 import com.mygdx.hud.HUD;
@@ -91,10 +92,10 @@ public class Juego implements Screen{
 	    
 	    npcManager.renderizar(Render.batch);
 	    npcManager.detectarJugador(jugador); 
-
+	    
 	    Render.batch.end();
 	    
-	    npcManager.mostrarDialogo(Render.batch,1);
+	    npcManager.mostrarDialogo(Render.batch,0);
 	    
 
 	    //Renderiza el HUD
@@ -150,9 +151,9 @@ public class Juego implements Screen{
 		viejo = new Viejo(32*10,32*15,Recursos.VIEJO, "Viejito");
 		viejo.agregarDialogo(bundle.get("viejo_Dialogo_1"));
 		viejo.agregarDialogo(bundle.get("viejo_Dialogo_2"));
-		vendedor = new Vendedor(32*20,32*5,Recursos.VENDEDOR, "Vendedor");
-		vendedor.agregarDialogo(bundle.get("vendedor_Dialogo_1"));
-		vendedor.agregarDialogo(bundle.get("vendedor_Dialogo_2"));
+		vendedor = new Vendedor(32*20,32*5,Recursos.VENDEDOR, NpcData.VENDEDOR.getNombre());
+		vendedor.agregarDialogo(NpcData.VENDEDOR.getDialogos());
+		//vendedor.agregarDialogo(bundle.get("vendedor_Dialogo_2"));
 		
 		
 	}

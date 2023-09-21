@@ -8,9 +8,9 @@ import com.mygdx.utiles.Render;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Npc extends Entidad{
+public abstract class Npc extends Entidad implements NpcInterface{
 	
-	private String nombre;
+	protected String nombre;
 	private Dialogo dialogo;
 	private List<String> dialogos;
 	private Animator animacion;

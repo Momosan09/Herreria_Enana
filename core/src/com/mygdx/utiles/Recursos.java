@@ -1,10 +1,13 @@
 package com.mygdx.utiles;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.utils.I18NBundle;
 
 public class Recursos {
 	
+	public static I18NBundle bundle = I18NBundle.createBundle(Gdx.files.internal("locale/locale"));
 	
 	//Menu
 	public static final String FUENTE_TEMPORAL = "Fonts/Cardinal.ttf";
@@ -25,7 +28,6 @@ public class Recursos {
 	
 	//Objetos del mapa
 	public static final String YUNQUE = "objetosDelMundo/inanimados/interactuables/yunque.png";
-	
 	
 	//HUD
 	public static final String DINERO_HUD = "HUD/Dinero.png";

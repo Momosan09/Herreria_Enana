@@ -94,3 +94,6 @@
 
 # 11 SEP
     - No es final pero le cambie el spritesheet del jugador por uno mas acorde
+
+# 21 SEP
+    - Bueno, estoy reestructurando los npcs y sus dialogos para usarlos con enum e interfaces

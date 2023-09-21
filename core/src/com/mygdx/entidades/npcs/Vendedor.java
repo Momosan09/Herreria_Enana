@@ -1,11 +1,18 @@
 package com.mygdx.entidades.npcs;
 
 import com.mygdx.entidades.Npc;
+import com.mygdx.entidades.NpcInterface;
 
 public class Vendedor extends Npc{
 
 		public Vendedor(float x, float y, String ruta, String nombre) {
 			super(x, y, ruta, nombre);
 
+		}
+
+		@Override
+		public String conseguirNombre() {
+			// TODO Auto-generated method stub
+			return null;
 		}
 }
