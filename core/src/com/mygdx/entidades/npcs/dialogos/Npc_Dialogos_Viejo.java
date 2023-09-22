@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 import com.mygdx.utiles.Recursos;
 
-public enum Npc_Dialogos_Vendedor implements DialogosNPC{
-
-	SALUDO(Recursos.bundle.get("vendedor_Dialogo_1")),
-	DIALOGO1(Recursos.bundle.get("vendedor_Dialogo_2")),
-	VENTA(Recursos.bundle.get("vendedor_Frase_Venta"));
+public enum Npc_Dialogos_Viejo implements DialogosNPC{
+	
+	SALUDO(Recursos.bundle.get("viejo_Saludo")),
+	DIALOGO_1(Recursos.bundle.get("viejo_Dialogo_1")),
+	DIALOGO_2(Recursos.bundle.get("viejo_Dialogo_2"));
 	
 	private final String _mensaje;
 	
-	Npc_Dialogos_Vendedor(String mensaje){
+	Npc_Dialogos_Viejo(String mensaje){
 		this._mensaje = mensaje;
 	}
 
@@ -21,15 +21,15 @@ public enum Npc_Dialogos_Vendedor implements DialogosNPC{
 		// TODO Auto-generated method stub
 		return _mensaje;
 	}
-
 	
 	public static ArrayList<String> obtenerTodosLosMensajes() {
         ArrayList<String> mensajes = new ArrayList<>();
-        for (Npc_Dialogos_Vendedor dialogo : values()) {
+        for (Npc_Dialogos_Viejo dialogo : values()) {
             mensajes.add(dialogo._mensaje);
         }
         return mensajes;
     }
-	
-	
+
+
+
 }

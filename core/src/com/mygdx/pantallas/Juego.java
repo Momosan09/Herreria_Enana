@@ -95,7 +95,10 @@ public class Juego implements Screen{
 	    
 	    Render.batch.end();
 	    
-	    npcManager.mostrarDialogo(Render.batch,0);
+	    npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
+	    //vendedor.getData().getMensaje(0);
+	    
+	    
 	    
 
 	    //Renderiza el HUD
@@ -148,12 +151,10 @@ public class Juego implements Screen{
 		//archivo de traduccion
 		I18NBundle bundle = I18NBundle.createBundle(Gdx.files.internal("locale/locale"));
 		
-		viejo = new Viejo(32*10,32*15,Recursos.VIEJO, "Viejito");
-		viejo.agregarDialogo(bundle.get("viejo_Dialogo_1"));
-		viejo.agregarDialogo(bundle.get("viejo_Dialogo_2"));
-		vendedor = new Vendedor(32*20,32*5,Recursos.VENDEDOR, NpcData.VENDEDOR.getNombre());
-		vendedor.agregarDialogo(NpcData.VENDEDOR.getDialogos());
-		//vendedor.agregarDialogo(bundle.get("vendedor_Dialogo_2"));
+		viejo = new Viejo(32*10,32*15,Recursos.VIEJO, NpcData.VIEJO);
+		vendedor = new Vendedor(32*20,32*5,Recursos.VENDEDOR, NpcData.VENDEDOR);
+		
+
 		
 		
 	}

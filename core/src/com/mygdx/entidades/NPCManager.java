@@ -46,7 +46,7 @@ public class NPCManager {
         for (Npc entidad : npcs) {
         	if(entidad.interaccion()) {
         		batch.begin();
-        		entidad.getDialogo().selectMensaje(index);
+        		entidad.getCajaDialogo().selectMensaje(index);
         		entidad.dibujarCajaDialogo(batch);
         		batch.end();
         	}
