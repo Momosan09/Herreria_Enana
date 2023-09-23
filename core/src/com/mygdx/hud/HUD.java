@@ -25,7 +25,7 @@ import com.mygdx.utiles.Recursos;
 /*
  	https://libgdxinfo.wordpress.com/basic_image/
  */
-public class HUD{
+public class HUD implements HeadUpDisplay{
 
 	private Texture dinero_Tex;
 	private Texture reloj_Tex;
@@ -62,10 +62,11 @@ public class HUD{
     	cargarTexturas();
     	crearFuentes();
     	crearActores();
-    	crearTablas();
+    	poblarStage();
     }
 	
-	public void crearTablas () {
+	@Override
+	public void poblarStage() {
 
 		stage = new Stage();
 		//Gdx.input.setInputProcessor(stage);
@@ -164,7 +165,8 @@ public class HUD{
 		reloj = new Image(reloj_Tex);
 	}
 
-	private void crearActores() {
+	@Override
+	public void crearActores() {
 		
 		//archivo de traduccion
 		I18NBundle bundle = I18NBundle.createBundle(Gdx.files.internal("locale/locale"));
@@ -200,6 +202,7 @@ public class HUD{
 		barraAbajoLbl = new Label("Barra De items", labelStyle);
 	}
 	
+	@Override
 	public void crearFuentes() {
 		estiloFuente = new EstiloFuente(); 
     	labelStyle = estiloFuente.generarFuente(22, Colores.BLANCO, false);
@@ -223,4 +226,6 @@ public class HUD{
 	    labelStyle = new Label.LabelStyle();
 	    labelStyle.font = font24;
 	}*/
+
+
 }

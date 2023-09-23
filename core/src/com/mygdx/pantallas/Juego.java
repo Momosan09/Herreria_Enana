@@ -20,6 +20,7 @@ import com.mygdx.entidades.npcs.Vendedor;
 import com.mygdx.entidades.npcs.Viejo;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.game.Principal;
+import com.mygdx.hud.Combinacion;
 import com.mygdx.hud.Dialogo;
 import com.mygdx.hud.HUD;
 import com.mygdx.utiles.Recursos;
@@ -34,6 +35,8 @@ public class Juego implements Screen{
 	private OrthographicCamera camaraJuego, camaraHud;
 	private Dialogo dialogo;
 	private NPCManager npcManager;
+	
+	private Combinacion combinacion;
 	
 	private HUD hud;
 
@@ -69,7 +72,7 @@ public class Juego implements Screen{
 		
 		//HUD
 		hud = new HUD();
-		
+	    combinacion = new Combinacion();
 
 
 
@@ -100,17 +103,17 @@ public class Juego implements Screen{
 	    viejo.charla(0, Render.batch);
 	    //vendedor.getData().getMensaje(0);
 	    
-	    
-	    
-
 	    //Renderiza el HUD
 	    camaraHud.update();
 	    //Render.batch.setProjectionMatrix(camaraHud.combined);//Una vez que renderiza el juego, se inicia el batch para la camara del HUD y lo dibuja
 	    Render.batch.begin();
 
 	    hud.draw(Render.batch);
-
+	    
 	    Render.batch.end();
+	    
+
+	    combinacion.render();
 	}
 
 

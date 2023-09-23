@@ -102,4 +102,8 @@
 # 22 SEP
     - Hice un retrato para el vendedor dentro del dialogo, voy a tener que cambiarle la ropa en el juego para que se vea como en el retrato
     - Cambie la forma en al que se pasan los retratos, ahora por npcData 
+
+# 23 SEP
+    - Empeze a hacer el tema de las combinaciones
+    
     
