@@ -68,6 +68,11 @@ public abstract class Npc extends Entidad implements NpcInterface{
 		 return cajaDialogo;
 	 }
 	 
+	 public void charla(int index, SpriteBatch batch) {
+		 cajaDialogo.selectMensaje(index);
+		 cajaDialogo.draw(batch);
+	 }
+	 
 	 public void ejecutarAnimacion() {
 		 animacion.render();
 	 }

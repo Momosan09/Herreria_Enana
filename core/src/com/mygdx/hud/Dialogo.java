@@ -4,15 +4,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.entidades.Npc;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
+import com.mygdx.utiles.Recursos;
 
 public class Dialogo {
 
@@ -21,6 +24,8 @@ public class Dialogo {
 	private Stage stage;
 	private Table cajaDeDialogo;
 	private Label nombre, mensaje;
+	private Texture retratoTextura;
+	private Image retrato;
 	
 	private EstiloFuente estiloFuente;
 	private Label.LabelStyle labelStyle;
@@ -64,7 +69,8 @@ public class Dialogo {
 
 		cajaDeDialogo.add(nombre).expandX().left();
 		cajaDeDialogo.row();
-		cajaDeDialogo.add(mensaje).size(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/3);
+		cajaDeDialogo.add(mensaje).size(Gdx.graphics.getWidth()/1.5f, Gdx.graphics.getHeight()/3).left();
+		cajaDeDialogo.add(retrato).size(retrato.getWidth()*2, Gdx.graphics.getHeight()/3);
 		cajaDeDialogo.bottom().setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/3);
 		cajaDeDialogo.pad(padding);
 		stage.addActor(cajaDeDialogo);
@@ -82,9 +88,11 @@ public class Dialogo {
 	}
 	
 	public void crearActores() {
+		retratoTextura = new Texture(Recursos.VENDEDOR_PORTRAIT);
 		
 		nombre = new Label(locutor.getNombre(), labelStyle);
 		mensaje = new Label(locutor.getDialogos(mensajeAMostrar), labelStyle);
+		retrato = new Image(retratoTextura);
 		
 	}
 	

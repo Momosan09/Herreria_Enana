@@ -30,6 +30,5 @@ public enum Npc_Dialogos_Vendedor implements DialogosNPC{
         }
         return mensajes;
     }
-	
-	
+
 }

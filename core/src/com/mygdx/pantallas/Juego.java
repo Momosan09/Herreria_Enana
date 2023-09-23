@@ -95,7 +95,8 @@ public class Juego implements Screen{
 	    
 	    Render.batch.end();
 	    
-	    npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
+	    //npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
+	    vendedor.charla(1, Render.batch);
 	    //vendedor.getData().getMensaje(0);
 	    
 	    
@@ -124,13 +125,11 @@ public class Juego implements Screen{
 
 	@Override
 	public void pause() {
-
-		
+	
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
 		
 	}
 

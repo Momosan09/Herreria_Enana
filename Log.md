@@ -98,4 +98,7 @@
 # 21 SEP
     - Bueno, estoy reestructurando los npcs y sus dialogos para usarlos con enum e interfaces
     - Ok la estructura creo que ya masomenos esta, tengo que cambiar el tema del NPCManager y hacer que cada npc diga sus mensajes de forma independiente (ahora le estoy pasando un indice y todos los npcs dan el mensaje de que este en ese indice)
+
+# 22 SEP
+    - Hice un retrato para el vendedor dentro del dialogo, voy a tener que cambiarle la ropa en el juego para que se vea como en el retrato
     

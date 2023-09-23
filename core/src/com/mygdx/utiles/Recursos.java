@@ -26,6 +26,9 @@ public class Recursos {
 	public static final String VIEJO = "objetosDelMundo/npc/viejo/viejoAnimacion.png";
 	public static final String VENDEDOR = "objetosDelMundo/npc/vendedor/vendedorAnimacion.png";
 	
+	//NPC PORTRAITS
+	public static final String VENDEDOR_PORTRAIT = "objetosDelMundo/npc/vendedor/vendedorPortrait.png";
+	
 	//Objetos del mapa
 	public static final String YUNQUE = "objetosDelMundo/inanimados/interactuables/yunque.png";
 	
