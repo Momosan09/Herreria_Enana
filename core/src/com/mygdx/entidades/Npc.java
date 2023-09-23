@@ -1,6 +1,7 @@
 package com.mygdx.entidades;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.hud.Dialogo;
@@ -16,6 +17,7 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	private Dialogo cajaDialogo;
 	private List<String> dialogos;
 	private Animator animacion;
+	private Texture retrato;
 	private NpcData data;
 
 	public Npc(float x, float y, String ruta, NpcData data){
@@ -23,7 +25,7 @@ public abstract class Npc extends Entidad implements NpcInterface{
 		this.data = data;
 		this.nombre = this.data.getNombre();
 		this.dialogos = data.getDialogos();
-
+		this.retrato = data.getTextura();
 
 		animacion = new Animator(ruta, posicion, 0);
 		animacion.create();
@@ -38,6 +40,10 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	
 	public String getNombre() {
 		return nombre;
+	}
+	
+	public Texture getRetratoTextura() {
+		return retrato;
 	}
 	
 	@Override
@@ -69,8 +75,10 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	 }
 	 
 	 public void charla(int index, SpriteBatch batch) {
-		 cajaDialogo.selectMensaje(index);
-		 cajaDialogo.draw(batch);
+		 if(interaccion()) {
+			 cajaDialogo.selectMensaje(index);
+			 cajaDialogo.draw(batch);
+		 }
 	 }
 	 
 	 public void ejecutarAnimacion() {

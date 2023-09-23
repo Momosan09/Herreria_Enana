@@ -97,6 +97,7 @@ public class Juego implements Screen{
 	    
 	    //npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
 	    vendedor.charla(1, Render.batch);
+	    viejo.charla(0, Render.batch);
 	    //vendedor.getData().getMensaje(0);
 	    
 	    
@@ -147,15 +148,8 @@ public class Juego implements Screen{
 	}
 	
 	public void crearNPCs() {
-		//archivo de traduccion
-		I18NBundle bundle = I18NBundle.createBundle(Gdx.files.internal("locale/locale"));
-		
 		viejo = new Viejo(32*10,32*15,Recursos.VIEJO, NpcData.VIEJO);
 		vendedor = new Vendedor(32*20,32*5,Recursos.VENDEDOR, NpcData.VENDEDOR);
-		
-
-		
-		
 	}
 	
 	public void managerConfig() {

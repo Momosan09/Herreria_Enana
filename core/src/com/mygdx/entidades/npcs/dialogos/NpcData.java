@@ -2,17 +2,22 @@ package com.mygdx.entidades.npcs.dialogos;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.utiles.Recursos;
+
 public enum NpcData implements DialogosNPC{
 
-	VENDEDOR("Vendedor", Npc_Dialogos_Vendedor.obtenerTodosLosMensajes()),
-	VIEJO("Viejin", Npc_Dialogos_Viejo.obtenerTodosLosMensajes());
+	VENDEDOR("Vendedor",  Recursos.VENDEDOR_PORTRAIT,Npc_Dialogos_Vendedor.obtenerTodosLosMensajes()),
+	VIEJO("Viejin", Recursos.VENDEDOR_PORTRAIT, Npc_Dialogos_Viejo.obtenerTodosLosMensajes());
 	
 	private final String _nombre;
+	private final Texture _retrato;
 	private ArrayList<String> _dialogos;
 
 	
-	NpcData(String nombre, ArrayList<String> arrayList) {
+	NpcData(String nombre, String retratoRuta, ArrayList<String> arrayList) {
 		this._nombre = nombre;
+		this._retrato = new Texture(retratoRuta);
 		_dialogos = arrayList;
 		
 		
@@ -20,6 +25,10 @@ public enum NpcData implements DialogosNPC{
 
 	public String getNombre() {
 		return _nombre;
+	}
+	
+	public Texture getTextura() {
+		return _retrato;
 	}
 	
     public ArrayList<String> getDialogos() {

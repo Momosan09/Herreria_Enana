@@ -24,7 +24,6 @@ public class Dialogo {
 	private Stage stage;
 	private Table cajaDeDialogo;
 	private Label nombre, mensaje;
-	private Texture retratoTextura;
 	private Image retrato;
 	
 	private EstiloFuente estiloFuente;
@@ -88,11 +87,10 @@ public class Dialogo {
 	}
 	
 	public void crearActores() {
-		retratoTextura = new Texture(Recursos.VENDEDOR_PORTRAIT);
 		
 		nombre = new Label(locutor.getNombre(), labelStyle);
 		mensaje = new Label(locutor.getDialogos(mensajeAMostrar), labelStyle);
-		retrato = new Image(retratoTextura);
+		retrato = new Image(locutor.getRetratoTextura());
 		
 	}
 	
