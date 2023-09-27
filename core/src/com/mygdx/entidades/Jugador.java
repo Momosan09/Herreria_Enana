@@ -41,8 +41,6 @@ public class Jugador {
 
 	private void update() {
 		movimiento(Gdx.graphics.getDeltaTime());
-
-
 	}
 
 	private void movimiento(float deltaTime) {
@@ -145,6 +143,14 @@ public class Jugador {
 	
 	public boolean isEPressed() {
 		if(Gdx.input.isKeyPressed(Keys.E)) {
+			System.out.println("E");
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isTabPressed() {
+		if(Gdx.input.isKeyPressed(Keys.TAB)) {
 			System.out.println("E");
 			return true;
 		}

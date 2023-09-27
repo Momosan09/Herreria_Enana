@@ -112,8 +112,11 @@ public class Juego implements Screen{
 	    
 	    Render.batch.end();
 	    
+	    if(jugador.isTabPressed()) {//esto es temporal, solo para presentarselo al profe
+	    	combinacion.render();
+	    	
+	    }
 
-	    combinacion.render();
 	}
 
 
