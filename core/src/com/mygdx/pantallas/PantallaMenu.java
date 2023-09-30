@@ -8,19 +8,22 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Principal;
+import com.mygdx.hud.HeadUpDisplay;
 import com.mygdx.io.Entradas;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 
-public class PantallaMenu implements Screen {
+public class PantallaMenu implements Screen, HeadUpDisplay{
 
 	OrthographicCamera camara;
 	final Principal game;
@@ -52,7 +55,10 @@ public class PantallaMenu implements Screen {
 		
 		fondoImg = new Texture(Recursos.FONDO_MENU);
 		fondo = new Sprite(fondoImg);
-		crearInterfaz();
+		
+		crearFuentes();
+		crearActores();
+		poblarStage();
 
 		Gdx.input.setInputProcessor(entradas);
 
@@ -64,7 +70,6 @@ public class PantallaMenu implements Screen {
 	@Override
 	public void show() {
 		musicaMenu = Gdx.audio.newMusic(Gdx.files.internal(Recursos.MUSICA_MENU));
-
 		fondo.setPosition(0, stage.getViewport().getWorldHeight() - fondoImg.getHeight()); // creo que el segundo parametro lo hace una medida mas relativa, nose, investigar
 
 	}
@@ -80,8 +85,10 @@ public class PantallaMenu implements Screen {
 		Render.batch.begin();
 		fondoEnMovimiento(delta);
 		Render.batch.end();
+		
+		interfaz.act(delta);//ejecuta las Actions de esta tabla
 		stage.draw();
-		animacionRespirar(delta);
+		
 		seleccionarOpcion();
 
 	}
@@ -120,7 +127,8 @@ public class PantallaMenu implements Screen {
 
 	}
 	
-	private void crearEstilosDeLabel() {
+	@Override
+	public void crearFuentes() {
 		estiloFuente = new EstiloFuente();
 		tituloEstilo = estiloFuente.generarFuente(80, Colores.BLANCO, false);
 		subTituloEstilo = estiloFuente.generarFuente(26, Colores.BLANCO, false);
@@ -129,13 +137,10 @@ public class PantallaMenu implements Screen {
 		bottomEstilo = estiloFuente.generarFuente(20, Colores.MENUBOTTOMCOLOR, false);
 	}
 	
-	private void crearInterfaz() {
-		crearEstilosDeLabel();	
+	@Override
+	public void crearActores() {	
 		stage = new Stage();
-		
-		//archivo de traduccion
-		I18NBundle bundle = I18NBundle.createBundle(Gdx.files.internal("locale/locale"));
-		
+			
 		interfaz = new Table();
 		interfaz.setFillParent(true);
 		interfaz.debug();
@@ -143,15 +148,19 @@ public class PantallaMenu implements Screen {
 		interfazTexto = new Label[5];
 		
 		interfazTexto[0] = new Label("Herreria Enana", tituloEstilo);
-		interfazTexto[1] = new Label(bundle.get("menuPrincipal.menuPrincipal"), subTituloEstilo);
-		interfazTexto[4] = new Label(bundle.get("menuPrincipal.textoRespira"), bottomEstilo);
+		interfazTexto[1] = new Label(Recursos.bundle.get("menuPrincipal.menuPrincipal"), subTituloEstilo);
+		interfazTexto[4] = new Label(Recursos.bundle.get("menuPrincipal.textoRespira"), bottomEstilo);
 		
 		//Opciones
 		opciones = new Table();
 		opciones.debug();
-		interfazTexto[2] = new Label(bundle.get("menuPrincipal.jugar"), opcionEstilo);
-		interfazTexto[3] = new Label(bundle.get("menuPrincipal.configuraciones"), opcionEstilo);
-		
+		interfazTexto[2] = new Label(Recursos.bundle.get("menuPrincipal.jugar"), opcionEstilo);
+		interfazTexto[3] = new Label(Recursos.bundle.get("menuPrincipal.configuraciones"), opcionEstilo);
+
+	}
+
+	@Override
+	public void poblarStage() {
 		interfaz.add(interfazTexto[0]);
 		interfaz.row();
 		interfaz.add(interfazTexto[1]);
@@ -165,11 +174,11 @@ public class PantallaMenu implements Screen {
 		interfaz.add(opciones).expand();
 		interfaz.row();
 		interfaz.add(interfazTexto[4]).bottom().padBottom(20);
-		
+		agregarAnimaciones();
 		
 		stage.addActor(interfaz);
 	}
-
+	
 	private void seleccionarOpcion() {
 		int seleccion = entradas.seleccionarOpcion(interfazTexto, 2, 3);
 
@@ -200,17 +209,13 @@ public class PantallaMenu implements Screen {
 
         fondo.setX(fondoPosX);
     }
+    
+    private void agregarAnimaciones() {
+    	interfazTexto[4].addAction(Actions.forever(Actions.sequence(
 
-    private void animacionRespirar(float delta) {
-    	Gdx.gl.glEnable(GL30.GL_BLEND);		//Esto para que funcione el canal alpha de figuraMenu.setColor();
-    	
-
-    	
-    	interfazTexto[4].setColor(250, 90, 120, transparencia++*delta);
-    	if(transparencia == 255) {
-    		transparencia=0;
-    	}
-    }
-
+    			Actions.fadeOut(2f, Interpolation.fade)
+    			
+    	)));
+  }
 
 }

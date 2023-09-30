@@ -108,4 +108,5 @@
     
 # 30 SEP
     - OMG asi es, ya hice masomenos que se puede combinar (ponele). Dado un "inventario"(un ArrayList<Image>, lo resolvi asi para probar ahora, pero tengo que ver como es la mejor forma, ademas el "inventario" esta en la misma clase, la idea es sea traido desde el jugador) se muestran las imagenes sobre la pantalla y son todas arrastrables, por ahora, cuando son superpuestas dice que son validas con todas, tengo que ver como hacer para discriminar eso.
-    
+    - Hice masomenos la animacion que queria de respiracion del menu principal
+    - Todo masomenos hoy...

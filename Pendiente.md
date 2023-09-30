@@ -7,6 +7,6 @@
     - [x] Crear musica para el menu principal (Ya la hice pero puede ser que la cambie prrrr)
     - [x] Hacer que al apretar enter en el menu principal suene el sonidito
     - [ ] Voy a tener que poner una opcion para elegir si jugar multijugador o no, nose si ponerlo al apretar la opcion de jugar y que ahi salga una pantalla para elegir o en las configuraciones
-    - [ ] Hacer una animacion de respiracion para el ultimo texto que esta en el menu principal
+    - [-] Hacer una animacion de respiracion para el ultimo texto que esta en el menu principal
     - [x] El HUD cuando se reescala se ve como cortado
     - [ ] Me di cuenta recien que con el nuevo movimiento del personaje, ya no usa la animacion de "quieto"
