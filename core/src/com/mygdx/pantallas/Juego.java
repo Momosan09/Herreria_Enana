@@ -111,11 +111,9 @@ public class Juego implements Screen{
 	    hud.draw(Render.batch);
 	    
 	    Render.batch.end();
-	    
-	    if(jugador.isTabPressed()) {//esto es temporal, solo para presentarselo al profe
+
 	    	combinacion.render();
-	    	
-	    }
+
 
 	}
 

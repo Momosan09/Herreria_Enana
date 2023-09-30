@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.EstiloFuente;
+import com.mygdx.utiles.MyDragAndDrop;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 import com.mygdx.io.Entradas;
@@ -27,6 +28,8 @@ public class Combinacion implements HeadUpDisplay{
 	private Label.LabelStyle labelStyle;
     private float ancho=800, alto=700;
     Entradas entradas = new Entradas();
+    
+    MyDragAndDrop dp;
 
     public Combinacion() {
     	
@@ -34,7 +37,9 @@ public class Combinacion implements HeadUpDisplay{
     	cuadradoRojo = new DibujarFiguras();
     	dondeApuntar = new DibujarFiguras();
         stage = new Stage();
-
+        
+        dp = new MyDragAndDrop(stage);
+        dp.create();
         crearFuentes();
         crearActores();
         poblarStage();
@@ -47,8 +52,7 @@ public class Combinacion implements HeadUpDisplay{
     	fondo.dibujarRectanguloLleno((Gdx.graphics.getWidth()/2)-(ancho/2), (Gdx.graphics.getHeight()/2)-(alto/2) , ancho, alto, new Color(0,0,0,.7f));
     	 stage.draw();
     	 dondeApuntar.dibujarRectanguloLleno(490, 490, 10, 10, new Color(0,1,0,1));
-    	 dragNDrop();
-    	 
+    	 dp.render();
     }
     
 	@Override
@@ -80,12 +84,4 @@ public class Combinacion implements HeadUpDisplay{
 		
 	}
 	
-	public void dragNDrop() {
-		if(entradas.touchDown(500, 500, 0, 0)) {
-			float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
-
-			cuadradoRojo.dibujarRectanguloLleno(Gdx.input.getX(), mouseY, 50, 50, new Color(1,0,0,1));
-			System.out.println("algo pasa");
-		}
-	}
 }
