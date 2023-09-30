@@ -2,6 +2,7 @@ package com.mygdx.pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -112,7 +113,9 @@ public class Juego implements Screen{
 	    
 	    Render.batch.end();
 
-	    	combinacion.render();
+	    if(Gdx.input.isKeyPressed(Keys.TAB)) {//esto es solo para que lo pruebe el profe
+	    	combinacion.render();	    	
+	    }
 
 
 	}
