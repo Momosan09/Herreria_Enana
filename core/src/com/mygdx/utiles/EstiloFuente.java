@@ -3,6 +3,7 @@ package com.mygdx.utiles;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -22,6 +23,8 @@ public class EstiloFuente {
 	    parameter.size = tamano;
 	    parameter.color = Color.valueOf(hex);
 	    parameter.borderWidth = 1;
+	    parameter.minFilter = Texture.TextureFilter.Linear;//esto hace que no se vea tan mal cuando se reescala
+	    parameter.magFilter = Texture.TextureFilter.Linear;//esto hace que no se vea tan mal cuando se reescala
 	    if(sombra) {
 	    	parameter.shadowOffsetX = 3;
 	    	parameter.shadowOffsetY = 3;

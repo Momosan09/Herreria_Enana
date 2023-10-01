@@ -147,7 +147,8 @@ public class HUD implements HeadUpDisplay{
 	
 	public void reescalar(int width, int height) {
 		stage.getViewport().update(width, height);
-	}
+	}	
+	
 	public void dispose() {
 		stage.dispose();
 	}
@@ -168,11 +169,8 @@ public class HUD implements HeadUpDisplay{
 	@Override
 	public void crearActores() {
 		
-		//archivo de traduccion
-		I18NBundle bundle = I18NBundle.createBundle(Gdx.files.internal("locale/locale"));
-		
 		//IZQUIERDA
-		dineroLbl = new Label(bundle.get("hud.dinero"), labelStyle);
+		dineroLbl = new Label(Recursos.bundle.get("hud.dinero"), labelStyle);
 		monedas = new Label[3][2];
 		monedas[0][0] = new Label("Au: ", labelStyle);
 		monedas[0][1] = new Label("0", labelMonedasStyle[0]);
@@ -182,20 +180,20 @@ public class HUD implements HeadUpDisplay{
 		monedas[2][1] = new Label("0", labelMonedasStyle[2]);
 		
 		ultimaBatalla = new Label[2];
-		ultimaBatalla[0] = new Label(bundle.get("hud.ultimaBatalla"), labelStyle);
+		ultimaBatalla[0] = new Label(Recursos.bundle.get("hud.ultimaBatalla"), labelStyle);
 		ultimaBatalla[1] = new Label("Aca mostrar resultado", labelStyle);
-		verBatallasAnteriores = new Label(bundle.get("hud.verAnteriores"), labelStyle);
+		verBatallasAnteriores = new Label(Recursos.bundle.get("hud.verAnteriores"), labelStyle);
 		//verBatallasAnterioresClick = new TextButton("Click", skin);
-		siguienteBatallaLbl = new Label(bundle.get("hud.siguienteBatalla"), labelStyle);
+		siguienteBatallaLbl = new Label(Recursos.bundle.get("hud.siguienteBatalla"), labelStyle);
 		nombreSiguienteBatalla = new Label("Nombre-de-Batalla", labelStyle);
-		siguienteBatallaDetalles = new Label(bundle.get("hud.verDetalles"), labelStyle);
+		siguienteBatallaDetalles = new Label(Recursos.bundle.get("hud.verDetalles"), labelStyle);
 		
 		//CENTRO
 		centroLbl = new Label("Centro", labelStyle);
 		
 		//DERECHA
 		diaLbl = new Label("Luns", labelStyle);
-		pedidoLbl = new Label(bundle.get("hud.verPedidos"), labelStyle);
+		pedidoLbl = new Label(Recursos.bundle.get("hud.verPedidos"), labelStyle);
 		//pedidoBtn = new TextButton("",skin);
 		
 		//ABAJO
