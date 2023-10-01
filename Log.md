@@ -113,3 +113,4 @@
 
 # 1 OCT
     - Aplique un filtro al generador de fuentes, asi cuando se reescala la ventana, los textos no se ven tan mal
+    - Algunos cambios al reescalado

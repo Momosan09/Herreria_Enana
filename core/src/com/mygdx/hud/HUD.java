@@ -145,10 +145,10 @@ public class HUD implements HeadUpDisplay{
 
 	}
 	
-	public void reescalar(int width, int height) {
+	@Override
+	public void reEscalar(int width, int height) {
 		stage.getViewport().update(width, height);
-	}	
-	
+	}
 	public void dispose() {
 		stage.dispose();
 	}

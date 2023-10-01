@@ -43,9 +43,14 @@ public class Combinacion implements HeadUpDisplay{
     }
     
     public void render() {
-    	fondo.dibujarRectanguloLleno((Gdx.graphics.getWidth()/2)-(ancho/2), (Gdx.graphics.getHeight()/2)-(alto/2) , ancho, alto, new Color(0,0,0,.7f));
+    	fondo.dibujarRectanguloLleno(contenedor.getX(), contenedor.getY(), ancho, alto, new Color(0,0,0,.7f));
     	 stage.draw();
     	 dragNDrop.render();
+    }
+    
+    @Override
+    public void reEscalar(int width, int heigth) {
+    	stage.getViewport().update(width, heigth);
     }
     
 	@Override

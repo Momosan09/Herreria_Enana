@@ -218,4 +218,10 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
     	)));
   }
 
+	@Override
+	public void reEscalar(int width, int heigth) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

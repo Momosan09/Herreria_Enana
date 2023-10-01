@@ -97,4 +97,10 @@ public class Dialogo implements HeadUpDisplay{
 	public void selectMensaje(int index) {
 		mensajeAMostrar = index;
 	}
+
+	@Override
+	public void reEscalar(int width, int heigth) {
+		stage.getViewport().update(width, heigth);
+		
+	}
 }

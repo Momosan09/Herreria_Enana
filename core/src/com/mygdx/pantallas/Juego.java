@@ -126,7 +126,8 @@ public class Juego implements Screen{
 		camaraJuego.update();	
 		
 	    System.out.println("X =" +Gdx.graphics.getWidth() + "\n Y =" + Gdx.graphics.getHeight());
-	    hud.reescalar(width, height);
+	    hud.reEscalar(width, height);
+	    combinacion.reEscalar(width, height);
 	}
 
 	@Override
