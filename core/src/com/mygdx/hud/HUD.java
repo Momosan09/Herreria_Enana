@@ -153,11 +153,6 @@ public class HUD implements HeadUpDisplay{
 		stage.dispose();
 	}
 	
-	public void draw(SpriteBatch batch) {
-		stage.act(Gdx.graphics.getDeltaTime());
-		stage.draw();
-	}
-	
 	private void cargarTexturas() {
 		dinero_Tex = new Texture(Recursos.DINERO_HUD);
 		dineroImgSpr = new Sprite(dinero_Tex);
@@ -224,6 +219,13 @@ public class HUD implements HeadUpDisplay{
 	    labelStyle = new Label.LabelStyle();
 	    labelStyle.font = font24;
 	}*/
+
+	@Override
+	public void render() {
+		stage.act(Gdx.graphics.getDeltaTime());
+		stage.draw();
+		
+	}
 
 
 }

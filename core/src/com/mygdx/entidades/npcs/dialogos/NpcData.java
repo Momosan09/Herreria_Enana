@@ -8,7 +8,8 @@ import com.mygdx.utiles.Recursos;
 public enum NpcData implements DialogosNPC{
 
 	VENDEDOR("Vendedor",  Recursos.VENDEDOR_PORTRAIT,Npc_Dialogos_Vendedor.obtenerTodosLosMensajes()),
-	VIEJO("Viejin", Recursos.VENDEDOR_PORTRAIT, Npc_Dialogos_Viejo.obtenerTodosLosMensajes());
+	VIEJO("Viejin", Recursos.VENDEDOR_PORTRAIT, Npc_Dialogos_Viejo.obtenerTodosLosMensajes()),
+	REY("Rey", Recursos.VENDEDOR_PORTRAIT, Npc_Dialogos_Rey.obtenerTodosLosMensajes());
 	
 	private final String _nombre;
 	private final Texture _retrato;
@@ -19,8 +20,6 @@ public enum NpcData implements DialogosNPC{
 		this._nombre = nombre;
 		this._retrato = new Texture(retratoRuta);
 		_dialogos = arrayList;
-		
-		
 	}
 
 	public String getNombre() {

@@ -5,5 +5,4 @@ import java.util.ArrayList;
 public interface DialogosNPC {
 	
 	String getMensaje(int index);
-
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.utiles.Render;
 
 public abstract class Entidad {
 
@@ -25,13 +26,11 @@ public abstract class Entidad {
 		this.textura = new Texture(rutaTextura);
 		sprite = new Sprite(this.textura);
 		sprite.setPosition(this.posicion.x, this.posicion.y);
-		
 
 	}
 	
-	public void draw(SpriteBatch batch) {
-		sprite.draw(batch);
-
+	public void draw() {
+		sprite.draw(Render.batch);
 	}
 	
 	

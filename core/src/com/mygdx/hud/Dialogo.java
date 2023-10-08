@@ -42,13 +42,13 @@ public class Dialogo implements HeadUpDisplay{
 		
 	}
 	
-	public void draw(SpriteBatch batch) {
+	@Override
+	public void render() {
 		update();
 		fondoTabla.dibujarRectanguloLleno(0, padding, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/3, new Color(0,0,0,.5f));
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 		
-
 	}
 	
 	public void dispose() {
@@ -103,4 +103,6 @@ public class Dialogo implements HeadUpDisplay{
 		stage.getViewport().update(width, heigth);
 		
 	}
+
+
 }

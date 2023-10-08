@@ -224,4 +224,10 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		
 	}
 
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

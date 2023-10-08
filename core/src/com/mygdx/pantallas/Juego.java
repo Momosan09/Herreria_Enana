@@ -15,11 +15,15 @@ import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.NPCManager;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.ObjetoDelMapa;
+import com.mygdx.entidades.ObjetosDelMapa.Carta;
 import com.mygdx.entidades.ObjetosDelMapa.Yunque;
+import com.mygdx.entidades.npcs.Rey;
 import com.mygdx.entidades.npcs.Vendedor;
 import com.mygdx.entidades.npcs.Viejo;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
+import com.mygdx.entidades.npcs.dialogos.Npc_Dialogos_Rey;
 import com.mygdx.game.Principal;
+import com.mygdx.hud.CartaHUD;
 import com.mygdx.hud.Combinacion;
 import com.mygdx.hud.Dialogo;
 import com.mygdx.hud.HUD;
@@ -29,12 +33,13 @@ import com.mygdx.utiles.Render;
 public class Juego implements Screen{
 	
 	private Jugador jugador;
-	private Npc viejo, vendedor;
-	private ObjetoDelMapa yunque;
+	private Npc viejo, vendedor/*, rey*/;
+	private ObjetoDelMapa carta;
 	private Texture jugadorTextura;
 	private OrthographicCamera camaraJuego, camaraHud;
 	private Dialogo dialogo;
 	private NPCManager npcManager;
+	private CartaHUD cartaHUD;
 	
 	private Combinacion combinacion;
 	
@@ -68,7 +73,8 @@ public class Juego implements Screen{
 		managerConfig();
 
 		//objetos del mapa
-		yunque = new Yunque(532,532,Recursos.YUNQUE);
+		//yunque = new Yunque(532,532,Recursos.YUNQUE);
+		cartaHUD = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);
 		
 		//HUD
 		hud = new HUD();
@@ -96,11 +102,13 @@ public class Juego implements Screen{
 	    npcManager.renderizar(Render.batch);
 	    npcManager.detectarJugador(jugador); 
 	    
+	    //cartaHUD.render();
+	    
 	    Render.batch.end();
 	    
 	    //npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
-	    vendedor.charla(1, Render.batch);
-	    viejo.charla(0, Render.batch);
+	    vendedor.charla(1);
+	    viejo.charla(0);
 	    //vendedor.getData().getMensaje(0);
 	    
 	    //Renderiza el HUD
@@ -108,12 +116,13 @@ public class Juego implements Screen{
 	    //Render.batch.setProjectionMatrix(camaraHud.combined);//Una vez que renderiza el juego, se inicia el batch para la camara del HUD y lo dibuja
 	    Render.batch.begin();
 
-	    hud.draw(Render.batch);
+	    hud.render();
 	    
 	    Render.batch.end();
 
 	    
-	    combinacion.render();
+	    
+	    //combinacion.render();
 
 
 	}
@@ -156,12 +165,14 @@ public class Juego implements Screen{
 	public void crearNPCs() {
 		viejo = new Viejo(32*10,32*15,Recursos.VIEJO, NpcData.VIEJO);
 		vendedor = new Vendedor(32*20,32*5,Recursos.VENDEDOR, NpcData.VENDEDOR);
+		//rey = new Rey(0,0,Recursos.VENDEDOR, NpcData.REY);
 	}
 	
 	public void managerConfig() {
 		npcManager = new NPCManager();
 		npcManager.agregarEntidad(viejo);
 		npcManager.agregarEntidad(vendedor);
+		//npcManager.agregarEntidad(rey);
 	    npcManager.crearDialogos();
 	}
 }
