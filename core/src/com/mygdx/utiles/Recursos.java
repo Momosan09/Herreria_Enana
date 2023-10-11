@@ -5,7 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.I18NBundle;
 
-public class Recursos {
+public abstract class Recursos {
 	
 	public static I18NBundle bundle = I18NBundle.createBundle(Gdx.files.internal("locale/locale"));
 	
@@ -35,5 +35,8 @@ public class Recursos {
 	//HUD
 	public static final String DINERO_HUD = "HUD/Dinero.png";
 	public static final String RELOJ_HUD = "HUD/hora.png";
+	
+	//CARTA
+	public static final String CARTA_TEXTURA = "Imagen/juego/carta/carta.png";
 	
 }

@@ -117,3 +117,7 @@
 
 # 8 OCT
     - Empezando a hacer una demo para el juego, estoy haciendo la carta aparece apenas empieza el juego
+
+# 11 OCT
+    - Estoy haciendo el boton de cerrar de la carta
+    - Hice clase "HelpDebug" que tiene un metodo el cual te devuelve el nombre de la clase, lo hice porque en un momento estaba imprimiendo mensajes en la consola que no sabia de donde venian, es una boludez pero util! 

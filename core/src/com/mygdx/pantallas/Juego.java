@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.ui.Table.Debug;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Entidad;
@@ -27,6 +28,7 @@ import com.mygdx.hud.CartaHUD;
 import com.mygdx.hud.Combinacion;
 import com.mygdx.hud.Dialogo;
 import com.mygdx.hud.HUD;
+import com.mygdx.utiles.DebugHelp;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 
@@ -102,7 +104,7 @@ public class Juego implements Screen{
 	    npcManager.renderizar(Render.batch);
 	    npcManager.detectarJugador(jugador); 
 	    
-	    //cartaHUD.render();
+	    cartaHUD.render();
 	    
 	    Render.batch.end();
 	    
@@ -116,14 +118,14 @@ public class Juego implements Screen{
 	    //Render.batch.setProjectionMatrix(camaraHud.combined);//Una vez que renderiza el juego, se inicia el batch para la camara del HUD y lo dibuja
 	    Render.batch.begin();
 
-	    hud.render();
+	    //hud.render();
 	    
 	    Render.batch.end();
 
 	    
-	    
-	    //combinacion.render();
 
+	    //combinacion.render();
+	    //System.out.println(HelpDebug.debub(this.getClass()) + "Hola");
 
 	}
 
@@ -175,4 +177,7 @@ public class Juego implements Screen{
 		//npcManager.agregarEntidad(rey);
 	    npcManager.crearDialogos();
 	}
+
+
+
 }

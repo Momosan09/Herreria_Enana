@@ -35,7 +35,7 @@ public class Dialogo implements HeadUpDisplay{
 	
 	public Dialogo(Npc locutor) {
 		this.locutor = locutor;
-		System.out.println("mostando dialgo");
+		//System.out.println("mostrando dialgo");
 		fondoTabla = new DibujarFiguras();
 		poblarStage();
 		
