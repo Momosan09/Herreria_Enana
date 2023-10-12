@@ -16,7 +16,6 @@ import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.NPCManager;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.ObjetoDelMapa;
-import com.mygdx.entidades.ObjetosDelMapa.Carta;
 import com.mygdx.entidades.ObjetosDelMapa.Yunque;
 import com.mygdx.entidades.npcs.Rey;
 import com.mygdx.entidades.npcs.Vendedor;
@@ -28,7 +27,6 @@ import com.mygdx.hud.CartaHUD;
 import com.mygdx.hud.Combinacion;
 import com.mygdx.hud.Dialogo;
 import com.mygdx.hud.HUD;
-import com.mygdx.utiles.DebugHelp;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
@@ -36,7 +34,7 @@ import com.mygdx.utiles.Render;
 public class Juego implements Screen{
 	
 	private Jugador jugador;
-	private Npc viejo, vendedor/*, rey*/;
+	private Npc viejo, vendedor;
 	private ObjetoDelMapa carta;
 	private Texture jugadorTextura;
 	private OrthographicCamera camaraJuego, camaraHud;
@@ -105,7 +103,7 @@ public class Juego implements Screen{
 	    npcManager.renderizar(Render.batch);
 	    npcManager.detectarJugador(jugador); 
 	    
-	    cartaHUD.render();
+
 	    
 	    Render.batch.end();
 	    
@@ -117,10 +115,11 @@ public class Juego implements Screen{
 	    //Renderiza el HUD
 	    camaraHud.update();
 	    //Render.batch.setProjectionMatrix(camaraHud.combined);//Una vez que renderiza el juego, se inicia el batch para la camara del HUD y lo dibuja
-	    Render.batch.begin();
+	    
+	    Render.batch.begin();//HUD´s
 
 	    //hud.render();
-	    
+	    cartaHUD.render();
 	    Render.batch.end();
 
 	    
@@ -175,7 +174,6 @@ public class Juego implements Screen{
 		npcManager = new NPCManager();
 		npcManager.agregarEntidad(viejo);
 		npcManager.agregarEntidad(vendedor);
-		//npcManager.agregarEntidad(rey);
 	    npcManager.crearDialogos();
 	}
 

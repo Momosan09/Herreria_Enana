@@ -62,7 +62,7 @@ public class CartaHUD implements HeadUpDisplay{
 	@Override
 	public void crearActores() {
 		stage = new Stage();
-		
+		/*
 		contenedor = new Table();
 		contenedor.debug();
 		contenedor.setFillParent(false);
@@ -71,9 +71,8 @@ public class CartaHUD implements HeadUpDisplay{
 
 		cuerpoCarta = new Label(datosCartaNpc.getMensaje(0), labelStyle);
 		cuerpoCarta.setWrap(true);//Te lo re afane Facu ejej
-		
+*/		
 		cerrarBoton = new TextButton("a",botonCerrarSkin);
-		cerrarBoton.setPosition(100, 10);
 		cerrarBoton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -84,9 +83,9 @@ public class CartaHUD implements HeadUpDisplay{
 
 	@Override
 	public void poblarStage() {
-		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.CARTA_TEXTURA)));
+		/*contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.CARTA_TEXTURA)));
 		contenedor.add(cuerpoCarta).pad(10).expand().fill().top();//Te lo re afane Facu ejej
-		contenedor.add(cerrarBoton);
+		contenedor.add(cerrarBoton);*/
 		//stage.addActor(contenedor);
 		stage.addActor(cerrarBoton);
 		
