@@ -29,6 +29,7 @@ import com.mygdx.hud.Combinacion;
 import com.mygdx.hud.Dialogo;
 import com.mygdx.hud.HUD;
 import com.mygdx.utiles.DebugHelp;
+import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 
@@ -136,7 +137,7 @@ public class Juego implements Screen{
 		camaraJuego.viewportHeight = height;
 		camaraJuego.update();	
 		
-	    System.out.println("X =" +Gdx.graphics.getWidth() + "\n Y =" + Gdx.graphics.getHeight());
+	    System.out.println(HelpDebug.debub(getClass())+"X =" +Gdx.graphics.getWidth() + " Y =" + Gdx.graphics.getHeight());
 	    hud.reEscalar(width, height);
 	    combinacion.reEscalar(width, height);
 	}

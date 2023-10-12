@@ -1,6 +1,7 @@
 package com.mygdx.entidades;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.mygdx.utiles.HelpDebug;
 
 public abstract class ObjetoDelMapa extends Entidad{
 
@@ -18,7 +19,7 @@ public abstract class ObjetoDelMapa extends Entidad{
 
 	public void mostrarMensaje() {
 		if(interaccion()) {
-			System.out.println("yea");
+			System.out.println(HelpDebug.debub(getClass())+"yea");
 		}
 	}
 	

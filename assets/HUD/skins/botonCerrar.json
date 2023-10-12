@@ -1,0 +1,11 @@
+{
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: {
+		up: boton_cerrar_up
+		down: boton_cerrar_down
+		over: boton_cerrar_over
+		focused: boton_cerrar_focused
+		disabled: boton_cerrar_disabled
+	}
+}
+}

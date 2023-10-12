@@ -121,3 +121,7 @@
 # 11 OCT
     - Estoy haciendo el boton de cerrar de la carta
     - Hice clase "HelpDebug" que tiene un metodo el cual te devuelve el nombre de la clase, lo hice porque en un momento estaba imprimiendo mensajes en la consola que no sabia de donde venian, es una boludez pero util! 
+
+# 12 OCT
+    - Hice unas eskines para los botones
+    - no me andan los botones

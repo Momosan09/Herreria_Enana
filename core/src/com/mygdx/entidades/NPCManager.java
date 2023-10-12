@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.utiles.HelpDebug;
 
 public class NPCManager {
     private List<Npc> npcs;
@@ -36,7 +37,7 @@ public class NPCManager {
     public void crearDialogos() {
     	for (Npc npcIndex: npcs) {
     		npcIndex.crearCajaDialogo();
-    		System.out.println("Cargados los dialogos de " + npcIndex.getNombre() );
+    		System.out.println(HelpDebug.debub(getClass())+"Cargados los dialogos de " + npcIndex.getNombre() );
 
     		
 		}
