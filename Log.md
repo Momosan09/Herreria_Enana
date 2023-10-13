@@ -128,3 +128,6 @@
     - Vamos a ver si se arreglo magicamente o no... SI
     - OMG los HUDs se reescalan re piola, queda re bien (CartaHUD todavia no se puede reescalar bien)
     - Ahora se puede cerrar la carta del comienzo
+
+# 13 OCT
+    - CartaHUD ya se reescala correctamente (era una boludez, no estaba llamando al metodo para reescalar en el juego)

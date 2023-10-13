@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.npcs.dialogos.DialogosNPC;
@@ -24,11 +25,11 @@ import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 
-public class CartaHUD implements HeadUpDisplay{
+public class CartaHUD implements HeadUpDisplay, Cerrable{
 
 	private Stage stage;
 	private ScreenViewport screenViewport;
-	private Table contenedor;
+	private Table tabla, contenedor;
 	private Label cuerpoCarta;
 	private Button cerrarBoton;
 	private Skin skin;
@@ -65,11 +66,13 @@ public class CartaHUD implements HeadUpDisplay{
 
 		skin = new Skin(Gdx.files.internal(Recursos.SKIN));
 		
+		tabla = new Table();
+		tabla.setFillParent(true);
 		contenedor = new Table();
 		contenedor.debug();
 		contenedor.setFillParent(false);
-		contenedor.setSize(Config.ancho/2, Config.alto/2);
-		contenedor.setPosition(Gdx.graphics.getWidth()/2-contenedor.getWidth()/2, Gdx.graphics.getHeight()/2-contenedor.getHeight()/2);
+		//contenedor.setSize(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+		//contenedor.setPosition(Gdx.graphics.getWidth()/2-contenedor.getWidth()/2, Gdx.graphics.getHeight()/2-contenedor.getHeight()/2);
 
 		cuerpoCarta = new Label(datosCartaNpc.getMensaje(0), labelStyle);
 		cuerpoCarta.setWrap(true);//Te lo re afane Facu ejej
@@ -79,11 +82,8 @@ public class CartaHUD implements HeadUpDisplay{
 			
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				// TODO Auto-generated method stub
-				cerrar = !cerrar;
+				cerrar = true;
 				System.out.println(HelpDebug.debub(getClass())+cerrar);
-				
-				
 			}
 		});
 	}
@@ -91,20 +91,27 @@ public class CartaHUD implements HeadUpDisplay{
 	@Override
 	public void poblarStage() {
 		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.CARTA_TEXTURA)));
-		contenedor.add(cuerpoCarta).pad(10).expand().fill().top();//Te lo re afane Facu ejej
-		contenedor.add(cerrarBoton);
-		stage.addActor(contenedor);
+		contenedor.add(cuerpoCarta).pad(10).expand().fill();//Te lo re afane Facu ejej
+		contenedor.add(cerrarBoton).top();
+		tabla.add(contenedor);
+		stage.addActor(tabla);
 		
 	}
 
 	@Override
-	public void reEscalar(int width, int heigth) {
-		screenViewport.update(width, heigth, true);
-		//stage.getViewport().update(width, heigth, true);
+	public void reEscalar(int width, int height) {
+		    screenViewport.update(width, height, true);
+	}
+
+	@Override
+	public void cerrar() {
+	    contenedor.clear(); // Limpia todos los actores del contenedor
+	    stage.unfocusAll(); // Desenfoca el stage para que no procese eventos
+	    stage.clear(); // Limpia el stage completamente
+		
 	}
 
 	public void render() {
-		//screenViewport.apply();
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();	
 	}
@@ -114,4 +121,5 @@ public class CartaHUD implements HeadUpDisplay{
 		skin.dispose();
 	}
 
+	
 }

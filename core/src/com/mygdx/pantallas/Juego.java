@@ -105,19 +105,20 @@ public class Juego implements Screen{
 		Render.batch.end();
 	    
 		if(cartaHUD.cerrar) {//si ya leyo la carta
-		jugador.puedeMoverse=true;
-	    npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
-	    vendedor.charla(1);
-	    viejo.charla(0);
-	    //vendedor.getData().getMensaje(0);
+			cartaHUD.cerrar();
+			jugador.puedeMoverse=true;
+			npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
+			vendedor.charla(1);
+			viejo.charla(0);
+			//vendedor.getData().getMensaje(0);
 	    
-	    //Renderiza el HUD
-	    camaraHud.update();
-	    Render.batch.setProjectionMatrix(camaraHud.combined);//Una vez que renderiza el juego, se inicia el batch para la camara del HUD y lo dibuja
+			//Renderiza el HUD
+			camaraHud.update();
+			Render.batch.setProjectionMatrix(camaraHud.combined);//Una vez que renderiza el juego, se inicia el batch para la camara del HUD y lo dibuja
 	    
-	    Render.batch.begin();//HUD´s
-	    hud.render();
-	    Render.batch.end();
+			Render.batch.begin();//HUD´s
+			hud.render();
+			Render.batch.end();
 		}else {
 			cartaHUD.render();
 			
@@ -139,6 +140,7 @@ public class Juego implements Screen{
 		
 	    System.out.println(HelpDebug.debub(getClass())+"X =" +Gdx.graphics.getWidth() + " Y =" + Gdx.graphics.getHeight());
 	    hud.reEscalar(width, height);
+	    cartaHUD.reEscalar(width, height);
 	    combinacion.reEscalar(width, height);
 	}
 
@@ -181,3 +183,5 @@ public class Juego implements Screen{
 
 
 }
+
+
