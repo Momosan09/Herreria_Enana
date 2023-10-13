@@ -2,28 +2,26 @@ package com.mygdx.hud;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.entidades.npcs.dialogos.DialogosNPC;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.Config;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.Align;
 
 public class CartaHUD implements HeadUpDisplay{
 
@@ -31,25 +29,25 @@ public class CartaHUD implements HeadUpDisplay{
 	private Table contenedor;
 	private Label cuerpoCarta;
 	private Button cerrarBoton;
-	private Skin botonCerrarSkin;
+	private Skin skin;
 
 	private EstiloFuente estiloFuente;
 	private Label.LabelStyle labelStyle;
 	private DialogosNPC datosCartaNpc;
-	InputMultiplexer multiplexer;
+
 	
 	
 	
 	
 	public CartaHUD(DialogosNPC datosCartaNpc) {
 		this.datosCartaNpc = datosCartaNpc;
-		
-		botonCerrarSkin = new Skin(Gdx.files.internal(Recursos.BOTON_TEXTO_JSON));
+		stage = new Stage();
+		Gdx.input.setInputProcessor(stage);
+
 		
 		crearFuentes();
 		crearActores();
 		poblarStage();
-		Gdx.input.setInputProcessor(stage);
 	}
 	
 	@Override
@@ -61,8 +59,9 @@ public class CartaHUD implements HeadUpDisplay{
 
 	@Override
 	public void crearActores() {
-		stage = new Stage();
-		/*
+
+		skin = new Skin(Gdx.files.internal(Recursos.SKIN));
+		
 		contenedor = new Table();
 		contenedor.debug();
 		contenedor.setFillParent(false);
@@ -71,23 +70,25 @@ public class CartaHUD implements HeadUpDisplay{
 
 		cuerpoCarta = new Label(datosCartaNpc.getMensaje(0), labelStyle);
 		cuerpoCarta.setWrap(true);//Te lo re afane Facu ejej
-*/		
-		cerrarBoton = new TextButton("a",botonCerrarSkin);
-		cerrarBoton.addListener(new ClickListener() {
+		
+		cerrarBoton = new Button(skin);
+		cerrarBoton.addListener(new ChangeListener() {
+			
 			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				System.out.println(HelpDebug.debub(getClass())+"hola");
+			public void changed(ChangeEvent event, Actor actor) {
+				// TODO Auto-generated method stub
+				System.out.println(HelpDebug.debub(getClass())+"click");
+				
 			}
 		});
 	}
 
 	@Override
 	public void poblarStage() {
-		/*contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.CARTA_TEXTURA)));
+		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.CARTA_TEXTURA)));
 		contenedor.add(cuerpoCarta).pad(10).expand().fill().top();//Te lo re afane Facu ejej
-		contenedor.add(cerrarBoton);*/
-		//stage.addActor(contenedor);
-		stage.addActor(cerrarBoton);
+		contenedor.add(cerrarBoton);
+		stage.addActor(contenedor);
 		
 	}
 
@@ -97,8 +98,13 @@ public class CartaHUD implements HeadUpDisplay{
 	}
 
 	public void render() {
-		stage.draw();	
 		stage.act(Gdx.graphics.getDeltaTime());
+		stage.draw();	
+	}
+	
+	public void dispose() {
+		stage.dispose();
+		skin.dispose();
 	}
 
 }

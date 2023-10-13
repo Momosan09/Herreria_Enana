@@ -59,6 +59,7 @@ public class Juego implements Screen{
 		camaraJuego.setToOrtho(false);
 		camaraJuego.zoom = .7f;
 		
+		
 		camaraHud = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camaraHud.setToOrtho(false); 
 		camaraHud.zoom = .1f;
@@ -75,46 +76,43 @@ public class Juego implements Screen{
 
 		//objetos del mapa
 		//yunque = new Yunque(532,532,Recursos.YUNQUE);
-		cartaHUD = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);
 		
 		//HUD
 		hud = new HUD();
 	    combinacion = new Combinacion();
-
-
+		cartaHUD = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);
 
 	}
 
 	@Override
 	public void render(float delta) {
-	    Gdx.gl.glClearColor(0, 0, 0, 1);
-	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
 	    //Renderiza el Juego
-	    camaraJuego.update();
-	    Render.batch.setProjectionMatrix(camaraJuego.combined);//Aca estaba el problema de que el HUD no se renderizaba por encima del mapa, los setProjectionMatrix de cada camara tienen que estar en ciclos .begin() y .end() distintos
-	    Render.batch.begin();
+		camaraJuego.update();
+		Render.batch.setProjectionMatrix(camaraJuego.combined);//Aca estaba el problema de que el HUD no se renderizaba por encima del mapa, los setProjectionMatrix de cada camara tienen que estar en ciclos .begin() y .end() distintos
+		Render.batch.begin();
 
-	    Render.tiledMapRenderer.setView(camaraJuego);
-	    Render.tiledMapRenderer.render();
+		Render.tiledMapRenderer.setView(camaraJuego);
+		Render.tiledMapRenderer.render();
 
-	    jugador.draw(Render.batch);
+		jugador.draw(Render.batch);
 	    
-	    npcManager.renderizar(Render.batch);
-	    npcManager.detectarJugador(jugador); 
+		npcManager.renderizar(Render.batch);
+		npcManager.detectarJugador(jugador); 
 	    
 
 	    
-	    Render.batch.end();
+		Render.batch.end();
 	    
-	    //npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
+	    npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
 	    vendedor.charla(1);
 	    viejo.charla(0);
 	    //vendedor.getData().getMensaje(0);
 	    
 	    //Renderiza el HUD
 	    camaraHud.update();
-	    //Render.batch.setProjectionMatrix(camaraHud.combined);//Una vez que renderiza el juego, se inicia el batch para la camara del HUD y lo dibuja
+	    Render.batch.setProjectionMatrix(camaraHud.combined);//Una vez que renderiza el juego, se inicia el batch para la camara del HUD y lo dibuja
 	    
 	    Render.batch.begin();//HUD´s
 

@@ -125,3 +125,4 @@
 # 12 OCT
     - Hice unas eskines para los botones
     - no me andan los botones
+    - Vamos a ver si se arreglo magicamente o no...
