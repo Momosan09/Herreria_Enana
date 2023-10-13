@@ -131,3 +131,4 @@
 
 # 13 OCT
     - CartaHUD ya se reescala correctamente (era una boludez, no estaba llamando al metodo para reescalar en el juego)
+    - CartaHUD ahora se cierra completamente cuando es cerrado (se quitan los actores, el listener de eventos, etc)
