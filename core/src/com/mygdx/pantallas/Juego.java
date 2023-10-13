@@ -1,7 +1,9 @@
 package com.mygdx.pantallas;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -46,6 +48,9 @@ public class Juego implements Screen{
 	
 	private HUD hud;
 
+	private InputMultiplexer mux;
+
+
 
 	public Juego(final Principal game) {
 
@@ -53,8 +58,11 @@ public class Juego implements Screen{
 
 	@Override
 	public void show() {
+		mux = new InputMultiplexer();//El input multiplexer es una especie de gestor de inputProcessors
 		
+
 		//camaras
+		
 		camaraJuego = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camaraJuego.setToOrtho(false);
 		camaraJuego.zoom = .7f;
@@ -79,8 +87,13 @@ public class Juego implements Screen{
 		
 		//HUD
 		hud = new HUD();
+		cartaHUD = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);//ee parece que cartaHUD tiene que ir primero, sino no anda la combinacion (nose pq)
 	    combinacion = new Combinacion();
-		cartaHUD = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);
+	    
+	    mux.addProcessor(cartaHUD.getStage());
+	    mux.addProcessor(combinacion.getStage());//Esto es para los botones de la propia clase
+	    mux.addProcessor(combinacion.getDragAndDrop().getStage());//Esto es para las imagenes arratrables que tiene el stage del dragAndDrop de esta clase, si quiero poner otro dragAndDrop tengo q ue agregarlo asi
+		Gdx.input.setInputProcessor(mux);
 
 	}
 
@@ -89,7 +102,6 @@ public class Juego implements Screen{
 
 
 	    //Renderiza el Juego
-			
 		camaraJuego.update();
 		Render.batch.setProjectionMatrix(camaraJuego.combined);//Aca estaba el problema de que el HUD no se renderizaba por encima del mapa, los setProjectionMatrix de cada camara tienen que estar en ciclos .begin() y .end() distintos
 		Render.batch.begin();
@@ -104,10 +116,10 @@ public class Juego implements Screen{
 	      
 		Render.batch.end();
 	    
-		if(cartaHUD.cerrar) {//si ya leyo la carta
+		if(cartaHUD.getCerrar()) {//si ya leyo la carta
 			cartaHUD.cerrar();
 			jugador.puedeMoverse=true;
-			npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
+			//npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
 			vendedor.charla(1);
 			viejo.charla(0);
 			//vendedor.getData().getMensaje(0);
@@ -118,15 +130,20 @@ public class Juego implements Screen{
 	    
 			Render.batch.begin();//HUD´s
 			hud.render();
+
+			
 			Render.batch.end();
 		}else {
 			cartaHUD.render();
-			
 		}
-
-	    
-
-	    //combinacion.render();
+	    if(Gdx.input.isKeyPressed(Keys.TAB)) {//Esto despues lo tengo que cambiar
+	    	combinacion.setCerrar(false);//Abrir Combinacion
+	    	
+	    }
+		if(!combinacion.getCerrar()) {
+			combinacion.render();
+			jugador.puedeMoverse = false;
+		}
 	    //System.out.println(HelpDebug.debub(this.getClass()) + "Hola");
 
 	}

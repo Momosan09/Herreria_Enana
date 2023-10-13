@@ -1,78 +1,120 @@
 package com.mygdx.hud;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.EstiloFuente;
+import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MyDragAndDrop;
 import com.mygdx.utiles.Recursos;
 
 import com.mygdx.io.Entradas;
 
-public class Combinacion implements HeadUpDisplay{
+public class Combinacion implements HeadUpDisplay, Cerrable{
 
+	private ScreenViewport screenViewport;
 	private Stage stage;
-	private Table contenedor;
-	private Label titulo;
+	private Table contenedor, tabla;
+	private Label labelInv, titulo;
+	private Button cerrarBoton;
+	private Skin skin;
 
     private DibujarFiguras fondo;
     private EstiloFuente estiloFuente;
 	private Label.LabelStyle labelStyle;
-    private float ancho=800, alto=700;
-    Entradas entradas = new Entradas();
+
     
-    MyDragAndDrop dragNDrop;
+    private MyDragAndDrop dragNDrop;
+    
+    private int pad = 20;
+    private boolean cerrar = true;
 
     public Combinacion() {
     	
     	fondo = new DibujarFiguras();
-        stage = new Stage();
+    	screenViewport = new ScreenViewport();
+        stage = new Stage(screenViewport);
         
-        dragNDrop = new MyDragAndDrop(stage);
+        dragNDrop = new MyDragAndDrop();
         dragNDrop.create();
         crearFuentes();
         crearActores();
         poblarStage();
-        
 
         
     }
     
     public void render() {
-    	fondo.dibujarRectanguloLleno(contenedor.getX(), contenedor.getY(), ancho, alto, new Color(0,0,0,.7f));
-    	 stage.draw();
-    	 dragNDrop.render();
+    	fondo.dibujarRectanguloLleno(contenedor.getX()+pad, contenedor.getY()+pad, contenedor.getWidth()-(pad*2), contenedor.getHeight()-(pad*2), new Color(0,0,0,.7f));
+    	stage.act(Gdx.graphics.getDeltaTime());
+    	stage.draw();
+    	dragNDrop.render();
     }
     
     @Override
     public void reEscalar(int width, int heigth) {
-    	stage.getViewport().update(width, heigth);
+    	screenViewport.update(width, heigth, true);
+    	dragNDrop.resize(width, heigth);
     }
     
 	@Override
     public void crearActores() {
+		skin = new Skin(Gdx.files.internal(Recursos.SKIN));
+        
+		tabla = new Table();
+		tabla.setDebug(true);
+		tabla.setFillParent(true);
+		
     	contenedor = new Table();
-    	contenedor.setPosition((Gdx.graphics.getWidth()/2)-(ancho/2), (Gdx.graphics.getHeight()/2)-(alto/2));
-    	contenedor.setWidth(ancho);
-    	contenedor.setHeight(alto);
-    	//contenedor.setFillParent(true);
+    	contenedor.setFillParent(true);
     	contenedor.debug();
     	
-    	titulo = new Label(Recursos.bundle.get("combinacion.titulo"), labelStyle);
+    	cerrarBoton = new Button(skin);
+    	cerrarBoton.addListener(new ChangeListener() {
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				cerrar = true;
+			}
+		});
     	
+    	titulo = new Label(Recursos.bundle.get("combinacion.titulo"), labelStyle);
+    	labelInv = new Label(Recursos.bundle.get("combinacion.inventario"), labelStyle);
+    	traerinventario();
     }
+	
+	public void traerinventario() {
+		for (Image item : dragNDrop.getChilds()) {
+			item.setPosition(0, 0);
+		}
+	}
 	
 	@Override
     public void poblarStage() {
+		contenedor.pad(pad);
+		contenedor.add(labelInv).top();
 		contenedor.add(titulo).top();
+		contenedor.add(cerrarBoton);
 		contenedor.row();
-		contenedor.add().expand();
-		
+		contenedor.add();
+		contenedor.add().grow();
+		contenedor.add();
+		//tabla.add(contenedor).center();
     	stage.addActor(contenedor);
+    	
     }
 
 	@Override
@@ -81,5 +123,28 @@ public class Combinacion implements HeadUpDisplay{
 		labelStyle = estiloFuente.generarFuente(32, Colores.BLANCO, false);
 		
 	}
+
+	@Override
+	public void cerrar() {
+	    contenedor.clear(); // Limpia todos los actores del contenedor
+	    stage.unfocusAll(); // Desenfoca el stage para que no procese eventos
+	    stage.clear(); // Limpia el stage completamente
+		
+	}
 	
+	public Stage getStage() {
+		return stage;
+	}
+	
+	public MyDragAndDrop getDragAndDrop() {
+		return dragNDrop;
+	}
+	
+	public boolean getCerrar() {
+		return cerrar;
+	}
+	
+	public void setCerrar(boolean value) {
+		cerrar=value;
+	}
 }

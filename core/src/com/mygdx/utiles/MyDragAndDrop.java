@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.Null;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.EstiloFuente;
@@ -28,14 +29,17 @@ import com.mygdx.io.Entradas;
 import com.badlogic.gdx.utils.Null;
 
 public class MyDragAndDrop {
-	Stage stage;
+	
+	private ScreenViewport screenViewport;
+	private Stage stage;
     private EstiloFuente estiloFuente;
 	private Label.LabelStyle labelStyle;
 	private ArrayList<Image> inventario;
 	
 	
-	public MyDragAndDrop(Stage stage){
-		this.stage = stage;
+	public MyDragAndDrop(){
+		screenViewport = new ScreenViewport();
+		stage = new Stage(screenViewport);
 		estiloFuente = new EstiloFuente();
 		labelStyle = estiloFuente.generarFuente(32, Colores.BLANCO, false);
 		
@@ -51,13 +55,10 @@ public class MyDragAndDrop {
 		
 		inventario.add(sourceImage);
 		inventario.add(sourceImage2);
-		inventario.get(0).setPosition(500, 500);
-		inventario.get(1).setPosition(600, 600);
 	}
 
 	public void create () {
 		stage.setDebugAll(true);
-		Gdx.input.setInputProcessor(stage);
 
 		
 		for (Image image : inventario) {
@@ -72,7 +73,7 @@ public class MyDragAndDrop {
 				@Null
 				public Payload dragStart (InputEvent event, float x, float y, int pointer) {
 					Payload payload = new Payload();
-					payload.setObject("Some payload!");
+					payload.setObject(HelpDebug.debub(getClass())+"Some payload!");
 
 					payload.setDragActor(getActor());
 
@@ -94,6 +95,7 @@ public class MyDragAndDrop {
 			dragAndDrop.addTarget(new Target(image) {
 				public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
 					getActor().setColor(Color.GREEN);
+					
 					return true;
 				}
 
@@ -130,10 +132,18 @@ public class MyDragAndDrop {
 	}
 
 	public void resize (int width, int height) {
-		stage.getViewport().update(width, height, true);
+		screenViewport.update(width, height, true);
 	}
 
 	public void dispose () {
 		stage.dispose();
+	}
+	
+	public Stage getStage() {
+		return stage;
+	}
+	
+	public ArrayList<Image> getChilds(){
+		return inventario;
 	}
 }

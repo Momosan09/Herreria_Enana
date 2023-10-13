@@ -125,10 +125,12 @@
 # 12 OCT
     - Hice unas eskines para los botones
     - no me andan los botones
-    - Vamos a ver si se arreglo magicamente o no... SI
+    - Vamos a ver si se arreglo magicamente o no... SI || ACTUALIZACION -> El problema era el inputProcessor, faltaba un inputMultiplexer el cual se encarga de manejar a los distintos processors NO FUE MAGIA
     - OMG los HUDs se reescalan re piola, queda re bien (CartaHUD todavia no se puede reescalar bien)
     - Ahora se puede cerrar la carta del comienzo
 
 # 13 OCT
     - CartaHUD ya se reescala correctamente (era una boludez, no estaba llamando al metodo para reescalar en el juego)
     - CartaHUD ahora se cierra completamente cuando es cerrado (se quitan los actores, el listener de eventos, etc)
+    - InputMultiplexer yaajuuuu, ahora todo anda... TODO
+    - Unos cambios a la interfaz Combinacion

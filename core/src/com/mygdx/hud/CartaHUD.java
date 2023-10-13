@@ -38,7 +38,7 @@ public class CartaHUD implements HeadUpDisplay, Cerrable{
 	private Label.LabelStyle labelStyle;
 	private DialogosNPC datosCartaNpc;
 
-	public boolean cerrar = false;
+	private boolean cerrar = false;
 	
 	
 	
@@ -47,7 +47,6 @@ public class CartaHUD implements HeadUpDisplay, Cerrable{
 		this.datosCartaNpc = datosCartaNpc;
 		screenViewport = new ScreenViewport();
 		stage = new Stage(screenViewport);
-		Gdx.input.setInputProcessor(stage);
 
 		crearFuentes();
 		crearActores();
@@ -121,5 +120,11 @@ public class CartaHUD implements HeadUpDisplay, Cerrable{
 		skin.dispose();
 	}
 
+	public Stage getStage() {
+		return stage;
+	}
 	
+	public boolean getCerrar() {
+		return cerrar;
+	}
 }

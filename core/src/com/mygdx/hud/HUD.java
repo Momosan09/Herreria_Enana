@@ -85,6 +85,7 @@ public class HUD implements HeadUpDisplay{
 			//Dinero
 		dineroTable = new Table();
 		dineroTable.setFillParent(false);
+		dineroTable.setDebug(true);
 		dineroTable.setBackground(new SpriteDrawable(dineroImgSpr));//para poner sprite de fondo
 		dineroTable.add(dineroLbl);
 		dineroTable.row();
@@ -116,8 +117,6 @@ public class HUD implements HeadUpDisplay{
 		//Centro
 		
 		hudCen = new Table();
-
-		
 		hudCen.add().expand();
 		
 		//Derecha
