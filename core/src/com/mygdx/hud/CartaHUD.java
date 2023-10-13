@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.npcs.dialogos.DialogosNPC;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.Config;
@@ -26,6 +27,7 @@ import com.mygdx.utiles.Recursos;
 public class CartaHUD implements HeadUpDisplay{
 
 	private Stage stage;
+	private ScreenViewport screenViewport;
 	private Table contenedor;
 	private Label cuerpoCarta;
 	private Button cerrarBoton;
@@ -35,16 +37,17 @@ public class CartaHUD implements HeadUpDisplay{
 	private Label.LabelStyle labelStyle;
 	private DialogosNPC datosCartaNpc;
 
+	public boolean cerrar = false;
 	
 	
 	
 	
 	public CartaHUD(DialogosNPC datosCartaNpc) {
 		this.datosCartaNpc = datosCartaNpc;
-		stage = new Stage();
+		screenViewport = new ScreenViewport();
+		stage = new Stage(screenViewport);
 		Gdx.input.setInputProcessor(stage);
 
-		
 		crearFuentes();
 		crearActores();
 		poblarStage();
@@ -77,7 +80,9 @@ public class CartaHUD implements HeadUpDisplay{
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				// TODO Auto-generated method stub
-				System.out.println(HelpDebug.debub(getClass())+"click");
+				cerrar = !cerrar;
+				System.out.println(HelpDebug.debub(getClass())+cerrar);
+				
 				
 			}
 		});
@@ -94,10 +99,12 @@ public class CartaHUD implements HeadUpDisplay{
 
 	@Override
 	public void reEscalar(int width, int heigth) {
-		stage.getViewport().update(width, heigth);
+		screenViewport.update(width, heigth, true);
+		//stage.getViewport().update(width, heigth, true);
 	}
 
 	public void render() {
+		//screenViewport.apply();
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();	
 	}

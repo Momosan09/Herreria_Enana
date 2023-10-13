@@ -89,6 +89,7 @@ public class Juego implements Screen{
 
 
 	    //Renderiza el Juego
+			
 		camaraJuego.update();
 		Render.batch.setProjectionMatrix(camaraJuego.combined);//Aca estaba el problema de que el HUD no se renderizaba por encima del mapa, los setProjectionMatrix de cada camara tienen que estar en ciclos .begin() y .end() distintos
 		Render.batch.begin();
@@ -100,11 +101,11 @@ public class Juego implements Screen{
 	    
 		npcManager.renderizar(Render.batch);
 		npcManager.detectarJugador(jugador); 
-	    
-
-	    
+	      
 		Render.batch.end();
 	    
+		if(cartaHUD.cerrar) {
+		jugador.puedeMoverse=true;
 	    npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
 	    vendedor.charla(1);
 	    viejo.charla(0);
@@ -115,10 +116,12 @@ public class Juego implements Screen{
 	    Render.batch.setProjectionMatrix(camaraHud.combined);//Una vez que renderiza el juego, se inicia el batch para la camara del HUD y lo dibuja
 	    
 	    Render.batch.begin();//HUD´s
-
-	    //hud.render();
-	    cartaHUD.render();
+	    hud.render();
 	    Render.batch.end();
+		}else {
+			cartaHUD.render();
+			
+		}
 
 	    
 

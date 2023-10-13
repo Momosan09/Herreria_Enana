@@ -80,6 +80,106 @@ atlasData: {
 			tenPatchData: null
 			tvgData: null
 			type: TEXTURE
+			hidden: true
+		}
+		{
+			file: P:/MisJuegos/ProyectoEscuela/HerreriaEnana/archivos_de_edicion/HUD/skin/botonCerrar/boton_cerrar_up.png
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: boton_cerrar_up
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			tvgData: null
+			type: TEXTURE
+			hidden: false
+		}
+		{
+			file: P:/MisJuegos/ProyectoEscuela/HerreriaEnana/archivos_de_edicion/HUD/skin/botonCerrar/boton_cerrar_down.png
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: boton_cerrar_down
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			tvgData: null
+			type: TEXTURE
+			hidden: false
+		}
+		{
+			file: P:/MisJuegos/ProyectoEscuela/HerreriaEnana/archivos_de_edicion/HUD/skin/botonCerrar/boton_cerrar_over.png
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: boton_cerrar_over
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			tvgData: null
+			type: TEXTURE
+			hidden: false
+		}
+		{
+			file: P:/MisJuegos/ProyectoEscuela/HerreriaEnana/archivos_de_edicion/HUD/skin/botonCerrar/boton_cerrar_focused.png
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: boton_cerrar_focused
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			tvgData: null
+			type: TEXTURE
+			hidden: false
+		}
+		{
+			file: P:/MisJuegos/ProyectoEscuela/HerreriaEnana/archivos_de_edicion/HUD/skin/botonCerrar/boton_cerrar_disabled.png
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: boton_cerrar_disabled
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			tvgData: null
+			type: TEXTURE
 			hidden: false
 		}
 		{
@@ -201,31 +301,31 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: up
 						optional: true
-						value: null
+						value: boton_cerrar_up
 					}
 					down: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: down
 						optional: true
-						value: null
+						value: boton_cerrar_down
 					}
 					over: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: over
 						optional: true
-						value: null
+						value: boton_cerrar_over
 					}
 					focused: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: focused
 						optional: true
-						value: null
+						value: boton_cerrar_focused
 					}
 					disabled: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: disabled
 						optional: true
-						value: null
+						value: boton_cerrar_disabled
 					}
 					checked: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
@@ -845,13 +945,13 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: null
+						value: Cardinal
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
 						name: fontColor
 						optional: true
-						value: null
+						value: Blanco
 					}
 					background: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
@@ -1780,6 +1880,10 @@ preferences: {
 	id: {
 		class: java.lang.Integer
 		value: 722821840
+	}
+	last-import-export-path: {
+		class: java.lang.String
+		value: P:/MisJuegos/ProyectoEscuela/HerreriaEnana/assets/HUD/skin/skin.json
 	}
 	resources-relative: {
 		class: java.lang.Boolean

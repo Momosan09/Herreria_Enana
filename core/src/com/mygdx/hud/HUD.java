@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -24,12 +25,14 @@ import com.mygdx.utiles.Recursos;
 
 /*
  	https://libgdxinfo.wordpress.com/basic_image/
+ 	https://github.com/raeleus/viewports-sample-project
  */
 public class HUD implements HeadUpDisplay{
 
 	private Texture dinero_Tex;
 	private Texture reloj_Tex;
 	private Image reloj;
+	private ScreenViewport screenViewport;//Stage viene con un viewport pero no sirve, por eso usamos a este buen hombre
 	private Stage stage;
 	private Table hud;
 	private Table dineroTable;
@@ -68,7 +71,8 @@ public class HUD implements HeadUpDisplay{
 	@Override
 	public void poblarStage() {
 
-		stage = new Stage();
+		screenViewport = new ScreenViewport();//Stage viene con un viewport pero no sirve, por eso usamos a este buen hombre
+		stage = new Stage(screenViewport);//le pasamos a este buen hombre
 		//Gdx.input.setInputProcessor(stage);
 		hud = new Table();
 		hud.setFillParent(true);
@@ -147,7 +151,7 @@ public class HUD implements HeadUpDisplay{
 	
 	@Override
 	public void reEscalar(int width, int height) {
-		stage.getViewport().update(width, height);
+		screenViewport.update(width, height, true);//actualizamos cuando la ventana se reescala
 	}
 	public void dispose() {
 		stage.dispose();
@@ -222,6 +226,7 @@ public class HUD implements HeadUpDisplay{
 
 	@Override
 	public void render() {
+		//screenViewport.apply();//no estoy muy seguro de que hace esto
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 		

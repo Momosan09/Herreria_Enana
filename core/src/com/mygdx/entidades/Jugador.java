@@ -20,7 +20,7 @@ public class Jugador {
 	private Vector2 posicion;
 	private float velocidad = 120f;
 	public OrthographicCamera camara;
-
+	public boolean puedeMoverse = false;
 	private int tamañoPersonaje = 32;
     
 	private Direcciones direccionActual = Direcciones.QUIETO;
@@ -47,6 +47,8 @@ public class Jugador {
         float movimientoX = 0;
         float movimientoY = 0;
 
+        if(puedeMoverse) {
+        	
         if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) {
         if (Gdx.input.isKeyPressed(Keys.W)) {
             movimientoY += velocidad;
@@ -89,6 +91,7 @@ public class Jugador {
         }
 
         movimientoCamara();
+        }
     }
 
 	private void movimientoCamara() {
