@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Principal;
 import com.mygdx.hud.HeadUpDisplay;
 import com.mygdx.io.Entradas;
@@ -27,8 +28,8 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 
 	OrthographicCamera camara;
 	final Principal game;
-	//Stage trae su propio viewport, no es necesario crear uno
-	
+	//Stage trae su propio viewport, no es necesario crear uno	//Error, si es necesario crear uno, para los hud va el screenViewPort
+	private ScreenViewport screenViewPort;
 	private Stage stage;
 	private Table interfaz;
 	private Table opciones;
@@ -96,7 +97,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	@Override
 	public void resize(int width, int height) {
 		offSetX = fondoImg.getWidth() - camara.viewportWidth; //usa el ancho de la textura porque este va a ser siempre constante, en el caso de que modifique el tamaño del sprite aca no deberia haber cambios
-		stage.getViewport().update(width, height);
+		screenViewPort.update(width, height, true);		
 	}
 
 	@Override
@@ -138,8 +139,9 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	}
 	
 	@Override
-	public void crearActores() {	
-		stage = new Stage();
+	public void crearActores() {
+		screenViewPort = new ScreenViewport();
+		stage = new Stage(screenViewPort);
 			
 		interfaz = new Table();
 		interfaz.setFillParent(true);
@@ -221,7 +223,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	@Override
 	public void reEscalar(int width, int heigth) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

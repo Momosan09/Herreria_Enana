@@ -104,7 +104,7 @@ public class Juego implements Screen{
 	      
 		Render.batch.end();
 	    
-		if(cartaHUD.cerrar) {
+		if(cartaHUD.cerrar) {//si ya leyo la carta
 		jugador.puedeMoverse=true;
 	    npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
 	    vendedor.charla(1);

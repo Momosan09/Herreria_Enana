@@ -24,10 +24,6 @@ public class DesktopLauncher {
 		config.setDecorated(true);
 		//config.setMaximized(true);
 		config.setWindowedMode(1280, 768);
-		config.setWindowSizeLimits(1280, 768, 1920, 1080);
-
-
-
 		
 		new Lwjgl3Application(new Principal(), config);
 	}

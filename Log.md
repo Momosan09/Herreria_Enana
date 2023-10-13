@@ -126,5 +126,5 @@
     - Hice unas eskines para los botones
     - no me andan los botones
     - Vamos a ver si se arreglo magicamente o no... SI
-    - OMG, el hud ahora se reescala re piola, queda re bien (CartaHUD todavia no se puede reescalar bien)
-    - Mi cerebro a las brasas.
+    - OMG los HUDs se reescalan re piola, queda re bien (CartaHUD todavia no se puede reescalar bien)
+    - Ahora se puede cerrar la carta del comienzo
