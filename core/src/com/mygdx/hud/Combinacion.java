@@ -31,12 +31,8 @@ public class Combinacion implements HeadUpDisplay, Cerrable{
 	private Label labelInv, titulo;
 	private Button cerrarBoton;
 	private Skin skin;
-
-    private DibujarFiguras fondo;
-    private EstiloFuente estiloFuente;
 	private Label.LabelStyle labelStyle;
 
-    
     private MyDragAndDrop dragNDrop;
     
     private int pad = 20;
@@ -44,7 +40,6 @@ public class Combinacion implements HeadUpDisplay, Cerrable{
 
     public Combinacion() {
     	
-    	fondo = new DibujarFiguras();
     	screenViewport = new ScreenViewport();
         stage = new Stage(screenViewport);
         
@@ -58,7 +53,7 @@ public class Combinacion implements HeadUpDisplay, Cerrable{
     }
     
     public void render() {
-    	fondo.dibujarRectanguloLleno(contenedor.getX()+pad, contenedor.getY()+pad, contenedor.getWidth()-(pad*2), contenedor.getHeight()-(pad*2), new Color(0,0,0,.7f));
+    	DibujarFiguras.dibujarRectanguloLleno(contenedor.getX()+pad, contenedor.getY()+pad, contenedor.getWidth()-(pad*2), contenedor.getHeight()-(pad*2), new Color(0,0,0,.7f));
     	stage.act(Gdx.graphics.getDeltaTime());
     	stage.draw();
     	dragNDrop.render();
@@ -119,8 +114,7 @@ public class Combinacion implements HeadUpDisplay, Cerrable{
 
 	@Override
 	public void crearFuentes() {
-		estiloFuente = new EstiloFuente();
-		labelStyle = estiloFuente.generarFuente(32, Colores.BLANCO, false);
+		labelStyle = EstiloFuente.generarFuente(32, Colores.BLANCO, false);
 		
 	}
 

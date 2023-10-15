@@ -27,7 +27,6 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 	private Table interfaz;
 	private Label interfazTextos[];
 	private Label.LabelStyle estiloLabel, tituloEstilo;
-	private EstiloFuente estiloFuente;
 	Entradas entradas = new Entradas();
 	OrthographicCamera camara;
 	
@@ -113,9 +112,8 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 
 	@Override
 	public void crearFuentes() {
-		estiloFuente = new EstiloFuente();
-		estiloLabel = estiloFuente.generarFuente(24, Colores.BLANCO, false);
-		tituloEstilo = estiloFuente.generarFuente(40, Colores.BLANCO, false);
+		estiloLabel = EstiloFuente.generarFuente(24, Colores.BLANCO, false);
+		tituloEstilo = EstiloFuente.generarFuente(40, Colores.BLANCO, false);
 		
 	}
 

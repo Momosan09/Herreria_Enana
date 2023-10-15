@@ -8,10 +8,16 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -20,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
+import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 
 
@@ -57,11 +64,12 @@ public class HUD implements HeadUpDisplay{
 	private Label barraAbajoLbl;
 	private Label.LabelStyle labelStyle;
 	private Label.LabelStyle labelMonedasStyle[];
-	EstiloFuente estiloFuente;
+	
+	private ResultadosBatallasHUD resultadosHUD;
 
 	
     public HUD() {
-
+    	resultadosHUD = new ResultadosBatallasHUD();
     	cargarTexturas();
     	crearFuentes();
     	crearActores();
@@ -99,6 +107,7 @@ public class HUD implements HeadUpDisplay{
 		ultimasBatallasTable.add(ultimaBatalla[0], ultimaBatalla[1]);
 		ultimasBatallasTable.row();
 		ultimasBatallasTable.add(verBatallasAnteriores);
+		//ultimasBatallasTable.setBackground(new TextureRegionDrawable(new Texture(Recursos.CUADRO_HUD)));
 		hudIzq.add(ultimasBatallasTable);
 		
 			//Siguiente batalla
@@ -110,6 +119,7 @@ public class HUD implements HeadUpDisplay{
 		siguienteBatalla.add(nombreSiguienteBatalla);
 		siguienteBatalla.row();
 		siguienteBatalla.add(siguienteBatallaDetalles).left();
+		//siguienteBatalla.setBackground(new TextureRegionDrawable(new Texture(Recursos.CUADRO_HUD)));
 		
 		hudIzq.add(siguienteBatalla).left();
 		
@@ -142,6 +152,7 @@ public class HUD implements HeadUpDisplay{
 		hud.row();
 
 		hud.add(barraAbajoLbl).colspan(3);
+		hud.pad(15);
 
         stage.addActor(hud);
 
@@ -151,6 +162,7 @@ public class HUD implements HeadUpDisplay{
 	@Override
 	public void reEscalar(int width, int height) {
 		screenViewport.update(width, height, true);//actualizamos cuando la ventana se reescala
+		resultadosHUD.reEscalar(width, height);
 	}
 	public void dispose() {
 		stage.dispose();
@@ -180,11 +192,18 @@ public class HUD implements HeadUpDisplay{
 		ultimaBatalla = new Label[2];
 		ultimaBatalla[0] = new Label(Recursos.bundle.get("hud.ultimaBatalla"), labelStyle);
 		ultimaBatalla[1] = new Label("Aca mostrar resultado", labelStyle);
+		
+
+		
+		
 		verBatallasAnteriores = new Label(Recursos.bundle.get("hud.verAnteriores"), labelStyle);
+
+		
 		//verBatallasAnterioresClick = new TextButton("Click", skin);
 		siguienteBatallaLbl = new Label(Recursos.bundle.get("hud.siguienteBatalla"), labelStyle);
 		nombreSiguienteBatalla = new Label("Nombre-de-Batalla", labelStyle);
 		siguienteBatallaDetalles = new Label(Recursos.bundle.get("hud.verDetalles"), labelStyle);
+
 		
 		//CENTRO
 		centroLbl = new Label("Centro", labelStyle);
@@ -196,32 +215,46 @@ public class HUD implements HeadUpDisplay{
 		
 		//ABAJO
 		barraAbajoLbl = new Label("Barra De items", labelStyle);
+		
+		
+		
+		//EVENTOS
+		verBatallasAnteriores.addListener(new ClickListener() {
+			
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				resultadosHUD.mostrar(); // Abre resultadosHUD
+				//resultadosHUD.cerrar = !mostrarResultadosBatalla;
+				
+				System.out.println(HelpDebug.debub(getClass())+"click");
+			}
+		});
+		
+		siguienteBatallaDetalles.addListener(new ClickListener() {
+			
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				System.out.println(HelpDebug.debub(getClass())+"click");
+			}
+		});
+		
+		pedidoLbl.addListener(new ClickListener() {
+			
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				System.out.println(HelpDebug.debub(getClass())+"click");
+			}
+		});
 	}
 	
 	@Override
 	public void crearFuentes() {
-		estiloFuente = new EstiloFuente(); 
-    	labelStyle = estiloFuente.generarFuente(22, Colores.BLANCO, false);
+    	labelStyle = EstiloFuente.generarFuente(26, Colores.BLANCO, false);
     	labelMonedasStyle = new Label.LabelStyle[3];
-    	labelMonedasStyle[0] = estiloFuente.generarFuente(16, Colores.AU, false); 
-    	labelMonedasStyle[1] = estiloFuente.generarFuente(16, Colores.AG, false); 
-    	labelMonedasStyle[2] = estiloFuente.generarFuente(16, Colores.CU, false); 
+    	labelMonedasStyle[0] = EstiloFuente.generarFuente(16, Colores.AU, false); 
+    	labelMonedasStyle[1] = EstiloFuente.generarFuente(16, Colores.AG, false); 
+    	labelMonedasStyle[2] = EstiloFuente.generarFuente(16, Colores.CU, false); 
 	}
-	/*
-	private void generarFuente() {
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Recursos.FUENTE_TEMPORAL));
-	    FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-	    parameter.size = 22;
-	    parameter.borderWidth = 1;
-	    parameter.shadowOffsetX = 3;
-	    parameter.shadowOffsetY = 3;
-
-	    BitmapFont font24 = generator.generateFont(parameter); // tamaño de la fuente 24 pixeles
-	    generator.dispose();
-	 
-	    labelStyle = new Label.LabelStyle();
-	    labelStyle.font = font24;
-	}*/
 
 	@Override
 	public void render() {
@@ -229,7 +262,16 @@ public class HUD implements HeadUpDisplay{
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 		
+		resultadosHUD.render();
+		
 	}
 
+	public Stage getStage() {
+		return stage;
+	}
+
+	public ResultadosBatallasHUD getResultadosBatallasHUD() {
+		return resultadosHUD;
+	}
 
 }

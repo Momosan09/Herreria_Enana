@@ -34,7 +34,6 @@ public class CartaHUD implements HeadUpDisplay, Cerrable{
 	private Button cerrarBoton;
 	private Skin skin;
 
-	private EstiloFuente estiloFuente;
 	private Label.LabelStyle labelStyle;
 	private DialogosNPC datosCartaNpc;
 
@@ -55,8 +54,7 @@ public class CartaHUD implements HeadUpDisplay, Cerrable{
 	
 	@Override
 	public void crearFuentes() {
-		estiloFuente = new EstiloFuente();
-		labelStyle = estiloFuente.generarFuente(20, Colores.NEGRO, false);
+		labelStyle = EstiloFuente.generarFuente(20, Colores.NEGRO, false);
 		
 	}
 

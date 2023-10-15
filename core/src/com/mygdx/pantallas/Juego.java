@@ -65,12 +65,12 @@ public class Juego implements Screen{
 		
 		camaraJuego = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camaraJuego.setToOrtho(false);
-		camaraJuego.zoom = .7f;
+		camaraJuego.zoom = .6f;
 		
 		
 		camaraHud = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camaraHud.setToOrtho(false); 
-		camaraHud.zoom = .1f;
+		camaraHud.zoom = .01f;
 		
 	    //render
 		Render.tiledMapRenderer = new OrthogonalTiledMapRenderer(Recursos.MAPA);
@@ -93,6 +93,8 @@ public class Juego implements Screen{
 	    mux.addProcessor(cartaHUD.getStage());
 	    mux.addProcessor(combinacion.getStage());//Esto es para los botones de la propia clase
 	    mux.addProcessor(combinacion.getDragAndDrop().getStage());//Esto es para las imagenes arratrables que tiene el stage del dragAndDrop de esta clase, si quiero poner otro dragAndDrop tengo q ue agregarlo asi
+	    mux.addProcessor(hud.getStage());
+	    mux.addProcessor(hud.getResultadosBatallasHUD().getStage());
 		Gdx.input.setInputProcessor(mux);
 
 	}
@@ -129,21 +131,25 @@ public class Juego implements Screen{
 			Render.batch.setProjectionMatrix(camaraHud.combined);//Una vez que renderiza el juego, se inicia el batch para la camara del HUD y lo dibuja
 	    
 			Render.batch.begin();//HUD´s
-			hud.render();
 
+
+		    if(Gdx.input.isKeyPressed(Keys.TAB)) {//Esto despues lo tengo que cambiar
+		    	combinacion.setCerrar(false);//Abrir Combinacion
+		    }
+			if(!combinacion.getCerrar()) {
+				jugador.puedeMoverse = false;
+				combinacion.render();
+				
+			}else {
+				hud.render();
+			}
 			
 			Render.batch.end();
 		}else {
 			cartaHUD.render();
+			
 		}
-	    if(Gdx.input.isKeyPressed(Keys.TAB)) {//Esto despues lo tengo que cambiar
-	    	combinacion.setCerrar(false);//Abrir Combinacion
-	    	
-	    }
-		if(!combinacion.getCerrar()) {
-			combinacion.render();
-			jugador.puedeMoverse = false;
-		}
+
 	    //System.out.println(HelpDebug.debub(this.getClass()) + "Hola");
 
 	}
@@ -159,6 +165,7 @@ public class Juego implements Screen{
 	    hud.reEscalar(width, height);
 	    cartaHUD.reEscalar(width, height);
 	    combinacion.reEscalar(width, height);
+	    npcManager.reEscalarDialogos(width, height);
 	}
 
 	@Override

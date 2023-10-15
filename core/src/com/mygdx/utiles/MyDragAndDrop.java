@@ -32,7 +32,6 @@ public class MyDragAndDrop {
 	
 	private ScreenViewport screenViewport;
 	private Stage stage;
-    private EstiloFuente estiloFuente;
 	private Label.LabelStyle labelStyle;
 	private ArrayList<Image> inventario;
 	
@@ -40,8 +39,7 @@ public class MyDragAndDrop {
 	public MyDragAndDrop(){
 		screenViewport = new ScreenViewport();
 		stage = new Stage(screenViewport);
-		estiloFuente = new EstiloFuente();
-		labelStyle = estiloFuente.generarFuente(32, Colores.BLANCO, false);
+		labelStyle = EstiloFuente.generarFuente(32, Colores.BLANCO, false);
 		
 		Sprite spr = new Sprite(new Texture(Recursos.YUNQUE));
 		

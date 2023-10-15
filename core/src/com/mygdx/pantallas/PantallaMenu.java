@@ -35,7 +35,6 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	private Table opciones;
 	private Label[] interfazTexto;
 	private Label.LabelStyle tituloEstilo, subTituloEstilo, opcionEstilo, selccionadoEstilo, bottomEstilo;
-	private EstiloFuente estiloFuente;
 	Entradas entradas = new Entradas();
 	
 	private Texture fondoImg;
@@ -130,12 +129,11 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	
 	@Override
 	public void crearFuentes() {
-		estiloFuente = new EstiloFuente();
-		tituloEstilo = estiloFuente.generarFuente(80, Colores.BLANCO, false);
-		subTituloEstilo = estiloFuente.generarFuente(26, Colores.BLANCO, false);
-		opcionEstilo = estiloFuente.generarFuente(22, Colores.BLANCO, false);
-		selccionadoEstilo = estiloFuente.generarFuente(22, Colores.SELECCIONADO, false);
-		bottomEstilo = estiloFuente.generarFuente(20, Colores.MENUBOTTOMCOLOR, false);
+		tituloEstilo = EstiloFuente.generarFuente(80, Colores.BLANCO, false);
+		subTituloEstilo = EstiloFuente.generarFuente(26, Colores.BLANCO, false);
+		opcionEstilo = EstiloFuente.generarFuente(22, Colores.BLANCO, false);
+		selccionadoEstilo = EstiloFuente.generarFuente(22, Colores.SELECCIONADO, false);
+		bottomEstilo = EstiloFuente.generarFuente(20, Colores.MENUBOTTOMCOLOR, false);
 	}
 	
 	@Override

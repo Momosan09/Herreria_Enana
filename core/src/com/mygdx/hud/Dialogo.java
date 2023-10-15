@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Npc;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
@@ -20,23 +21,21 @@ import com.mygdx.utiles.Recursos;
 
 public class Dialogo implements HeadUpDisplay{
 
-	Npc locutor;
+	private Npc locutor;
 	
+	private ScreenViewport screenViewport;
 	private Stage stage;
 	private Table cajaDeDialogo;
 	private Label nombre, mensaje;
 	private Image retrato;
 	
-	private EstiloFuente estiloFuente;
 	private Label.LabelStyle labelStyle;
 	private int mensajeAMostrar, padding = 20;
 	
-	private DibujarFiguras fondoTabla;
 	
 	public Dialogo(Npc locutor) {
 		this.locutor = locutor;
 		//System.out.println("mostrando dialgo");
-		fondoTabla = new DibujarFiguras();
 		poblarStage();
 		
 		
@@ -45,7 +44,7 @@ public class Dialogo implements HeadUpDisplay{
 	@Override
 	public void render() {
 		update();
-		fondoTabla.dibujarRectanguloLleno(0, padding, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/3, new Color(0,0,0,.5f));
+		DibujarFiguras.dibujarRectanguloLleno(0, padding, cajaDeDialogo.getWidth(), cajaDeDialogo.getRowHeight(1), new Color(0,0,0,.5f));
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 		
@@ -61,7 +60,6 @@ public class Dialogo implements HeadUpDisplay{
 	
 	@Override
 	public void crearActores() {
-		
 		nombre = new Label(locutor.getNombre(), labelStyle);
 		mensaje = new Label(locutor.getDialogos(mensajeAMostrar), labelStyle);
 		retrato = new Image(locutor.getRetratoTextura());
@@ -72,7 +70,8 @@ public class Dialogo implements HeadUpDisplay{
 	public void poblarStage() {
 		crearFuentes();
 		crearActores();
-		stage = new Stage();
+		screenViewport = new ScreenViewport();
+		stage = new Stage(screenViewport);
 		cajaDeDialogo = new Table();
 		cajaDeDialogo.setFillParent(true);
 		cajaDeDialogo.setDebug(true);
@@ -90,8 +89,7 @@ public class Dialogo implements HeadUpDisplay{
 	
 	@Override
 	public void crearFuentes() {
-		estiloFuente = new EstiloFuente();
-		labelStyle = estiloFuente.generarFuente(22, Colores.BLANCO, false);
+		labelStyle = EstiloFuente.generarFuente(22, Colores.BLANCO, false);
 	}
 	
 	public void selectMensaje(int index) {
@@ -100,7 +98,8 @@ public class Dialogo implements HeadUpDisplay{
 
 	@Override
 	public void reEscalar(int width, int heigth) {
-		stage.getViewport().update(width, heigth);
+		screenViewport.update(width, heigth,true);
+		DibujarFiguras.dibujarRectanguloLleno(0, padding, cajaDeDialogo.getWidth(), cajaDeDialogo.getRowHeight(1), new Color(0,0,0,.5f));
 		
 	}
 

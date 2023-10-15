@@ -62,6 +62,12 @@ public class NPCManager {
     public List<Npc> getEntidades() {
         return npcs;
     }
+    
+    public void reEscalarDialogos(int width, int height) {
+    	for (Npc npc : npcs) {
+    		npc.getCajaDialogo().reEscalar(width, height);			
+		}
+    }
 
 }
 

@@ -134,3 +134,8 @@
     - CartaHUD ahora se cierra completamente cuando es cerrado (se quitan los actores, el listener de eventos, etc)
     - InputMultiplexer yaajuuuu, ahora todo anda... TODO
     - Unos cambios a la interfaz Combinacion
+
+# 15 OCT
+    - El HUD principal tiene ahora las Labels clickeables
+    - La base del funcionamiento de la label de batallas anteriores ya funciona
+    - Cambie algunas clases a clases abstractas 

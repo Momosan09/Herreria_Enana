@@ -12,10 +12,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
-public class EstiloFuente {
-	public Label.LabelStyle labelStyle;
+public abstract class EstiloFuente {
+	public static Label.LabelStyle labelStyle;
 	
-	public Label.LabelStyle generarFuente (int tamano, String hex, boolean sombra) {
+	public static Label.LabelStyle generarFuente (int tamano, String hex, boolean sombra) {
 		
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Recursos.FUENTE_TEMPORAL));
 	    FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();

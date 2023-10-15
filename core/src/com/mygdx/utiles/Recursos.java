@@ -35,6 +35,7 @@ public abstract class Recursos {
 	//HUD
 	public static final String DINERO_HUD = "HUD/Dinero.png";
 	public static final String RELOJ_HUD = "HUD/hora.png";
+	public static final String CUADRO_HUD = "HUD/cuadro.png";
 	public static final String SKIN = "HUD/skin/skin.json";
 	
 	//CARTA
