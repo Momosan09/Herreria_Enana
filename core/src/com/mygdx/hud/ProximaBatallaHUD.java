@@ -75,7 +75,7 @@ public class ProximaBatallaHUD implements HeadUpDisplay, Ocultable{
 		contenedor.add(new Label(Recursos.bundle.get("siguienteBatalla.terreno"), labelStyle));
 		contenedor.add(new Label(Recursos.bundle.get("siguienteBatalla.tipoTerreno"), labelStyle));
 		
-		tabla.add(contenedor);
+		tabla.add(contenedor).center();
 		tabla.add(cerrarBoton).top();
 		stage.addActor(tabla);
 		
@@ -83,7 +83,8 @@ public class ProximaBatallaHUD implements HeadUpDisplay, Ocultable{
 
 	@Override
 	public void reEscalar(int width, int heigth) {
-		screenViewport.update(width, heigth);
+		screenViewport.update(width, heigth, true);
+		
 		
 	}
 

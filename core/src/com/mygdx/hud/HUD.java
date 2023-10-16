@@ -166,6 +166,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 	public void reEscalar(int width, int height) {
 		screenViewport.update(width, height, true);//actualizamos cuando la ventana se reescala
 		resultadosHUD.reEscalar(width, height);
+		proximaBatallaHUD.reEscalar(width, height);
 	}
 	public void dispose() {
 		stage.dispose();

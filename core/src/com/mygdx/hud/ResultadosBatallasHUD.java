@@ -110,7 +110,7 @@ public class ResultadosBatallasHUD implements HeadUpDisplay, Ocultable{//Una cos
 
 	@Override
 	public void reEscalar(int width, int heigth) {
-		screenViewport.update(width, heigth);
+		screenViewport.update(width, heigth, true);
 		
 	}
 
