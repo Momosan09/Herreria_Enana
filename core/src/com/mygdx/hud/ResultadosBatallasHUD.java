@@ -29,6 +29,7 @@ public class ResultadosBatallasHUD implements HeadUpDisplay, Ocultable{//Una cos
 	private Table tabla,contenedor;
 	private Label.LabelStyle labelStyle, labelStylePerdio, labelStyleGano;
 	private ArrayList<String> historial;
+	private ArrayList<Table> tablas;
 	private ArrayList<Label> labels;
 	private Skin skin;
 	private Button cerrarBoton;
@@ -37,6 +38,7 @@ public class ResultadosBatallasHUD implements HeadUpDisplay, Ocultable{//Una cos
 	
 	public ResultadosBatallasHUD() {
 		historial = ResultadosBatallas.getHistorial();
+		tablas = new ArrayList<Table>();
 		labels = new ArrayList<Label>();
 		crearFuentes();
 		crearActores();
@@ -70,6 +72,7 @@ public class ResultadosBatallasHUD implements HeadUpDisplay, Ocultable{//Una cos
 		historial.add(Recursos.bundle.get("resultadosBatalla.ganada"));
 		
 		for (int i = 0; i<historial.size();i++) {
+			tablas.add(new Table());
 			labels.add(new Label(historial.get(i), (historial.get(i).contains(Recursos.bundle.get("resultadosBatalla.ganada"))?labelStyleGano:labelStylePerdio)));//color verde si es ganada, color rojo si es perdida
 			
 			if(i==historial.size()-1)System.out.println(HelpDebug.debub(getClass())+"Creadas= "+(i+1));
@@ -91,7 +94,10 @@ public class ResultadosBatallasHUD implements HeadUpDisplay, Ocultable{//Una cos
 	public void poblarStage() {
 
 		for (int i = 0; i<labels.size();i++) {
-			contenedor.add(labels.get(i)).fill();
+			tablas.get(i).add(new Label("Encabezado", labelStyle));
+			tablas.get(i).row();
+			tablas.get(i).add(labels.get(i)).fill();
+			contenedor.add(tablas.get(i));
 			contenedor.row();
 		}
 		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.CARTA_TEXTURA)) );
@@ -127,6 +133,9 @@ public class ResultadosBatallasHUD implements HeadUpDisplay, Ocultable{//Una cos
         visible = false;
     }
 	
+	public boolean getVisible() {
+		return visible;
+	}
 	public Stage getStage() {
 		return stage;
 	}

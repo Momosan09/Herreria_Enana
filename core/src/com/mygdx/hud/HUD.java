@@ -34,7 +34,7 @@ import com.mygdx.utiles.Recursos;
  	https://libgdxinfo.wordpress.com/basic_image/
  	https://github.com/raeleus/viewports-sample-project
  */
-public class HUD implements HeadUpDisplay{
+public class HUD implements HeadUpDisplay, Ocultable{
 
 	private Texture dinero_Tex;
 	private Texture reloj_Tex;
@@ -66,10 +66,13 @@ public class HUD implements HeadUpDisplay{
 	private Label.LabelStyle labelMonedasStyle[];
 	
 	private ResultadosBatallasHUD resultadosHUD;
+	private ProximaBatallaHUD proximaBatallaHUD;
 
+	public boolean visible = true;
 	
     public HUD() {
     	resultadosHUD = new ResultadosBatallasHUD();
+    	proximaBatallaHUD = new ProximaBatallaHUD();
     	cargarTexturas();
     	crearFuentes();
     	crearActores();
@@ -223,10 +226,13 @@ public class HUD implements HeadUpDisplay{
 			
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				resultadosHUD.mostrar(); // Abre resultadosHUD
+				if(!proximaBatallaHUD.getVisible()) {
+					resultadosHUD.mostrar(); // Abre resultadosHUD		
+					
+				}
 				//resultadosHUD.cerrar = !mostrarResultadosBatalla;
 				
-				System.out.println(HelpDebug.debub(getClass())+"click");
+				//System.out.println(HelpDebug.debub(getClass())+"click");
 			}
 		});
 		
@@ -234,7 +240,10 @@ public class HUD implements HeadUpDisplay{
 			
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				System.out.println(HelpDebug.debub(getClass())+"click");
+				if(!resultadosHUD.getVisible()) {
+					proximaBatallaHUD.mostrar();
+					
+				}
 			}
 		});
 		
@@ -258,11 +267,14 @@ public class HUD implements HeadUpDisplay{
 
 	@Override
 	public void render() {
+		if(visible) {
 		//screenViewport.apply();//no estoy muy seguro de que hace esto
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 		
 		resultadosHUD.render();
+		proximaBatallaHUD.render();//Nose porque no funciona el click de proximaBatallaHUD cuando lo quiero usar despues de haber abierto resultadosHUD
+		}
 		
 	}
 
@@ -272,6 +284,23 @@ public class HUD implements HeadUpDisplay{
 
 	public ResultadosBatallasHUD getResultadosBatallasHUD() {
 		return resultadosHUD;
+	}
+	
+	public ProximaBatallaHUD getProximaBatallaHUD() {
+		return proximaBatallaHUD;
+	}
+
+	@Override
+	public void mostrar() {
+		visible = true;
+		
+	}
+
+	@Override
+	public void ocultar() {
+		visible = false;
+		stage.unfocusAll();//Cuando esta oculto desenfoca el stage para que no procese eventos
+		
 	}
 
 }

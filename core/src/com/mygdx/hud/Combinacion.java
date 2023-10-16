@@ -23,7 +23,7 @@ import com.mygdx.utiles.Recursos;
 
 import com.mygdx.io.Entradas;
 
-public class Combinacion implements HeadUpDisplay, Cerrable{
+public class Combinacion implements HeadUpDisplay, Ocultable{
 
 	private ScreenViewport screenViewport;
 	private Stage stage;
@@ -36,8 +36,7 @@ public class Combinacion implements HeadUpDisplay, Cerrable{
     private MyDragAndDrop dragNDrop;
     
     private int pad = 20;
-    private boolean cerrar = true;
-
+    public boolean visible=false;
     public Combinacion() {
     	
     	screenViewport = new ScreenViewport();
@@ -53,10 +52,12 @@ public class Combinacion implements HeadUpDisplay, Cerrable{
     }
     
     public void render() {
+    	if(visible) {
     	DibujarFiguras.dibujarRectanguloLleno(contenedor.getX()+pad, contenedor.getY()+pad, contenedor.getWidth()-(pad*2), contenedor.getHeight()-(pad*2), new Color(0,0,0,.7f));
     	stage.act(Gdx.graphics.getDeltaTime());
     	stage.draw();
     	dragNDrop.render();
+    	}
     }
     
     @Override
@@ -82,7 +83,7 @@ public class Combinacion implements HeadUpDisplay, Cerrable{
 			
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				cerrar = true;
+				ocultar();
 			}
 		});
     	
@@ -118,14 +119,14 @@ public class Combinacion implements HeadUpDisplay, Cerrable{
 		
 	}
 
-	@Override
+/*
 	public void cerrar() {
 	    contenedor.clear(); // Limpia todos los actores del contenedor
 	    stage.unfocusAll(); // Desenfoca el stage para que no procese eventos
 	    stage.clear(); // Limpia el stage completamente
 		
 	}
-	
+	*/
 	public Stage getStage() {
 		return stage;
 	}
@@ -133,12 +134,24 @@ public class Combinacion implements HeadUpDisplay, Cerrable{
 	public MyDragAndDrop getDragAndDrop() {
 		return dragNDrop;
 	}
-	
+/*
 	public boolean getCerrar() {
 		return cerrar;
 	}
 	
 	public void setCerrar(boolean value) {
 		cerrar=value;
+	}
+*/
+	@Override
+	public void mostrar() {
+		visible = true;
+		
+	}
+
+	@Override
+	public void ocultar() {
+		visible = false;
+		stage.unfocusAll();//Cuando esta oculto desenfoca el stage para que no procese eventos
 	}
 }

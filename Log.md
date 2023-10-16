@@ -139,3 +139,7 @@
     - El HUD principal tiene ahora las Labels clickeables
     - La base del funcionamiento de la label de batallas anteriores ya funciona
     - Cambie algunas clases a clases abstractas 
+
+# 16 OCT
+    - Modificando y agregando nuevos HUDs
+    

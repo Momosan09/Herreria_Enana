@@ -95,6 +95,7 @@ public class Juego implements Screen{
 	    mux.addProcessor(combinacion.getDragAndDrop().getStage());//Esto es para las imagenes arratrables que tiene el stage del dragAndDrop de esta clase, si quiero poner otro dragAndDrop tengo q ue agregarlo asi
 	    mux.addProcessor(hud.getStage());
 	    mux.addProcessor(hud.getResultadosBatallasHUD().getStage());
+	    mux.addProcessor(hud.getProximaBatallaHUD().getStage());
 		Gdx.input.setInputProcessor(mux);
 
 	}
@@ -117,7 +118,11 @@ public class Juego implements Screen{
 		npcManager.detectarJugador(jugador); 
 	      
 		Render.batch.end();
-	    
+
+		Render.batch.begin();//HUD´s
+		
+		
+
 		if(cartaHUD.getCerrar()) {//si ya leyo la carta
 			cartaHUD.cerrar();
 			jugador.puedeMoverse=true;
@@ -130,26 +135,33 @@ public class Juego implements Screen{
 			camaraHud.update();
 			Render.batch.setProjectionMatrix(camaraHud.combined);//Una vez que renderiza el juego, se inicia el batch para la camara del HUD y lo dibuja
 	    
-			Render.batch.begin();//HUD´s
 
 
-		    if(Gdx.input.isKeyPressed(Keys.TAB)) {//Esto despues lo tengo que cambiar
-		    	combinacion.setCerrar(false);//Abrir Combinacion
+
+			//Renderiza ocultables
+			hud.render();
+			combinacion.render();
+
+		    if(Gdx.input.isKeyJustPressed(Keys.TAB)) {//Esto despues lo tengo que cambiar
+		    	combinacion.mostrar();//Abrir Combinacion
 		    }
-			if(!combinacion.getCerrar()) {
-				jugador.puedeMoverse = false;
-				combinacion.render();
-				
-			}else {
-				hud.render();
-			}
-			
-			Render.batch.end();
+		    
 		}else {
 			cartaHUD.render();
-			
+		}
+		
+		//bloquear movimiento del jugador
+		if(combinacion.visible) {
+			jugador.puedeMoverse = false;
+			hud.ocultar();
+		}else {
+			jugador.puedeMoverse=true;
+			hud.mostrar();
 		}
 
+
+
+		Render.batch.end();
 	    //System.out.println(HelpDebug.debub(this.getClass()) + "Hola");
 
 	}
@@ -207,5 +219,3 @@ public class Juego implements Screen{
 
 
 }
-
-
