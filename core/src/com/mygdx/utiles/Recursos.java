@@ -31,6 +31,7 @@ public abstract class Recursos {
 	
 	//Objetos del mapa
 	public static final String YUNQUE = "objetosDelMundo/inanimados/interactuables/yunque.png";
+	public static final String PIEDRA = "objetosDelMundo/inanimados/interactuables/piedra.png";
 	
 	//HUD
 	public static final String DINERO_HUD = "HUD/Dinero.png";

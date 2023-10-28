@@ -143,3 +143,5 @@
 # 16 OCT
     - Modificando y agregando nuevos HUDs
     
+# 28 OCT
+    - Agregando Mineria

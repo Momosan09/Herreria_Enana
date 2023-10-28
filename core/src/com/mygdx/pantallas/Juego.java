@@ -18,12 +18,14 @@ import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.NPCManager;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.ObjetoDelMapa;
+import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Yunque;
 import com.mygdx.entidades.npcs.Rey;
 import com.mygdx.entidades.npcs.Vendedor;
 import com.mygdx.entidades.npcs.Viejo;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.entidades.npcs.dialogos.Npc_Dialogos_Rey;
+import com.mygdx.enums.Items;
 import com.mygdx.game.Principal;
 import com.mygdx.hud.CartaHUD;
 import com.mygdx.hud.Combinacion;
@@ -38,6 +40,7 @@ public class Juego implements Screen{
 	private Jugador jugador;
 	private Npc viejo, vendedor;
 	private ObjetoDelMapa carta;
+	private Mineral piedra;
 	private Texture jugadorTextura;
 	private OrthographicCamera camaraJuego, camaraHud;
 	private Dialogo dialogo;
@@ -97,6 +100,8 @@ public class Juego implements Screen{
 	    mux.addProcessor(hud.getResultadosBatallasHUD().getStage());
 	    mux.addProcessor(hud.getProximaBatallaHUD().getStage());
 		Gdx.input.setInputProcessor(mux);
+		
+		piedra = new Mineral(600,600,Recursos.PIEDRA);
 
 	}
 
@@ -116,6 +121,12 @@ public class Juego implements Screen{
 	    
 		npcManager.renderizar(Render.batch);
 		npcManager.detectarJugador(jugador); 
+		
+		if(piedra.vida > 0) {
+		piedra.detectarJugador(jugador);
+		piedra.minar();
+		piedra.draw();
+		}
 	      
 		Render.batch.end();
 
@@ -160,7 +171,10 @@ public class Juego implements Screen{
 		}
 
 
-
+		if(Gdx.input.isKeyPressed(Keys.E)) {
+			jugador.getItems().add(Items.PICO);
+			System.out.println("Otorgado: Pico");
+		}
 		Render.batch.end();
 	    //System.out.println(HelpDebug.debub(this.getClass()) + "Hola");
 

@@ -1,5 +1,7 @@
 package com.mygdx.entidades;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -10,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.enums.Direcciones;
+import com.mygdx.enums.Items;
 import com.mygdx.hud.HUD;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.Recursos;
@@ -22,6 +25,7 @@ public class Jugador {
 	public OrthographicCamera camara;
 	public boolean puedeMoverse = false;
 	private int tamañoPersonaje = 32;
+	private ArrayList<Items> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
     
 	private Direcciones direccionActual = Direcciones.QUIETO;
 	Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
@@ -158,6 +162,10 @@ public class Jugador {
 			return true;
 		}
 		return false;
+	}
+	
+	public ArrayList<Items> getItems(){
+		return items;
 	}
 
 }
