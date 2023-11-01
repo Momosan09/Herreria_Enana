@@ -24,6 +24,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.mygdx.entidades.Jugador;
+import com.mygdx.enums.Items;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
@@ -47,6 +49,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 	private Table siguienteBatalla;
 	private Table pedidosTable;
 	private Table hudIzq, hudCen, hudDer;
+	private Table barraItems;
 	
 	private Sprite dineroImgSpr;
 	private Label dineroLbl;
@@ -70,7 +73,10 @@ public class HUD implements HeadUpDisplay, Ocultable{
 
 	public boolean visible = true;
 	
-    public HUD() {
+	private Jugador jugador;
+	
+    public HUD(Jugador jugador) {
+    	this.jugador = jugador;
     	resultadosHUD = new ResultadosBatallasHUD();
     	proximaBatallaHUD = new ProximaBatallaHUD();
     	cargarTexturas();
@@ -136,7 +142,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		hudDer = new Table();
 		pedidosTable = new Table();
 		
-			//pedidos
+		//pedidos
 		pedidosTable.add(pedidoLbl);
 		//pedidosTable.add(pedidoBtn);
 		
@@ -146,6 +152,9 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		hudDer.row();
 		hudDer.add(pedidosTable).bottom();
 
+		//barra items
+		Image imagen = new Image(Items.PICO.getTextura());
+		barraItems.add(imagen);
 		
 	
 		//Gral
@@ -154,7 +163,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		hud.add(hudDer).size(200, 200).top();
 		hud.row();
 
-		hud.add(barraAbajoLbl).colspan(3);
+		hud.add(barraItems).colspan(3);
 		hud.pad(15);
 
         stage.addActor(hud);
@@ -217,8 +226,10 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		pedidoLbl = new Label(Recursos.bundle.get("hud.verPedidos"), labelStyle);
 		//pedidoBtn = new TextButton("",skin);
 		
-		//ABAJO
-		barraAbajoLbl = new Label("Barra De items", labelStyle);
+		//BARRA ITEMS
+		barraItems = new Table();
+		barraItems.setDebug(true);
+		//barraAbajoLbl = new Label("Barra De items", labelStyle);
 		
 		
 		

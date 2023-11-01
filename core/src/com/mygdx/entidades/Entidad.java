@@ -20,16 +20,26 @@ public abstract class Entidad {
 	private Sprite sprite;
 	protected boolean jugadorEnRango = false, apretoE = false;
 	private boolean jugadorTienePico = false;//Deberia ir en mineral pero no se me ocurre como hacerlo
+	private boolean comprable = false;
+	private String nombre;
 
 	private int distanciaInteraccion = 64;
 	
-	public Entidad(float x, float y, String rutaTextura) {
+	public Entidad(float x, float y,String rutaTextura) {
 		this.posicion = new Vector2(x,y);
 
 		this.textura = new Texture(rutaTextura);
 		sprite = new Sprite(this.textura);
 		sprite.setPosition(this.posicion.x, this.posicion.y);
 
+	}
+	
+	public Entidad(float x, float y, boolean comprable,String rutaTextura) {
+		this.posicion = new Vector2(x,y);
+		this.textura = new Texture(rutaTextura);
+		this.comprable = comprable;
+		sprite = new Sprite(this.textura);
+		sprite.setPosition(this.posicion.x, this.posicion.y);
 	}
 	
 	public void draw() {
@@ -78,6 +88,14 @@ public abstract class Entidad {
 		default:
 			return false;
 		}
+	}
+	
+	public Texture getTextura() {
+		return textura;
+	}
+	
+	public boolean isComprable() {
+		return comprable;
 	}
 	
 	

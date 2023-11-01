@@ -17,6 +17,7 @@ import com.mygdx.hud.HUD;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
+import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 
 public class Jugador {
 
@@ -25,22 +26,41 @@ public class Jugador {
 	public OrthographicCamera camara;
 	public boolean puedeMoverse = false;
 	private int tamañoPersonaje = 32;
+	private Texture texturaItem;
+	private Sprite spriteItem;
+	public int dinero=10;
+	
 	private ArrayList<Items> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
+	private ArrayList<Mineral> mineralesInv = new ArrayList<>();  
     
 	private Direcciones direccionActual = Direcciones.QUIETO;
 	Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
 	
 	public Jugador(OrthographicCamera camara) {
-		
 		posicion = new Vector2(Gdx.graphics.getWidth() / 2 - (tamañoPersonaje/ 2),Gdx.graphics.getHeight() / 2 - (tamañoPersonaje/ 2)); // posicion inicial
 		this.camara = camara;
 		crearAnimaciones();
+		texturaItem = new Texture(Recursos.PICO_DER);
+		spriteItem = new Sprite(texturaItem);
+		
+
 
 	}
 
+	private void dibujarItemActual() {
+		if(items.contains(Items.PICO)) {
+			if(direccionActual == Direcciones.IZQUIERDA) {
+				//spriteItem.flip(true, false);
+			}
+			spriteItem.draw(Render.batch);
+			spriteItem.setPosition(posicion.x, posicion.y);
+		}
+	}
+	
 	public void draw(SpriteBatch batch) {
 		// sprite.draw(batch);
 		update();
+		dibujarItemActual();
 	}
 
 	private void update() {
@@ -166,6 +186,10 @@ public class Jugador {
 	
 	public ArrayList<Items> getItems(){
 		return items;
+	}
+	
+	public ArrayList<Mineral> getMinerales(){
+		return mineralesInv;
 	}
 
 }

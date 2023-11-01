@@ -145,3 +145,7 @@
     
 # 28 OCT
     - Agregando Mineria
+
+# 1 NOV
+    - Cambios en mineria
+    - Agrega Inventario

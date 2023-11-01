@@ -19,7 +19,10 @@ import com.mygdx.entidades.NPCManager;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
+import com.mygdx.entidades.ObjetosDelMapa.MineralesManager;
 import com.mygdx.entidades.ObjetosDelMapa.Yunque;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.Hierro;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.Piedra;
 import com.mygdx.entidades.npcs.Rey;
 import com.mygdx.entidades.npcs.Vendedor;
 import com.mygdx.entidades.npcs.Viejo;
@@ -30,7 +33,9 @@ import com.mygdx.game.Principal;
 import com.mygdx.hud.CartaHUD;
 import com.mygdx.hud.Combinacion;
 import com.mygdx.hud.Dialogo;
+import com.mygdx.hud.DialogoDeCompra;
 import com.mygdx.hud.HUD;
+import com.mygdx.hud.InventarioHUD;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
@@ -40,19 +45,22 @@ public class Juego implements Screen{
 	private Jugador jugador;
 	private Npc viejo, vendedor;
 	private ObjetoDelMapa carta;
-	private Mineral piedra;
+	private Mineral piedra, hierro, hierro1, piedra2;
 	private Texture jugadorTextura;
 	private OrthographicCamera camaraJuego, camaraHud;
 	private Dialogo dialogo;
 	private NPCManager npcManager;
+	private MineralesManager mineralesManager;
 	private CartaHUD cartaHUD;
+	private InventarioHUD inventarioHUD;
+	private DialogoDeCompra dialogoDeCompra;
+	private HUD hud;
 	
 	private Combinacion combinacion;
-	
-	private HUD hud;
 
 	private InputMultiplexer mux;
-
+	
+	private boolean toggleInventario = false;
 
 
 	public Juego(final Principal game) {
@@ -83,25 +91,37 @@ public class Juego implements Screen{
 				
 		//Npc
 		crearNPCs();
-		managerConfig();
+		npcManagerConfig();
 
 		//objetos del mapa
+		piedra = new Piedra(600,600,false,Recursos.PIEDRA);
+		piedra2 = new Piedra(600,500,false, Recursos.PIEDRA);
+		hierro = new Hierro(632,632,false, Recursos.HIERRO);
+		hierro1 = new Hierro(700,32*5,true, Recursos.HIERRO);
+		
+		
+		mineralesManager = new MineralesManager();
+		
+		mineralesManagerConfig();
 		//yunque = new Yunque(532,532,Recursos.YUNQUE);
 		
 		//HUD
-		hud = new HUD();
+		hud = new HUD(jugador);
 		cartaHUD = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);//ee parece que cartaHUD tiene que ir primero, sino no anda la combinacion (nose pq)
 	    combinacion = new Combinacion();
+	    inventarioHUD = new InventarioHUD();
+	    dialogoDeCompra = new DialogoDeCompra();
 	    
 	    mux.addProcessor(cartaHUD.getStage());
 	    mux.addProcessor(combinacion.getStage());//Esto es para los botones de la propia clase
+	    mux.addProcessor(dialogoDeCompra.getStage());
 	    mux.addProcessor(combinacion.getDragAndDrop().getStage());//Esto es para las imagenes arratrables que tiene el stage del dragAndDrop de esta clase, si quiero poner otro dragAndDrop tengo q ue agregarlo asi
 	    mux.addProcessor(hud.getStage());
 	    mux.addProcessor(hud.getResultadosBatallasHUD().getStage());
 	    mux.addProcessor(hud.getProximaBatallaHUD().getStage());
 		Gdx.input.setInputProcessor(mux);
 		
-		piedra = new Mineral(600,600,Recursos.PIEDRA);
+		
 
 	}
 
@@ -122,12 +142,12 @@ public class Juego implements Screen{
 		npcManager.renderizar(Render.batch);
 		npcManager.detectarJugador(jugador); 
 		
-		if(piedra.vida > 0) {
-		piedra.detectarJugador(jugador);
-		piedra.minar();
-		piedra.draw();
-		}
-	      
+		mineralesManager.renderizar();
+		mineralesManager.detectarJugador(jugador);
+		mineralesManager.minar(jugador);
+		mineralesManager.comprar(jugador);
+
+
 		Render.batch.end();
 
 		Render.batch.begin();//HUD´s
@@ -147,15 +167,36 @@ public class Juego implements Screen{
 			Render.batch.setProjectionMatrix(camaraHud.combined);//Una vez que renderiza el juego, se inicia el batch para la camara del HUD y lo dibuja
 	    
 
-
-
 			//Renderiza ocultables
 			hud.render();
 			combinacion.render();
+			inventarioHUD.render(jugador);
+			dialogoDeCompra.render(jugador);
 
-		    if(Gdx.input.isKeyJustPressed(Keys.TAB)) {//Esto despues lo tengo que cambiar
+		    if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT)) {//Esto despues lo tengo que cambiar
 		    	combinacion.mostrar();//Abrir Combinacion
 		    }
+		    
+		    
+		    if(Gdx.input.isKeyJustPressed(Keys.TAB)) {
+		    	toggleInventario = !toggleInventario;
+		    	
+		    	if(toggleInventario) {
+		    		inventarioHUD.mostrar();
+		    	}else {
+		    		inventarioHUD.ocultar();
+		    	}
+		    }
+		    
+		    if(mineralesManager.devolverComprable()) {
+		    	dialogoDeCompra.mostrar();
+
+		    }
+	    	if(dialogoDeCompra.cerrar) {
+	    		mineralesManager.detenerCompra();
+	    	}
+		    
+		    
 		    
 		}else {
 			cartaHUD.render();
@@ -192,6 +233,8 @@ public class Juego implements Screen{
 	    cartaHUD.reEscalar(width, height);
 	    combinacion.reEscalar(width, height);
 	    npcManager.reEscalarDialogos(width, height);
+	    inventarioHUD.reEscalar(width, height);
+	    dialogoDeCompra.reEscalar(width, height);
 	}
 
 	@Override
@@ -223,11 +266,19 @@ public class Juego implements Screen{
 		//rey = new Rey(0,0,Recursos.VENDEDOR, NpcData.REY);
 	}
 	
-	public void managerConfig() {
+	public void npcManagerConfig() {
 		npcManager = new NPCManager();
 		npcManager.agregarEntidad(viejo);
 		npcManager.agregarEntidad(vendedor);
 	    npcManager.crearDialogos();
+	}
+	
+	public void mineralesManagerConfig() {
+		mineralesManager = new MineralesManager();
+		mineralesManager.agregarMineral(piedra);
+		mineralesManager.agregarMineral(piedra2);
+		mineralesManager.agregarMineral(hierro);
+		mineralesManager.agregarMineral(hierro1);
 	}
 
 

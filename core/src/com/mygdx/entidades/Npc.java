@@ -21,7 +21,7 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	private NpcData data;
 
 	public Npc(float x, float y, String ruta, NpcData data){
-		super(x,y,ruta);
+		super(x, y, ruta);
 		this.data = data;
 		this.nombre = this.data.getNombre();
 		this.dialogos = data.getDialogos();

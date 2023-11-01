@@ -19,6 +19,10 @@ public abstract class Recursos {
 	public static final String JUGADOR_TEXTURA = "Jugador/quieto_0.png";
 	public static final String JUGADOR_SPRITESHEET = "Jugador/jugadorSpriteSheet1.png";
 	
+	//Items
+	public static final String PICO_DER = "Items/picoDer.png";
+	public static final String PICO_IZ = "Items/picoIz.png";
+	
 	//Mapas
 	public static final TiledMap MAPA = new TmxMapLoader().load("mapas/mapa.tmx");
 	
@@ -32,6 +36,8 @@ public abstract class Recursos {
 	//Objetos del mapa
 	public static final String YUNQUE = "objetosDelMundo/inanimados/interactuables/yunque.png";
 	public static final String PIEDRA = "objetosDelMundo/inanimados/interactuables/piedra.png";
+	public static final String HIERRO = "objetosDelMundo/inanimados/interactuables/hierro.png";
+	public static final String VACIO = "objetosDelMundo/inanimados/vacio.png";
 	
 	//HUD
 	public static final String DINERO_HUD = "HUD/Dinero.png";

@@ -2,16 +2,19 @@ package com.mygdx.entidades.ObjetosDelMapa;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.entidades.Entidad;
+import com.mygdx.entidades.Jugador;
 import com.mygdx.enums.Items;
 import com.mygdx.utiles.HelpDebug;
 
 public class Mineral extends Entidad{
 	
+	public String nombre;
 	public int vida = 100;
+	public int valor=5;
+	private boolean comprar = false, cerrar = false;
 
-	public Mineral(float x, float y, String rutaTextura) {
-		super(x, y, rutaTextura);
-		// TODO Auto-generated constructor stub
+	public Mineral(float x, float y, boolean comprable, String rutaTextura) {
+		super(x, y, comprable,rutaTextura);
 	}
 
 	
@@ -24,18 +27,34 @@ public class Mineral extends Entidad{
 		}
 	}
 
-	public void minar() {
-		
+	public void minar(Jugador jugador) {
 		if((getJugadorEnRango() && buscarPorItemEnJugador(Items.PICO)) ) {
 			click();
-			if(this.vida < 0) {
-				System.out.println("muerte");
+			if(this.vida <= 0) {
+				System.out.println(HelpDebug.debub(getClass())+"muerte");
+				jugador.getMinerales().add(this);
 			}
 
 		}else {
-			System.out.println("No tiene pico");
+			//System.out.println("No tiene pico");
 		}
 	}
 	
+	public void comprar(Jugador jugador) {
+		if((((getJugadorEnRango()) && this.isComprable()) && Gdx.input.isTouched()) && !cerrar) {
+			System.out.println("click compra");
+			comprar = true;
+		}else {
+			//System.out.println("No tiene pico");
+		}
+	}
+	
+	public boolean getComprar() {
+		return comprar;
+	}
+	
+	public void dejarDeComprar() {
+		cerrar = true;
+	}
 
 }

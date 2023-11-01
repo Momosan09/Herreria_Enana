@@ -27,7 +27,7 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
 
 	private ScreenViewport screenViewport;
 	private Stage stage;
-	private Table contenedor, tabla;
+	private Table contenedor;
 	private Label labelInv, titulo;
 	private Button cerrarBoton;
 	private Skin skin;
@@ -70,10 +70,6 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
     public void crearActores() {
 		skin = new Skin(Gdx.files.internal(Recursos.SKIN));
         
-		tabla = new Table();
-		tabla.setDebug(true);
-		tabla.setFillParent(true);
-		
     	contenedor = new Table();
     	contenedor.setFillParent(true);
     	contenedor.debug();
