@@ -149,3 +149,9 @@
 # 1 NOV
     - Cambios en mineria
     - Agrega Inventario
+
+# 3 NOV
+    - Cambios menores que me olvide de poner
+
+# 4 NOV
+    - Empezando el tema de red

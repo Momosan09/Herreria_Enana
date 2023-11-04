@@ -36,35 +36,49 @@ import com.mygdx.hud.Dialogo;
 import com.mygdx.hud.DialogoDeCompra;
 import com.mygdx.hud.HUD;
 import com.mygdx.hud.InventarioHUD;
+import com.mygdx.hud.PausaHUD;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 
 public class Juego implements Screen{
 	
+	//Entidades
 	private Jugador jugador;
-	private Npc viejo, vendedor;
 	private ObjetoDelMapa carta;
-	private Mineral piedra, hierro, hierro1, piedra2;
+	private Npc viejo, vendedor;
 	private Texture jugadorTextura;
-	private OrthographicCamera camaraJuego, camaraHud;
-	private Dialogo dialogo;
+	private Mineral piedra, hierro, hierro1, piedra2;
+	
+	//Managers
 	private NPCManager npcManager;
 	private MineralesManager mineralesManager;
+
+	//Camaras
+	private OrthographicCamera camaraJuego, camaraHud;
+
+	//Scene2d.ui
+	private HUD hud;
+	private Dialogo dialogo;
 	private CartaHUD cartaHUD;
+	private PausaHUD pausaHud;
+	private Combinacion combinacion;
 	private InventarioHUD inventarioHUD;
 	private DialogoDeCompra dialogoDeCompra;
-	private HUD hud;
 	
-	private Combinacion combinacion;
-
+	//Input
 	private InputMultiplexer mux;
 	
+	//Toggles (referido a HUDs), los uso cuando ese hud no se cierra con boton
 	private boolean toggleInventario = false;
+	private boolean togglePausa = false;
+	
+	//Screens
+	private final Principal game;
 
 
 	public Juego(final Principal game) {
-
+		this.game = game;
 	}
 
 	@Override
@@ -81,7 +95,7 @@ public class Juego implements Screen{
 		
 		camaraHud = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camaraHud.setToOrtho(false); 
-		camaraHud.zoom = .01f;
+		camaraHud.zoom = .6f;
 		
 	    //render
 		Render.tiledMapRenderer = new OrthogonalTiledMapRenderer(Recursos.MAPA);
@@ -94,10 +108,10 @@ public class Juego implements Screen{
 		npcManagerConfig();
 
 		//objetos del mapa
-		piedra = new Piedra(600,600,false,Recursos.PIEDRA);
-		piedra2 = new Piedra(600,500,false, Recursos.PIEDRA);
-		hierro = new Hierro(632,632,false, Recursos.HIERRO);
-		hierro1 = new Hierro(700,32*5,true, Recursos.HIERRO);
+		piedra = new Piedra(32*19,32*15,false,Recursos.PIEDRA);
+		piedra2 = new Piedra(32*18,32*18,false, Recursos.PIEDRA);
+		hierro = new Hierro(32*20,32*20,false, Recursos.HIERRO);
+		hierro1 = new Hierro(32*7,32*5,true, Recursos.HIERRO);
 		
 		
 		mineralesManager = new MineralesManager();
@@ -111,8 +125,10 @@ public class Juego implements Screen{
 	    combinacion = new Combinacion();
 	    inventarioHUD = new InventarioHUD();
 	    dialogoDeCompra = new DialogoDeCompra();
+	    pausaHud = new PausaHUD(game);
 	    
 	    mux.addProcessor(cartaHUD.getStage());
+	    mux.addProcessor(pausaHud.getStage());
 	    mux.addProcessor(combinacion.getStage());//Esto es para los botones de la propia clase
 	    mux.addProcessor(dialogoDeCompra.getStage());
 	    mux.addProcessor(combinacion.getDragAndDrop().getStage());//Esto es para las imagenes arratrables que tiene el stage del dragAndDrop de esta clase, si quiero poner otro dragAndDrop tengo q ue agregarlo asi
@@ -154,7 +170,7 @@ public class Juego implements Screen{
 		
 		
 
-		if(cartaHUD.getCerrar()) {//si ya leyo la carta
+		if(cartaHUD.getCerrar()) {//si ya leyo la carta...
 			cartaHUD.cerrar();
 			jugador.puedeMoverse=true;
 			//npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
@@ -170,6 +186,7 @@ public class Juego implements Screen{
 			//Renderiza ocultables
 			hud.render();
 			combinacion.render();
+			pausaHud.render(jugador);
 			inventarioHUD.render(jugador);
 			dialogoDeCompra.render(jugador);
 
@@ -187,16 +204,31 @@ public class Juego implements Screen{
 		    		inventarioHUD.ocultar();
 		    	}
 		    }
+		    if (mineralesManager.comprar(jugador)) {
+	            // Comprueba si el diálogo de compra debe abrirse o cerrarse
+	            if (!dialogoDeCompra.isVisible()) {
+	                // Abre el diálogo de compra
+	                dialogoDeCompra.mostrar();
+	            } else {
+	                // Cierra el diálogo de compra
+	                dialogoDeCompra.ocultar();
+	            }
+	        }
 		    
-		    if(mineralesManager.devolverComprable()) {
-		    	dialogoDeCompra.mostrar();
-
+		    if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+		    	togglePausa = !togglePausa;
+		    	if(togglePausa) {
+		    		jugador.puedeMoverse = false;
+		    	
+		    		//System.out.println(HelpDebug.debub(getClass())+"Pausa");
+		    		pausaHud.mostrar();
+		    		//hud.ocultar();
+		    	}else {
+		    		pausaHud.ocultar();
+		    		//hud.mostrar();
+		    		
+		    	}
 		    }
-	    	if(dialogoDeCompra.cerrar) {
-	    		mineralesManager.detenerCompra();
-	    	}
-		    
-		    
 		    
 		}else {
 			cartaHUD.render();
@@ -206,8 +238,11 @@ public class Juego implements Screen{
 		if(combinacion.visible) {
 			jugador.puedeMoverse = false;
 			hud.ocultar();
+			if(inventarioHUD.visible) {//oculta el inventario si este esta mostrandose
+				inventarioHUD.ocultar();
+				toggleInventario = !toggleInventario; //cambio el valor del toggle asi no se traba
+			}
 		}else {
-			jugador.puedeMoverse=true;
 			hud.mostrar();
 		}
 
@@ -231,6 +266,7 @@ public class Juego implements Screen{
 	    System.out.println(HelpDebug.debub(getClass())+"X =" +Gdx.graphics.getWidth() + " Y =" + Gdx.graphics.getHeight());
 	    hud.reEscalar(width, height);
 	    cartaHUD.reEscalar(width, height);
+	    pausaHud.reEscalar(width, height);
 	    combinacion.reEscalar(width, height);
 	    npcManager.reEscalarDialogos(width, height);
 	    inventarioHUD.reEscalar(width, height);
@@ -249,12 +285,13 @@ public class Juego implements Screen{
 
 	@Override
 	public void hide() {
-		dispose();
+		//dispose();
 		
 	}
 
 	@Override
 	public void dispose() {
+
 		Render.tiledMapRenderer.dispose();
 		Recursos.MAPA.dispose();
 		

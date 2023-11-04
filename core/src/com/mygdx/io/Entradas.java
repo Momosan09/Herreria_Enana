@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -19,10 +20,10 @@ public class Entradas implements InputProcessor {
 		if (!isSoundPlaying) {
 			efectoSonidoTeclas.play();
 			isSoundPlaying = true;
-			System.out.println("play" + isSoundPlaying);
+			//System.out.println(HelpDebug.debub(getClass())+"Sonido= " + isSoundPlaying);
 		} else {
 			isSoundPlaying = false;
-			System.out.println(isSoundPlaying);
+			//System.out.println(HelpDebug.debub(getClass())+ "Sonido= "+ isSoundPlaying);
 		}
 	}
 
@@ -110,10 +111,10 @@ public class Entradas implements InputProcessor {
 	public int seleccionarOpcion(Label[] labels, int textoMinNro, int textoTopeNro) {// Tengo mis dudas sobre la eficiencia de este metodo, por el for que blanquea todos los textos
 		if(cont < textoMinNro) cont = textoMinNro;//setea la posicion inicial en la primera label
 		
-		if (isAbajo() && cont < textoTopeNro) {//para que no se pase a un label inferior no seleccionable
+		if (Gdx.input.isKeyJustPressed(Keys.S) && cont < textoTopeNro) {//para que no se pase a un label inferior no seleccionable
 			cont++;
 		}
-		if (isArriba() && cont > textoMinNro) {//para que no se pase a un label superior no seleccionable
+		if (Gdx.input.isKeyJustPressed(Keys.W) && cont > textoMinNro) {//para que no se pase a un label superior no seleccionable
 			cont--;
 		}
 
@@ -122,7 +123,7 @@ public class Entradas implements InputProcessor {
 		} 
 		labels[cont].setColor(Color.YELLOW);
 		
-		if(isEnter()) {
+		if(Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 			return cont;	
 		}
 		

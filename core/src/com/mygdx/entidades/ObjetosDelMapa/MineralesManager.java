@@ -41,20 +41,23 @@ public class MineralesManager {
     
     public void minar(Jugador jugador) { //necesito al jugador para saber a quien pasarle el mineral cuando es picado
     	for (Mineral mineral : minerales) {
-    		if(mineral.vida >0 && !mineral.isComprable()) {//Si el mineral esta vivo y no es comprable, se puede minar
+    		if(mineral.vida > 0 && !mineral.isComprable()) {//Si el mineral esta vivo y no es comprable, se puede minar
 			mineral.minar(jugador);
     		}
 		}
     }
     
-    public void comprar(Jugador jugador) { //necesito al jugador para saber a quien pasarle el mineral cuando es picado
+    public boolean comprar(Jugador jugador) { //necesito al jugador para saber a quien pasarle el mineral cuando es picado
     	for (Mineral mineral : minerales) {
     		if(mineral.isComprable()) {//Si el mineral es comprable, se puede comprar
-			mineral.comprar(jugador);
+    			if(mineral.getComprar()) {
+    				mineral.comprar(jugador);
+    			}
     		}
 		}
+    	return false;
     }
-    public boolean devolverComprable() {
+    public boolean dialogoCompra() {
     	for (Mineral mineral : minerales) {
 			if(mineral.isComprable()) {
 				if(mineral.getComprar()) {
@@ -65,15 +68,6 @@ public class MineralesManager {
 		return false;
     }
     
-    public void detenerCompra() {
-    	for (Mineral mineral : minerales) {
-			if(mineral.isComprable()) {
-				if(mineral.getComprar()) {
-					mineral.dejarDeComprar();
-				}
-			}
-		}
-    }
     
     public void generarVetas() {
     	

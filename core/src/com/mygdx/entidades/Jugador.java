@@ -72,27 +72,26 @@ public class Jugador {
         float movimientoY = 0;
 
         if(puedeMoverse) {
-        	
-        if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) {
-        if (Gdx.input.isKeyPressed(Keys.W)) {
-            movimientoY += velocidad;
-            direccionActual = Direcciones.ARRIBA;
-        } else if (Gdx.input.isKeyPressed(Keys.S)) {
-            movimientoY -= velocidad;
-            direccionActual = Direcciones.ABAJO;
-        }
-        }else {
-        	resetearAnimaciones(animacionQuieto);
-        }
+        	if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) {
+        		if (Gdx.input.isKeyPressed(Keys.W)) {
+        			movimientoY += velocidad;
+        			direccionActual = Direcciones.ARRIBA;
+        		} else if (Gdx.input.isKeyPressed(Keys.S)) {
+        			movimientoY -= velocidad;
+        			direccionActual = Direcciones.ABAJO;
+        		}
+        	}else {
+        		resetearAnimaciones(animacionQuieto);
+        	}
 
         if(Gdx.input.isKeyPressed(Keys.A) != Gdx.input.isKeyPressed(Keys.D)) {
-        if (Gdx.input.isKeyPressed(Keys.A)) {
-            movimientoX -= velocidad;
-            direccionActual = Direcciones.IZQUIERDA;
-        } else if (Gdx.input.isKeyPressed(Keys.D)) {
-            movimientoX += velocidad;
-            direccionActual = Direcciones.DERECHA;
-        }
+        	if (Gdx.input.isKeyPressed(Keys.A)) {
+        		movimientoX -= velocidad;
+        		direccionActual = Direcciones.IZQUIERDA;
+        	} else if (Gdx.input.isKeyPressed(Keys.D)) {
+        		movimientoX += velocidad;
+        		direccionActual = Direcciones.DERECHA;
+        	}
         }else {
         	resetearAnimaciones(animacionQuieto);
         }

@@ -1,6 +1,6 @@
 package com.mygdx.utiles;
 
-public class Colores {
+public abstract class Colores {
 
 	public static final String AU = "#ffbf00";
 	public static final String AG = "#e3e4e5";

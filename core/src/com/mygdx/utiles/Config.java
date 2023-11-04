@@ -2,7 +2,7 @@ package com.mygdx.utiles;
 
 import com.badlogic.gdx.Gdx;
 
-public class Config {
+public abstract class Config {
 
 	public static float ancho =  1280;
 	public static float alto = 768;

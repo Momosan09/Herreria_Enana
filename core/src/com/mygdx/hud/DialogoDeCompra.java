@@ -50,6 +50,9 @@ public class DialogoDeCompra implements HeadUpDisplay, Ocultable{
 		
 	}
 
+	public boolean isVisible() {
+		return visible;
+	}
 	@Override
 	public void ocultar() {
 		visible = false;
@@ -88,7 +91,6 @@ public class DialogoDeCompra implements HeadUpDisplay, Ocultable{
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				ocultar();
-				cerrar = true;
 			}
 		});
 		
@@ -97,8 +99,10 @@ public class DialogoDeCompra implements HeadUpDisplay, Ocultable{
 	@Override
 	public void poblarStage() {
 		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.CARTA_TEXTURA)));//cambiar por otra tetura
+		contenedor.add(cerrarBoton).top().right();
+		contenedor.row();
 		contenedor.add(titulo).top();
-		contenedor.add(cerrarBoton);
+		contenedor.row();
 		contenedor.add(aceptarBotton);
 		
 		tabla.add(contenedor);
@@ -118,6 +122,7 @@ public class DialogoDeCompra implements HeadUpDisplay, Ocultable{
 		if(visible) {
 	    	stage.act(Gdx.graphics.getDeltaTime());
 	    	stage.draw();
+
 		}
 		
 	}
