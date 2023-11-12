@@ -19,11 +19,11 @@ public class DesktopLauncher {
 
 
 		config.setForegroundFPS(60);
-		config.setTitle("HerreriaEnana");
+		config.setTitle("Server");
 		config.setIdleFPS(0);
 		config.setDecorated(true);
 		//config.setMaximized(true);
-		config.setWindowedMode(1280, 768);
+		config.setWindowedMode(500, 800);
 		
 		new Lwjgl3Application(new Principal(), config);
 	}

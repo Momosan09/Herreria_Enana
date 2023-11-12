@@ -37,14 +37,17 @@ import com.mygdx.hud.DialogoDeCompra;
 import com.mygdx.hud.HUD;
 import com.mygdx.hud.InventarioHUD;
 import com.mygdx.hud.PausaHUD;
+import com.mygdx.utiles.ConsolaDebug;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 
+import red.Servidor;
+
 public class Juego implements Screen{
 	
 	//Entidades
-	private Jugador jugador;
+	private Jugador jugador_1, jugador_2;
 	private ObjetoDelMapa carta;
 	private Npc viejo, vendedor;
 	private Texture jugadorTextura;
@@ -75,34 +78,28 @@ public class Juego implements Screen{
 	
 	//Screens
 	private final Principal game;
+	
+	private ConsolaDebug consola;
+	private Servidor servidor;
 
 
 	public Juego(final Principal game) {
 		this.game = game;
+		consola = new ConsolaDebug();
+
 	}
 
 	@Override
 	public void show() {
 		mux = new InputMultiplexer();//El input multiplexer es una especie de gestor de inputProcessors
 		
-
-		//camaras
-		
-		camaraJuego = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camaraJuego.setToOrtho(false);
-		camaraJuego.zoom = .6f;
-		
-		
-		camaraHud = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camaraHud.setToOrtho(false); 
-		camaraHud.zoom = .6f;
-		
 	    //render
-		Render.tiledMapRenderer = new OrthogonalTiledMapRenderer(Recursos.MAPA);
+		//Render.tiledMapRenderer = new OrthogonalTiledMapRenderer(Recursos.MAPA);
 		
 		//jugador
-		jugador = new Jugador(camaraJuego);
-				
+		jugador_1 = new Jugador();
+		jugador_2= new Jugador();		
+		servidor = new Servidor(this, consola);
 		//Npc
 		crearNPCs();
 		npcManagerConfig();
@@ -120,7 +117,8 @@ public class Juego implements Screen{
 		//yunque = new Yunque(532,532,Recursos.YUNQUE);
 		
 		//HUD
-		hud = new HUD(jugador);
+		//hud = new HUD(jugador);
+		/*
 		cartaHUD = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);//ee parece que cartaHUD tiene que ir primero, sino no anda la combinacion (nose pq)
 	    combinacion = new Combinacion();
 	    inventarioHUD = new InventarioHUD();
@@ -137,15 +135,16 @@ public class Juego implements Screen{
 	    mux.addProcessor(hud.getProximaBatallaHUD().getStage());
 		Gdx.input.setInputProcessor(mux);
 		
-		
+		*/
 
 	}
 
 	@Override
 	public void render(float delta) {
-
+		consola.render();
 
 	    //Renderiza el Juego
+		/*
 		camaraJuego.update();
 		Render.batch.setProjectionMatrix(camaraJuego.combined);//Aca estaba el problema de que el HUD no se renderizaba por encima del mapa, los setProjectionMatrix de cada camara tienen que estar en ciclos .begin() y .end() distintos
 		Render.batch.begin();
@@ -253,12 +252,12 @@ public class Juego implements Screen{
 		}
 		Render.batch.end();
 	    //System.out.println(HelpDebug.debub(this.getClass()) + "Hola");
-
+*/
 	}
 
 
 	@Override
-	public void resize(int width, int height) {
+	public void resize(int width, int height) {/*
 		camaraJuego.viewportWidth = width;
 		camaraJuego.viewportHeight = height;
 		camaraJuego.update();	
@@ -271,6 +270,8 @@ public class Juego implements Screen{
 	    npcManager.reEscalarDialogos(width, height);
 	    inventarioHUD.reEscalar(width, height);
 	    dialogoDeCompra.reEscalar(width, height);
+	    */
+		consola.reEscalar(width, height);
 	}
 
 	@Override
@@ -291,10 +292,11 @@ public class Juego implements Screen{
 
 	@Override
 	public void dispose() {
-
+		servidor.cerrarHilo();
+		/*
 		Render.tiledMapRenderer.dispose();
 		Recursos.MAPA.dispose();
-		
+		*/
 	}
 	
 	public void crearNPCs() {
@@ -318,6 +320,13 @@ public class Juego implements Screen{
 		mineralesManager.agregarMineral(hierro1);
 	}
 
+	public Jugador getJugador1() {
+		return jugador_1;
+	}
+	
+	public Jugador getJugador2() {
+		return jugador_2;
+	}
 
 
 }

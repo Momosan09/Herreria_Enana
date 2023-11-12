@@ -15,13 +15,14 @@ import com.mygdx.enums.Direcciones;
 import com.mygdx.enums.Items;
 import com.mygdx.hud.HUD;
 import com.mygdx.utiles.Animator;
+import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 
 public class Jugador {
 
-	private Vector2 posicion;
+	public Vector2 posicion;
 	private float velocidad = 120f;
 	public OrthographicCamera camara;
 	public boolean puedeMoverse = false;
@@ -36,15 +37,12 @@ public class Jugador {
 	private Direcciones direccionActual = Direcciones.QUIETO;
 	Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
 	
-	public Jugador(OrthographicCamera camara) {
+	
+	public Jugador() {
 		posicion = new Vector2(Gdx.graphics.getWidth() / 2 - (tamañoPersonaje/ 2),Gdx.graphics.getHeight() / 2 - (tamañoPersonaje/ 2)); // posicion inicial
-		this.camara = camara;
-		crearAnimaciones();
-		texturaItem = new Texture(Recursos.PICO_DER);
-		spriteItem = new Sprite(texturaItem);
-		
-
-
+		//crearAnimaciones();
+		//texturaItem = new Texture(Recursos.PICO_DER);
+		//spriteItem = new Sprite(texturaItem);
 	}
 
 	private void dibujarItemActual() {
@@ -64,20 +62,38 @@ public class Jugador {
 	}
 
 	private void update() {
-		movimiento(Gdx.graphics.getDeltaTime());
+		//movimiento();
 	}
 
-	private void movimiento(float deltaTime) {
+	public void movimiento(Direcciones direccion) {
+		float deltaTime = Gdx.graphics.getDeltaTime();
         float movimientoX = 0;
         float movimientoY = 0;
+        
+        System.out.println(HelpDebug.debub(getClass())+"moviendo");
 
-        if(puedeMoverse) {
-        	if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) {
+        switch(direccion){
+        	case ARRIBA:
+        		movimientoY += velocidad;
+        		break;
+        	case ABAJO:
+        		movimientoY -= velocidad;
+        		break;
+        	case IZQUIERDA:
+        		movimientoX -= velocidad;
+        		break;
+        	case DERECHA:
+        		movimientoX += velocidad;
+        		break;
+        }
+        
+        //if(puedeMoverse) {
+        	/*if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) {
         		if (Gdx.input.isKeyPressed(Keys.W)) {
-        			movimientoY += velocidad;
+        			
         			direccionActual = Direcciones.ARRIBA;
         		} else if (Gdx.input.isKeyPressed(Keys.S)) {
-        			movimientoY -= velocidad;
+        			
         			direccionActual = Direcciones.ABAJO;
         		}
         	}else {
@@ -86,15 +102,15 @@ public class Jugador {
 
         if(Gdx.input.isKeyPressed(Keys.A) != Gdx.input.isKeyPressed(Keys.D)) {
         	if (Gdx.input.isKeyPressed(Keys.A)) {
-        		movimientoX -= velocidad;
+        		
         		direccionActual = Direcciones.IZQUIERDA;
         	} else if (Gdx.input.isKeyPressed(Keys.D)) {
-        		movimientoX += velocidad;
+        		
         		direccionActual = Direcciones.DERECHA;
         	}
         }else {
         	resetearAnimaciones(animacionQuieto);
-        }
+        }*/
 
         if (movimientoX != 0 && movimientoY != 0) {
             movimientoX *= 0.7071f;
@@ -107,20 +123,16 @@ public class Jugador {
 
         // Actualizar animaciones y cámaras
         if (movimientoX != 0 || movimientoY != 0) {
-            alternarSprites(direccionActual);
+           //alternarSprites(direccionActual);
         } else {
-            alternarSprites(Direcciones.QUIETO);
-            resetearAnimaciones(animacionArriba, animacionAbajo, animacionIzquierda, animacionDerecha);
+            //alternarSprites(Direcciones.QUIETO);
+            //resetearAnimaciones(animacionArriba, animacionAbajo, animacionIzquierda, animacionDerecha);
         }
 
-        movimientoCamara();
-        }
+        //movimientoCamara();
+        //}
     }
 
-	private void movimientoCamara() {
-		camara.position.set(posicion.x + tamañoPersonaje / 2, posicion.y + tamañoPersonaje / 2, 0);
-		camara.update();
-	}
 
 	public Vector2 getPosicion() {
 		return posicion;
