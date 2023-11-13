@@ -20,7 +20,8 @@ import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MyDragAndDrop;
 import com.mygdx.utiles.Recursos;
-
+import com.mygdx.entidades.Jugador;
+import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.io.Entradas;
 
 public class Combinacion implements HeadUpDisplay, Ocultable{
@@ -34,16 +35,19 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
 	private Label.LabelStyle labelStyle;
 
     private MyDragAndDrop dragNDrop;
+    private Jugador jugador;
+    private ArrayList<Image> combinables;
     
     private int pad = 20;
     public boolean visible=false;
-    public Combinacion() {
-    	
+    public Combinacion(Jugador jugador) {
+    	this.jugador = jugador;
+    	combinables = new ArrayList<Image>();
     	screenViewport = new ScreenViewport();
         stage = new Stage(screenViewport);
         
-        dragNDrop = new MyDragAndDrop();
-        dragNDrop.create();
+        dragNDrop = new MyDragAndDrop(this.jugador);
+        //dragNDrop.create();
         crearFuentes();
         crearActores();
         poblarStage();
@@ -85,12 +89,13 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
     	
     	titulo = new Label(Recursos.bundle.get("combinacion.titulo"), labelStyle);
     	labelInv = new Label(Recursos.bundle.get("combinacion.inventario"), labelStyle);
-    	traerinventario();
+    	//traerinventario();
     }
 	
 	public void traerinventario() {
-		for (Image item : dragNDrop.getChilds()) {
-			item.setPosition(0, 0);
+		for (int i = 0; i<jugador.getMinerales().size();i++) {
+			 combinables.add(new Image(jugador.getMinerales().get(i).getTextura()));
+			 combinables.get(i).setPosition(32, 32);
 		}
 	}
 	
@@ -103,6 +108,7 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
 		contenedor.row();
 		contenedor.add();
 		contenedor.add().grow();
+		contenedor.add();
 		contenedor.add();
 		//tabla.add(contenedor).center();
     	stage.addActor(contenedor);
@@ -142,6 +148,9 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
 	@Override
 	public void mostrar() {
 		visible = true;
+		dragNDrop.refrescar();
+		dragNDrop.create();
+
 		
 	}
 

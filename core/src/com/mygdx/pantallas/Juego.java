@@ -34,9 +34,12 @@ import com.mygdx.hud.CartaHUD;
 import com.mygdx.hud.Combinacion;
 import com.mygdx.hud.Dialogo;
 import com.mygdx.hud.DialogoDeCompra;
+import com.mygdx.hud.Fundicion;
 import com.mygdx.hud.HUD;
 import com.mygdx.hud.InventarioHUD;
 import com.mygdx.hud.PausaHUD;
+import com.mygdx.red.HiloCliente;
+import com.mygdx.red.UtilesRed;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
@@ -44,7 +47,7 @@ import com.mygdx.utiles.Render;
 public class Juego implements Screen{
 	
 	//Entidades
-	private Jugador jugador;
+	private Jugador jugador_1, jugador_2;
 	private ObjetoDelMapa carta;
 	private Npc viejo, vendedor;
 	private Texture jugadorTextura;
@@ -65,6 +68,7 @@ public class Juego implements Screen{
 	private Combinacion combinacion;
 	private InventarioHUD inventarioHUD;
 	private DialogoDeCompra dialogoDeCompra;
+	private Fundicion fundicionHUD;
 	
 	//Input
 	private InputMultiplexer mux;
@@ -76,16 +80,19 @@ public class Juego implements Screen{
 	//Screens
 	private final Principal game;
 
+	//red
+	private boolean red = true;
+	HiloCliente hc;
 
 	public Juego(final Principal game) {
 		this.game = game;
+		UtilesRed.game = this;
 	}
 
 	@Override
 	public void show() {
 		mux = new InputMultiplexer();//El input multiplexer es una especie de gestor de inputProcessors
 		
-
 		//camaras
 		
 		camaraJuego = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -101,7 +108,14 @@ public class Juego implements Screen{
 		Render.tiledMapRenderer = new OrthogonalTiledMapRenderer(Recursos.MAPA);
 		
 		//jugador
-		jugador = new Jugador(camaraJuego);
+		hc = new HiloCliente(this);
+		jugador_1 = new Jugador(camaraJuego,hc);
+		jugador_2 = new Jugador(camaraJuego,hc);
+		if(red) {
+
+			UtilesRed.hc.setGame(this);//Le paso el juego porque sino el juego que le entra por constructor (al estatico) vale nulo
+			UtilesRed.hc = hc;
+		}
 				
 		//Npc
 		crearNPCs();
@@ -120,17 +134,19 @@ public class Juego implements Screen{
 		//yunque = new Yunque(532,532,Recursos.YUNQUE);
 		
 		//HUD
-		hud = new HUD(jugador);
+		hud = new HUD(jugador_1);
 		cartaHUD = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);//ee parece que cartaHUD tiene que ir primero, sino no anda la combinacion (nose pq)
-	    combinacion = new Combinacion();
+	    combinacion = new Combinacion(jugador_1);
 	    inventarioHUD = new InventarioHUD();
 	    dialogoDeCompra = new DialogoDeCompra();
+	    fundicionHUD = new Fundicion(jugador_1);
 	    pausaHud = new PausaHUD(game);
 	    
 	    mux.addProcessor(cartaHUD.getStage());
 	    mux.addProcessor(pausaHud.getStage());
 	    mux.addProcessor(combinacion.getStage());//Esto es para los botones de la propia clase
-	    mux.addProcessor(dialogoDeCompra.getStage());
+	    mux.addProcessor(fundicionHUD.getStage());
+	    //mux.addProcessor(dialogoDeCompra.getStage());
 	    mux.addProcessor(combinacion.getDragAndDrop().getStage());//Esto es para las imagenes arratrables que tiene el stage del dragAndDrop de esta clase, si quiero poner otro dragAndDrop tengo q ue agregarlo asi
 	    mux.addProcessor(hud.getStage());
 	    mux.addProcessor(hud.getResultadosBatallasHUD().getStage());
@@ -153,15 +169,18 @@ public class Juego implements Screen{
 		Render.tiledMapRenderer.setView(camaraJuego);
 		Render.tiledMapRenderer.render();
 
-		jugador.draw(Render.batch);
+		jugador_1.draw(Render.batch);
+		if(red) {
+			jugador_2.draw(Render.batch);
+		}
 	    
 		npcManager.renderizar(Render.batch);
-		npcManager.detectarJugador(jugador); 
+		npcManager.detectarJugador(jugador_1); 
 		
 		mineralesManager.renderizar();
-		mineralesManager.detectarJugador(jugador);
-		mineralesManager.minar(jugador);
-		mineralesManager.comprar(jugador);
+		mineralesManager.detectarJugador(jugador_1);
+		mineralesManager.minar(jugador_1);
+		mineralesManager.comprar(jugador_1);
 
 
 		Render.batch.end();
@@ -172,7 +191,7 @@ public class Juego implements Screen{
 
 		if(cartaHUD.getCerrar()) {//si ya leyo la carta...
 			cartaHUD.cerrar();
-			jugador.puedeMoverse=true;
+			jugador_1.puedeMoverse=true;
 			//npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
 			vendedor.charla(1);
 			viejo.charla(0);
@@ -186,14 +205,15 @@ public class Juego implements Screen{
 			//Renderiza ocultables
 			hud.render();
 			combinacion.render();
-			pausaHud.render(jugador);
-			inventarioHUD.render(jugador);
-			dialogoDeCompra.render(jugador);
+			pausaHud.render(jugador_1);
+			inventarioHUD.render(jugador_1);
+			dialogoDeCompra.render(jugador_1);
+			fundicionHUD.render(jugador_1);
 
 		    if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT)) {//Esto despues lo tengo que cambiar
 		    	combinacion.mostrar();//Abrir Combinacion
 		    }
-		    
+		    fundicionHUD.mostrar();
 		    
 		    if(Gdx.input.isKeyJustPressed(Keys.TAB)) {
 		    	toggleInventario = !toggleInventario;
@@ -204,7 +224,7 @@ public class Juego implements Screen{
 		    		inventarioHUD.ocultar();
 		    	}
 		    }
-		    if (mineralesManager.comprar(jugador)) {
+		    if (mineralesManager.comprar(jugador_1)) {
 	            // Comprueba si el diálogo de compra debe abrirse o cerrarse
 	            if (!dialogoDeCompra.isVisible()) {
 	                // Abre el diálogo de compra
@@ -218,7 +238,7 @@ public class Juego implements Screen{
 		    if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 		    	togglePausa = !togglePausa;
 		    	if(togglePausa) {
-		    		jugador.puedeMoverse = false;
+		    		jugador_1.puedeMoverse = false;
 		    	
 		    		//System.out.println(HelpDebug.debub(getClass())+"Pausa");
 		    		pausaHud.mostrar();
@@ -236,7 +256,7 @@ public class Juego implements Screen{
 		
 		//bloquear movimiento del jugador
 		if(combinacion.visible) {
-			jugador.puedeMoverse = false;
+			jugador_1.puedeMoverse = false;
 			hud.ocultar();
 			if(inventarioHUD.visible) {//oculta el inventario si este esta mostrandose
 				inventarioHUD.ocultar();
@@ -248,11 +268,12 @@ public class Juego implements Screen{
 
 
 		if(Gdx.input.isKeyPressed(Keys.E)) {
-			jugador.getItems().add(Items.PICO);
+			jugador_1.getItems().add(Items.PICO);
 			System.out.println("Otorgado: Pico");
 		}
 		Render.batch.end();
 	    //System.out.println(HelpDebug.debub(this.getClass()) + "Hola");
+		jugador_1.puedeMoverse = true;
 
 	}
 
@@ -318,6 +339,14 @@ public class Juego implements Screen{
 		mineralesManager.agregarMineral(hierro1);
 	}
 
+	public Jugador getJugador1() {
+		return jugador_1;
+	}
+	
+	public Jugador getJugador2() {
+		return jugador_2;
+	}
+	
 
 
 }

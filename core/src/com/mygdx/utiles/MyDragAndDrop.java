@@ -24,6 +24,8 @@ import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
+import com.mygdx.entidades.Jugador;
+import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.io.Entradas;
 
 import com.badlogic.gdx.utils.Null;
@@ -34,38 +36,27 @@ public class MyDragAndDrop {
 	private Stage stage;
 	private Label.LabelStyle labelStyle;
 	private ArrayList<Image> inventario;
+	private Jugador jugador;
+	private DragAndDrop dragAndDrop;
 	
-	
-	public MyDragAndDrop(){
+	public MyDragAndDrop(Jugador jugador){
+		dragAndDrop = new DragAndDrop();
+		this.jugador = jugador;
 		screenViewport = new ScreenViewport();
 		stage = new Stage(screenViewport);
 		labelStyle = EstiloFuente.generarFuente(32, Colores.BLANCO, false);
+		inventario = new ArrayList<Image>();
 		
-		Sprite spr = new Sprite(new Texture(Recursos.YUNQUE));
-		
-		Image sourceImage = new Image(spr);
-		
-		Sprite spr2 = new Sprite(new Texture(Recursos.RELOJ_HUD));
-		
-		Image sourceImage2 = new Image(spr2);
-		
-		inventario = new ArrayList();
-		
-		inventario.add(sourceImage);
-		inventario.add(sourceImage2);
+		if(jugador.getMinerales().size() >0) {	
+		for (Mineral image : jugador.getMinerales()) {
+			inventario.add(new Image(new Sprite(image.getTextura())));//Agrega los minearales del inventario del personaje, aca puede haber un error cuando quiera combinar mas cosas que solo minerales
+		}
+		}
 	}
 
 	public void create () {
 		stage.setDebugAll(true);
 
-		
-		for (Image image : inventario) {
-			stage.addActor(image);
-		}
-
-
-		DragAndDrop dragAndDrop = new DragAndDrop();
-		
 		for (Image image : inventario) {
 			dragAndDrop.addSource(new Source(image) {//addSource permite que la imagen sea arrastrable, por eso necesito que cada imagen del inventario sea source
 				@Null
@@ -144,4 +135,14 @@ public class MyDragAndDrop {
 	public ArrayList<Image> getChilds(){
 		return inventario;
 	}
+	
+	public void refrescar() {
+		
+		for (int i=0; i<jugador.getMinerales().size();i++) {
+			System.out.println("jeda"+jugador.getMinerales().size() + "i" + i);
+			inventario.add(new Image(new Sprite(jugador.getMinerales().get(i).getTextura())));//Agrega los minearales del inventario del personaje, aca puede haber un error cuando quiera combinar mas cosas que solo minerales
+			stage.addActor(inventario.get(i));
+		}
+	}
+
 }

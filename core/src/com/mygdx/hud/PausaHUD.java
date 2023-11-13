@@ -13,6 +13,7 @@ import com.mygdx.entidades.Jugador;
 import com.mygdx.game.Principal;
 import com.mygdx.pantallas.Juego;
 import com.mygdx.pantallas.PantallaMenu;
+import com.mygdx.red.UtilesRed;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.EstiloFuente;
@@ -156,6 +157,8 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 			
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				UtilesRed.hc.enviarMensaje("desconectar");
+				UtilesRed.hc.cerrarSocket();
 				System.out.println(HelpDebug.debub(getClass())+"Finalizar_conexion");
 				cambiarColorLabels(lblSalirOpcion1, lblSalirOpcion2);
 				

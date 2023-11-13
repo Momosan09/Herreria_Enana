@@ -155,3 +155,8 @@
 
 # 4 NOV
     - Empezando el tema de red
+
+# 12 NOV
+    - Esto es todo lo que pude hacer de redes, queria hacer un commit grande con el tema ya mas que nada terminado pero no pude
+    - Ahora el inventario del jugador se refleja en la pantalla de combinaciones
+    - Dejando a medias el tema de la fundicion

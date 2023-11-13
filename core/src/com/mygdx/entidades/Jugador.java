@@ -14,21 +14,27 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.enums.Direcciones;
 import com.mygdx.enums.Items;
 import com.mygdx.hud.HUD;
+import com.mygdx.red.HiloCliente;
+import com.mygdx.red.UtilesRed;
 import com.mygdx.utiles.Animator;
+import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 
 public class Jugador {
 
-	private Vector2 posicion;
+	public Vector2 posicion; //la hice publica para poder setearle valor en el hiloCliente
 	private float velocidad = 120f;
 	public OrthographicCamera camara;
-	public boolean puedeMoverse = false;
+	public boolean puedeMoverse = true;
 	private int tamañoPersonaje = 32;
 	private Texture texturaItem;
 	private Sprite spriteItem;
 	public int dinero=10;
+	private boolean red = false;
+	public int nroJugador;
+	private HiloCliente hc;
 	
 	private ArrayList<Items> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
 	private ArrayList<Mineral> mineralesInv = new ArrayList<>();  
@@ -36,15 +42,20 @@ public class Jugador {
 	private Direcciones direccionActual = Direcciones.QUIETO;
 	Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
 	
-	public Jugador(OrthographicCamera camara) {
+	public Jugador(OrthographicCamera camara, HiloCliente hc) {
 		posicion = new Vector2(Gdx.graphics.getWidth() / 2 - (tamañoPersonaje/ 2),Gdx.graphics.getHeight() / 2 - (tamañoPersonaje/ 2)); // posicion inicial
 		this.camara = camara;
 		crearAnimaciones();
 		texturaItem = new Texture(Recursos.PICO_DER);
 		spriteItem = new Sprite(texturaItem);
-		
+		this.hc = hc;
+	}
 
-
+	public Jugador() {
+		posicion = new Vector2(Gdx.graphics.getWidth() / 2 - (tamañoPersonaje/ 2)-32,Gdx.graphics.getHeight() / 2 - (tamañoPersonaje/ 2)); // posicion inicial
+		crearAnimaciones();
+		texturaItem = new Texture(Recursos.PICO_DER);
+		spriteItem = new Sprite(texturaItem);
 	}
 
 	private void dibujarItemActual() {
@@ -71,7 +82,7 @@ public class Jugador {
         float movimientoX = 0;
         float movimientoY = 0;
 
-        if(puedeMoverse) {
+        if(puedeMoverse && !red) {
         	if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) {
         		if (Gdx.input.isKeyPressed(Keys.W)) {
         			movimientoY += velocidad;
@@ -81,7 +92,7 @@ public class Jugador {
         			direccionActual = Direcciones.ABAJO;
         		}
         	}else {
-        		resetearAnimaciones(animacionQuieto);
+        		//resetearAnimaciones(animacionQuieto);
         	}
 
         if(Gdx.input.isKeyPressed(Keys.A) != Gdx.input.isKeyPressed(Keys.D)) {
@@ -93,40 +104,78 @@ public class Jugador {
         		direccionActual = Direcciones.DERECHA;
         	}
         }else {
-        	resetearAnimaciones(animacionQuieto);
+        	//resetearAnimaciones(animacionQuieto);
         }
 
         if (movimientoX != 0 && movimientoY != 0) {
             movimientoX *= 0.7071f;
             movimientoY *= 0.7071f;
             //Esta es la velocidad que tiene cuando se mueva diagonalmente, ya que, sino su velocidad diagonal seria mayor que la horizontal o vertical
-        }
+       }
 
         posicion.x += movimientoX * deltaTime;
         posicion.y += movimientoY * deltaTime;
 
         // Actualizar animaciones y cámaras
+        movimientoCamara();
+        }
+        
+        if(red) {
+        	if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) {
+        		if (Gdx.input.isKeyPressed(Keys.W)) {
+        			direccionActual = Direcciones.ARRIBA;
+        			System.out.println("++++++Soy el cliente "+ hc.getIdCliente() + "yendo para arriba");
+        			//System.out.println(HelpDebug.debub(getClass())+"direccion arriba");
+        			UtilesRed.hc.enviarMensaje("direccion#arriba");
+        		} else if (Gdx.input.isKeyPressed(Keys.S)) {
+        			direccionActual = Direcciones.ABAJO;
+        			UtilesRed.hc.enviarMensaje("direccion#abajo");
+        		}
+        	}else {
+        		resetearAnimaciones(animacionQuieto);
+        	}
+        
+        
+        
+        if(Gdx.input.isKeyPressed(Keys.A) != Gdx.input.isKeyPressed(Keys.D)) {
+        	if (Gdx.input.isKeyPressed(Keys.A)) {
+    			direccionActual = Direcciones.IZQUIERDA;
+    			UtilesRed.hc.enviarMensaje("direccion#izquierda");
+        	} else if (Gdx.input.isKeyPressed(Keys.D)) {
+    			direccionActual = Direcciones.DERECHA;
+    			UtilesRed.hc.enviarMensaje("direccion#derecha");
+        	}
+        }else {
+        	resetearAnimaciones(animacionQuieto);
+        }
+    
+        }
+        
         if (movimientoX != 0 || movimientoY != 0) {
             alternarSprites(direccionActual);
         } else {
             alternarSprites(Direcciones.QUIETO);
             resetearAnimaciones(animacionArriba, animacionAbajo, animacionIzquierda, animacionDerecha);
         }
+        //movimientoCamara();
+        
+	}
+	
+	
 
-        movimientoCamara();
-        }
-    }
-
-	private void movimientoCamara() {
+	public void movimientoCamara() {
+		if(camara != null) {
+			
 		camara.position.set(posicion.x + tamañoPersonaje / 2, posicion.y + tamañoPersonaje / 2, 0);
 		camara.update();
+		}
 	}
 
 	public Vector2 getPosicion() {
 		return posicion;
 	}
 
-	private void alternarSprites(Direcciones direccion) {
+	public void alternarSprites(Direcciones direccion) {
 		switch (direccion) {
 		case ABAJO:
 			animacionAbajo.render();

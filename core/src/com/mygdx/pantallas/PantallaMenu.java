@@ -24,6 +24,7 @@ import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
+import com.mygdx.red.Cliente;
 
 public class PantallaMenu implements Screen, HeadUpDisplay{
 
@@ -46,6 +47,9 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	private int cont = 2;
 	
     private float fondoPosX, offSetX, transparencia=0;
+    
+    //Red
+    private Cliente cliente;
     
 	public PantallaMenu(final Principal game) {
 		this.game = game;
@@ -191,6 +195,9 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 			dispose();
 		} else if (seleccion == 3) {
 			System.out.println(HelpDebug.debub(getClass())+"Red");
+			game.setScreen(new PantallaConexion(game));
+			dispose();
+			
 
 		}else if (seleccion == 4){
 			game.setScreen(new PantallaConfiguracion(game));
