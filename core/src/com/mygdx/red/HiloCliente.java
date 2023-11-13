@@ -17,7 +17,7 @@ public class HiloCliente extends Thread{
 	private DatagramSocket socket;
 	private boolean fin = false;
 	private InetAddress ipServer;
-	private int puerto = 35123;//El puerto del servidor siempre va a estar fijo
+	private int puerto = 35323;//El puerto del servidor siempre va a estar fijo
 	private boolean conexionExitosa = false;
 	private boolean servidorLleno = false;
 	private boolean esperandoJugadores = true;
@@ -130,15 +130,9 @@ public class HiloCliente extends Thread{
 	
 	public void fin() {
 		fin = true;
-		interrupt();
+		socket.close();
 	}
 	
-	
-	public void cerrarSocket() {
-	    if (socket != null && !socket.isClosed()) {
-	        socket.close();
-	    }
-	}
 	
 	public void setGame(Juego game) {//Sirve para pasarle un Juego, porque en el constructor del static le estoy pasando uno nulo, entonces llamo a esta funcion desde la clase del juego y fue
 		this.game = game;

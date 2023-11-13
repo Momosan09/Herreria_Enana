@@ -158,7 +158,7 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				UtilesRed.hc.enviarMensaje("desconectar");
-				UtilesRed.hc.cerrarSocket();
+				UtilesRed.hc.fin();
 				System.out.println(HelpDebug.debub(getClass())+"Finalizar_conexion");
 				cambiarColorLabels(lblSalirOpcion1, lblSalirOpcion2);
 				

@@ -20,7 +20,6 @@ public class Cliente {
 	public void cerrarCliente() {
 		System.out.println(HelpDebug.debub(getClass())+"cerrando");
 		UtilesRed.hc.fin();
-		UtilesRed.hc.cerrarSocket();
 		UtilesRed.hc.interrupt();
 	}
 }
