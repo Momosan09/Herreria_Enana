@@ -160,3 +160,7 @@
     - Esto es todo lo que pude hacer de redes, queria hacer un commit grande con el tema ya mas que nada terminado pero no pude
     - Ahora el inventario del jugador se refleja en la pantalla de combinaciones
     - Dejando a medias el tema de la fundicion
+
+# 13 NOV
+    - Redes... la parte de que los dos clientes sean independientes entre si ya esta, varios dias de intentos y despues con la ayuda del profe. El problema era que tenia 3 hilos por cliente cuando solo deberia tener 1, entonces llegaba un punto en que era un re quilombo ahi adentro de la red nadie se entendia nada y bueno...
+     
