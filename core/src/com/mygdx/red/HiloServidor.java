@@ -1,4 +1,4 @@
-package red;
+package com.mygdx.red;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -27,7 +27,7 @@ public class HiloServidor extends Thread{
 		this.juego = juego;
 		try {
 			this.consola = consola;
-			socket = new DatagramSocket(35123);
+			socket = new DatagramSocket(35323);
 			System.out.println(HelpDebug.debub(getClass())+"servidor iniciado");
 			consola.agregarMensajes("Servidor iniciado");
 
@@ -179,14 +179,10 @@ public class HiloServidor extends Thread{
 	
 	public void fin() {
 		fin = true;
-		interrupt();
+		socket.close();
 	}
 	
-	public void cerrarSocket() {
-	    if (socket != null && !socket.isClosed()) {
-	        socket.close();
-	    }
-	}
+
 
 }
 

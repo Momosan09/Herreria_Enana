@@ -1,4 +1,4 @@
-package red;
+package com.mygdx.red;
 
 import java.net.InetAddress;
 

@@ -9,7 +9,8 @@ import com.mygdx.pantallas.PantallaMenu;
 import com.mygdx.utiles.ConsolaDebug;
 import com.mygdx.utiles.Render;
 
-import red.Servidor;
+import com.mygdx.red.Servidor;
+import com.mygdx.red.UtilesRed;
 
 public class Principal extends Game {
 	public SpriteBatch batch;
@@ -38,6 +39,7 @@ public class Principal extends Game {
 	
 	@Override
 	public void dispose () {
+		UtilesRed.hs.fin();
 		super.dispose();
 		Render.batch.dispose();
 		font.dispose();

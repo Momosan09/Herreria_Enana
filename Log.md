@@ -6,3 +6,4 @@
 
 # 13 NOV :D
     - Redes... la parte de que los dos clientes sean independientes entre si ya esta, varios dias de intentos y despues con la ayuda del profe. El problema era que tenia 3 hilos por cliente cuando solo deberia tener 1, entonces llegaba un punto en que era un re quilombo ahi adentro de la red nadie se entendia nada y bueno...
+    - Ahora el hilo del servidor efectivamente se cierra cuando cerras el programa 

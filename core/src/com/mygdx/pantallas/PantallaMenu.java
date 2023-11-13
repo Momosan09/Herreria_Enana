@@ -26,7 +26,7 @@ import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 
-import red.Servidor;
+import com.mygdx.red.Servidor;
 
 public class PantallaMenu implements Screen{
 

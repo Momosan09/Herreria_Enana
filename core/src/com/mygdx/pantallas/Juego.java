@@ -42,7 +42,7 @@ import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 
-import red.Servidor;
+import com.mygdx.red.Servidor;
 
 public class Juego implements Screen{
 	
@@ -80,7 +80,7 @@ public class Juego implements Screen{
 	private final Principal game;
 	
 	private ConsolaDebug consola;
-	private Servidor servidor;
+	public static Servidor servidor;
 
 
 	public Juego(final Principal game) {
