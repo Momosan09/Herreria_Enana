@@ -147,7 +147,6 @@ public class HiloServidor extends Thread{
 			+jugadores[nroJugador].getEntidadJugador().posicion.x
 			+"#"
 			+jugadores[nroJugador].getEntidadJugador().posicion.y);
-			
 			}
 			}
 		}
