@@ -11,6 +11,7 @@ import com.mygdx.enums.Direcciones;
 import com.mygdx.game.Principal;
 import com.mygdx.pantallas.Juego;
 import com.mygdx.red.Cliente;
+import com.mygdx.utiles.Render;
 
 public class HiloCliente extends Thread{
 
@@ -21,6 +22,7 @@ public class HiloCliente extends Thread{
 	private boolean conexionExitosa = false;
 	private boolean servidorLleno = false;
 	private boolean esperandoJugadores = true;
+	public boolean comenzoJuego = false;
 	private Juego game;
 	private int idCliente;
 	
@@ -81,11 +83,17 @@ public class HiloCliente extends Thread{
 			servidorLleno = true;
 		}	
 		
+		if(comenzoJuego) {
+			if(this.idCliente==0) {
+				game.idJugador=0;
+			}else if(this.idCliente==1){
+				game.idJugador=1;
+			}
+		}
+		
 		if(conexionExitosa) {
 		if(mensajeCompuesto[0].equals("actualizar_posicion")) {
-			System.out.println("EL JUGADOR ES EL NUMERO "+mensajeCompuesto[1] );
 			if(mensajeCompuesto[1].equals("1")) {
-				System.out.println("mi id es" + idCliente);
 				game.getJugador1().posicion.x = Float.valueOf(mensajeCompuesto[2]);
 				game.getJugador1().posicion.y = Float.valueOf(mensajeCompuesto[3]);
 				game.getJugador1().movimientoCamara();			

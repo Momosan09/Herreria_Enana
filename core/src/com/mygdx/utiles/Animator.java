@@ -73,6 +73,7 @@ public class Animator implements ApplicationListener {
 
 	}
 	
+	
 	public void reset() {
 		stateTime = 0;
 	}

@@ -32,7 +32,7 @@ public class Jugador {
 	private Texture texturaItem;
 	private Sprite spriteItem;
 	public int dinero=10;
-	private boolean red = false;
+	private boolean red = true;
 	public int nroJugador;
 	private HiloCliente hc;
 	

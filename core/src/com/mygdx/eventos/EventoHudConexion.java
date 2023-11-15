@@ -1,4 +1,4 @@
-package eventos;
+package com.mygdx.eventos;
 
 import java.util.EventListener;
 

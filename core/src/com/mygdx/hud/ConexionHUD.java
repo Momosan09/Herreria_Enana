@@ -8,7 +8,7 @@ import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.Recursos;
 
-import eventos.EventoHudConexion;
+import com.mygdx.eventos.EventoHudConexion;
 
 public class ConexionHUD implements HeadUpDisplay{
 	

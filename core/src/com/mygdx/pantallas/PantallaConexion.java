@@ -48,6 +48,7 @@ public class PantallaConexion implements Screen{
 		if(UtilesRed.hc.isConexionExitosa() && !UtilesRed.hc.isEsperandojugadores()) {
 			hud.agregarMensaje("Iniciando juego", false);
 			this.game.setScreen(new Juego(game));
+			UtilesRed.hc.comenzoJuego = true;//Esto es para setear la proyeccion de la camara
 		}
 	}
 

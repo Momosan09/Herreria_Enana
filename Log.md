@@ -164,4 +164,7 @@
 # 13 NOV
     - Redes... la parte de que los dos clientes sean independientes entre si ya esta, varios dias de intentos y despues con la ayuda del profe. El problema era que tenia 3 hilos por cliente cuando solo deberia tener 1, entonces llegaba un punto en que era un re quilombo ahi adentro de la red nadie se entendia nada y bueno...
     - Ahora el hilo del cliente efectivamente se cierra cuando cerras el programa 
+
+# 15 NOV
+    - OMG LO LOGRE, los dos jugadores se pueden mover por el mundo libremente, la camara es especifica de cada uno y, recien empiezo con esto, pero por lo menos los minerales del inventario se muestran de manera independiente. Podria limpiar un poco el codigo de la clase Juego... 
      

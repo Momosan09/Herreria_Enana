@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Table.Debug;
@@ -58,7 +59,7 @@ public class Juego implements Screen{
 	private MineralesManager mineralesManager;
 
 	//Camaras
-	private OrthographicCamera camaraJuego, camaraHud;
+	private OrthographicCamera camaraJugador1, camaraJugador2, camaraHud;
 
 	//Scene2d.ui
 	private HUD hud;
@@ -66,7 +67,7 @@ public class Juego implements Screen{
 	private CartaHUD cartaHUD;
 	private PausaHUD pausaHud;
 	private Combinacion combinacion;
-	private InventarioHUD inventarioHUD;
+	private InventarioHUD inventarioHUD, inventarioHUD2;
 	private DialogoDeCompra dialogoDeCompra;
 	private Fundicion fundicionHUD;
 	
@@ -83,10 +84,13 @@ public class Juego implements Screen{
 	//red
 	private boolean red = true;
 	HiloCliente hc;
+	public int idJugador = -1;
 
+	
 	public Juego(final Principal game) {
 		this.game = game;
 		UtilesRed.game = this;
+		
 	}
 
 	@Override
@@ -95,9 +99,10 @@ public class Juego implements Screen{
 		
 		//camaras
 		
-		camaraJuego = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camaraJuego.setToOrtho(false);
-		camaraJuego.zoom = .6f;
+		camaraJugador1 = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camaraJugador1.setToOrtho(false);
+		camaraJugador1.zoom = .6f;
+
 		
 		
 		camaraHud = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -108,10 +113,13 @@ public class Juego implements Screen{
 		Render.tiledMapRenderer = new OrthogonalTiledMapRenderer(Recursos.MAPA);
 		
 		//jugador
-		hc = new HiloCliente(this);
-		jugador_1 = new Jugador(camaraJuego,hc);
-		jugador_2 = new Jugador(camaraJuego,hc);
+		hc = UtilesRed.hc;
+		jugador_1 = new Jugador(camaraJugador1,hc);
 		if(red) {
+			camaraJugador2 = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			camaraJugador2.setToOrtho(false);
+			camaraJugador2.zoom = .6f;
+			jugador_2 = new Jugador(camaraJugador2,hc);
 
 			UtilesRed.hc.setGame(this);//Le paso el juego porque sino el juego que le entra por constructor (al estatico) vale nulo
 			UtilesRed.hc = hc;
@@ -142,6 +150,10 @@ public class Juego implements Screen{
 	    fundicionHUD = new Fundicion(jugador_1);
 	    pausaHud = new PausaHUD(game);
 	    
+	   if(red) {
+		    inventarioHUD2 = new InventarioHUD();
+	    }
+	    
 	    mux.addProcessor(cartaHUD.getStage());
 	    mux.addProcessor(pausaHud.getStage());
 	    mux.addProcessor(combinacion.getStage());//Esto es para los botones de la propia clase
@@ -160,20 +172,42 @@ public class Juego implements Screen{
 	@Override
 	public void render(float delta) {
 
+		
+		Render.batch.begin();
+		Render.tiledMapRenderer.render();
+		Render.batch.end();
 
 	    //Renderiza el Juego
-		camaraJuego.update();
-		Render.batch.setProjectionMatrix(camaraJuego.combined);//Aca estaba el problema de que el HUD no se renderizaba por encima del mapa, los setProjectionMatrix de cada camara tienen que estar en ciclos .begin() y .end() distintos
 		Render.batch.begin();
 
-		Render.tiledMapRenderer.setView(camaraJuego);
-		Render.tiledMapRenderer.render();
+			
+		if(idJugador==1 || !red) {//Para determinar que camara es la que se usa en el batch
+			camaraJugador1.update();
+			Render.batch.setProjectionMatrix(camaraJugador1.combined);
+			Render.tiledMapRenderer.setView(camaraJugador1);
+			System.out.println("Esta es la camara del cliente 0");
+		}else if(idJugador==0) {
+			Render.batch.setProjectionMatrix(camaraJugador2.combined);
+			Render.tiledMapRenderer.setView(camaraJugador2);
+			camaraJugador2.update();
+			System.out.println("Esta es la camara del cliente 1");
+		}else if(idJugador == -1) {
+			System.out.println("La camara es -1");
+		}
+		
+	
 
 		jugador_1.draw(Render.batch);
+
+		//Render.batch.setProjectionMatrix(camaraJugador2.combined);
 		if(red) {
-			jugador_2.draw(Render.batch);
+			jugador_2.draw(Render.batch);			
 		}
-	    
+
+		
+		Render.batch.end();
+		Render.batch.begin();
+		
 		npcManager.renderizar(Render.batch);
 		npcManager.detectarJugador(jugador_1); 
 		
@@ -181,6 +215,15 @@ public class Juego implements Screen{
 		mineralesManager.detectarJugador(jugador_1);
 		mineralesManager.minar(jugador_1);
 		mineralesManager.comprar(jugador_1);
+		
+		
+		if(red && idJugador == 0) {
+			npcManager.detectarJugador(jugador_2); 
+			mineralesManager.detectarJugador(jugador_2);
+			mineralesManager.minar(jugador_2);
+			mineralesManager.comprar(jugador_2);
+		}
+		
 
 
 		Render.batch.end();
@@ -192,6 +235,11 @@ public class Juego implements Screen{
 		if(cartaHUD.getCerrar()) {//si ya leyo la carta...
 			cartaHUD.cerrar();
 			jugador_1.puedeMoverse=true;
+			/*
+			if(red && idJugador ==0) {
+				jugador_2.puedeMoverse = true;
+			}
+			*/
 			//npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
 			vendedor.charla(1);
 			viejo.charla(0);
@@ -209,6 +257,15 @@ public class Juego implements Screen{
 			inventarioHUD.render(jugador_1);
 			dialogoDeCompra.render(jugador_1);
 			fundicionHUD.render(jugador_1);
+			
+			
+			if(red && idJugador == 0) {
+				pausaHud.render(jugador_2);
+				inventarioHUD2.render(jugador_2);
+				dialogoDeCompra.render(jugador_2);
+				fundicionHUD.render(jugador_2);
+			}
+			
 
 		    if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT)) {//Esto despues lo tengo que cambiar
 		    	combinacion.mostrar();//Abrir Combinacion
@@ -220,8 +277,14 @@ public class Juego implements Screen{
 		    	
 		    	if(toggleInventario) {
 		    		inventarioHUD.mostrar();
+		    		if(red) {
+		    			inventarioHUD2.mostrar();
+		    		}
 		    	}else {
 		    		inventarioHUD.ocultar();
+		    		if(red) {
+		    			inventarioHUD2.ocultar();
+		    		}
 		    	}
 		    }
 		    if (mineralesManager.comprar(jugador_1)) {
@@ -239,6 +302,9 @@ public class Juego implements Screen{
 		    	togglePausa = !togglePausa;
 		    	if(togglePausa) {
 		    		jugador_1.puedeMoverse = false;
+		    		if(red && idJugador ==0) {
+		    			jugador_2.puedeMoverse = false;
+		    		}
 		    	
 		    		//System.out.println(HelpDebug.debub(getClass())+"Pausa");
 		    		pausaHud.mostrar();
@@ -253,10 +319,14 @@ public class Juego implements Screen{
 		}else {
 			cartaHUD.render();
 		}
+
 		
 		//bloquear movimiento del jugador
 		if(combinacion.visible) {
 			jugador_1.puedeMoverse = false;
+			if(red && idJugador == 0) {
+				jugador_2.puedeMoverse = false;
+			}
 			hud.ocultar();
 			if(inventarioHUD.visible) {//oculta el inventario si este esta mostrandose
 				inventarioHUD.ocultar();
@@ -268,21 +338,35 @@ public class Juego implements Screen{
 
 
 		if(Gdx.input.isKeyPressed(Keys.E)) {
-			jugador_1.getItems().add(Items.PICO);
-			System.out.println("Otorgado: Pico");
+			if(idJugador == 1 ||!red) {
+				jugador_1.getItems().add(Items.PICO);
+				System.out.println("Otorgado: Pico");				
+			}else {
+				jugador_2.getItems().add(Items.PICO);
+				System.out.println("Otorgado: Pico al jugador 2");
+			}
 		}
 		Render.batch.end();
 	    //System.out.println(HelpDebug.debub(this.getClass()) + "Hola");
-		jugador_1.puedeMoverse = true;
+		jugador_1.puedeMoverse = false;
+		if(red && idJugador ==0) {
+			jugador_2.puedeMoverse = false;
+		}
 
 	}
 
 
 	@Override
 	public void resize(int width, int height) {
-		camaraJuego.viewportWidth = width;
-		camaraJuego.viewportHeight = height;
-		camaraJuego.update();	
+		camaraJugador1.viewportWidth = width;
+		camaraJugador1.viewportHeight = height;
+		camaraJugador1.update();	
+
+		if(red) {
+			camaraJugador2.viewportWidth = width;
+			camaraJugador2.viewportHeight = height;
+			camaraJugador2.update();	
+		}
 		
 	    System.out.println(HelpDebug.debub(getClass())+"X =" +Gdx.graphics.getWidth() + " Y =" + Gdx.graphics.getHeight());
 	    hud.reEscalar(width, height);
