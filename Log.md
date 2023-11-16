@@ -10,3 +10,7 @@
 
 # 15 NOV
     - Los jugadores se mueven por separado con camaras distintas
+
+
+# 16 NOV
+    - Cambios menores
