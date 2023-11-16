@@ -93,13 +93,13 @@ public class HiloCliente extends Thread{
 		
 		if(conexionExitosa) {
 		if(mensajeCompuesto[0].equals("actualizar_posicion")) {
+			float x = Float.valueOf(mensajeCompuesto[2]);
+			float y = Float.valueOf(mensajeCompuesto[3]);
 			if(mensajeCompuesto[1].equals("1")) {
-				game.getJugador1().posicion.x = Float.valueOf(mensajeCompuesto[2]);
-				game.getJugador1().posicion.y = Float.valueOf(mensajeCompuesto[3]);
+				game.getJugador1().movimientoPorRed(x, y);
 				game.getJugador1().movimientoCamara();			
 			}else {
-				game.getJugador2().posicion.x = Float.valueOf(mensajeCompuesto[2]);
-				game.getJugador2().posicion.y = Float.valueOf(mensajeCompuesto[3]);	
+				game.getJugador2().movimientoPorRed(x, y);
 				game.getJugador2().movimientoCamara();		
 			}
 		}

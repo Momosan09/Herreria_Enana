@@ -32,7 +32,7 @@ public class Jugador {
 	private Texture texturaItem;
 	private Sprite spriteItem;
 	public int dinero=10;
-	private boolean red = true;
+	private boolean red = false;
 	public int nroJugador;
 	private HiloCliente hc;
 	
@@ -49,13 +49,16 @@ public class Jugador {
 		texturaItem = new Texture(Recursos.PICO_DER);
 		spriteItem = new Sprite(texturaItem);
 		this.hc = hc;
+		this.red = true;
 	}
-
-	public Jugador() {
-		posicion = new Vector2(Gdx.graphics.getWidth() / 2 - (tamañoPersonaje/ 2)-32,Gdx.graphics.getHeight() / 2 - (tamañoPersonaje/ 2)); // posicion inicial
+	
+	public Jugador(OrthographicCamera camara) {
+		posicion = new Vector2(Gdx.graphics.getWidth() / 2 - (tamañoPersonaje/ 2),Gdx.graphics.getHeight() / 2 - (tamañoPersonaje/ 2)); // posicion inicial
+		this.camara = camara;
 		crearAnimaciones();
 		texturaItem = new Texture(Recursos.PICO_DER);
 		spriteItem = new Sprite(texturaItem);
+		this.red = false;
 	}
 
 	private void dibujarItemActual() {
@@ -92,7 +95,7 @@ public class Jugador {
         			direccionActual = Direcciones.ABAJO;
         		}
         	}else {
-        		//resetearAnimaciones(animacionQuieto);
+        		resetearAnimaciones(animacionQuieto);
         	}
 
         if(Gdx.input.isKeyPressed(Keys.A) != Gdx.input.isKeyPressed(Keys.D)) {
@@ -104,7 +107,7 @@ public class Jugador {
         		direccionActual = Direcciones.DERECHA;
         	}
         }else {
-        	//resetearAnimaciones(animacionQuieto);
+        	resetearAnimaciones(animacionQuieto);
         }
 
         if (movimientoX != 0 && movimientoY != 0) {
@@ -124,7 +127,7 @@ public class Jugador {
         	if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) {
         		if (Gdx.input.isKeyPressed(Keys.W)) {
         			direccionActual = Direcciones.ARRIBA;
-        			System.out.println("++++++Soy el cliente "+ hc.getIdCliente() + "yendo para arriba");
+//        			System.out.println("++++++Soy el cliente "+ hc.getIdCliente() + "yendo para arriba");
         			//System.out.println(HelpDebug.debub(getClass())+"direccion arriba");
         			UtilesRed.hc.enviarMensaje("direccion#arriba");
         		} else if (Gdx.input.isKeyPressed(Keys.S)) {
@@ -150,10 +153,12 @@ public class Jugador {
         }
     
         }
-        
+
         if (movimientoX != 0 || movimientoY != 0) {
+//        	System.out.println(HelpDebug.debub(getClass())+"animanod");
             alternarSprites(direccionActual);
         } else {
+//        	System.out.println("animado quieto");
             alternarSprites(Direcciones.QUIETO);
             resetearAnimaciones(animacionArriba, animacionAbajo, animacionIzquierda, animacionDerecha);
         }
@@ -163,6 +168,12 @@ public class Jugador {
 	
 	
 
+	public void movimientoPorRed(float x, float y) {
+		if(red) {
+	        posicion.x = x;
+	        posicion.y = y;
+		}
+	}
 	public void movimientoCamara() {
 		if(camara != null) {
 			

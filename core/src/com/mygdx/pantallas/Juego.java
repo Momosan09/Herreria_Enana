@@ -82,14 +82,15 @@ public class Juego implements Screen{
 	private final Principal game;
 
 	//red
-	private boolean red = true;
+	private boolean red = false;
 	HiloCliente hc;
 	public int idJugador = -1;
 
 	
-	public Juego(final Principal game) {
+	public Juego(final Principal game, boolean red) {
 		this.game = game;
 		UtilesRed.game = this;
+		this.red = red;
 		
 	}
 
@@ -113,9 +114,9 @@ public class Juego implements Screen{
 		Render.tiledMapRenderer = new OrthogonalTiledMapRenderer(Recursos.MAPA);
 		
 		//jugador
-		hc = UtilesRed.hc;
-		jugador_1 = new Jugador(camaraJugador1,hc);
 		if(red) {
+			hc = UtilesRed.hc;
+			jugador_1 = new Jugador(camaraJugador1,hc);
 			camaraJugador2 = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			camaraJugador2.setToOrtho(false);
 			camaraJugador2.zoom = .6f;
@@ -123,6 +124,8 @@ public class Juego implements Screen{
 
 			UtilesRed.hc.setGame(this);//Le paso el juego porque sino el juego que le entra por constructor (al estatico) vale nulo
 			UtilesRed.hc = hc;
+		}else {
+			jugador_1 = new Jugador(camaraJugador1);
 		}
 				
 		//Npc
@@ -185,14 +188,14 @@ public class Juego implements Screen{
 			camaraJugador1.update();
 			Render.batch.setProjectionMatrix(camaraJugador1.combined);
 			Render.tiledMapRenderer.setView(camaraJugador1);
-			System.out.println("Esta es la camara del cliente 0");
+//			System.out.println(HelpDebug.debub(getClass())+"Esta es la camara del cliente 0");
 		}else if(idJugador==0) {
 			Render.batch.setProjectionMatrix(camaraJugador2.combined);
 			Render.tiledMapRenderer.setView(camaraJugador2);
 			camaraJugador2.update();
-			System.out.println("Esta es la camara del cliente 1");
+//			System.out.println(HelpDebug.debub(getClass())+"Esta es la camara del cliente 1");
 		}else if(idJugador == -1) {
-			System.out.println("La camara es -1");
+//			System.out.println(HelpDebug.debub(getClass())+"La camara es -1");
 		}
 		
 	
@@ -348,7 +351,7 @@ public class Juego implements Screen{
 		}
 		Render.batch.end();
 	    //System.out.println(HelpDebug.debub(this.getClass()) + "Hola");
-		jugador_1.puedeMoverse = false;
+		jugador_1.puedeMoverse = true;
 		if(red && idJugador ==0) {
 			jugador_2.puedeMoverse = false;
 		}
@@ -399,6 +402,10 @@ public class Juego implements Screen{
 
 		Render.tiledMapRenderer.dispose();
 		Recursos.MAPA.dispose();
+		if(red) {
+			UtilesRed.hc.enviarMensaje("desconectar");
+			UtilesRed.hc.fin();
+		}
 		
 	}
 	

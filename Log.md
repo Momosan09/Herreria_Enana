@@ -167,4 +167,7 @@
 
 # 15 NOV
     - OMG LO LOGRE, los dos jugadores se pueden mover por el mundo libremente, la camara es especifica de cada uno y, recien empiezo con esto, pero por lo menos los minerales del inventario se muestran de manera independiente. Podria limpiar un poco el codigo de la clase Juego... 
+
+# 16 NOV
+    - Cambios menores
      
