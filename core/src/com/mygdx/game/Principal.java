@@ -32,7 +32,11 @@ public class Principal extends Game {
 	
 	@Override
 	public void dispose () {
-
+		if(UtilesRed.hc != null) {
+			UtilesRed.hc.enviarMensaje("desconectar");
+			UtilesRed.hc.fin();
+		}
+		
 		super.dispose();
 		Render.batch.dispose();
 		font.dispose();

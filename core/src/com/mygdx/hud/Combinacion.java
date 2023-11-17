@@ -40,6 +40,7 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
     
     private int pad = 20;
     public boolean visible=false;
+    
     public Combinacion(Jugador jugador) {
     	this.jugador = jugador;
     	combinables = new ArrayList<Image>();

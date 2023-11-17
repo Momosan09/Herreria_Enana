@@ -44,7 +44,9 @@ public class MyDragAndDrop {
 		this.jugador = jugador;
 		screenViewport = new ScreenViewport();
 		stage = new Stage(screenViewport);
+		
 		labelStyle = EstiloFuente.generarFuente(32, Colores.BLANCO, false);
+		
 		inventario = new ArrayList<Image>();
 		
 		if(jugador.getMinerales().size() >0) {	

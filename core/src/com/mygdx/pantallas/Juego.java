@@ -66,7 +66,7 @@ public class Juego implements Screen{
 	private Dialogo dialogo;
 	private CartaHUD cartaHUD;
 	private PausaHUD pausaHud;
-	private Combinacion combinacion;
+	private Combinacion combinacionJugador1, combinacionJugador2;
 	private InventarioHUD inventarioHUD, inventarioHUD2;
 	private DialogoDeCompra dialogoDeCompra;
 	private Fundicion fundicionHUD;
@@ -121,6 +121,8 @@ public class Juego implements Screen{
 			camaraJugador2.setToOrtho(false);
 			camaraJugador2.zoom = .6f;
 			jugador_2 = new Jugador(camaraJugador2,hc);
+			
+
 
 			UtilesRed.hc.setGame(this);//Le paso el juego porque sino el juego que le entra por constructor (al estatico) vale nulo
 			UtilesRed.hc = hc;
@@ -147,7 +149,7 @@ public class Juego implements Screen{
 		//HUD
 		hud = new HUD(jugador_1);
 		cartaHUD = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);//ee parece que cartaHUD tiene que ir primero, sino no anda la combinacion (nose pq)
-	    combinacion = new Combinacion(jugador_1);
+		combinacionJugador1 = new Combinacion(jugador_1);
 	    inventarioHUD = new InventarioHUD();
 	    dialogoDeCompra = new DialogoDeCompra();
 	    fundicionHUD = new Fundicion(jugador_1);
@@ -155,14 +157,18 @@ public class Juego implements Screen{
 	    
 	   if(red) {
 		    inventarioHUD2 = new InventarioHUD();
+			combinacionJugador2 = new Combinacion(jugador_2);
+			
+			mux.addProcessor(combinacionJugador2.getStage());
+			mux.addProcessor(combinacionJugador2.getDragAndDrop().getStage());
 	    }
 	    
 	    mux.addProcessor(cartaHUD.getStage());
 	    mux.addProcessor(pausaHud.getStage());
-	    mux.addProcessor(combinacion.getStage());//Esto es para los botones de la propia clase
+	    mux.addProcessor(combinacionJugador1.getStage());//Esto es para los botones de la propia clase
 	    mux.addProcessor(fundicionHUD.getStage());
 	    //mux.addProcessor(dialogoDeCompra.getStage());
-	    mux.addProcessor(combinacion.getDragAndDrop().getStage());//Esto es para las imagenes arratrables que tiene el stage del dragAndDrop de esta clase, si quiero poner otro dragAndDrop tengo q ue agregarlo asi
+	    mux.addProcessor(combinacionJugador1.getDragAndDrop().getStage());//Esto es para las imagenes arratrables que tiene el stage del dragAndDrop de esta clase, si quiero poner otro dragAndDrop tengo q ue agregarlo asi
 	    mux.addProcessor(hud.getStage());
 	    mux.addProcessor(hud.getResultadosBatallasHUD().getStage());
 	    mux.addProcessor(hud.getProximaBatallaHUD().getStage());
@@ -255,14 +261,15 @@ public class Juego implements Screen{
 
 			//Renderiza ocultables
 			hud.render();
-			combinacion.render();
+			combinacionJugador1.render();
 			pausaHud.render(jugador_1);
 			inventarioHUD.render(jugador_1);
 			dialogoDeCompra.render(jugador_1);
-			fundicionHUD.render(jugador_1);
+			//fundicionHUD.render(jugador_1);
 			
 			
 			if(red && idJugador == 0) {
+				combinacionJugador2.render();
 				pausaHud.render(jugador_2);
 				inventarioHUD2.render(jugador_2);
 				dialogoDeCompra.render(jugador_2);
@@ -271,7 +278,12 @@ public class Juego implements Screen{
 			
 
 		    if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT)) {//Esto despues lo tengo que cambiar
-		    	combinacion.mostrar();//Abrir Combinacion
+		    	
+		    	if(red && idJugador == 0) {
+		    		combinacionJugador2.mostrar();
+		    	}else {
+		    		combinacionJugador1.mostrar();//Abrir Combinacion
+		    	}
 		    }
 		    fundicionHUD.mostrar();
 		    
@@ -325,7 +337,7 @@ public class Juego implements Screen{
 
 		
 		//bloquear movimiento del jugador
-		if(combinacion.visible) {
+		if(combinacionJugador1.visible) {
 			jugador_1.puedeMoverse = false;
 			if(red && idJugador == 0) {
 				jugador_2.puedeMoverse = false;
@@ -368,6 +380,8 @@ public class Juego implements Screen{
 		if(red) {
 			camaraJugador2.viewportWidth = width;
 			camaraJugador2.viewportHeight = height;
+		    combinacionJugador2.reEscalar(width, height);
+		    inventarioHUD2.reEscalar(width, height);
 			camaraJugador2.update();	
 		}
 		
@@ -375,7 +389,7 @@ public class Juego implements Screen{
 	    hud.reEscalar(width, height);
 	    cartaHUD.reEscalar(width, height);
 	    pausaHud.reEscalar(width, height);
-	    combinacion.reEscalar(width, height);
+	    combinacionJugador1.reEscalar(width, height);
 	    npcManager.reEscalarDialogos(width, height);
 	    inventarioHUD.reEscalar(width, height);
 	    dialogoDeCompra.reEscalar(width, height);
@@ -402,10 +416,6 @@ public class Juego implements Screen{
 
 		Render.tiledMapRenderer.dispose();
 		Recursos.MAPA.dispose();
-		if(red) {
-			UtilesRed.hc.enviarMensaje("desconectar");
-			UtilesRed.hc.fin();
-		}
 		
 	}
 	
@@ -415,14 +425,14 @@ public class Juego implements Screen{
 		//rey = new Rey(0,0,Recursos.VENDEDOR, NpcData.REY);
 	}
 	
-	public void npcManagerConfig() {
+	private void npcManagerConfig() {
 		npcManager = new NPCManager();
 		npcManager.agregarEntidad(viejo);
 		npcManager.agregarEntidad(vendedor);
 	    npcManager.crearDialogos();
 	}
 	
-	public void mineralesManagerConfig() {
+	private void mineralesManagerConfig() {
 		mineralesManager = new MineralesManager();
 		mineralesManager.agregarMineral(piedra);
 		mineralesManager.agregarMineral(piedra2);
@@ -438,6 +448,9 @@ public class Juego implements Screen{
 		return jugador_2;
 	}
 	
+	public MineralesManager getMineralesManager() {
+		return mineralesManager;
+	}
 
 
 }

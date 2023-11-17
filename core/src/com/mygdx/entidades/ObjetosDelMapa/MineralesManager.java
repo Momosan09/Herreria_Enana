@@ -16,8 +16,23 @@ public class MineralesManager {
     	minerales.add(mineral);
     }
 
-    public void eliminarMineral(Mineral mineral) {
-    	minerales.remove(mineral);
+//    public void eliminarMineral(Mineral mineral) {
+//    	minerales.remove(mineral);
+//    }
+    
+    public void eliminarMineral(float posX, float posY) {
+    	boolean fin=false;
+    	int i=0;
+    	do {
+    		if(minerales.get(i).getPosicion().x == posX && minerales.get(i).getPosicion().y == posY) {
+    			minerales.get(i).vida=0;
+    			minerales.remove(i);
+    			fin = true;
+    			System.out.println("Eliminadot");
+    		}
+    		
+    		i++;
+    	}while(!fin);
     }
 
     public void detectarJugador(Jugador jugador) {

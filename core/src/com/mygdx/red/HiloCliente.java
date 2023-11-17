@@ -103,6 +103,15 @@ public class HiloCliente extends Thread{
 				game.getJugador2().movimientoCamara();		
 			}
 		}
+		
+		if(mensajeCompuesto[0].equals("eliminar")) {
+			if(mensajeCompuesto[1].equals("mineral")) {
+				float posX = Float.valueOf(mensajeCompuesto[2]);
+				float posY = Float.valueOf(mensajeCompuesto[3]);
+				game.getMineralesManager().eliminarMineral(posX, posY);;
+				System.out.println("elimnadororor");
+			}
+		}
 		}
 		//mensajeCompuesto(msg);
 		

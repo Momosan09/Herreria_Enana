@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.enums.Items;
+import com.mygdx.red.UtilesRed;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.HelpDebug;
@@ -26,7 +27,7 @@ public class Mineral extends Entidad{
 
 	
 	public void click(Jugador jugador) {
-		DibujarFiguras.dibujarRectanguloLleno((this.posicion.x-jugador.getPosicion().x)+this.posicion.x, (this.posicion.y-jugador.getPosicion().y)+this.posicion.y, this.textura.getWidth(), this.textura.getHeight(), Color.valueOf(Colores.ROJO));
+		DibujarFiguras.dibujarRectanguloLleno(this.posicion.x,this.posicion.y, this.textura.getWidth(), this.textura.getHeight(), Color.valueOf(Colores.ROJO));
 		System.out.println(jugador.getPosicion().x);
 		if(Gdx.input.isTouched()) {
 			System.out.println("click");
@@ -39,11 +40,14 @@ public class Mineral extends Entidad{
 	        }
 	}
 
-	public void minar(Jugador jugador) {
+	public void minar(Jugador jugador) {	
 		if((getJugadorEnRango() && buscarPorItemEnJugador(Items.PICO)) ) {
 			click(jugador);
 			if(this.vida <= 0) {
 				System.out.println(HelpDebug.debub(getClass())+"muerte");
+				if(jugador.isRed()) {
+			    	UtilesRed.hc.enviarMensaje("eliminar#mineral#"+this.getPosicion().x+"#"+this.getPosicion().y);
+				}
 				jugador.getMinerales().add(this);
 			}
 

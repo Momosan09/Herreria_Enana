@@ -250,5 +250,9 @@ public class Jugador {
 	public ArrayList<Mineral> getMinerales(){
 		return mineralesInv;
 	}
+	
+	public boolean isRed() {
+		return red;
+	}
 
 }
