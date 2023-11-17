@@ -14,3 +14,6 @@
 
 # 16 NOV
     - Cambios menores
+
+# 17 NOV
+    - Los minerales ahora se manejan en red. Si un jugador mina un hierro, ese hierro desaparece para ambos clientes

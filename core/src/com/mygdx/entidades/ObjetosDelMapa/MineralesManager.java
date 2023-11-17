@@ -3,6 +3,7 @@ package com.mygdx.entidades.ObjetosDelMapa;
 import java.util.ArrayList;
 import java.util.List;
 import com.mygdx.entidades.Jugador;
+import com.mygdx.red.UtilesRed;
 
 
 public class MineralesManager {
@@ -17,13 +18,16 @@ public class MineralesManager {
     }
 
     public void eliminarMineral(Mineral mineral) {
+    	System.out.println("Se elimina un mineral");
+
     	minerales.remove(mineral);
     }
 
-    public void detectarJugador(Jugador jugador) {
+    public void detectarJugador(Jugador jugador_1, Jugador jugador_2) {
         for (Mineral mineral : minerales) {
         	if(mineral.vida >0) {//Si el mineral esta vivo, detecta al jugador
-        	mineral.detectarJugador(jugador);
+        	mineral.detectarJugador(jugador_1);
+        	mineral.detectarJugador(jugador_2);
         	}
         }
     }

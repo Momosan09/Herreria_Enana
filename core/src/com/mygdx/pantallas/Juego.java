@@ -142,7 +142,15 @@ public class Juego implements Screen{
 	@Override
 	public void render(float delta) {
 		consola.render();
-
+		
+		
+		mineralesManager.detectarJugador(jugador_1, jugador_2);
+		mineralesManager.minar(jugador_1);
+		mineralesManager.comprar(jugador_1);
+		
+		mineralesManager.minar(jugador_2);
+		mineralesManager.comprar(jugador_2);
+		
 	    //Renderiza el Juego
 		/*
 		camaraJuego.update();

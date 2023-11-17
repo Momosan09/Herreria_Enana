@@ -148,6 +148,18 @@ public class HiloServidor extends Thread{
 			+"#"
 			+jugadores[nroJugador].getEntidadJugador().posicion.y);
 			}
+			
+		case "eliminar":
+			if(cantConexiones >=2) {
+			if(mensajeCompuesto[1].equals("mineral")) {
+				float posX = Float.valueOf(mensajeCompuesto[2]);
+				float posY = Float.valueOf(mensajeCompuesto[3]);
+				enviarMensaje("eliminar#mineral#"+posX+"#"+posY);
+			}
+			
+			}
+			break;
+		
 			}
 		}
 			
