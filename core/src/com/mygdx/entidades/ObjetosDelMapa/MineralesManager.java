@@ -28,7 +28,6 @@ public class MineralesManager {
     			minerales.get(i).vida=0;
     			minerales.remove(i);
     			fin = true;
-    			System.out.println("Eliminadot");
     		}
     		
     		i++;

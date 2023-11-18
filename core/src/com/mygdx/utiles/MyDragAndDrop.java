@@ -58,11 +58,12 @@ public class MyDragAndDrop {
 
 	public void create () {
 		stage.setDebugAll(true);
-
+		System.out.println(HelpDebug.debub(getClass())+ "creado");
 		for (Image image : inventario) {
 			dragAndDrop.addSource(new Source(image) {//addSource permite que la imagen sea arrastrable, por eso necesito que cada imagen del inventario sea source
 				@Null
 				public Payload dragStart (InputEvent event, float x, float y, int pointer) {
+					System.out.println("detecta");
 					Payload payload = new Payload();
 					payload.setObject(HelpDebug.debub(getClass())+"Some payload!");
 
@@ -141,7 +142,7 @@ public class MyDragAndDrop {
 	public void refrescar() {
 		
 		for (int i=0; i<jugador.getMinerales().size();i++) {
-			System.out.println("jeda"+jugador.getMinerales().size() + "i" + i);
+//			System.out.println("jeda"+jugador.getMinerales().size() + "i" + i);
 			inventario.add(new Image(new Sprite(jugador.getMinerales().get(i).getTextura())));//Agrega los minearales del inventario del personaje, aca puede haber un error cuando quiera combinar mas cosas que solo minerales
 			stage.addActor(inventario.get(i));
 		}

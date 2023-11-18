@@ -32,14 +32,18 @@ public class Jugador {
 	private Texture texturaItem;
 	private Sprite spriteItem;
 	public int dinero=10;
+	
+	//Red
 	private boolean red = false;
 	public int nroJugador;
 	private HiloCliente hc;
+	private float movimientoRedX=0, movimientoRedY =0;
 	
+	//Inventarios
 	private ArrayList<Items> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
 	private ArrayList<Mineral> mineralesInv = new ArrayList<>();  
     
-	private Direcciones direccionActual = Direcciones.QUIETO;
+	public Direcciones direccionActual = Direcciones.QUIETO;
 	Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
 	
 	public Jugador(OrthographicCamera camara, HiloCliente hc) {
@@ -75,6 +79,9 @@ public class Jugador {
 		// sprite.draw(batch);
 		update();
 		dibujarItemActual();
+		if(red) {
+			alternarSprites(direccionActual);//Tengo que llamarlo aca porque sino hay problemas con el batch
+		}
 	}
 
 	private void update() {
@@ -120,60 +127,67 @@ public class Jugador {
         posicion.y += movimientoY * deltaTime;
 
         // Actualizar animaciones y cámaras
+        if (movimientoX != 0 || movimientoY != 0) {
+            alternarSprites(direccionActual);
+        } else {
+            alternarSprites(Direcciones.QUIETO);
+            resetearAnimaciones(animacionArriba, animacionAbajo, animacionIzquierda, animacionDerecha);
+        }
         movimientoCamara();
         }
         
         if(red) {
         	if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) {
         		if (Gdx.input.isKeyPressed(Keys.W)) {
-        			direccionActual = Direcciones.ARRIBA;
-//        			System.out.println("++++++Soy el cliente "+ hc.getIdCliente() + "yendo para arriba");
-        			//System.out.println(HelpDebug.debub(getClass())+"direccion arriba");
         			UtilesRed.hc.enviarMensaje("direccion#arriba");
         		} else if (Gdx.input.isKeyPressed(Keys.S)) {
-        			direccionActual = Direcciones.ABAJO;
         			UtilesRed.hc.enviarMensaje("direccion#abajo");
         		}
         	}else {
-        		resetearAnimaciones(animacionQuieto);
         	}
         
         
         
         if(Gdx.input.isKeyPressed(Keys.A) != Gdx.input.isKeyPressed(Keys.D)) {
         	if (Gdx.input.isKeyPressed(Keys.A)) {
-    			direccionActual = Direcciones.IZQUIERDA;
     			UtilesRed.hc.enviarMensaje("direccion#izquierda");
         	} else if (Gdx.input.isKeyPressed(Keys.D)) {
-    			direccionActual = Direcciones.DERECHA;
     			UtilesRed.hc.enviarMensaje("direccion#derecha");
         	}
         }else {
-        	resetearAnimaciones(animacionQuieto);
         }
-    
+        
+        if(!Gdx.input.isKeyPressed(Keys.W) && !Gdx.input.isKeyPressed(Keys.S) && !Gdx.input.isKeyPressed(Keys.A) && !Gdx.input.isKeyPressed(Keys.D)) {
+        		UtilesRed.hc.enviarMensaje("direccion#quieto");
+        }
         }
 
-        if (movimientoX != 0 || movimientoY != 0) {
-//        	System.out.println(HelpDebug.debub(getClass())+"animanod");
-            alternarSprites(direccionActual);
-        } else {
-//        	System.out.println("animado quieto");
-            alternarSprites(Direcciones.QUIETO);
-            resetearAnimaciones(animacionArriba, animacionAbajo, animacionIzquierda, animacionDerecha);
-        }
-        //movimientoCamara();
         
 	}
 	
 	
-
+	
 	public void movimientoPorRed(float x, float y) {
+		float deltaTime = Gdx.graphics.getDeltaTime();
 		if(red) {
-	        posicion.x = x;
-	        posicion.y = y;
+			this.movimientoRedX = x;
+			this.movimientoRedY = y;
+			
+			if (movimientoRedX != 0 && movimientoRedY != 0) {
+				movimientoRedX *= 0.7071f;
+				movimientoRedY *= 0.7071f;
+				//Esta es la velocidad que tiene cuando se mueva diagonalmente, ya que, sino su velocidad diagonal seria mayor que la horizontal o vertical
+			}
+
+        posicion.x += movimientoRedX * deltaTime;
+        posicion.y += movimientoRedY * deltaTime;
+        
+		}else {
+			this.movimientoRedX = 0;
+			this.movimientoRedY = 0;
 		}
 	}
+	
 	public void movimientoCamara() {
 		if(camara != null) {
 			

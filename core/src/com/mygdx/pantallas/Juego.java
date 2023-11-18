@@ -260,12 +260,7 @@ public class Juego implements Screen{
 	    
 
 			//Renderiza ocultables
-			hud.render();
-			combinacionJugador1.render();
-			pausaHud.render(jugador_1);
-			inventarioHUD.render(jugador_1);
-			dialogoDeCompra.render(jugador_1);
-			//fundicionHUD.render(jugador_1);
+
 			
 			
 			if(red && idJugador == 0) {
@@ -273,19 +268,29 @@ public class Juego implements Screen{
 				pausaHud.render(jugador_2);
 				inventarioHUD2.render(jugador_2);
 				dialogoDeCompra.render(jugador_2);
-				fundicionHUD.render(jugador_2);
+//				fundicionHUD.render(jugador_2);
+			}else {
+				hud.render();
+				combinacionJugador1.render();
+				pausaHud.render(jugador_1);
+				inventarioHUD.render(jugador_1);
+				dialogoDeCompra.render(jugador_1);
+				//fundicionHUD.render(jugador_1);
 			}
 			
 
-		    if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT)) {//Esto despues lo tengo que cambiar
-		    	
-		    	if(red && idJugador == 0) {
+		    if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT) && red && idJugador == 0) {//Esto despues lo tengo que cambiar
 		    		combinacionJugador2.mostrar();
-		    	}else {
-		    		combinacionJugador1.mostrar();//Abrir Combinacion
-		    	}
 		    }
-		    fundicionHUD.mostrar();
+		    
+		    if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT) && red && idJugador == 1) {
+		    	combinacionJugador1.mostrar();
+		    }
+		    
+		    if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT) && !red) {
+		    	combinacionJugador1.mostrar();
+		    }
+		    
 		    
 		    if(Gdx.input.isKeyJustPressed(Keys.TAB)) {
 		    	toggleInventario = !toggleInventario;
@@ -336,20 +341,7 @@ public class Juego implements Screen{
 		}
 
 		
-		//bloquear movimiento del jugador
-		if(combinacionJugador1.visible) {
-			jugador_1.puedeMoverse = false;
-			if(red && idJugador == 0) {
-				jugador_2.puedeMoverse = false;
-			}
-			hud.ocultar();
-			if(inventarioHUD.visible) {//oculta el inventario si este esta mostrandose
-				inventarioHUD.ocultar();
-				toggleInventario = !toggleInventario; //cambio el valor del toggle asi no se traba
-			}
-		}else {
-			hud.mostrar();
-		}
+
 
 
 		if(Gdx.input.isKeyPressed(Keys.E)) {

@@ -173,3 +173,7 @@
 
 # 17 NOV
     - Los minerales ahora se manejan en red. Si un jugador mina un hierro, ese hierro desaparece para ambos clientes
+
+# 18 NOV
+    - Ahora hay animaciones cuando se juega en red
+    - Ahora las animaciones en red funcionan correctamente
