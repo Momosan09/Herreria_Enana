@@ -117,11 +117,7 @@ public class HiloServidor extends Thread{
 				        break;
 				    }
 				}
-
-				System.out.println("El puerto del jugador 0 es = " + jugadores[0].puerto);
-				System.out.println("El puerto del jugador 1 es = " + jugadores[1].puerto);
-				System.out.println("El puerto del paquete es = " + dp.getPort());
-			
+				
 			switch (mensajeCompuesto[1]) {
 			case "arriba":
 				System.out.println("EL JUGADOR " + nroJugador + " Va a arriba");
@@ -142,11 +138,23 @@ public class HiloServidor extends Thread{
 				System.out.println("derecha");
 				jugadores[nroJugador].getEntidadJugador().movimiento(Direcciones.DERECHA);
 				break;
+			case "quieto":
+				System.out.println("quieto");
+				jugadores[nroJugador].getEntidadJugador().movimiento(Direcciones.QUIETO);
 			}
+			
 			enviarMensaje("actualizar_posicion#"+nroJugador+"#"+
-			+jugadores[nroJugador].getEntidadJugador().posicion.x
+			+jugadores[nroJugador].getEntidadJugador().movimientoX
 			+"#"
-			+jugadores[nroJugador].getEntidadJugador().posicion.y);
+			+jugadores[nroJugador].getEntidadJugador().movimientoY
+			+"#"
+			+jugadores[0].getEntidadJugador().direccionActual
+			+"#"
+			+jugadores[1].getEntidadJugador().direccionActual
+			);
+			
+			System.out.println("el jugador 1" + jugadores[0].getEntidadJugador().direccionActual);
+			System.out.println("el jugador 2" + jugadores[1].getEntidadJugador().direccionActual);
 			}
 			
 		case "eliminar":

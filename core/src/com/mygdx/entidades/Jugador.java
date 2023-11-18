@@ -23,18 +23,19 @@ import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 public class Jugador {
 
 	public Vector2 posicion;
-	private float velocidad = 120f;
+	private float velocidad = 100f;
 	public OrthographicCamera camara;
 	public boolean puedeMoverse = false;
 	private int tamañoPersonaje = 32;
 	private Texture texturaItem;
 	private Sprite spriteItem;
 	public int dinero=10;
-	
+	public float movimientoX, movimientoY;
+	 
 	private ArrayList<Items> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
 	private ArrayList<Mineral> mineralesInv = new ArrayList<>();  
     
-	private Direcciones direccionActual = Direcciones.QUIETO;
+	public Direcciones direccionActual = Direcciones.QUIETO;
 	Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
 	
 	
@@ -67,12 +68,12 @@ public class Jugador {
 
 	public void movimiento(Direcciones direccion) {
 		float deltaTime = Gdx.graphics.getDeltaTime();
-        float movimientoX = 0;
-        float movimientoY = 0;
+        movimientoX = 0;
+        movimientoY = 0;
         
-        System.out.println(HelpDebug.debub(getClass())+"moviendo");
-
-        switch(direccion){
+        this.direccionActual = direccion;
+        
+        switch(direccionActual){
         	case ARRIBA:
         		movimientoY += velocidad;
         		break;
@@ -85,32 +86,10 @@ public class Jugador {
         	case DERECHA:
         		movimientoX += velocidad;
         		break;
+        	case QUIETO:
+        		movimientoX = 0;
+        		movimientoY = 0;
         }
-        
-        //if(puedeMoverse) {
-        	/*if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) {
-        		if (Gdx.input.isKeyPressed(Keys.W)) {
-        			
-        			direccionActual = Direcciones.ARRIBA;
-        		} else if (Gdx.input.isKeyPressed(Keys.S)) {
-        			
-        			direccionActual = Direcciones.ABAJO;
-        		}
-        	}else {
-        		resetearAnimaciones(animacionQuieto);
-        	}
-
-        if(Gdx.input.isKeyPressed(Keys.A) != Gdx.input.isKeyPressed(Keys.D)) {
-        	if (Gdx.input.isKeyPressed(Keys.A)) {
-        		
-        		direccionActual = Direcciones.IZQUIERDA;
-        	} else if (Gdx.input.isKeyPressed(Keys.D)) {
-        		
-        		direccionActual = Direcciones.DERECHA;
-        	}
-        }else {
-        	resetearAnimaciones(animacionQuieto);
-        }*/
 
         if (movimientoX != 0 && movimientoY != 0) {
             movimientoX *= 0.7071f;
