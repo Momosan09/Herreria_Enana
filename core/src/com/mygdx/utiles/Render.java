@@ -8,5 +8,5 @@ public class Render {
 
 	public static SpriteBatch batch;
 	public static  OrthogonalTiledMapRenderer tiledMapRenderer;
-	public static ShapeRenderer shapeR;
+	public static ShapeRenderer shapeR = new ShapeRenderer();
 }

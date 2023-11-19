@@ -14,6 +14,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Table.Debug;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.entidades.ColisionesManager;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.NPCManager;
@@ -41,6 +43,7 @@ import com.mygdx.hud.InventarioHUD;
 import com.mygdx.hud.PausaHUD;
 import com.mygdx.red.HiloCliente;
 import com.mygdx.red.UtilesRed;
+import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
@@ -85,8 +88,10 @@ public class Juego implements Screen{
 	private boolean red = false;
 	HiloCliente hc;
 	public int idJugador = -1;
-
 	
+	//Colisiones
+	private ColisionesManager colisionesManager;
+
 	public Juego(final Principal game, boolean red) {
 		this.game = game;
 		UtilesRed.game = this;
@@ -116,13 +121,11 @@ public class Juego implements Screen{
 		//jugador
 		if(red) {
 			hc = UtilesRed.hc;
-			jugador_1 = new Jugador(camaraJugador1,hc);
+			jugador_1 = new Jugador(camaraJugador1,hc, Recursos.JUGADOR1_SPRITESHEET);
 			camaraJugador2 = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			camaraJugador2.setToOrtho(false);
 			camaraJugador2.zoom = .6f;
-			jugador_2 = new Jugador(camaraJugador2,hc);
-			
-
+			jugador_2 = new Jugador(camaraJugador2,hc,Recursos.JUGADOR2_SPRITESHEET);
 
 			UtilesRed.hc.setGame(this);//Le paso el juego porque sino el juego que le entra por constructor (al estatico) vale nulo
 			UtilesRed.hc = hc;
@@ -133,18 +136,18 @@ public class Juego implements Screen{
 		//Npc
 		crearNPCs();
 		npcManagerConfig();
-
+		
 		//objetos del mapa
-		piedra = new Piedra(32*19,32*15,false,Recursos.PIEDRA);
+		piedra = new Piedra(0,0,false,Recursos.PIEDRA);
 		piedra2 = new Piedra(32*18,32*18,false, Recursos.PIEDRA);
 		hierro = new Hierro(32*20,32*20,false, Recursos.HIERRO);
 		hierro1 = new Hierro(32*7,32*5,true, Recursos.HIERRO);
 		
-		
-		mineralesManager = new MineralesManager();
-		
 		mineralesManagerConfig();
 		//yunque = new Yunque(532,532,Recursos.YUNQUE);
+		
+		//Colisiones
+		colisionesManagerConfig();
 		
 		//HUD
 		hud = new HUD(jugador_1);
@@ -188,7 +191,7 @@ public class Juego implements Screen{
 
 	    //Renderiza el Juego
 		Render.batch.begin();
-
+//		DibujarFiguras.dibujarRectanguloLleno(colisionPrueba.x, colisionPrueba.y, colisionPrueba.width, colisionPrueba.height, Color.CYAN);
 			
 		if(idJugador==1 || !red) {//Para determinar que camara es la que se usa en el batch
 			camaraJugador1.update();
@@ -207,11 +210,13 @@ public class Juego implements Screen{
 	
 
 		jugador_1.draw(Render.batch);
+		
 
 		//Render.batch.setProjectionMatrix(camaraJugador2.combined);
 		if(red) {
 			jugador_2.draw(Render.batch);			
 		}
+		colisionesManager.checkearColisiones();
 
 		
 		Render.batch.end();
@@ -233,6 +238,7 @@ public class Juego implements Screen{
 			mineralesManager.comprar(jugador_2);
 		}
 		
+		mineralesManager.limpiarMinerales(colisionesManager);
 
 
 		Render.batch.end();
@@ -431,6 +437,18 @@ public class Juego implements Screen{
 		mineralesManager.agregarMineral(hierro);
 		mineralesManager.agregarMineral(hierro1);
 	}
+	
+	private void colisionesManagerConfig() {
+		if(idJugador==0) {
+			colisionesManager = new ColisionesManager(jugador_2);
+		}else {
+			colisionesManager = new ColisionesManager(jugador_1);
+		}
+		colisionesManager.agregarArrayDeColisiones(mineralesManager.getColisiones());
+		colisionesManager.agregarArrayDeColisiones(npcManager.getColisiones());
+		
+//		colisionesManager.agregarArrayDeColisiones(mineralesManager.getColisiones());
+	}
 
 	public Jugador getJugador1() {
 		return jugador_1;
@@ -444,5 +462,8 @@ public class Juego implements Screen{
 		return mineralesManager;
 	}
 
+	public ColisionesManager getColisionesManager() {
+		return colisionesManager;
+	}
 
 }

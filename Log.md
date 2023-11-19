@@ -177,3 +177,8 @@
 # 18 NOV
     - Ahora hay animaciones cuando se juega en red
     - Ahora las animaciones en red funcionan correctamente
+
+# 19 NOV
+    - Colisiones omg
+    - Agrege sprites para un segundo jugador asi es facil de diferenciar uno del otro
+    

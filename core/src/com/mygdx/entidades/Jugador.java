@@ -4,12 +4,15 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.enums.Direcciones;
 import com.mygdx.enums.Items;
@@ -17,6 +20,8 @@ import com.mygdx.hud.HUD;
 import com.mygdx.red.HiloCliente;
 import com.mygdx.red.UtilesRed;
 import com.mygdx.utiles.Animator;
+import com.mygdx.utiles.Colores;
+import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
@@ -32,6 +37,9 @@ public class Jugador {
 	private Texture texturaItem;
 	private Sprite spriteItem;
 	public int dinero=10;
+	public Rectangle colision;
+	public boolean estaChocando = false;
+	public String spritesheet;
 	
 	//Red
 	private boolean red = false;
@@ -44,25 +52,30 @@ public class Jugador {
 	private ArrayList<Mineral> mineralesInv = new ArrayList<>();  
     
 	public Direcciones direccionActual = Direcciones.QUIETO;
+	public Direcciones direccionDelChoque = null;
 	Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
 	
-	public Jugador(OrthographicCamera camara, HiloCliente hc) {
+	public Jugador(OrthographicCamera camara, HiloCliente hc, String spriteSheet) {
 		posicion = new Vector2(Gdx.graphics.getWidth() / 2 - (tamañoPersonaje/ 2),Gdx.graphics.getHeight() / 2 - (tamañoPersonaje/ 2)); // posicion inicial
 		this.camara = camara;
-		crearAnimaciones();
 		texturaItem = new Texture(Recursos.PICO_DER);
 		spriteItem = new Sprite(texturaItem);
 		this.hc = hc;
 		this.red = true;
+		colision = new Rectangle(posicion.x, posicion.y, tamañoPersonaje, tamañoPersonaje);
+		this.spritesheet = spriteSheet;
+		crearAnimaciones();
 	}
 	
 	public Jugador(OrthographicCamera camara) {
 		posicion = new Vector2(Gdx.graphics.getWidth() / 2 - (tamañoPersonaje/ 2),Gdx.graphics.getHeight() / 2 - (tamañoPersonaje/ 2)); // posicion inicial
 		this.camara = camara;
-		crearAnimaciones();
 		texturaItem = new Texture(Recursos.PICO_DER);
 		spriteItem = new Sprite(texturaItem);
 		this.red = false;
+		colision = new Rectangle(posicion.x, posicion.y, tamañoPersonaje, tamañoPersonaje);
+		this.spritesheet = Recursos.JUGADOR1_SPRITESHEET;
+		crearAnimaciones();
 	}
 
 	private void dibujarItemActual() {
@@ -94,10 +107,10 @@ public class Jugador {
 
         if(puedeMoverse && !red) {
         	if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) {
-        		if (Gdx.input.isKeyPressed(Keys.W)) {
+        		if (Gdx.input.isKeyPressed(Keys.W) && direccionDelChoque != Direcciones.ARRIBA) {
         			movimientoY += velocidad;
         			direccionActual = Direcciones.ARRIBA;
-        		} else if (Gdx.input.isKeyPressed(Keys.S)) {
+        		} else if (Gdx.input.isKeyPressed(Keys.S) && direccionDelChoque != Direcciones.ABAJO) {
         			movimientoY -= velocidad;
         			direccionActual = Direcciones.ABAJO;
         		}
@@ -106,10 +119,10 @@ public class Jugador {
         	}
 
         if(Gdx.input.isKeyPressed(Keys.A) != Gdx.input.isKeyPressed(Keys.D)) {
-        	if (Gdx.input.isKeyPressed(Keys.A)) {
+        	if (Gdx.input.isKeyPressed(Keys.A) && direccionDelChoque != Direcciones.IZQUIERDA) {
         		movimientoX -= velocidad;
         		direccionActual = Direcciones.IZQUIERDA;
-        	} else if (Gdx.input.isKeyPressed(Keys.D)) {
+        	} else if (Gdx.input.isKeyPressed(Keys.D) && direccionDelChoque != Direcciones.DERECHA) {
         		movimientoX += velocidad;
         		direccionActual = Direcciones.DERECHA;
         	}
@@ -134,13 +147,16 @@ public class Jugador {
             resetearAnimaciones(animacionArriba, animacionAbajo, animacionIzquierda, animacionDerecha);
         }
         movimientoCamara();
+        actualizarColision(posicion.x, posicion.y);
         }
         
+        
         if(red) {
+        System.out.println(HelpDebug.debub(getClass())+ direccionDelChoque);
         	if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) {
         		if (Gdx.input.isKeyPressed(Keys.W)) {
         			UtilesRed.hc.enviarMensaje("direccion#arriba");
-        		} else if (Gdx.input.isKeyPressed(Keys.S)) {
+        		} else if (Gdx.input.isKeyPressed(Keys.S) && direccionDelChoque != Direcciones.ABAJO) {
         			UtilesRed.hc.enviarMensaje("direccion#abajo");
         		}
         	}else {
@@ -149,9 +165,9 @@ public class Jugador {
         
         
         if(Gdx.input.isKeyPressed(Keys.A) != Gdx.input.isKeyPressed(Keys.D)) {
-        	if (Gdx.input.isKeyPressed(Keys.A)) {
+        	if (Gdx.input.isKeyPressed(Keys.A) && direccionDelChoque != Direcciones.IZQUIERDA) {
     			UtilesRed.hc.enviarMensaje("direccion#izquierda");
-        	} else if (Gdx.input.isKeyPressed(Keys.D)) {
+        	} else if (Gdx.input.isKeyPressed(Keys.D) && direccionDelChoque != Direcciones.DERECHA) {
     			UtilesRed.hc.enviarMensaje("direccion#derecha");
         	}
         }else {
@@ -160,9 +176,8 @@ public class Jugador {
         if(!Gdx.input.isKeyPressed(Keys.W) && !Gdx.input.isKeyPressed(Keys.S) && !Gdx.input.isKeyPressed(Keys.A) && !Gdx.input.isKeyPressed(Keys.D)) {
         		UtilesRed.hc.enviarMensaje("direccion#quieto");
         }
-        }
-
-        
+		actualizarColision(posicion.x, posicion.y);
+        }     
 	}
 	
 	
@@ -186,6 +201,8 @@ public class Jugador {
 			this.movimientoRedX = 0;
 			this.movimientoRedY = 0;
 		}
+		
+		actualizarColision(posicion.x, posicion.y);
 	}
 	
 	public void movimientoCamara() {
@@ -199,6 +216,13 @@ public class Jugador {
 	public Vector2 getPosicion() {
 		return posicion;
 	}
+	
+	public void actualizarColision(float x,float y) {
+		colision.x = x;
+		colision.y = y;
+	}
+	
+
 
 	public void alternarSprites(Direcciones direccion) {
 		switch (direccion) {
@@ -221,11 +245,11 @@ public class Jugador {
 	}
 
 	private void crearAnimaciones() {
-		animacionAbajo = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion, 0);
-		animacionArriba = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion, 1);
-		animacionIzquierda = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion, 2);
-		animacionDerecha = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion, 3);
-		animacionQuieto = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion, 4);
+		animacionAbajo = new Animator(spritesheet, posicion, 0);
+		animacionArriba = new Animator(spritesheet, posicion, 1);
+		animacionIzquierda = new Animator(spritesheet, posicion, 2);
+		animacionDerecha = new Animator(spritesheet, posicion, 3);
+		animacionQuieto = new Animator(spritesheet, posicion, 4);
 
 		animacionAbajo.create();
 		animacionArriba.create();

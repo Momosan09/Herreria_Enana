@@ -111,11 +111,29 @@ public class HiloCliente extends Thread{
 	
 		}
 		
+		if(mensajeCompuesto[0].equals("corroborar_posicion")) {
+			float x = Float.valueOf(mensajeCompuesto[2]);
+			float y = Float.valueOf(mensajeCompuesto[3]);
+			if(mensajeCompuesto[1].equals("1")) {
+				if(game.getJugador1().posicion.x != x || game.getJugador1().posicion.y != y) {
+					game.getJugador1().posicion.y = x;
+					game.getJugador1().posicion.y = y;
+				}
+
+			}else {
+				if(game.getJugador2().posicion.x != x || game.getJugador2().posicion.y != y) {
+					game.getJugador2().posicion.y = x;
+					game.getJugador2().posicion.y = y;
+				}
+
+			}
+		}
+		
 		if(mensajeCompuesto[0].equals("eliminar")) {
 			if(mensajeCompuesto[1].equals("mineral")) {
 				float posX = Float.valueOf(mensajeCompuesto[2]);
 				float posY = Float.valueOf(mensajeCompuesto[3]);
-				game.getMineralesManager().eliminarMineral(posX, posY);;
+				game.getMineralesManager().eliminarMineral(posX, posY, game.getColisionesManager());;
 			}
 		}
 		}	

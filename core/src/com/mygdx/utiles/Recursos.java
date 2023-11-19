@@ -17,7 +17,8 @@ public abstract class Recursos {
 	
 	//Jugador
 	public static final String JUGADOR_TEXTURA = "Jugador/quieto_0.png";
-	public static final String JUGADOR_SPRITESHEET = "Jugador/jugadorSpriteSheet1.png";
+	public static final String JUGADOR1_SPRITESHEET = "Jugador/jugador_1_SpriteSheet.png";
+	public static final String JUGADOR2_SPRITESHEET = "Jugador/jugador_2_SpriteSheet.png";
 	
 	//Items
 	public static final String PICO_DER = "Items/picoDer.png";

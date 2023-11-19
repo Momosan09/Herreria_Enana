@@ -3,6 +3,7 @@ package com.mygdx.entidades;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.hud.Dialogo;
 import com.mygdx.utiles.Animator;
@@ -19,6 +20,7 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	private Animator animacion;
 	private Texture retrato;
 	private NpcData data;
+
 
 	public Npc(float x, float y, String ruta, NpcData data){
 		super(x, y, ruta);
@@ -84,4 +86,6 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	 public void ejecutarAnimacion() {
 		 animacion.render();
 	 }
+	 
+
 }
