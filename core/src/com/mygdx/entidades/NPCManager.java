@@ -5,13 +5,16 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.utiles.HelpDebug;
 
 public class NPCManager {
-    private List<Npc> npcs;
+    private ArrayList<Npc> npcs;
+	private ArrayList<Rectangle> colisiones;
 
     public NPCManager() {
     	npcs = new ArrayList<Npc>();
+    	colisiones = new ArrayList<Rectangle>();
     }
 
     public void agregarEntidad(Npc entidad) {
@@ -59,7 +62,7 @@ public class NPCManager {
     	npc.getDialogos(index);
     }
 
-    public List<Npc> getEntidades() {
+    public ArrayList<Npc> getEntidades() {
         return npcs;
     }
     
@@ -67,6 +70,11 @@ public class NPCManager {
     	for (Npc npc : npcs) {
     		npc.getCajaDialogo().reEscalar(width, height);			
 		}
+    }
+    
+    
+    public ArrayList<Rectangle> getColisiones() {
+    	return colisiones;
     }
 
 }

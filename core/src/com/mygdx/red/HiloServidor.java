@@ -6,6 +6,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
+import com.mygdx.entidades.ColisionesManager;
 import com.mygdx.enums.Direcciones;
 import com.mygdx.pantallas.Juego;
 import com.mygdx.utiles.ConsolaDebug;
@@ -58,12 +59,12 @@ public class HiloServidor extends Thread{
 		String msg = new String(dp.getData()).trim();//trim() lo que hace es sacar los espacios
 		String[] mensajeCompuesto = msg.split("#");
 	
-		System.out.println(HelpDebug.debub(getClass())+"mensaje de longitud " + mensajeCompuesto.length);
+		//System.out.println(HelpDebug.debub(getClass())+"mensaje de longitud " + mensajeCompuesto.length);
 		
 
 		
 
-		System.out.println(HelpDebug.debub(getClass())+mensajeCompuesto[0]);
+		//System.out.println(HelpDebug.debub(getClass())+mensajeCompuesto[0]);
 		switch(mensajeCompuesto[0]) {
 		case "conectar":
 			cantConexiones++;
@@ -117,29 +118,20 @@ public class HiloServidor extends Thread{
 				        break;
 				    }
 				}
-				
 			switch (mensajeCompuesto[1]) {
 			case "arriba":
-				System.out.println("EL JUGADOR " + nroJugador + " Va a arriba");
-				
-				//if(nroCliente == 0) {
-					jugadores[nroJugador].getEntidadJugador().movimiento(Direcciones.ARRIBA);
-				//}
+				jugadores[nroJugador].getEntidadJugador().movimiento(Direcciones.ARRIBA);
 				break;
 			case "abajo":
-				System.out.println("abajo");
 				jugadores[nroJugador].getEntidadJugador().movimiento(Direcciones.ABAJO);
 				break;
 			case "izquierda":
-				System.out.println("izquierda");
 				jugadores[nroJugador].getEntidadJugador().movimiento(Direcciones.IZQUIERDA);
 				break;
 			case "derecha":
-				System.out.println("derecha");
 				jugadores[nroJugador].getEntidadJugador().movimiento(Direcciones.DERECHA);
 				break;
 			case "quieto":
-				System.out.println("quieto");
 				jugadores[nroJugador].getEntidadJugador().movimiento(Direcciones.QUIETO);
 			}
 			
@@ -153,8 +145,16 @@ public class HiloServidor extends Thread{
 			+jugadores[1].getEntidadJugador().direccionActual
 			);
 			
-			System.out.println("el jugador 1" + jugadores[0].getEntidadJugador().direccionActual);
-			System.out.println("el jugador 2" + jugadores[1].getEntidadJugador().direccionActual);
+//			siempre le manda un mensaje corroborando la posicion asi si llega a existir algun problema, el servidor le setea la posicion directamente
+			
+			enviarMensaje("corroborar_posicion#"+nroJugador+"#"+
+			+jugadores[nroJugador].getEntidadJugador().posicion.x
+			+"#"
+			+jugadores[nroJugador].getEntidadJugador().posicion.y
+			);
+			
+			System.out.println("el jugador 1 " + jugadores[0].getEntidadJugador().direccionActual);
+			System.out.println("el jugador 2 " + jugadores[1].getEntidadJugador().direccionActual);
 			}
 			
 		case "eliminar":

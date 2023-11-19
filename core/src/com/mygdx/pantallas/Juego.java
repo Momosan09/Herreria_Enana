@@ -9,10 +9,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Table.Debug;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.entidades.ColisionesManager;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.NPCManager;
@@ -38,6 +40,7 @@ import com.mygdx.hud.HUD;
 import com.mygdx.hud.InventarioHUD;
 import com.mygdx.hud.PausaHUD;
 import com.mygdx.utiles.ConsolaDebug;
+import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
@@ -79,13 +82,16 @@ public class Juego implements Screen{
 	//Screens
 	private final Principal game;
 	
+	public ColisionesManager colisionesManager1,colisionesManager2;
+	
 	private ConsolaDebug consola;
 	public static Servidor servidor;
-
+	Rectangle pruebaColision = new Rectangle(32*10,32*10,64,64);
 
 	public Juego(final Principal game) {
 		this.game = game;
 		consola = new ConsolaDebug();
+		camaraJuego = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
 	}
 
@@ -94,26 +100,26 @@ public class Juego implements Screen{
 		mux = new InputMultiplexer();//El input multiplexer es una especie de gestor de inputProcessors
 		
 	    //render
-		//Render.tiledMapRenderer = new OrthogonalTiledMapRenderer(Recursos.MAPA);
+		Render.tiledMapRenderer = new OrthogonalTiledMapRenderer(Recursos.MAPA);
 		
 		//jugador
 		jugador_1 = new Jugador();
-		jugador_2= new Jugador();		
+		jugador_2= new Jugador(64);		
 		servidor = new Servidor(this, consola);
 		//Npc
 		crearNPCs();
 		npcManagerConfig();
 
 		//objetos del mapa
-		piedra = new Piedra(32*19,32*15,false,Recursos.PIEDRA);
+		piedra = new Piedra(0,0,false,Recursos.PIEDRA);
 		piedra2 = new Piedra(32*18,32*18,false, Recursos.PIEDRA);
 		hierro = new Hierro(32*20,32*20,false, Recursos.HIERRO);
 		hierro1 = new Hierro(32*7,32*5,true, Recursos.HIERRO);
 		
-		
-		mineralesManager = new MineralesManager();
-		
 		mineralesManagerConfig();
+		
+		colisionesManagerConfig();
+		
 		//yunque = new Yunque(532,532,Recursos.YUNQUE);
 		
 		//HUD
@@ -141,28 +147,39 @@ public class Juego implements Screen{
 
 	@Override
 	public void render(float delta) {
-		consola.render();
+//		consola.render();
 		
+
 		
-		mineralesManager.detectarJugador(jugador_1, jugador_2);
-		mineralesManager.minar(jugador_1);
-		mineralesManager.comprar(jugador_1);
-		
-		mineralesManager.minar(jugador_2);
-		mineralesManager.comprar(jugador_2);
+
+//		colisionesManager2.checkearColisiones();
 		
 	    //Renderiza el Juego
-		/*
+		camaraJuego.position.x = jugador_1.posicion.x;
+		camaraJuego.position.y = jugador_1.posicion.y;
 		camaraJuego.update();
-		Render.batch.setProjectionMatrix(camaraJuego.combined);//Aca estaba el problema de que el HUD no se renderizaba por encima del mapa, los setProjectionMatrix de cada camara tienen que estar en ciclos .begin() y .end() distintos
 		Render.batch.begin();
-
 		Render.tiledMapRenderer.setView(camaraJuego);
 		Render.tiledMapRenderer.render();
-
-		jugador.draw(Render.batch);
-	    
+		Render.batch.setProjectionMatrix(camaraJuego.combined);//Aca estaba el problema de que el HUD no se renderizaba por encima del mapa, los setProjectionMatrix de cada camara tienen que estar en ciclos .begin() y .end() distintos
+		Render.batch.end();
+		
+		Render.batch.begin();
+		DibujarFiguras.dibujarRectanguloLleno(pruebaColision.x, pruebaColision.y, 64, 64, Color.BLUE);
+		mineralesManager.renderizar();
 		npcManager.renderizar(Render.batch);
+
+
+
+		jugador_1.draw(Render.batch);
+		jugador_2.draw(Render.batch);
+		Render.batch.end();
+		
+		colisionesManager1.checkearColisiones();
+		colisionesManager2.checkearColisiones();
+		
+		
+		/*
 		npcManager.detectarJugador(jugador); 
 		
 		mineralesManager.renderizar();
@@ -327,6 +344,18 @@ public class Juego implements Screen{
 		mineralesManager.agregarMineral(hierro);
 		mineralesManager.agregarMineral(hierro1);
 	}
+	
+	private void colisionesManagerConfig() {
+		System.out.println("se llama");
+		colisionesManager1 = new ColisionesManager(jugador_1);
+		colisionesManager1.agregarArrayDeColisiones(mineralesManager.getColisiones());
+		colisionesManager1.agregarColision(jugador_2.colision);
+		colisionesManager2 = new ColisionesManager(jugador_2);
+		colisionesManager2.agregarArrayDeColisiones(mineralesManager.getColisiones());
+		colisionesManager2.agregarColision(jugador_1.colision);
+//		colisionesManager.agregarArrayDeColisiones(mineralesManager.getColisiones());
+	}
+
 
 	public Jugador getJugador1() {
 		return jugador_1;

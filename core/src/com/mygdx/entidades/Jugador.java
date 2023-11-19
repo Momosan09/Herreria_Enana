@@ -1,6 +1,7 @@
 package com.mygdx.entidades;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.enums.Direcciones;
 import com.mygdx.enums.Items;
@@ -31,16 +33,34 @@ public class Jugador {
 	private Sprite spriteItem;
 	public int dinero=10;
 	public float movimientoX, movimientoY;
+	public Rectangle colision;
+
+	
+	public Sprite jugadorImg;
 	 
 	private ArrayList<Items> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
 	private ArrayList<Mineral> mineralesInv = new ArrayList<>();  
     
 	public Direcciones direccionActual = Direcciones.QUIETO;
+	public Direcciones direccionDelChoque = null;
 	Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
 	
 	
 	public Jugador() {
 		posicion = new Vector2(Gdx.graphics.getWidth() / 2 - (tamañoPersonaje/ 2),Gdx.graphics.getHeight() / 2 - (tamañoPersonaje/ 2)); // posicion inicial
+		colision = new Rectangle(posicion.x, posicion.y, tamañoPersonaje, tamañoPersonaje);
+		jugadorImg = new Sprite(new Texture(Recursos.YUNQUE));
+		
+		//crearAnimaciones();
+		//texturaItem = new Texture(Recursos.PICO_DER);
+		//spriteItem = new Sprite(texturaItem);
+	}
+	
+	public Jugador(int offset) {
+		posicion = new Vector2(Gdx.graphics.getWidth() / 2 - (tamañoPersonaje/ 2),Gdx.graphics.getHeight() / 2 - (tamañoPersonaje/ 2)); // posicion inicial
+		colision = new Rectangle(posicion.x, posicion.y, tamañoPersonaje, tamañoPersonaje);
+		jugadorImg = new Sprite(new Texture(Recursos.YUNQUE));
+		
 		//crearAnimaciones();
 		//texturaItem = new Texture(Recursos.PICO_DER);
 		//spriteItem = new Sprite(texturaItem);
@@ -57,7 +77,7 @@ public class Jugador {
 	}
 	
 	public void draw(SpriteBatch batch) {
-		// sprite.draw(batch);
+		jugadorImg.draw(batch);
 		update();
 		dibujarItemActual();
 	}
@@ -70,25 +90,39 @@ public class Jugador {
 		float deltaTime = Gdx.graphics.getDeltaTime();
         movimientoX = 0;
         movimientoY = 0;
-        
+
         this.direccionActual = direccion;
+
+        	
+        System.out.println("la direccion acutal " + direccionActual);
+        System.out.println("choque en " + direccionDelChoque);
         
         switch(direccionActual){
         	case ARRIBA:
-        		movimientoY += velocidad;
+        		if(direccionDelChoque != Direcciones.ARRIBA) {
+        			movimientoY += velocidad;        			
+        		}
         		break;
         	case ABAJO:
+        		if(direccionDelChoque != Direcciones.ABAJO) {        			
         		movimientoY -= velocidad;
+        		}
         		break;
         	case IZQUIERDA:
+        		if(direccionDelChoque != Direcciones.IZQUIERDA) {  
         		movimientoX -= velocidad;
+        		}
         		break;
         	case DERECHA:
+        		if(direccionDelChoque != Direcciones.DERECHA) {  
         		movimientoX += velocidad;
+        		}
         		break;
         	case QUIETO:
+        		if(direccionDelChoque != Direcciones.QUIETO) {        			
         		movimientoX = 0;
         		movimientoY = 0;
+        		}
         }
 
         if (movimientoX != 0 && movimientoY != 0) {
@@ -99,7 +133,10 @@ public class Jugador {
 
         posicion.x += movimientoX * deltaTime;
         posicion.y += movimientoY * deltaTime;
-
+        
+        jugadorImg.setPosition(posicion.x, posicion.y);
+        actualizarColision(posicion.x,posicion.y);
+        
         // Actualizar animaciones y cámaras
         if (movimientoX != 0 || movimientoY != 0) {
            //alternarSprites(direccionActual);
@@ -117,46 +154,13 @@ public class Jugador {
 		return posicion;
 	}
 
-	private void alternarSprites(Direcciones direccion) {
-		switch (direccion) {
-		case ABAJO:
-			animacionAbajo.render();
-			break;
-		case ARRIBA:
-			animacionArriba.render();
-			break;
-		case IZQUIERDA:
-			animacionIzquierda.render();
-			break;
-		case DERECHA:
-			animacionDerecha.render();
-			break;
-		case QUIETO:
-			animacionQuieto.render();
-			break;
-		}
+
+	public void actualizarColision(float x,float y) {
+		colision.x = x;
+		colision.y = y;
 	}
-
-	private void crearAnimaciones() {
-		animacionAbajo = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion, 0);
-		animacionArriba = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion, 1);
-		animacionIzquierda = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion, 2);
-		animacionDerecha = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion, 3);
-		animacionQuieto = new Animator(Recursos.JUGADOR_SPRITESHEET, posicion, 4);
-
-		animacionAbajo.create();
-		animacionArriba.create();
-		animacionIzquierda.create();
-		animacionDerecha.create();
-		animacionQuieto.create();
-	}
-
-	private void resetearAnimaciones(Animator ... animaciones) {	//varargs, ya que nose cuantas animaciones voy a usar
-	    for (Animator animacion : animaciones) { // for each: tipo del elemento, nombre del elemento, coleccion a recorrer;
-	        animacion.reset();
-	    }
-
-	}
+	
+	
 	
 	public boolean isEPressed() {
 		if(Gdx.input.isKeyPressed(Keys.E)) {

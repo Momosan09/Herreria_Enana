@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.enums.Items;
 import com.mygdx.utiles.Render;
@@ -23,11 +24,14 @@ public abstract class Entidad {
 	private boolean comprable = false;
 	private String nombre;
 
+	protected int colisionAncho=32, colisionAlto=32;//Por si tengo entidades mas grandes?
+	private Rectangle colision;
+
 	private int distanciaInteraccion = 64;
 	
 	public Entidad(float x, float y,String rutaTextura) {
 		this.posicion = new Vector2(x,y);
-
+		colision = new Rectangle(posicion.x,posicion.y,colisionAncho,colisionAlto);
 		this.textura = new Texture(rutaTextura);
 		sprite = new Sprite(this.textura);
 		sprite.setPosition(this.posicion.x, this.posicion.y);
@@ -36,6 +40,7 @@ public abstract class Entidad {
 	
 	public Entidad(float x, float y, boolean comprable,String rutaTextura) {
 		this.posicion = new Vector2(x,y);
+		colision = new Rectangle(posicion.x,posicion.y,colisionAncho,colisionAlto);
 		this.textura = new Texture(rutaTextura);
 		this.comprable = comprable;
 		sprite = new Sprite(this.textura);
@@ -98,6 +103,8 @@ public abstract class Entidad {
 		return comprable;
 	}
 	
-	
+	 public Rectangle getColision() {
+		 return colision;
+	 }
 	
 }

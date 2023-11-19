@@ -2,39 +2,68 @@ package com.mygdx.entidades.ObjetosDelMapa;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.entidades.ColisionesManager;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.red.UtilesRed;
 
 
 public class MineralesManager {
-	private List<Mineral> minerales;
+	private ArrayList<Mineral> minerales;
+	private ArrayList<Rectangle> colisiones;
 
     public MineralesManager() {
     	minerales = new ArrayList<Mineral>();
+    	colisiones = new ArrayList<Rectangle>();
     }
 
     public void agregarMineral(Mineral mineral) {
     	minerales.add(mineral);
+    	colisiones.add(mineral.getColision());
     }
 
-    public void eliminarMineral(Mineral mineral) {
-    	System.out.println("Se elimina un mineral");
-
-    	minerales.remove(mineral);
+//    public void eliminarMineral(Mineral mineral) {
+//    	minerales.remove(mineral);
+//    }
+    
+    public void eliminarMineral(float posX, float posY, ColisionesManager colisionesManager) {
+    	boolean fin=false;
+    	int i=0;
+    	do {
+    		if(minerales.get(i).getPosicion().x == posX && minerales.get(i).getPosicion().y == posY) {
+    			minerales.get(i).vida=0;
+    			colisionesManager.eliminarColision(colisiones.get(i));
+    			minerales.remove(i);
+    			colisiones.remove(i);
+    			fin = true;
+    		}
+    		
+    		i++;
+    	}while(!fin);
     }
 
-    public void detectarJugador(Jugador jugador_1, Jugador jugador_2) {
+    public void detectarJugador(Jugador jugador) {
         for (Mineral mineral : minerales) {
         	if(mineral.vida >0) {//Si el mineral esta vivo, detecta al jugador
-        	mineral.detectarJugador(jugador_1);
-        	mineral.detectarJugador(jugador_2);
+        	mineral.detectarJugador(jugador);
+        	}
+        }
+    }
+    public void detectarJugador(Jugador jugador1, Jugador jugador2) {
+        for (Mineral mineral : minerales) {
+        	if(mineral.vida >0) {//Si el mineral esta vivo, detecta al jugador
+        	mineral.detectarJugador(jugador1);
+        	mineral.detectarJugador(jugador2);
         	}
         }
     }
 
     public void renderizar() {
         for (Mineral mineral : minerales) {
-        	if(mineral.isComprable()) mineral.draw();
+        	if(mineral.isComprable()) {
+        		mineral.draw();
+        	}
         	if(mineral.vida >0 && !mineral.isComprable()) {//Si el mineral esta vivo, se renderiza
         		mineral.draw();
         		//entidad.ejecutarAnimacion();
@@ -77,8 +106,12 @@ public class MineralesManager {
     	
     }
 
-    public List<Mineral> getMinerales() {
+    public ArrayList<Mineral> getMinerales() {
         return minerales;
+    }
+    
+    public ArrayList<Rectangle> getColisiones() {
+    	return colisiones;
     }
     
 }
