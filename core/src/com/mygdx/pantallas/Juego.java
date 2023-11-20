@@ -1,47 +1,23 @@
 package com.mygdx.pantallas;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.scenes.scene2d.ui.Table.Debug;
-import com.badlogic.gdx.utils.I18NBundle;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.ColisionesManager;
-import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.NPCManager;
 import com.mygdx.entidades.Npc;
-import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.MineralesManager;
-import com.mygdx.entidades.ObjetosDelMapa.Yunque;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.Hierro;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.Piedra;
-import com.mygdx.entidades.npcs.Rey;
 import com.mygdx.entidades.npcs.Vendedor;
 import com.mygdx.entidades.npcs.Viejo;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
-import com.mygdx.entidades.npcs.dialogos.Npc_Dialogos_Rey;
-import com.mygdx.enums.Items;
 import com.mygdx.game.Principal;
-import com.mygdx.hud.CartaHUD;
-import com.mygdx.hud.Combinacion;
-import com.mygdx.hud.Dialogo;
-import com.mygdx.hud.DialogoDeCompra;
-import com.mygdx.hud.HUD;
-import com.mygdx.hud.InventarioHUD;
-import com.mygdx.hud.PausaHUD;
 import com.mygdx.utiles.ConsolaDebug;
-import com.mygdx.utiles.DibujarFiguras;
-import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 
@@ -51,9 +27,7 @@ public class Juego implements Screen{
 	
 	//Entidades
 	private Jugador jugador_1, jugador_2;
-	private ObjetoDelMapa carta;
 	private Npc viejo, vendedor;
-	private Texture jugadorTextura;
 	private Mineral piedra, hierro, hierro1, piedra2;
 	
 	//Managers
@@ -61,23 +35,10 @@ public class Juego implements Screen{
 	private MineralesManager mineralesManager;
 
 	//Camaras
-	private OrthographicCamera camaraJuego, camaraHud;
+	private OrthographicCamera camaraJuego;
 
-	//Scene2d.ui
-	private HUD hud;
-	private Dialogo dialogo;
-	private CartaHUD cartaHUD;
-	private PausaHUD pausaHud;
-	private Combinacion combinacion;
-	private InventarioHUD inventarioHUD;
-	private DialogoDeCompra dialogoDeCompra;
-	
-	//Input
-	private InputMultiplexer mux;
 	
 	//Toggles (referido a HUDs), los uso cuando ese hud no se cierra con boton
-	private boolean toggleInventario = false;
-	private boolean togglePausa = false;
 	private boolean toggleConsola = true;
 	
 	//Screens
@@ -96,7 +57,6 @@ public class Juego implements Screen{
 
 	@Override
 	public void show() {
-		mux = new InputMultiplexer();//El input multiplexer es una especie de gestor de inputProcessors
 		
 	    //render
 		Render.tiledMapRenderer = new OrthogonalTiledMapRenderer(Recursos.MAPA);
@@ -118,29 +78,6 @@ public class Juego implements Screen{
 		mineralesManagerConfig();
 		
 		colisionesManagerConfig();
-		
-		//yunque = new Yunque(532,532,Recursos.YUNQUE);
-		
-		//HUD
-		//hud = new HUD(jugador);
-		/*
-		cartaHUD = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);//ee parece que cartaHUD tiene que ir primero, sino no anda la combinacion (nose pq)
-	    combinacion = new Combinacion();
-	    inventarioHUD = new InventarioHUD();
-	    dialogoDeCompra = new DialogoDeCompra();
-	    pausaHud = new PausaHUD(game);
-	    
-	    mux.addProcessor(cartaHUD.getStage());
-	    mux.addProcessor(pausaHud.getStage());
-	    mux.addProcessor(combinacion.getStage());//Esto es para los botones de la propia clase
-	    mux.addProcessor(dialogoDeCompra.getStage());
-	    mux.addProcessor(combinacion.getDragAndDrop().getStage());//Esto es para las imagenes arratrables que tiene el stage del dragAndDrop de esta clase, si quiero poner otro dragAndDrop tengo q ue agregarlo asi
-	    mux.addProcessor(hud.getStage());
-	    mux.addProcessor(hud.getResultadosBatallasHUD().getStage());
-	    mux.addProcessor(hud.getProximaBatallaHUD().getStage());
-		Gdx.input.setInputProcessor(mux);
-		
-		*/
 
 	}
 
@@ -150,13 +87,10 @@ public class Juego implements Screen{
 		if(Gdx.input.isKeyJustPressed(Keys.TAB)) {
 			toggleConsola = !toggleConsola;
 		}
-		
 
-		
 		colisionesManager1.checkearColisiones();
 		colisionesManager2.checkearColisiones();
 
-//		colisionesManager2.checkearColisiones();
 		
 	    //Renderiza el Juego
 		
@@ -175,7 +109,6 @@ public class Juego implements Screen{
 		Render.batch.end();
 		
 		Render.batch.begin();
-		//DibujarFiguras.dibujarRectanguloLleno(pruebaColision.x, pruebaColision.y, 64, 64, Color.BLUE);
 		mineralesManager.renderizar();
 		npcManager.renderizar(Render.batch);
 
@@ -183,129 +116,13 @@ public class Juego implements Screen{
 
 		jugador_1.draw(Render.batch);
 		jugador_2.draw(Render.batch);
-		Render.batch.end();
-//		
-
-		
+		Render.batch.end();	
 		}
-		
-		/*
-		npcManager.detectarJugador(jugador); 
-		
-		mineralesManager.renderizar();
-		mineralesManager.detectarJugador(jugador);
-		mineralesManager.minar(jugador);
-		mineralesManager.comprar(jugador);
-
-
-		Render.batch.end();
-
-		Render.batch.begin();//HUD´s
-		
-		
-
-		if(cartaHUD.getCerrar()) {//si ya leyo la carta...
-			cartaHUD.cerrar();
-			jugador.puedeMoverse=true;
-			//npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
-			vendedor.charla(1);
-			viejo.charla(0);
-			//vendedor.getData().getMensaje(0);
-	    
-			//Renderiza el HUD
-			camaraHud.update();
-			Render.batch.setProjectionMatrix(camaraHud.combined);//Una vez que renderiza el juego, se inicia el batch para la camara del HUD y lo dibuja
-	    
-
-			//Renderiza ocultables
-			hud.render();
-			combinacion.render();
-			pausaHud.render(jugador);
-			inventarioHUD.render(jugador);
-			dialogoDeCompra.render(jugador);
-
-		    if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT)) {//Esto despues lo tengo que cambiar
-		    	combinacion.mostrar();//Abrir Combinacion
-		    }
-		    
-		    
-		    if(Gdx.input.isKeyJustPressed(Keys.TAB)) {
-		    	toggleInventario = !toggleInventario;
-		    	
-		    	if(toggleInventario) {
-		    		inventarioHUD.mostrar();
-		    	}else {
-		    		inventarioHUD.ocultar();
-		    	}
-		    }
-		    if (mineralesManager.comprar(jugador)) {
-	            // Comprueba si el diálogo de compra debe abrirse o cerrarse
-	            if (!dialogoDeCompra.isVisible()) {
-	                // Abre el diálogo de compra
-	                dialogoDeCompra.mostrar();
-	            } else {
-	                // Cierra el diálogo de compra
-	                dialogoDeCompra.ocultar();
-	            }
-	        }
-		    
-		    if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-		    	togglePausa = !togglePausa;
-		    	if(togglePausa) {
-		    		jugador.puedeMoverse = false;
-		    	
-		    		//System.out.println(HelpDebug.debub(getClass())+"Pausa");
-		    		pausaHud.mostrar();
-		    		//hud.ocultar();
-		    	}else {
-		    		pausaHud.ocultar();
-		    		//hud.mostrar();
-		    		
-		    	}
-		    }
-		    
-		}else {
-			cartaHUD.render();
-		}
-		
-		//bloquear movimiento del jugador
-		if(combinacion.visible) {
-			jugador.puedeMoverse = false;
-			hud.ocultar();
-			if(inventarioHUD.visible) {//oculta el inventario si este esta mostrandose
-				inventarioHUD.ocultar();
-				toggleInventario = !toggleInventario; //cambio el valor del toggle asi no se traba
-			}
-		}else {
-			hud.mostrar();
-		}
-
-
-		if(Gdx.input.isKeyPressed(Keys.E)) {
-			jugador.getItems().add(Items.PICO);
-			System.out.println("Otorgado: Pico");
-		}
-		Render.batch.end();
-	    //System.out.println(HelpDebug.debub(this.getClass()) + "Hola");
-*/
 	}
 
 
 	@Override
-	public void resize(int width, int height) {/*
-		camaraJuego.viewportWidth = width;
-		camaraJuego.viewportHeight = height;
-		camaraJuego.update();	
-		
-	    System.out.println(HelpDebug.debub(getClass())+"X =" +Gdx.graphics.getWidth() + " Y =" + Gdx.graphics.getHeight());
-	    hud.reEscalar(width, height);
-	    cartaHUD.reEscalar(width, height);
-	    pausaHud.reEscalar(width, height);
-	    combinacion.reEscalar(width, height);
-	    npcManager.reEscalarDialogos(width, height);
-	    inventarioHUD.reEscalar(width, height);
-	    dialogoDeCompra.reEscalar(width, height);
-	    */
+	public void resize(int width, int height) {
 		consola.reEscalar(width, height);
 	}
 
@@ -321,30 +138,26 @@ public class Juego implements Screen{
 
 	@Override
 	public void hide() {
-		//dispose();
 		
 	}
 
 	@Override
 	public void dispose() {
 		servidor.cerrarHilo();
-		/*
 		Render.tiledMapRenderer.dispose();
 		Recursos.MAPA.dispose();
-		*/
+		
 	}
 	
 	public void crearNPCs() {
 		viejo = new Viejo(32*10,32*15,Recursos.VIEJO, NpcData.VIEJO);
 		vendedor = new Vendedor(32*20,32*5,Recursos.VENDEDOR, NpcData.VENDEDOR);
-		//rey = new Rey(0,0,Recursos.VENDEDOR, NpcData.REY);
 	}
 	
 	public void npcManagerConfig() {
 		npcManager = new NPCManager();
 		npcManager.agregarEntidad(viejo);
 		npcManager.agregarEntidad(vendedor);
-	    npcManager.crearDialogos();
 	}
 	
 	public void mineralesManagerConfig() {
@@ -359,11 +172,12 @@ public class Juego implements Screen{
 		System.out.println("se llama");
 		colisionesManager1 = new ColisionesManager(jugador_1);
 		colisionesManager1.agregarArrayDeColisiones(mineralesManager.getColisiones());
+		colisionesManager1.agregarArrayDeColisiones(npcManager.getColisiones());
 		colisionesManager1.agregarColision(jugador_2.colision);
 		colisionesManager2 = new ColisionesManager(jugador_2);
 		colisionesManager2.agregarArrayDeColisiones(mineralesManager.getColisiones());
+		colisionesManager2.agregarArrayDeColisiones(npcManager.getColisiones());
 		colisionesManager2.agregarColision(jugador_1.colision);
-//		colisionesManager.agregarArrayDeColisiones(mineralesManager.getColisiones());
 	}
 
 

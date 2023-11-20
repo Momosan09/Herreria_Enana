@@ -1,14 +1,7 @@
 package com.mygdx.entidades;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Colors;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.enums.Items;
@@ -22,7 +15,6 @@ public abstract class Entidad {
 	protected boolean jugadorEnRango = false, apretoE = false;
 	private boolean jugadorTienePico = false;//Deberia ir en mineral pero no se me ocurre como hacerlo
 	private boolean comprable = false;
-	private String nombre;
 
 	protected int colisionAncho=32, colisionAlto=32;//Por si tengo entidades mas grandes?
 	private Rectangle colision;
@@ -56,9 +48,6 @@ public abstract class Entidad {
 		buscarItemEnJugador(jugador);//Cuando el jugador esta dentro del rango de la entidad, esta busca en los items del jugador. Esto me puede servir para objetos de mision y el minado
 		if(((jugador.getPosicion().x - this.posicion.x) < distanciaInteraccion && (jugador.getPosicion().x - this.posicion.x) > -distanciaInteraccion) && ((jugador.getPosicion().y - this.posicion.y) < distanciaInteraccion && (jugador.getPosicion().y - this.posicion.y) > -distanciaInteraccion)){
 			jugadorEnRango = true;
-			if(jugador.isEPressed()) {
-				apretoE = true;
-			}
 		}else {
 			jugadorEnRango = false;
 			apretoE = false;

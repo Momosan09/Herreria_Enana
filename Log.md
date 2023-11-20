@@ -29,3 +29,4 @@
     - Modificando el comportamiento del servidor frente a la desconexion de un jugador
     - Puliendo la desconexion
     - TAB para cambiar entre modo consola y modo mundo
+    - Limpie un poco el codigo

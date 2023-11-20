@@ -1,23 +1,16 @@
 package com.mygdx.entidades;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.enums.Direcciones;
 import com.mygdx.enums.Items;
-import com.mygdx.hud.HUD;
 import com.mygdx.utiles.Animator;
-import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
@@ -29,7 +22,6 @@ public class Jugador {
 	public OrthographicCamera camara;
 	public boolean puedeMoverse = false;
 	private int tamañoPersonaje = 32;
-	private Texture texturaItem;
 	private Sprite spriteItem;
 	public int dinero=10;
 	public float movimientoX, movimientoY;
@@ -162,23 +154,6 @@ public class Jugador {
 		colision.y = y;
 	}
 	
-	
-	
-	public boolean isEPressed() {
-		if(Gdx.input.isKeyPressed(Keys.E)) {
-			System.out.println("E");
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean isTabPressed() {
-		if(Gdx.input.isKeyPressed(Keys.TAB)) {
-			System.out.println("E");
-			return true;
-		}
-		return false;
-	}
 	
 	public ArrayList<Items> getItems(){
 		return items;

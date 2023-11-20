@@ -5,11 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.pantallas.Juego;
-import com.mygdx.pantallas.PantallaMenu;
-import com.mygdx.utiles.ConsolaDebug;
 import com.mygdx.utiles.Render;
-
-import com.mygdx.red.Servidor;
 import com.mygdx.red.UtilesRed;
 
 public class Principal extends Game {
