@@ -18,14 +18,14 @@ public class HiloServidor extends Thread{
 	private boolean fin = false;
 	private int cantConexiones = 0, maxConexiones = 2;
 	private JugadorRed[] jugadores;
-	private Juego juego;
+	private Juego game;
 
 	
 	private ConsolaDebug consola;
 	
-	public HiloServidor(Juego juego, ConsolaDebug consola) {
+	public HiloServidor(Juego game, ConsolaDebug consola) {
 		jugadores = new JugadorRed[maxConexiones];
-		this.juego = juego;
+		this.game = game;
 		try {
 			this.consola = consola;
 			socket = new DatagramSocket(35323);
@@ -70,42 +70,56 @@ public class HiloServidor extends Thread{
 			cantConexiones++;
 			//System.out.println(cantConexiones);
 			if(cantConexiones == 1) {
-				jugadores[0] = new JugadorRed(juego.getJugador1(), dp.getAddress(), dp.getPort());
+				jugadores[0] = new JugadorRed(game.getJugador1(), dp.getAddress(), dp.getPort());
 				consola.agregarMensajes("Conectado: " + dp.getAddress()+" "+ dp.getPort());
 				enviarMensaje("conexion_exitosa#"+0, jugadores[0].ip, jugadores[0].puerto);
 				
 			}else if(cantConexiones == 2){
-				jugadores[1] = new JugadorRed(juego.getJugador2(), dp.getAddress(),dp.getPort());
+				jugadores[1] = new JugadorRed(game.getJugador2(), dp.getAddress(),dp.getPort());
 				consola.agregarMensajes("Conectado: " + dp.getAddress()+" "+ dp.getPort());
 				enviarMensaje("conexion_exitosa#"+1, jugadores[1].ip, jugadores[1].puerto);
-				enviarMensaje("jugadores_listos");
+				enviarMensaje("jugadores_listos");				
+			
 			}else {
 				consola.agregarMensajes("Sala llena");
 				enviarMensaje("servidor_lleno", dp.getAddress(), dp.getPort());
 			}
 			break;
-		case "desconectar":{
-			if(cantConexiones>0) {//esto es para que no se "desconecten mas de la cuenta" y me quede la variable en negativo
-				consola.agregarMensajes("Jugador desconectado");
-				cantConexiones--;
-			if(cantConexiones == 1) {//si la cantidad de conexiones es uno y alguien se desconecta, se eliminan los datos
-				//consola.agregarMensajes("Jugador desconectado");
-				jugadores[0].ip = null;
-				jugadores[0].puerto = -1;
-				jugadores[0] = null;
 			
-			}else if(cantConexiones == 2) {	//si hay dos jugadores
-			if(dp.getAddress().equals(jugadores[1].ip) && dp.getPort() == jugadores[1].puerto) {//si la ip del paquete enviado es igual a la del jugador 1, entonces se le avisa al jugador 0
-				enviarMensaje("jugador_desconectado", jugadores[0].ip, jugadores[0].puerto);
-				jugadores[1] = null;
-			//enviarMensaje("jugador_desconectado", ip[0],puerto[0]);
-				}else {// Sino el jugador 2 pasa a ser el 1 y el 2 se borra 
-					jugadores[0].ip = jugadores[1].ip;
-					jugadores[0].puerto = jugadores[1].puerto;
-					jugadores[1] = null;
-				}
-			}
-			}
+		case "desconectar":{
+			enviarMensaje("salir_del_juego");
+			jugadores[0].getEntidadJugador().posicion.x = jugadores[0].getEntidadJugador().posicionXInicial;
+			jugadores[0].getEntidadJugador().posicion.y = jugadores[0].getEntidadJugador().posicionYInicial;
+			jugadores[1].getEntidadJugador().posicion.x = jugadores[1].getEntidadJugador().posicionXInicial;
+			jugadores[1].getEntidadJugador().posicion.y = jugadores[1].getEntidadJugador().posicionYInicial;
+			cantConexiones=0;
+			
+			
+//			if(cantConexiones>0) {//esto es para que no se "desconecten mas de la cuenta" y me quede la variable en negativo
+//				consola.agregarMensajes("Jugador desconectado");
+//				cantConexiones--;
+//			if(cantConexiones == 1) {//si la cantidad de conexiones es uno y alguien se desconecta, se eliminan los datos
+//				//consola.agregarMensajes("Jugador desconectado");
+//				jugadores[0].ip = null;
+//				jugadores[0].puerto = -1;
+//				jugadores[0] = null;
+//			
+//			}else if(cantConexiones == 2) {	//si hay dos jugadores
+//			if(dp.getAddress().equals(jugadores[1].ip) && dp.getPort() == jugadores[1].puerto) {//si la ip del paquete enviado es igual a la del jugador 1, entonces se le avisa al jugador 0
+//				enviarMensaje("jugador_desconectado", jugadores[0].ip, jugadores[0].puerto);
+//				enviarMensaje("salir_del_juego",jugadores[0].ip, jugadores[0].puerto);
+//				jugadores[1] = null;
+//			//enviarMensaje("jugador_desconectado", ip[0],puerto[0]);
+//				}else {// Sino el jugador 2 pasa a ser el 1 y el 2 se borra 
+//					jugadores[0].ip = jugadores[1].ip;
+//					jugadores[0].puerto = jugadores[1].puerto;
+//					jugadores[1] = null;
+//				}
+//			}
+//			}
+//			System.out.println("SALGAAAAN------");
+			
+			
 		}
 			
 		case "direccion":
@@ -162,6 +176,7 @@ public class HiloServidor extends Thread{
 			if(mensajeCompuesto[1].equals("mineral")) {
 				float posX = Float.valueOf(mensajeCompuesto[2]);
 				float posY = Float.valueOf(mensajeCompuesto[3]);
+				game.getMineralesManager().eliminarMineral(posX, posY, game.colisionesManager1, game.colisionesManager2);;
 				enviarMensaje("eliminar#mineral#"+posX+"#"+posY);
 			}
 			

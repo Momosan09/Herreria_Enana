@@ -24,3 +24,6 @@
 
 # 19 NOV
     - Colisiones omg
+
+# 20 NOV
+    - Modificando el comportamiento del servidor frente a la desconexion de un jugador

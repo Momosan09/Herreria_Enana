@@ -27,13 +27,14 @@ public class MineralesManager {
 //    	minerales.remove(mineral);
 //    }
     
-    public void eliminarMineral(float posX, float posY, ColisionesManager colisionesManager) {
+    public void eliminarMineral(float posX, float posY, ColisionesManager colisionesManager1, ColisionesManager colisionesManager2) {
     	boolean fin=false;
     	int i=0;
     	do {
     		if(minerales.get(i).getPosicion().x == posX && minerales.get(i).getPosicion().y == posY) {
     			minerales.get(i).vida=0;
-    			colisionesManager.eliminarColision(colisiones.get(i));
+    			colisionesManager1.eliminarColision(colisiones.get(i));
+    			colisionesManager2.eliminarColision(colisiones.get(i));
     			minerales.remove(i);
     			colisiones.remove(i);
     			fin = true;

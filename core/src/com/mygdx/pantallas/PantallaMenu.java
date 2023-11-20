@@ -37,26 +37,20 @@ public class PantallaMenu implements Screen{
     
 	public PantallaMenu(final Principal game) {
 		this.game = game;
-		
-
-
 	}
 
 	@Override
 	public void show() {
 
-
 	}
 
 	@Override
 	public void render(float delta) {
-		consola.render();
 
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		consola.reEscalar(width, height);
 	}
 
 	@Override

@@ -34,6 +34,8 @@ public class Jugador {
 	public int dinero=10;
 	public float movimientoX, movimientoY;
 	public Rectangle colision;
+	public int posicionXInicial = Gdx.graphics.getWidth() / 2 - (tamañoPersonaje/ 2);
+	public int posicionYInicial = Gdx.graphics.getHeight() / 2 - (tamañoPersonaje/ 2);
 
 	
 	public Sprite jugadorImg;
@@ -57,7 +59,7 @@ public class Jugador {
 	}
 	
 	public Jugador(int offset) {
-		posicion = new Vector2(Gdx.graphics.getWidth() / 2 - (tamañoPersonaje/ 2),Gdx.graphics.getHeight() / 2 - (tamañoPersonaje/ 2)); // posicion inicial
+		posicion = new Vector2(posicionXInicial,posicionYInicial); // posicion inicial
 		colision = new Rectangle(posicion.x, posicion.y, tamañoPersonaje, tamañoPersonaje);
 		jugadorImg = new Sprite(new Texture(Recursos.YUNQUE));
 		

@@ -86,13 +86,11 @@ public class Juego implements Screen{
 	
 	private ConsolaDebug consola;
 	public static Servidor servidor;
-	Rectangle pruebaColision = new Rectangle(32*10,32*10,64,64);
 
 	public Juego(final Principal game) {
 		this.game = game;
 		consola = new ConsolaDebug();
 		camaraJuego = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-
 	}
 
 	@Override
@@ -111,7 +109,7 @@ public class Juego implements Screen{
 		npcManagerConfig();
 
 		//objetos del mapa
-		piedra = new Piedra(0,0,false,Recursos.PIEDRA);
+		piedra = new Piedra(32*20,32*16,false,Recursos.PIEDRA);
 		piedra2 = new Piedra(32*18,32*18,false, Recursos.PIEDRA);
 		hierro = new Hierro(32*20,32*20,false, Recursos.HIERRO);
 		hierro1 = new Hierro(32*7,32*5,true, Recursos.HIERRO);
@@ -147,10 +145,10 @@ public class Juego implements Screen{
 
 	@Override
 	public void render(float delta) {
-//		consola.render();
+		consola.render();
 		
-
-		
+		colisionesManager1.checkearColisiones();
+		colisionesManager2.checkearColisiones();
 
 //		colisionesManager2.checkearColisiones();
 		
@@ -165,7 +163,7 @@ public class Juego implements Screen{
 		Render.batch.end();
 		
 		Render.batch.begin();
-		DibujarFiguras.dibujarRectanguloLleno(pruebaColision.x, pruebaColision.y, 64, 64, Color.BLUE);
+		//DibujarFiguras.dibujarRectanguloLleno(pruebaColision.x, pruebaColision.y, 64, 64, Color.BLUE);
 		mineralesManager.renderizar();
 		npcManager.renderizar(Render.batch);
 
@@ -174,9 +172,8 @@ public class Juego implements Screen{
 		jugador_1.draw(Render.batch);
 		jugador_2.draw(Render.batch);
 		Render.batch.end();
-		
-		colisionesManager1.checkearColisiones();
-		colisionesManager2.checkearColisiones();
+//		
+
 		
 		
 		/*
@@ -365,5 +362,8 @@ public class Juego implements Screen{
 		return jugador_2;
 	}
 
+	public MineralesManager getMineralesManager() {
+		return mineralesManager;
+	}
 
 }

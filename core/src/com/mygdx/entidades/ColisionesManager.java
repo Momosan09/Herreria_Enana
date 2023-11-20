@@ -31,13 +31,13 @@ public class ColisionesManager {
 	}
 	
 	public void checkearColisiones() {
-		System.out.println("checking");
+//		System.out.println("checking");
 	    boolean hayColision = false;
 	    for (Rectangle colision : colisiones) {
 	        if (actor.colision.overlaps(colision)) {
 	            actor.direccionDelChoque = actor.direccionActual;
 	            hayColision = true;	     
-	            System.out.println("pepin");
+//	            System.out.println("pepin");
 	        	}
 	        }
 	    
