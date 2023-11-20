@@ -184,4 +184,4 @@
 
 # 20 NOV
     - Modificando el comportamiento del servidor frente a la desconexion de un jugador
-    
+    - Puliendo la desconexion

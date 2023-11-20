@@ -171,9 +171,8 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				System.out.println(HelpDebug.debub(getClass())+"Menu principal");
-				UtilesRed.hc.enviarMensaje("desconectar");
+				cambiarColorLabels(lblSalirOpcion2, lblSalirOpcion1); 
 				game.setScreen(new PantallaMenu(game));
-				cambiarColorLabels(lblSalirOpcion2, lblSalirOpcion1);
 				}
 		});
 	}
@@ -222,6 +221,13 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 	
 	public void render(Jugador jugador) {
 		if(visible) {
+			if(UtilesRed.hc != null) {
+				lblSalirOpcion1.setVisible(true);
+				lblSalirOpcion2.setVisible(false);
+			}else {
+				lblSalirOpcion1.setVisible(false);
+				lblSalirOpcion2.setVisible(true);
+			}
 			//DibujarFiguras.dibujarRectanguloLleno(contenedor.getX(), contenedor.getY(), contenedor.getWidth(), contenedor.getHeight(), new Color(0,0,0,.7f));
 	    	stage.act(Gdx.graphics.getDeltaTime());
 	    	stage.draw();

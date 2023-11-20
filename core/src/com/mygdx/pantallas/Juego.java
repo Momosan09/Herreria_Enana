@@ -88,6 +88,7 @@ public class Juego implements Screen{
 	private boolean red = false;
 	HiloCliente hc;
 	public int idJugador = -1;
+	public boolean frenarGameLoop = false;
 	
 	//Colisiones
 	private ColisionesManager colisionesManager;
@@ -184,7 +185,8 @@ public class Juego implements Screen{
 	@Override
 	public void render(float delta) {
 
-		
+		if(!frenarGameLoop) {
+			
 		Render.batch.begin();
 		Render.tiledMapRenderer.render();
 		Render.batch.end();
@@ -365,6 +367,9 @@ public class Juego implements Screen{
 		if(red && idJugador ==0) {
 			jugador_2.puedeMoverse = false;
 		}
+		}else {
+			this.game.setScreen(new PantallaMenu(game, true));
+		}
 
 	}
 
@@ -468,5 +473,9 @@ public class Juego implements Screen{
 
 	public void salirDelJuego() {
 		game.setScreen(new PantallaMenu(game));
+	}
+	
+	public boolean isRed() {
+		return red;
 	}
 }

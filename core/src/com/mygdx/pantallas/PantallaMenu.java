@@ -36,7 +36,8 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	private Table interfaz;
 	private Table opciones;
 	private Label[] interfazTexto;
-	private Label.LabelStyle tituloEstilo, subTituloEstilo, opcionEstilo, selccionadoEstilo, bottomEstilo;
+	private Label mensajePerdidaConexion;
+	private Label.LabelStyle tituloEstilo, subTituloEstilo, opcionEstilo, selccionadoEstilo, bottomEstilo, perdidaConexion;
 	Entradas entradas = new Entradas();
 	
 	private Texture fondoImg;
@@ -48,6 +49,8 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	
     private float fondoPosX, offSetX, transparencia=0;
     
+    private boolean mostrarMensajeDeDesconectado=false;
+    
     //Red
     private Cliente cliente;
     
@@ -56,9 +59,8 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		
 		camara = new OrthographicCamera();
 		camara.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//		fondoImg = new Texture(Recursos.FONDO_MENU);
-//		fondo = new Sprite(fondoImg);
-//		fondo.setPosition(0, stage.getViewport().getWorldHeight() - fondoImg.getHeight()); // creo que el segundo parametro lo hace una medida mas relativa, nose, investigar
+		fondoImg = new Texture(Recursos.FONDO_MENU);
+		fondo = new Sprite(fondoImg);
 		crearFuentes();
 		crearActores();
 		poblarStage();
@@ -69,6 +71,31 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 
 		// Inicializar la instancia de SpriteBatch en Render con la del juego
 		Render.batch = game.batch;
+		fondo.setPosition(0, stage.getViewport().getWorldHeight() - fondoImg.getHeight()); // creo que el segundo parametro lo hace una medida mas relativa, nose, investigar
+
+	}
+	
+	
+	public PantallaMenu(final Principal game, boolean mostrarMensajeDeDesconectado) {
+		this.game = game;
+		
+		camara = new OrthographicCamera();
+		camara.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		fondoImg = new Texture(Recursos.FONDO_MENU);
+		fondo = new Sprite(fondoImg);
+		crearFuentes();
+		crearActores();
+		poblarStage();
+		
+		musicaMenu = Gdx.audio.newMusic(Gdx.files.internal(Recursos.MUSICA_MENU));
+
+		Gdx.input.setInputProcessor(entradas);
+
+		// Inicializar la instancia de SpriteBatch en Render con la del juego
+		Render.batch = game.batch;
+		fondo.setPosition(0, stage.getViewport().getWorldHeight() - fondoImg.getHeight()); // creo que el segundo parametro lo hace una medida mas relativa, nose, investigar
+		
+		this.mostrarMensajeDeDesconectado = mostrarMensajeDeDesconectado;
 
 	}
 
@@ -90,8 +117,14 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		camara.update();
 		Render.batch.setProjectionMatrix(camara.combined);
 		Render.batch.begin();
-		//fondoEnMovimiento(delta);
+		fondoEnMovimiento(delta);
 		Render.batch.end();
+
+		if(mostrarMensajeDeDesconectado) {
+			mensajePerdidaConexion.setVisible(true);
+		}else {
+			mensajePerdidaConexion.setVisible(false);
+		}
 		
 		interfaz.act(delta);//ejecuta las Actions de esta tabla
 		stage.draw();
@@ -102,7 +135,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 
 	@Override
 	public void resize(int width, int height) {
-//		offSetX = fondoImg.getWidth() - camara.viewportWidth; //usa el ancho de la textura porque este va a ser siempre constante, en el caso de que modifique el tamaño del sprite aca no deberia haber cambios
+		offSetX = fondoImg.getWidth() - camara.viewportWidth; //usa el ancho de la textura porque este va a ser siempre constante, en el caso de que modifique el tamaño del sprite aca no deberia haber cambios
 		screenViewPort.update(width, height, true);		
 	}
 
@@ -142,6 +175,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		opcionEstilo = EstiloFuente.generarFuente(22, Colores.BLANCO, false);
 		selccionadoEstilo = EstiloFuente.generarFuente(22, Colores.SELECCIONADO, false);
 		bottomEstilo = EstiloFuente.generarFuente(20, Colores.MENUBOTTOMCOLOR, false);
+		perdidaConexion = EstiloFuente.generarFuente(24, Colores.AU, false);
 	}
 	
 	@Override
@@ -166,6 +200,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		interfazTexto[3] = new Label(Recursos.bundle.get("menuPrincipal.red"), opcionEstilo);
 		interfazTexto[4] = new Label(Recursos.bundle.get("menuPrincipal.configuraciones"), opcionEstilo);
 
+		mensajePerdidaConexion = new Label(Recursos.bundle.get("menuPrincipal.perdidaConexion"), perdidaConexion);
 	}
 
 	@Override
@@ -173,6 +208,9 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		interfaz.add(interfazTexto[0]);
 		interfaz.row();
 		interfaz.add(interfazTexto[1]);
+		interfaz.row();
+			
+		interfaz.add(mensajePerdidaConexion);
 		interfaz.row();
 		
 		//opciones

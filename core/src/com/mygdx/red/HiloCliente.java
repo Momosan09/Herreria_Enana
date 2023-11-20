@@ -139,7 +139,7 @@ public class HiloCliente extends Thread{
 		
 		if(mensajeCompuesto[0].equals("salir_del_juego")) {
 			System.out.println("salir del juego++++++++");
-			game.salirDelJuego();
+			this.game.frenarGameLoop=true;
 		}
 		}	
 	}
