@@ -97,8 +97,10 @@ public class Juego implements Screen{
 		if(toggleConsola) {		
 		consola.render();
 		Gdx.graphics.setWindowedMode(450, 800);
+		resize(450, 800);
 		}else {
 			Gdx.graphics.setWindowedMode(1280, 720);
+			resize(1280, 720);
 		camaraJuego.position.x = jugador_1.posicion.x;
 		camaraJuego.position.y = jugador_1.posicion.y;
 		camaraJuego.update();
@@ -124,6 +126,9 @@ public class Juego implements Screen{
 	@Override
 	public void resize(int width, int height) {
 		consola.reEscalar(width, height);
+		camaraJuego.viewportWidth = width;
+		camaraJuego.viewportHeight = height;
+		camaraJuego.update();	
 	}
 
 	@Override
