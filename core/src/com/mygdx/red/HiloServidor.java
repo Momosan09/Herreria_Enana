@@ -87,7 +87,13 @@ public class HiloServidor extends Thread{
 			break;
 			
 		case "desconectar":{
-			enviarMensaje("salir_del_juego");
+			if(dp.getAddress().equals(jugadores[0].ip) && dp.getPort() == jugadores[0].puerto) {
+				enviarMensaje("salir_del_juego",jugadores[1].ip, jugadores[1].puerto);
+				
+			}else if(dp.getAddress().equals(jugadores[1].ip) && dp.getPort() == jugadores[1].puerto){
+				enviarMensaje("salir_del_juego",jugadores[0].ip, jugadores[0].puerto);
+			}
+			
 			jugadores[0].getEntidadJugador().posicion.x = jugadores[0].getEntidadJugador().posicionXInicial;
 			jugadores[0].getEntidadJugador().posicion.y = jugadores[0].getEntidadJugador().posicionYInicial;
 			jugadores[1].getEntidadJugador().posicion.x = jugadores[1].getEntidadJugador().posicionXInicial;

@@ -78,6 +78,7 @@ public class Juego implements Screen{
 	//Toggles (referido a HUDs), los uso cuando ese hud no se cierra con boton
 	private boolean toggleInventario = false;
 	private boolean togglePausa = false;
+	private boolean toggleConsola = true;
 	
 	//Screens
 	private final Principal game;
@@ -145,7 +146,12 @@ public class Juego implements Screen{
 
 	@Override
 	public void render(float delta) {
-		consola.render();
+		
+		if(Gdx.input.isKeyJustPressed(Keys.TAB)) {
+			toggleConsola = !toggleConsola;
+		}
+		
+
 		
 		colisionesManager1.checkearColisiones();
 		colisionesManager2.checkearColisiones();
@@ -153,6 +159,12 @@ public class Juego implements Screen{
 //		colisionesManager2.checkearColisiones();
 		
 	    //Renderiza el Juego
+		
+		if(toggleConsola) {		
+		consola.render();
+		Gdx.graphics.setWindowedMode(450, 800);
+		}else {
+			Gdx.graphics.setWindowedMode(1280, 720);
 		camaraJuego.position.x = jugador_1.posicion.x;
 		camaraJuego.position.y = jugador_1.posicion.y;
 		camaraJuego.update();
@@ -175,6 +187,7 @@ public class Juego implements Screen{
 //		
 
 		
+		}
 		
 		/*
 		npcManager.detectarJugador(jugador); 
