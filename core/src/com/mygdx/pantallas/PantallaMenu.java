@@ -56,14 +56,14 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		
 		camara = new OrthographicCamera();
 		camara.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		//Stage trae su propio viewport, no es necesario crear uno
-		
-		fondoImg = new Texture(Recursos.FONDO_MENU);
-		fondo = new Sprite(fondoImg);
-		
+//		fondoImg = new Texture(Recursos.FONDO_MENU);
+//		fondo = new Sprite(fondoImg);
+//		fondo.setPosition(0, stage.getViewport().getWorldHeight() - fondoImg.getHeight()); // creo que el segundo parametro lo hace una medida mas relativa, nose, investigar
 		crearFuentes();
 		crearActores();
 		poblarStage();
+		
+		musicaMenu = Gdx.audio.newMusic(Gdx.files.internal(Recursos.MUSICA_MENU));
 
 		Gdx.input.setInputProcessor(entradas);
 
@@ -74,8 +74,10 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 
 	@Override
 	public void show() {
-		musicaMenu = Gdx.audio.newMusic(Gdx.files.internal(Recursos.MUSICA_MENU));
-		fondo.setPosition(0, stage.getViewport().getWorldHeight() - fondoImg.getHeight()); // creo que el segundo parametro lo hace una medida mas relativa, nose, investigar
+
+
+
+		
 
 	}
 
@@ -88,7 +90,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		camara.update();
 		Render.batch.setProjectionMatrix(camara.combined);
 		Render.batch.begin();
-		fondoEnMovimiento(delta);
+		//fondoEnMovimiento(delta);
 		Render.batch.end();
 		
 		interfaz.act(delta);//ejecuta las Actions de esta tabla
@@ -100,7 +102,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 
 	@Override
 	public void resize(int width, int height) {
-		offSetX = fondoImg.getWidth() - camara.viewportWidth; //usa el ancho de la textura porque este va a ser siempre constante, en el caso de que modifique el tamaño del sprite aca no deberia haber cambios
+//		offSetX = fondoImg.getWidth() - camara.viewportWidth; //usa el ancho de la textura porque este va a ser siempre constante, en el caso de que modifique el tamaño del sprite aca no deberia haber cambios
 		screenViewPort.update(width, height, true);		
 	}
 
@@ -124,10 +126,11 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 
 	@Override
 	public void dispose() {
+//		fondoImg.dispose();
 		stage.dispose();
 		game.font.dispose();
 		entradas.efectoSonidoTeclas.dispose();
-		musicaMenu.pause();
+		musicaMenu.stop();
 		musicaMenu.dispose();
 
 	}
@@ -211,7 +214,8 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	}
     private void fondoEnMovimiento(float delta) {
     	float velocidadDesplazamiento = 30;
-    	
+    	if(fondo!=null) {
+    		
     	fondo.draw(Render.batch);
         fondoPosX -= velocidadDesplazamiento * delta;
         if (fondoPosX <= offSetX*-1) {
@@ -221,6 +225,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
         }
 
         fondo.setX(fondoPosX);
+    	}
     }
     
     private void agregarAnimaciones() {

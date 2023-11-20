@@ -133,8 +133,13 @@ public class HiloCliente extends Thread{
 			if(mensajeCompuesto[1].equals("mineral")) {
 				float posX = Float.valueOf(mensajeCompuesto[2]);
 				float posY = Float.valueOf(mensajeCompuesto[3]);
-				game.getMineralesManager().eliminarMineral(posX, posY, game.getColisionesManager());;
+				game.getMineralesManager().eliminarMineral(posX, posY, game.getColisionesManager());
 			}
+		}
+		
+		if(mensajeCompuesto[0].equals("salir_del_juego")) {
+			System.out.println("salir del juego++++++++");
+			game.salirDelJuego();
 		}
 		}	
 	}

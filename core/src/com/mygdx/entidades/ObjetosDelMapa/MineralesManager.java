@@ -33,7 +33,7 @@ public class MineralesManager {
     		if(minerales.get(i).vida <= 0) {
     			minerales.remove(i);
     			colisiones.remove(i);
-    			colisionesManager.eliminarColision(i);
+    			//colisionesManager.eliminarColision(i);
     		}
     	}
     }
@@ -41,17 +41,18 @@ public class MineralesManager {
     public void eliminarMineral(float posX, float posY, ColisionesManager colisionesManager) {
     	boolean fin=false;
     	int i=0;
+    	
     	do {
     		if(minerales.get(i).getPosicion().x == posX && minerales.get(i).getPosicion().y == posY) {
     			minerales.get(i).vida=0;
-    			colisionesManager.eliminarColision(i);
+    			colisionesManager.eliminarColision(minerales.get(i).getColision());
     			minerales.remove(i);
     			colisiones.remove(i);
     			fin = true;
     		}
     		
     		i++;
-    	}while(!fin);
+    	}while(!fin && i<minerales.size());
     }
 
     public void detectarJugador(Jugador jugador) {

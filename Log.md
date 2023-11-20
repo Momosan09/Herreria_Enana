@@ -181,4 +181,7 @@
 # 19 NOV
     - Colisiones omg
     - Agrege sprites para un segundo jugador asi es facil de diferenciar uno del otro
+
+# 20 NOV
+    - Modificando el comportamiento del servidor frente a la desconexion de un jugador
     

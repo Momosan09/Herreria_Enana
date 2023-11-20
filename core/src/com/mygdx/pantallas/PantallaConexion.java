@@ -37,8 +37,9 @@ public class PantallaConexion implements Screen{
 		}
 		
 		if(UtilesRed.hc.isConexionExitosa() && UtilesRed.hc.isEsperandojugadores()) {
-			hud.agregarMensaje("Conexion Exitosa", false);
-			hud.agregarMensaje("Esperando jugadores", false);
+			//hud.agregarMensaje("Conexion Exitosa", false);
+			//hud.agregarMensaje("Esperando jugadores", false);
+			hud.conexionExitosa = true;
 			
 		}else if(UtilesRed.hc.isServidorLleno()) {
 			hud.agregarMensaje("El servidor esta lleno", true);

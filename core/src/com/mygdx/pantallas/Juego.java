@@ -138,7 +138,7 @@ public class Juego implements Screen{
 		npcManagerConfig();
 		
 		//objetos del mapa
-		piedra = new Piedra(0,0,false,Recursos.PIEDRA);
+		piedra = new Piedra(32*20,32*16,false,Recursos.PIEDRA);
 		piedra2 = new Piedra(32*18,32*18,false, Recursos.PIEDRA);
 		hierro = new Hierro(32*20,32*20,false, Recursos.HIERRO);
 		hierro1 = new Hierro(32*7,32*5,true, Recursos.HIERRO);
@@ -466,4 +466,7 @@ public class Juego implements Screen{
 		return colisionesManager;
 	}
 
+	public void salirDelJuego() {
+		game.setScreen(new PantallaMenu(game));
+	}
 }

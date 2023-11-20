@@ -161,6 +161,7 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 				UtilesRed.hc.fin();
 				System.out.println(HelpDebug.debub(getClass())+"Finalizar_conexion");
 				cambiarColorLabels(lblSalirOpcion1, lblSalirOpcion2);
+				game.setScreen(new PantallaMenu(game));
 				
 				}
 		});
@@ -170,8 +171,8 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				System.out.println(HelpDebug.debub(getClass())+"Menu principal");
+				UtilesRed.hc.enviarMensaje("desconectar");
 				game.setScreen(new PantallaMenu(game));
-				//dispose();
 				cambiarColorLabels(lblSalirOpcion2, lblSalirOpcion1);
 				}
 		});

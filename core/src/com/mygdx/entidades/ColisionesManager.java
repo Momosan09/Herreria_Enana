@@ -25,8 +25,8 @@ public class ColisionesManager {
 	}
 	
 	
-	public void eliminarColision(int index) {
-		colisiones.remove(index);
+	public void eliminarColision(Rectangle colision) {
+		colisiones.remove(colision);
 	}
 	
 	public void checkearColisiones() {

@@ -152,7 +152,7 @@ public class Jugador {
         
         
         if(red) {
-        System.out.println(HelpDebug.debub(getClass())+ direccionDelChoque);
+//        System.out.println(HelpDebug.debub(getClass())+ direccionDelChoque);
         	if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) {
         		if (Gdx.input.isKeyPressed(Keys.W)) {
         			UtilesRed.hc.enviarMensaje("direccion#arriba");
@@ -275,7 +275,7 @@ public class Jugador {
 	
 	public boolean isTabPressed() {
 		if(Gdx.input.isKeyPressed(Keys.TAB)) {
-			System.out.println("E");
+			System.out.println("TAB");
 			return true;
 		}
 		return false;

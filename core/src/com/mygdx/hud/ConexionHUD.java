@@ -15,7 +15,9 @@ public class ConexionHUD implements HeadUpDisplay{
 	private ScreenViewport screenViewport;
 	private Stage stage;
 	private Table contenedor, tabla;
-	private Label titulo, conexionExitosaLbl;
+	private Label titulo, conexionExitosaLbl, esperandoJugadores;
+	
+	public boolean conexionExitosa;
 	
 	private Label.LabelStyle labelStyle,labelStyleError;
 	
@@ -42,7 +44,9 @@ public class ConexionHUD implements HeadUpDisplay{
 		contenedor = new Table();
 		
 		titulo = new Label(Recursos.bundle.get("conexion.hud.titulo"), labelStyle);
-		conexionExitosaLbl = new Label("conexion.hud.conexionExitosa", labelStyle);
+		conexionExitosaLbl = new Label(Recursos.bundle.get("conexion.hud.conexionExitosa"), labelStyle);
+		esperandoJugadores = new Label(Recursos.bundle.get("conexion.hud.esperandoJugadores"),labelStyle);
+		
 	
 	}
 
@@ -52,6 +56,10 @@ public class ConexionHUD implements HeadUpDisplay{
 		tabla.add(contenedor);
 		
 		contenedor.add(titulo);
+		contenedor.row();
+		contenedor.add(conexionExitosaLbl);
+		contenedor.row();
+		contenedor.add(esperandoJugadores);
 		stage.addActor(tabla);
 		
 	}
@@ -64,6 +72,13 @@ public class ConexionHUD implements HeadUpDisplay{
 
 	@Override
 	public void render() {
+		if(!conexionExitosa) {
+			conexionExitosaLbl.setVisible(false);;
+			esperandoJugadores.setVisible(false);
+		}else {
+			conexionExitosaLbl.setVisible(true);;
+			esperandoJugadores.setVisible(true);
+		}
 		stage.draw();
 		
 	}
@@ -75,5 +90,8 @@ public class ConexionHUD implements HeadUpDisplay{
 		
 	}
 	
+	public boolean getConexionExitosa() {
+		return conexionExitosa;
+	}
 
 }
