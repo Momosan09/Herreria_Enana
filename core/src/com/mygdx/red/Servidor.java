@@ -11,7 +11,7 @@ public class Servidor {
 		hs = new HiloServidor(game,consola);
 		hs.start();
 
-		UtilesRed.hs = hs;
+		hs = UtilesRed.hs;
 	}
 	
 	public void cerrarHilo() {
