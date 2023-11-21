@@ -4,7 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.entidades.ColisionesManager;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.NPCManager;
@@ -45,6 +48,8 @@ public class Juego implements Screen{
 	private final Principal game;
 	
 	public ColisionesManager colisionesManager1,colisionesManager2;
+	private Rectangle colisionDelHorno;
+	private Sprite  hornoSprite;
 	
 	private ConsolaDebug consola;
 	public static Servidor servidor;
@@ -75,9 +80,14 @@ public class Juego implements Screen{
 		hierro = new Hierro(32*20,32*20,false, Recursos.HIERRO);
 		hierro1 = new Hierro(32*7,32*5,true, Recursos.HIERRO);
 		
+		colisionDelHorno = new Rectangle(32*22,32*10,32,32);//En el servidor solo hace falta la colision
+		hornoSprite = new Sprite(new Texture(Recursos.HORNO));
+		hornoSprite.setPosition(colisionDelHorno.x, colisionDelHorno.y);
 		mineralesManagerConfig();
 		
 		colisionesManagerConfig();
+		
+		
 
 	}
 
@@ -113,7 +123,7 @@ public class Juego implements Screen{
 		Render.batch.begin();
 		mineralesManager.renderizar();
 		npcManager.renderizar(Render.batch);
-
+		hornoSprite.draw(Render.batch);
 
 
 		jugador_1.draw(Render.batch);
@@ -179,10 +189,12 @@ public class Juego implements Screen{
 		colisionesManager1.agregarArrayDeColisiones(mineralesManager.getColisiones());
 		colisionesManager1.agregarArrayDeColisiones(npcManager.getColisiones());
 		colisionesManager1.agregarColision(jugador_2.colision);
+		colisionesManager1.agregarColision(colisionDelHorno);
 		colisionesManager2 = new ColisionesManager(jugador_2);
 		colisionesManager2.agregarArrayDeColisiones(mineralesManager.getColisiones());
 		colisionesManager2.agregarArrayDeColisiones(npcManager.getColisiones());
 		colisionesManager2.agregarColision(jugador_1.colision);
+		colisionesManager2.agregarColision(colisionDelHorno);
 	}
 
 

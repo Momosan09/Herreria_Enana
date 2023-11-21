@@ -34,6 +34,7 @@ public class Jugador {
 	 
 	private ArrayList<Items> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
 	private ArrayList<Mineral> mineralesInv = new ArrayList<>();  
+	private ArrayList<Integer> indicesDeEliminacion = new ArrayList<>();
     
 	public Direcciones direccionActual = Direcciones.QUIETO;
 	public Direcciones direccionDelChoque = null;
@@ -163,4 +164,31 @@ public class Jugador {
 		return mineralesInv;
 	}
 
+	public int buscarCantidadDeMineralesPorNombre(String nombre){
+		int cont = 0;
+		for(int i = 0; i<mineralesInv.size();i++) {
+			if(mineralesInv.get(i).nombre.equals(nombre)) {
+				cont++;
+			}
+		}
+		return cont;
+	}
+	
+	public void eliminarPorNombreDadoYCantidad(String nombre, int cantidad) {
+	    for (int i = 0; i <= cantidad; i++) {
+	        if (mineralesInv.get(i).nombre.equals(nombre)) {
+	        	indicesDeEliminacion.add(i);
+	        }
+	    }
+	    
+	    for (int i = 0; i < indicesDeEliminacion.size(); i++) {	    	
+	        mineralesInv.remove(indicesDeEliminacion.get(i).intValue());
+	    }
+
+	    
+	    indicesDeEliminacion.clear();
+	}
+
+	
+	
 }

@@ -192,7 +192,17 @@ public class HiloServidor extends Thread{
 			
 			}
 			break;
-		
+			
+		case "horno_fundicion":
+				if(mensajeCompuesto[1].equals("recoger")) {
+					enviarMensaje("actualizar_horno#recogido");
+				}else {
+					int cantidad = Integer.valueOf(mensajeCompuesto[1]);
+					String material = mensajeCompuesto[2];
+					
+					enviarMensaje("actualizar_horno#"+cantidad+"#"+material);
+				}
+				
 			}
 		}
 			

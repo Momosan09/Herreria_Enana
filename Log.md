@@ -30,3 +30,5 @@
     - Puliendo la desconexion
     - TAB para cambiar entre modo consola y modo mundo
     - Limpie un poco el codigo
+    - Horno de fundicion
+    - Dejando casi para entregar

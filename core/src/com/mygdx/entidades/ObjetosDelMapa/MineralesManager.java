@@ -29,19 +29,17 @@ public class MineralesManager {
     
     public void eliminarMineral(float posX, float posY, ColisionesManager colisionesManager1, ColisionesManager colisionesManager2) {
     	boolean fin=false;
-    	int i=0;
-    	do {
-    		if(minerales.get(i).getPosicion().x == posX && minerales.get(i).getPosicion().y == posY) {
-    			minerales.get(i).vida=0;
-    			colisionesManager1.eliminarColision(colisiones.get(i));
-    			colisionesManager2.eliminarColision(colisiones.get(i));
-    			minerales.remove(i);
-    			colisiones.remove(i);
-    			fin = true;
-    		}
-    		
-    		i++;
-    	}while(!fin);
+    	for (int i = minerales.size() - 1; i >= 0; i--) {//Busqueda inversa
+    	    if (minerales.get(i).getPosicion().x == posX && minerales.get(i).getPosicion().y == posY) {
+    	        minerales.get(i).vida = 0;
+    	        colisionesManager1.eliminarColision(colisiones.get(i));
+    	        colisionesManager2.eliminarColision(colisiones.get(i));
+    	        minerales.remove(i);
+    	        colisiones.remove(i);
+    	        fin = true;
+    	    }
+    	}
+
     }
 
     public void detectarJugador(Jugador jugador) {
