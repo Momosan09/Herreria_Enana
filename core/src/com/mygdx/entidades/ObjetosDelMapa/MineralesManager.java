@@ -28,12 +28,14 @@ public class MineralesManager {
 //    }
     
     
-    public void limpiarMinerales(ColisionesManager colisionesManager) {
+    public void limpiarMinerales(ColisionesManager colisionesManager, boolean red) {
     	for(int i = 0; i<minerales.size();i++) {
     		if(minerales.get(i).vida <= 0) {
+    			if(!red) {
+    				colisionesManager.eliminarColision(colisiones.get(i));    				
+    			}
     			minerales.remove(i);
     			colisiones.remove(i);
-    			//colisionesManager.eliminarColision(i);
     		}
     	}
     }

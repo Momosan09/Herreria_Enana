@@ -21,6 +21,7 @@ import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.NPCManager;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.ObjetoDelMapa;
+import com.mygdx.entidades.ObjetosDelMapa.Horno;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.MineralesManager;
 import com.mygdx.entidades.ObjetosDelMapa.Yunque;
@@ -56,6 +57,8 @@ public class Juego implements Screen{
 	private Npc viejo, vendedor;
 	private Texture jugadorTextura;
 	private Mineral piedra, hierro, hierro1, piedra2;
+	private Horno horno;
+	
 	
 	//Managers
 	private NPCManager npcManager;
@@ -70,7 +73,7 @@ public class Juego implements Screen{
 	private CartaHUD cartaHUD;
 	private PausaHUD pausaHud;
 	private Combinacion combinacionJugador1, combinacionJugador2;
-	private InventarioHUD inventarioHUD, inventarioHUD2;
+	private InventarioHUD inventarioHUD1, inventarioHUD2;
 	private DialogoDeCompra dialogoDeCompra;
 	private Fundicion fundicionHUD;
 	
@@ -87,7 +90,7 @@ public class Juego implements Screen{
 	//red
 	private boolean red = false;
 	HiloCliente hc;
-	public int idJugador = -1;
+	public int idJugador = 1;
 	public boolean frenarGameLoop = false;
 	
 	//Colisiones
@@ -122,17 +125,20 @@ public class Juego implements Screen{
 		//jugador
 		if(red) {
 			hc = UtilesRed.hc;
-			jugador_1 = new Jugador(camaraJugador1,hc, Recursos.JUGADOR1_SPRITESHEET);
 			camaraJugador2 = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			camaraJugador2.setToOrtho(false);
 			camaraJugador2.zoom = .6f;
+			jugador_1 = new Jugador(camaraJugador1,hc, Recursos.JUGADOR1_SPRITESHEET);
 			jugador_2 = new Jugador(camaraJugador2,hc,Recursos.JUGADOR2_SPRITESHEET);
 
 			UtilesRed.hc.setGame(this);//Le paso el juego porque sino el juego que le entra por constructor (al estatico) vale nulo
 			UtilesRed.hc = hc;
 		}else {
 			jugador_1 = new Jugador(camaraJugador1);
+
 		}
+		
+	
 				
 		//Npc
 		crearNPCs();
@@ -144,41 +150,52 @@ public class Juego implements Screen{
 		hierro = new Hierro(32*20,32*20,false, Recursos.HIERRO);
 		hierro1 = new Hierro(32*7,32*5,true, Recursos.HIERRO);
 		
+				
 		mineralesManagerConfig();
 		//yunque = new Yunque(532,532,Recursos.YUNQUE);
 		
-		//Colisiones
-		colisionesManagerConfig();
+
 		
 		//HUD
-		hud = new HUD(jugador_1);
+
 		cartaHUD = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);//ee parece que cartaHUD tiene que ir primero, sino no anda la combinacion (nose pq)
-		combinacionJugador1 = new Combinacion(jugador_1);
-	    inventarioHUD = new InventarioHUD();
-	    dialogoDeCompra = new DialogoDeCompra();
-	    fundicionHUD = new Fundicion(jugador_1);
-	    pausaHud = new PausaHUD(game);
+
 	    
-	   if(red) {
-		    inventarioHUD2 = new InventarioHUD();
-			combinacionJugador2 = new Combinacion(jugador_2);
-			
-			mux.addProcessor(combinacionJugador2.getStage());
-			mux.addProcessor(combinacionJugador2.getDragAndDrop().getStage());
-	    }
+	    dialogoDeCompra = new DialogoDeCompra();
+	    pausaHud = new PausaHUD(game);
+
 	    
 	    mux.addProcessor(cartaHUD.getStage());
 	    mux.addProcessor(pausaHud.getStage());
-	    mux.addProcessor(combinacionJugador1.getStage());//Esto es para los botones de la propia clase
-	    mux.addProcessor(fundicionHUD.getStage());
 	    //mux.addProcessor(dialogoDeCompra.getStage());
-	    mux.addProcessor(combinacionJugador1.getDragAndDrop().getStage());//Esto es para las imagenes arratrables que tiene el stage del dragAndDrop de esta clase, si quiero poner otro dragAndDrop tengo q ue agregarlo asi
+	   
+	    inventarioHUD1 = new InventarioHUD(jugador_1);
+	    inventarioHUD2 = new InventarioHUD(jugador_2);
+	    
+	    if(idJugador==0) {
+			hud = new HUD(jugador_2);
+			fundicionHUD = new Fundicion(jugador_2);
+			combinacionJugador2 = new Combinacion(jugador_2);
+	    	mux.addProcessor(combinacionJugador2.getStage());
+	    	mux.addProcessor(combinacionJugador2.getDragAndDrop().getStage());//Esto es para las imagenes arratrables que tiene el stage del dragAndDrop de esta clase, si quiero poner otro dragAndDrop tengo q ue agregarlo asi
+	    }else if(idJugador==1) {
+			hud = new HUD(jugador_1);
+			fundicionHUD = new Fundicion(jugador_1);
+			
+			combinacionJugador1 = new Combinacion(jugador_1);
+	    	mux.addProcessor(combinacionJugador1.getStage());
+	    	mux.addProcessor(combinacionJugador1.getDragAndDrop().getStage());
+	    }
+	    horno = new Horno(32*22,32*10, Recursos.HORNO, fundicionHUD);
+	    mux.addProcessor(horno.getHUD().getStage());
 	    mux.addProcessor(hud.getStage());
 	    mux.addProcessor(hud.getResultadosBatallasHUD().getStage());
 	    mux.addProcessor(hud.getProximaBatallaHUD().getStage());
+	    
 		Gdx.input.setInputProcessor(mux);
 		
-		
+		//Colisiones
+		colisionesManagerConfig();
 
 	}
 
@@ -228,19 +245,23 @@ public class Juego implements Screen{
 		npcManager.detectarJugador(jugador_1); 
 		
 		mineralesManager.renderizar();
-		mineralesManager.detectarJugador(jugador_1);
-		mineralesManager.minar(jugador_1);
-		mineralesManager.comprar(jugador_1);
-		
-		
-		if(red && idJugador == 0) {
+
+		if(idJugador == 0) {
 			npcManager.detectarJugador(jugador_2); 
 			mineralesManager.detectarJugador(jugador_2);
 			mineralesManager.minar(jugador_2);
 			mineralesManager.comprar(jugador_2);
+			horno.detectarJugador(jugador_2);
+			mineralesManager.limpiarMinerales(colisionesManager,true);
+		}else {
+			mineralesManager.detectarJugador(jugador_1);
+			mineralesManager.minar(jugador_1);
+			mineralesManager.comprar(jugador_1);
+			horno.detectarJugador(jugador_1);
 		}
 		
-		mineralesManager.limpiarMinerales(colisionesManager);
+		horno.draw();
+		mineralesManager.limpiarMinerales(colisionesManager,false);
 
 
 		Render.batch.end();
@@ -268,25 +289,27 @@ public class Juego implements Screen{
 	    
 
 			//Renderiza ocultables
-
-			
-			
 			if(red && idJugador == 0) {
-				combinacionJugador2.render();
+				hud.render();
 				pausaHud.render(jugador_2);
-				inventarioHUD2.render(jugador_2);
 				dialogoDeCompra.render(jugador_2);
-//				fundicionHUD.render(jugador_2);
+				inventarioHUD2.render(jugador_2);
+				horno.mostarHUD(jugador_2);
+				fundicionHUD.render();
+				combinacionJugador2.render();
 			}else {
 				hud.render();
-				combinacionJugador1.render();
 				pausaHud.render(jugador_1);
-				inventarioHUD.render(jugador_1);
 				dialogoDeCompra.render(jugador_1);
-				//fundicionHUD.render(jugador_1);
+				inventarioHUD1.render(jugador_1);
+				horno.mostarHUD(jugador_1);
+				fundicionHUD.render();
+				combinacionJugador1.render();
+				
 			}
-			
 
+			
+			
 		    if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT) && red && idJugador == 0) {//Esto despues lo tengo que cambiar
 		    		combinacionJugador2.mostrar();
 		    }
@@ -304,14 +327,16 @@ public class Juego implements Screen{
 		    	toggleInventario = !toggleInventario;
 		    	
 		    	if(toggleInventario) {
-		    		inventarioHUD.mostrar();
-		    		if(red) {
+		    		if(idJugador==0) {
 		    			inventarioHUD2.mostrar();
+		    		}else {
+		    			inventarioHUD1.mostrar();		    			
 		    		}
 		    	}else {
-		    		inventarioHUD.ocultar();
-		    		if(red) {
+		    		if(idJugador==0) {
 		    			inventarioHUD2.ocultar();
+		    		}else {
+		    			inventarioHUD1.ocultar();
 		    		}
 		    	}
 		    }
@@ -355,10 +380,10 @@ public class Juego implements Screen{
 		if(Gdx.input.isKeyPressed(Keys.E)) {
 			if(idJugador == 1 ||!red) {
 				jugador_1.getItems().add(Items.PICO);
-				System.out.println("Otorgado: Pico");				
+//				System.out.println("Otorgado: Pico");				
 			}else {
 				jugador_2.getItems().add(Items.PICO);
-				System.out.println("Otorgado: Pico al jugador 2");
+//				System.out.println("Otorgado: Pico al jugador 2");
 			}
 		}
 		Render.batch.end();
@@ -376,26 +401,33 @@ public class Juego implements Screen{
 
 	@Override
 	public void resize(int width, int height) {
-		camaraJugador1.viewportWidth = width;
-		camaraJugador1.viewportHeight = height;
-		camaraJugador1.update();	
 
-		if(red) {
+
+		if(idJugador == 0) {
 			camaraJugador2.viewportWidth = width;
 			camaraJugador2.viewportHeight = height;
-		    combinacionJugador2.reEscalar(width, height);
-		    inventarioHUD2.reEscalar(width, height);
 			camaraJugador2.update();	
+		    combinacionJugador2.reEscalar(width, height);
+			inventarioHUD2.reEscalar(width, height);
+		}else {
+			camaraJugador1.viewportWidth = width;
+			camaraJugador1.viewportHeight = height;
+			camaraJugador1.update();	
+		    combinacionJugador1.reEscalar(width, height);
+			inventarioHUD1.reEscalar(width, height);
 		}
 		
+
+		fundicionHUD.reEscalar(width, height);
 	    System.out.println(HelpDebug.debub(getClass())+"X =" +Gdx.graphics.getWidth() + " Y =" + Gdx.graphics.getHeight());
 	    hud.reEscalar(width, height);
 	    cartaHUD.reEscalar(width, height);
 	    pausaHud.reEscalar(width, height);
-	    combinacionJugador1.reEscalar(width, height);
+
 	    npcManager.reEscalarDialogos(width, height);
-	    inventarioHUD.reEscalar(width, height);
 	    dialogoDeCompra.reEscalar(width, height);
+
+
 	}
 
 	@Override
@@ -451,8 +483,8 @@ public class Juego implements Screen{
 		}
 		colisionesManager.agregarArrayDeColisiones(mineralesManager.getColisiones());
 		colisionesManager.agregarArrayDeColisiones(npcManager.getColisiones());
-		
-//		colisionesManager.agregarArrayDeColisiones(mineralesManager.getColisiones());
+		colisionesManager.agregarColision(horno.getColision());
+
 	}
 
 	public Jugador getJugador1() {
@@ -477,5 +509,9 @@ public class Juego implements Screen{
 	
 	public boolean isRed() {
 		return red;
+	}
+	
+	public Horno getHorno() {
+		return horno;
 	}
 }

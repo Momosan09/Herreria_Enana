@@ -106,6 +106,7 @@ public class ProximaBatallaHUD implements HeadUpDisplay, Ocultable{
 	@Override
 	public void ocultar() {
 		visible = false;
+        stage.unfocusAll();
 	}
 	
 	public boolean getVisible() {

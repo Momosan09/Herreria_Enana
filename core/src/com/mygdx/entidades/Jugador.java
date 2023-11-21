@@ -50,6 +50,7 @@ public class Jugador {
 	//Inventarios
 	private ArrayList<Items> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
 	private ArrayList<Mineral> mineralesInv = new ArrayList<>();  
+	private ArrayList<Integer> indicesDeEliminacion = new ArrayList<>();//Se guardan temporalmente los indices de los minerales a eliminar, despues este array se limpia
     
 	public Direcciones direccionActual = Direcciones.QUIETO;
 	public Direcciones direccionDelChoque = null;
@@ -267,7 +268,7 @@ public class Jugador {
 	
 	public boolean isEPressed() {
 		if(Gdx.input.isKeyPressed(Keys.E)) {
-			System.out.println("E");
+//			System.out.println("E");
 			return true;
 		}
 		return false;
@@ -275,7 +276,7 @@ public class Jugador {
 	
 	public boolean isTabPressed() {
 		if(Gdx.input.isKeyPressed(Keys.TAB)) {
-			System.out.println("TAB");
+//			System.out.println("TAB");
 			return true;
 		}
 		return false;
@@ -288,6 +289,37 @@ public class Jugador {
 	public ArrayList<Mineral> getMinerales(){
 		return mineralesInv;
 	}
+	
+	public int buscarCantidadDeMineralesPorNombre(String nombre){
+		int cont = 0;
+		for(int i = 0; i<mineralesInv.size();i++) {
+			if(mineralesInv.get(i).nombre.equals(nombre)) {
+				cont++;
+			}
+		}
+		return cont;
+	}
+	
+	public void eliminarPorNombreDadoYCantidad(String nombre, int cantidad) {
+		System.out.println("el tamano es " + mineralesInv.size() + "++++++++++++");
+		if(mineralesInv.size() > 0) {
+			
+			int cont = 0;
+			for(int i = 0; i<mineralesInv.size();i++) {
+				if(mineralesInv.get(i).nombre.equals(nombre) && cont < cantidad) {
+					indicesDeEliminacion.add(i);
+					cont++;
+				}
+			}
+	    
+	    
+	    for (int j = 0; j < indicesDeEliminacion.size(); j++) {	    	
+	        mineralesInv.remove(indicesDeEliminacion.get(j).intValue());
+	    }
+	    //indicesDeEliminacion.clear();
+		}
+	}
+
 	
 	public boolean isRed() {
 		return red;

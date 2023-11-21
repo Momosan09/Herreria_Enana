@@ -20,9 +20,10 @@ public class Mineral extends Entidad{
 
 
 	
-	public Mineral(float x, float y, boolean comprable, String rutaTextura) {
+	public Mineral(float x, float y, boolean comprable, String rutaTextura, String nombre) {
 		super(x, y, comprable,rutaTextura);
 		this.comprable = comprable;
+		this.nombre = nombre;
 	}
 
 	
@@ -81,4 +82,7 @@ public class Mineral extends Entidad{
 		    dialogoAbierto = false;
 		    // Cierra el diálogo de compra aquí
 		}
+		
+
+	
 }

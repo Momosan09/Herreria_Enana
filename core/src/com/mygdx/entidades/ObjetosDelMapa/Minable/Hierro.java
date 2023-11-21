@@ -7,7 +7,7 @@ public class Hierro extends Mineral{
 
 
 	public Hierro(int x, int y, boolean comprable, String rutaTextura) {
-		super(x, y, comprable, rutaTextura);
+		super(x, y, comprable, rutaTextura, "hierro");
 	}
 
 }

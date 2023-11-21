@@ -129,6 +129,20 @@ public class HiloCliente extends Thread{
 			}
 		}
 		
+		
+		if(mensajeCompuesto[0].equals("actualizar_horno")) {
+			if(mensajeCompuesto[1].equals("recogido")) {
+				game.getHorno().getHUD().elegido=false;
+				game.getHorno().getHUD().fabricar = false;
+				game.getHorno().getHUD().cantidad= 0;
+			}else {
+				game.getHorno().getHUD().cantidad = Integer.valueOf(mensajeCompuesto[1]);
+				game.getHorno().getHUD().elegido = true;
+				game.getHorno().getHUD().fabricar = true;
+			}
+			
+		}
+		
 		if(mensajeCompuesto[0].equals("eliminar")) {
 			if(mensajeCompuesto[1].equals("mineral")) {
 				float posX = Float.valueOf(mensajeCompuesto[2]);

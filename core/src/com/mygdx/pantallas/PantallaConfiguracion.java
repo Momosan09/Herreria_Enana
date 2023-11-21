@@ -123,7 +123,7 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 		
 		interfaz = new Table();
 		interfaz.setFillParent(true);
-		interfaz.debug();
+//		interfaz.debug();
 		
 		interfazTextos[0] = new Label(Recursos.bundle.get("pantallaConfiguracion.volverMenuPrincipal"), estiloLabel);
 		interfazTextos[1] = new Label(Recursos.bundle.get("pantallaConfiguracion.titulo"), tituloEstilo);

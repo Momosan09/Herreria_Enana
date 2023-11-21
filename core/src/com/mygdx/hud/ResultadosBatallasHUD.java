@@ -64,7 +64,7 @@ public class ResultadosBatallasHUD implements HeadUpDisplay, Ocultable{//Una cos
 		tabla.setFillParent(true);
 		
 		contenedor = new Table();
-		contenedor.setDebug(true);
+//		contenedor.setDebug(true);
 	
 		historial.add(Recursos.bundle.get("resultadosBatalla.ganada"));//Se supone que va a venir ya con los datos
 		historial.add(Recursos.bundle.get("resultadosBatalla.ganada"));
@@ -75,7 +75,7 @@ public class ResultadosBatallasHUD implements HeadUpDisplay, Ocultable{//Una cos
 			tablas.add(new Table());
 			labels.add(new Label(historial.get(i), (historial.get(i).contains(Recursos.bundle.get("resultadosBatalla.ganada"))?labelStyleGano:labelStylePerdio)));//color verde si es ganada, color rojo si es perdida
 			
-			if(i==historial.size()-1)System.out.println(HelpDebug.debub(getClass())+"Creadas= "+(i+1));
+//			if(i==historial.size()-1)System.out.println(HelpDebug.debub(getClass())+"Creadas= "+(i+1));
 			
 		}
 		
@@ -131,6 +131,7 @@ public class ResultadosBatallasHUD implements HeadUpDisplay, Ocultable{//Una cos
 	@Override
     public void ocultar() {
         visible = false;
+        stage.unfocusAll();
     }
 	
 	public boolean getVisible() {

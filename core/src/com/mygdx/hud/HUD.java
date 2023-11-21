@@ -102,7 +102,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 			//Dinero
 		dineroTable = new Table();
 		dineroTable.setFillParent(false);
-		dineroTable.setDebug(true);
+//		dineroTable.setDebug(true);
 		dineroTable.setBackground(new SpriteDrawable(dineroImgSpr));//para poner sprite de fondo
 		dineroTable.add(dineroLbl);
 		dineroTable.row();

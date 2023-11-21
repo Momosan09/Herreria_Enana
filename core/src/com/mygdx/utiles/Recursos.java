@@ -39,6 +39,8 @@ public abstract class Recursos {
 	public static final String PIEDRA = "objetosDelMundo/inanimados/interactuables/piedra.png";
 	public static final String HIERRO = "objetosDelMundo/inanimados/interactuables/hierro.png";
 	public static final String VACIO = "objetosDelMundo/inanimados/vacio.png";
+	public static final String HORNO = "objetosDelMundo/inanimados/interactuables/horno.png";
+	public static final String LINGOTE_HIERRO = "objetosDelMundo/inanimados/hierroLingote.png";
 	
 	//HUD
 	public static final String DINERO_HUD = "HUD/Dinero.png";
@@ -48,7 +50,8 @@ public abstract class Recursos {
 	public static final String SKIN_BOTON_ARRIBA = "HUD/skin/botonArriba.json";
 	public static final String SKIN_BOTON_ABAJO = "HUD/skin/botonAbajo.json";
 	
-	//CARTA
+	//HUD fondos
 	public static final String CARTA_TEXTURA = "Imagen/juego/carta/carta.png";
+	public static final String HORNO_TEXTURA = "Imagen/juego/horno/horno.png";
 	
 }

@@ -23,15 +23,16 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 	private Stage stage;
 	private Table contenedor, tabla, tablaMinerales, tablaArtefactos, tablaBarraItems;
 	private Label encabezadoMinerales, encabezadoArtefactos, cantidadMineral;
+	private Jugador jugador;
 	
 	private Label.LabelStyle labelStyle, labelStyleCantidades;
 	
 	 public boolean visible=false;
 	
-	public InventarioHUD() {
+	public InventarioHUD(Jugador jugador) {
     	screenViewport = new ScreenViewport();
         stage = new Stage(screenViewport);
-        
+        this.jugador = jugador;
         crearFuentes();
         crearActores();
         poblarStage();
@@ -106,7 +107,7 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 			//DibujarFiguras.dibujarRectanguloLleno(contenedor.getX(), contenedor.getY(), contenedor.getWidth(), contenedor.getHeight(), new Color(0,0,0,.7f));
 	    	stage.act(Gdx.graphics.getDeltaTime());
 	    	stage.draw();
-	    	llenarInventario(jugador);//Cada vez que se renderize el inventario llena las tablas
+	    	llenarMinerales(jugador);//Cada vez que se muestre el inventario llena las tablas
 		}
 		
 	}

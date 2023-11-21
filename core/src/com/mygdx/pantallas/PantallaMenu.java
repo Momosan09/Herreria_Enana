@@ -185,7 +185,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 			
 		interfaz = new Table();
 		interfaz.setFillParent(true);
-		interfaz.debug();
+//		interfaz.debug();
 		
 		interfazTexto = new Label[6];
 		
@@ -195,7 +195,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		
 		//Opciones
 		opciones = new Table();
-		opciones.debug();
+//		opciones.debug();
 		interfazTexto[2] = new Label(Recursos.bundle.get("menuPrincipal.jugar"), opcionEstilo);
 		interfazTexto[3] = new Label(Recursos.bundle.get("menuPrincipal.red"), opcionEstilo);
 		interfazTexto[4] = new Label(Recursos.bundle.get("menuPrincipal.configuraciones"), opcionEstilo);

@@ -77,7 +77,7 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
         
     	contenedor = new Table();
     	contenedor.setFillParent(true);
-    	contenedor.debug();
+//    	contenedor.debug();
     	
     	cerrarBoton = new Button(skin);
     	cerrarBoton.addListener(new ChangeListener() {
