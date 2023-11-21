@@ -131,12 +131,22 @@ public class Juego implements Screen{
 			jugador_1 = new Jugador(camaraJugador1,hc, Recursos.JUGADOR1_SPRITESHEET);
 			jugador_2 = new Jugador(camaraJugador2,hc,Recursos.JUGADOR2_SPRITESHEET);
 
+			hud = new HUD(jugador_2);
+			fundicionHUD = new Fundicion(jugador_2);
+			combinacionJugador2 = new Combinacion(jugador_2);
+	    	mux.addProcessor(combinacionJugador2.getStage());
+	    	mux.addProcessor(combinacionJugador2.getDragAndDrop().getStage());//Esto es para las imagenes arratrables que tiene el stage del dragAndDrop de esta clase, si quiero poner otro dragAndDrop tengo q ue agregarlo asi
+	    
 			UtilesRed.hc.setGame(this);//Le paso el juego porque sino el juego que le entra por constructor (al estatico) vale nulo
 			UtilesRed.hc = hc;
 		}else {
 			jugador_1 = new Jugador(camaraJugador1);
 
 		}
+		combinacionJugador1 = new Combinacion(jugador_1);
+		
+    	mux.addProcessor(combinacionJugador1.getStage());
+    	mux.addProcessor(combinacionJugador1.getDragAndDrop().getStage());
 		
 	
 				
@@ -173,18 +183,13 @@ public class Juego implements Screen{
 	    inventarioHUD2 = new InventarioHUD(jugador_2);
 	    
 	    if(idJugador==0) {
-			hud = new HUD(jugador_2);
-			fundicionHUD = new Fundicion(jugador_2);
-			combinacionJugador2 = new Combinacion(jugador_2);
-	    	mux.addProcessor(combinacionJugador2.getStage());
-	    	mux.addProcessor(combinacionJugador2.getDragAndDrop().getStage());//Esto es para las imagenes arratrables que tiene el stage del dragAndDrop de esta clase, si quiero poner otro dragAndDrop tengo q ue agregarlo asi
+
 	    }else if(idJugador==1) {
 			hud = new HUD(jugador_1);
 			fundicionHUD = new Fundicion(jugador_1);
 			
-			combinacionJugador1 = new Combinacion(jugador_1);
-	    	mux.addProcessor(combinacionJugador1.getStage());
-	    	mux.addProcessor(combinacionJugador1.getDragAndDrop().getStage());
+
+
 	    }
 	    horno = new Horno(32*22,32*10, Recursos.HORNO, fundicionHUD);
 	    mux.addProcessor(horno.getHUD().getStage());
@@ -304,9 +309,10 @@ public class Juego implements Screen{
 				inventarioHUD1.render(jugador_1);
 				horno.mostarHUD(jugador_1);
 				fundicionHUD.render();
-				combinacionJugador1.render();
 				
 			}
+			combinacionJugador1.render();
+
 
 			
 			
