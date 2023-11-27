@@ -20,7 +20,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.Hierro;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.LingoteHierro;
-import com.mygdx.red.UtilesRed;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
@@ -124,17 +123,10 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 		fundirBoton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				if(UtilesRed.hc != null) {
-					String material = "hierro";//esto es temporal
-					UtilesRed.hc.enviarMensaje("horno_fundicion#"+cantidad+"#"+material);	
-					jugador.eliminarPorNombreDadoYCantidad(material, cantidad);
-					System.out.println("elimina por nombre y cantridad");
-				}else {
-					fabricar = true;
-					System.out.println(cantidad);
-					jugador.eliminarPorNombreDadoYCantidad("hierro", cantidad);
-				}
 
+				fabricar = true;
+				System.out.println(cantidad);
+				jugador.eliminarPorNombreDadoYCantidad("hierro", cantidad);
 			}
 		});
 		
@@ -159,9 +151,6 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 				cantidad = 0;
 				fabricar = false;
 				fundirBoton.setText("Fundir x" + cantidad);
-				if(UtilesRed.hc != null) {
-					UtilesRed.hc.enviarMensaje("horno_fundicion#recoger");
-				}
 				}
 		});
 		

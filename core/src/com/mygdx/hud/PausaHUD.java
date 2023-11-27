@@ -13,7 +13,6 @@ import com.mygdx.entidades.Jugador;
 import com.mygdx.game.Principal;
 import com.mygdx.pantallas.Juego;
 import com.mygdx.pantallas.PantallaMenu;
-import com.mygdx.red.UtilesRed;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.EstiloFuente;
@@ -157,8 +156,6 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 			
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				UtilesRed.hc.enviarMensaje("desconectar");
-				UtilesRed.hc.fin();
 				System.out.println(HelpDebug.debub(getClass())+"Finalizar_conexion");
 				cambiarColorLabels(lblSalirOpcion1, lblSalirOpcion2);
 				game.setScreen(new PantallaMenu(game));
@@ -221,20 +218,15 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 	
 	public void render(Jugador jugador) {
 		if(visible) {
-			if(UtilesRed.hc != null) {
-				lblSalirOpcion1.setVisible(true);
-				lblSalirOpcion2.setVisible(false);
-			}else {
 				lblSalirOpcion1.setVisible(false);
 				lblSalirOpcion2.setVisible(true);
-			}
 			//DibujarFiguras.dibujarRectanguloLleno(contenedor.getX(), contenedor.getY(), contenedor.getWidth(), contenedor.getHeight(), new Color(0,0,0,.7f));
 	    	stage.act(Gdx.graphics.getDeltaTime());
 	    	stage.draw();
 	    	//DibujarFiguras.dibujarRectanguloLleno(tablaLienzo.getX(), tablaLienzo.getY(), tablaLienzo.getWidth(), tablaLienzo.getHeight(), Color.valueOf(Colores.NEGRO));
 		}
+		}
 		
-	}
 	
 	
 	public void cambiarVentana() {

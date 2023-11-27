@@ -3,7 +3,6 @@ package com.mygdx.entidades;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.red.UtilesRed;
 import com.mygdx.utiles.HelpDebug;
 
 public class ColisionesManager {
@@ -33,10 +32,8 @@ public class ColisionesManager {
 	    boolean hayColision = false;
 	    for (Rectangle colision : colisiones) {
 	        if (actor.colision.overlaps(colision)) {
-	        	if(!actor.isRed()) {
 	            actor.direccionDelChoque = actor.direccionActual;
 	            hayColision = true;	            
-	        	}
 	        }
 	    }
 

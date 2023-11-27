@@ -1,6 +1,5 @@
 package com.mygdx.pantallas;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -24,7 +23,6 @@ import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
-import com.mygdx.red.Cliente;
 
 public class PantallaMenu implements Screen, HeadUpDisplay{
 
@@ -51,8 +49,6 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
     
     private boolean mostrarMensajeDeDesconectado=false;
     
-    //Red
-    private Cliente cliente;
     
 	public PantallaMenu(final Principal game) {
 		this.game = game;
@@ -187,18 +183,18 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		interfaz.setFillParent(true);
 //		interfaz.debug();
 		
-		interfazTexto = new Label[6];
+		interfazTexto = new Label[5];
 		
 		interfazTexto[0] = new Label("Herreria Enana", tituloEstilo);
 		interfazTexto[1] = new Label(Recursos.bundle.get("menuPrincipal.menuPrincipal"), subTituloEstilo);
-		interfazTexto[5] = new Label(Recursos.bundle.get("menuPrincipal.textoRespira"), bottomEstilo);
+		interfazTexto[4] = new Label(Recursos.bundle.get("menuPrincipal.textoRespira"), bottomEstilo);
 		
 		//Opciones
 		opciones = new Table();
 //		opciones.debug();
 		interfazTexto[2] = new Label(Recursos.bundle.get("menuPrincipal.jugar"), opcionEstilo);
-		interfazTexto[3] = new Label(Recursos.bundle.get("menuPrincipal.red"), opcionEstilo);
-		interfazTexto[4] = new Label(Recursos.bundle.get("menuPrincipal.configuraciones"), opcionEstilo);
+		//interfazTexto[3] = new Label(Recursos.bundle.get("menuPrincipal.red"), opcionEstilo);
+		interfazTexto[3] = new Label(Recursos.bundle.get("menuPrincipal.configuraciones"), opcionEstilo);
 
 		mensajePerdidaConexion = new Label(Recursos.bundle.get("menuPrincipal.perdidaConexion"), perdidaConexion);
 	}
@@ -216,31 +212,25 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		//opciones
 			opciones.add(interfazTexto[2]);
 			opciones.row();
+			//opciones.add(interfazTexto[3]);
+			//opciones.row();
 			opciones.add(interfazTexto[3]);
-			opciones.row();
-			opciones.add(interfazTexto[4]);
 		
 		interfaz.add(opciones).expand();
 		interfaz.row();
-		interfaz.add(interfazTexto[5]).bottom().padBottom(20);
+		interfaz.add(interfazTexto[4]).bottom().padBottom(20);
 		agregarAnimaciones();
 		
 		stage.addActor(interfaz);
 	}
 	
 	private void seleccionarOpcion() {
-		int seleccion = entradas.seleccionarOpcion(interfazTexto, 2, 4);
+		int seleccion = entradas.seleccionarOpcion(interfazTexto, 2, 3);
 
 		if (seleccion == 2) {
 			game.setScreen(new Juego(game, false));
 			dispose();
-		} else if (seleccion == 3) {
-			System.out.println(HelpDebug.debub(getClass())+"Red");
-			game.setScreen(new PantallaConexion(game));
-			dispose();
-			
-
-		}else if (seleccion == 4){
+		}else if (seleccion == 3){
 			game.setScreen(new PantallaConfiguracion(game));
 			dispose();
 		}
@@ -267,7 +257,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
     }
     
     private void agregarAnimaciones() {
-    	interfazTexto[5].addAction(Actions.forever(Actions.sequence(
+    	interfazTexto[4].addAction(Actions.forever(Actions.sequence(
     			Actions.fadeOut(2f, Interpolation.fade)	
     	)));
   }

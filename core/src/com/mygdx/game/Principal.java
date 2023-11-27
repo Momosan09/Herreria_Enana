@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.pantallas.Juego;
 import com.mygdx.pantallas.PantallaMenu;
-import com.mygdx.red.UtilesRed;
 import com.mygdx.utiles.Render;
 
 public class Principal extends Game {
@@ -32,11 +31,6 @@ public class Principal extends Game {
 	
 	@Override
 	public void dispose () {
-		if(UtilesRed.hc != null) {
-			UtilesRed.hc.enviarMensaje("desconectar");
-			UtilesRed.hc.fin();
-		}
-		
 		super.dispose();
 		Render.batch.dispose();
 		font.dispose();

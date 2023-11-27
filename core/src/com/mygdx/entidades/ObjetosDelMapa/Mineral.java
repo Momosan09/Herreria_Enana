@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.enums.Items;
-import com.mygdx.red.UtilesRed;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.HelpDebug;
@@ -46,9 +45,6 @@ public class Mineral extends Entidad{
 			click(jugador);
 			if(this.vida <= 0) {
 				System.out.println(HelpDebug.debub(getClass())+"muerte");
-				if(jugador.isRed()) {
-			    	UtilesRed.hc.enviarMensaje("eliminar#mineral#"+this.getPosicion().x+"#"+this.getPosicion().y);
-				}
 				jugador.getMinerales().add(this);
 			}
 

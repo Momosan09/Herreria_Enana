@@ -17,8 +17,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.enums.Direcciones;
 import com.mygdx.enums.Items;
 import com.mygdx.hud.HUD;
-import com.mygdx.red.HiloCliente;
-import com.mygdx.red.UtilesRed;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
@@ -41,12 +39,6 @@ public class Jugador {
 	public boolean estaChocando = false;
 	public String spritesheet;
 	
-	//Red
-	private boolean red = false;
-	public int nroJugador;
-	private HiloCliente hc;
-	private float movimientoRedX=0, movimientoRedY =0;
-	
 	//Inventarios
 	private ArrayList<Items> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
 	private ArrayList<Mineral> mineralesInv = new ArrayList<>();  
@@ -56,24 +48,12 @@ public class Jugador {
 	public Direcciones direccionDelChoque = null;
 	Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
 	
-	public Jugador(OrthographicCamera camara, HiloCliente hc, String spriteSheet) {
-		posicion = new Vector2(Gdx.graphics.getWidth() / 2 - (tamañoPersonaje/ 2),Gdx.graphics.getHeight() / 2 - (tamañoPersonaje/ 2)); // posicion inicial
-		this.camara = camara;
-		texturaItem = new Texture(Recursos.PICO_DER);
-		spriteItem = new Sprite(texturaItem);
-		this.hc = hc;
-		this.red = true;
-		colision = new Rectangle(posicion.x, posicion.y, tamañoPersonaje, tamañoPersonaje);
-		this.spritesheet = spriteSheet;
-		crearAnimaciones();
-	}
 	
 	public Jugador(OrthographicCamera camara) {
 		posicion = new Vector2(Gdx.graphics.getWidth() / 2 - (tamañoPersonaje/ 2),Gdx.graphics.getHeight() / 2 - (tamañoPersonaje/ 2)); // posicion inicial
 		this.camara = camara;
 		texturaItem = new Texture(Recursos.PICO_DER);
 		spriteItem = new Sprite(texturaItem);
-		this.red = false;
 		colision = new Rectangle(posicion.x, posicion.y, tamañoPersonaje, tamañoPersonaje);
 		this.spritesheet = Recursos.JUGADOR1_SPRITESHEET;
 		crearAnimaciones();
@@ -93,9 +73,6 @@ public class Jugador {
 		// sprite.draw(batch);
 		update();
 		dibujarItemActual();
-		if(red) {
-			alternarSprites(direccionActual);//Tengo que llamarlo aca porque sino hay problemas con el batch
-		}
 	}
 
 	private void update() {
@@ -106,7 +83,7 @@ public class Jugador {
         float movimientoX = 0;
         float movimientoY = 0;
 
-        if(puedeMoverse && !red) {
+        if(puedeMoverse) {
         	if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) {
         		if (Gdx.input.isKeyPressed(Keys.W) && direccionDelChoque != Direcciones.ARRIBA) {
         			movimientoY += velocidad;
@@ -151,60 +128,8 @@ public class Jugador {
         actualizarColision(posicion.x, posicion.y);
         }
         
-        
-        if(red) {
-//        System.out.println(HelpDebug.debub(getClass())+ direccionDelChoque);
-        	if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) {
-        		if (Gdx.input.isKeyPressed(Keys.W)) {
-        			UtilesRed.hc.enviarMensaje("direccion#arriba");
-        		} else if (Gdx.input.isKeyPressed(Keys.S) && direccionDelChoque != Direcciones.ABAJO) {
-        			UtilesRed.hc.enviarMensaje("direccion#abajo");
-        		}
-        	}else {
-        	}
-        
-        
-        
-        if(Gdx.input.isKeyPressed(Keys.A) != Gdx.input.isKeyPressed(Keys.D)) {
-        	if (Gdx.input.isKeyPressed(Keys.A) && direccionDelChoque != Direcciones.IZQUIERDA) {
-    			UtilesRed.hc.enviarMensaje("direccion#izquierda");
-        	} else if (Gdx.input.isKeyPressed(Keys.D) && direccionDelChoque != Direcciones.DERECHA) {
-    			UtilesRed.hc.enviarMensaje("direccion#derecha");
-        	}
-        }else {
-        }
-        
-        if(!Gdx.input.isKeyPressed(Keys.W) && !Gdx.input.isKeyPressed(Keys.S) && !Gdx.input.isKeyPressed(Keys.A) && !Gdx.input.isKeyPressed(Keys.D)) {
-        		UtilesRed.hc.enviarMensaje("direccion#quieto");
-        }
-		actualizarColision(posicion.x, posicion.y);
-        }     
 	}
 	
-	
-	
-	public void movimientoPorRed(float x, float y) {
-		float deltaTime = Gdx.graphics.getDeltaTime();
-		if(red) {
-			this.movimientoRedX = x;
-			this.movimientoRedY = y;
-			
-			if (movimientoRedX != 0 && movimientoRedY != 0) {
-				movimientoRedX *= 0.7071f;
-				movimientoRedY *= 0.7071f;
-				//Esta es la velocidad que tiene cuando se mueva diagonalmente, ya que, sino su velocidad diagonal seria mayor que la horizontal o vertical
-			}
-
-        posicion.x += movimientoRedX * deltaTime;
-        posicion.y += movimientoRedY * deltaTime;
-        
-		}else {
-			this.movimientoRedX = 0;
-			this.movimientoRedY = 0;
-		}
-		
-		actualizarColision(posicion.x, posicion.y);
-	}
 	
 	public void movimientoCamara() {
 		if(camara != null) {
@@ -319,10 +244,4 @@ public class Jugador {
 	    //indicesDeEliminacion.clear();
 		}
 	}
-
-	
-	public boolean isRed() {
-		return red;
-	}
-
 }
