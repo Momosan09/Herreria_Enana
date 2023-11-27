@@ -187,3 +187,7 @@
     - Puliendo la desconexion
     - Horno de fundicion
     - Dejando casi para entregar
+
+# 27 NOV
+    - El proyecto fue aprobado el 21 de noviembre, este commit es la version que fue aprobada.
+    - Desde aca sigo el proyecto para terminarlo
