@@ -7,9 +7,10 @@ import com.mygdx.utiles.Recursos;
 
 public enum NpcData implements DialogosNPC{
 
-	VENDEDOR("Vendedor",  Recursos.VENDEDOR_PORTRAIT,Npc_Dialogos_Vendedor.obtenerTodosLosMensajes()),
-	VIEJO("Viejin", Recursos.VENDEDOR_PORTRAIT, Npc_Dialogos_Viejo.obtenerTodosLosMensajes()),
-	REY("Rey", Recursos.VENDEDOR_PORTRAIT, Npc_Dialogos_Rey.obtenerTodosLosMensajes());
+	VENDEDOR_AMBULANTE("Vendedor Ambulante",  Recursos.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Vendedor_Ambulante.obtenerTodosLosMensajes()),
+	VIEJO("Viejin", Recursos.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Viejo.obtenerTodosLosMensajes()),
+	VENDEDOR_TIENDA("Vendedor Tienda", Recursos.VENDEDOR_TIENDA_PORTRAIT, Npc_Dialogos_Vendedor_Tienda.obtenerTodosLosMensajes()),
+	REY("Rey", Recursos.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Rey.obtenerTodosLosMensajes());
 	
 	private final String _nombre;
 	private final Texture _retrato;

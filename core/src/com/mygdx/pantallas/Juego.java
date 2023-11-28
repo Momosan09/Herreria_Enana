@@ -28,7 +28,8 @@ import com.mygdx.entidades.ObjetosDelMapa.Yunque;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.Hierro;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.Piedra;
 import com.mygdx.entidades.npcs.Rey;
-import com.mygdx.entidades.npcs.Vendedor;
+import com.mygdx.entidades.npcs.VendedorAmbulante;
+import com.mygdx.entidades.npcs.VendedorDeTienda;
 import com.mygdx.entidades.npcs.Viejo;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.entidades.npcs.dialogos.Npc_Dialogos_Rey;
@@ -52,7 +53,7 @@ public class Juego implements Screen{
 	//Entidades
 	private Jugador jugador;
 	private ObjetoDelMapa carta;
-	private Npc viejo, vendedor;
+	private Npc viejo, vendedorAmbulate, vendedorTienda;
 	private Texture jugadorTextura;
 	private Mineral piedra, hierro, hierro1, piedra2;
 	private Horno horno;
@@ -88,7 +89,7 @@ public class Juego implements Screen{
 	//Colisiones
 	private ColisionesManager colisionesManager;
 
-	public Juego(final Principal game, boolean red) {
+	public Juego(final Principal game) {
 		this.game = game;
 	}
 
@@ -216,8 +217,9 @@ public class Juego implements Screen{
 			jugador.puedeMoverse=true;
 
 			//npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
-			vendedor.charla(1);
+			vendedorAmbulate.charla(1);
 			viejo.charla(0);
+			vendedorTienda.charla(0);
 			//vendedor.getData().getMensaje(0);
 	    
 			//Renderiza el HUD
@@ -327,15 +329,18 @@ public class Juego implements Screen{
 	}
 	
 	public void crearNPCs() {
-		viejo = new Viejo(32*10,32*15,Recursos.VIEJO, NpcData.VIEJO);
-		vendedor = new Vendedor(32*20,32*5,Recursos.VENDEDOR, NpcData.VENDEDOR);
+		viejo = new Viejo(32*10,32*12,Recursos.VIEJO, NpcData.VIEJO);
+		vendedorAmbulate = new VendedorAmbulante(32*20,32*5,Recursos.VENDEDOR_AMBULANTE, NpcData.VENDEDOR_AMBULANTE);
+		vendedorTienda = new VendedorDeTienda(32*12, 32*15, Recursos.VENDEDOR_TIENDA, NpcData.VENDEDOR_TIENDA);
+		
 		//rey = new Rey(0,0,Recursos.VENDEDOR, NpcData.REY);
 	}
 	
 	private void npcManagerConfig() {
 		npcManager = new NPCManager();
 		npcManager.agregarEntidad(viejo);
-		npcManager.agregarEntidad(vendedor);
+		npcManager.agregarEntidad(vendedorAmbulate);
+		npcManager.agregarEntidad(vendedorTienda);
 	    npcManager.crearDialogos();
 	}
 	

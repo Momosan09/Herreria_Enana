@@ -29,10 +29,12 @@ public abstract class Recursos {
 	
 	//NPC
 	public static final String VIEJO = "objetosDelMundo/npc/viejo/viejoAnimacion.png";
-	public static final String VENDEDOR = "objetosDelMundo/npc/vendedor/vendedorAnimacion.png";
+	public static final String VENDEDOR_AMBULANTE = "objetosDelMundo/npc/vendedor/vendedorAnimacion.png";
+	public static final String VENDEDOR_TIENDA = "objetosDelMundo/npc/tiendaNpc/tiendaNpcAnimacion.png";
 	
 	//NPC PORTRAITS
-	public static final String VENDEDOR_PORTRAIT = "objetosDelMundo/npc/vendedor/vendedorPortrait.png";
+	public static final String VENDEDOR_AMBULANTE_PORTRAIT = "objetosDelMundo/npc/vendedor/vendedorPortrait.png";
+	public static final String VENDEDOR_TIENDA_PORTRAIT = "objetosDelMundo/npc/tiendaNpc/tiendaNpcPortrait.png";
 	
 	//Objetos del mapa
 	public static final String YUNQUE = "objetosDelMundo/inanimados/interactuables/yunque.png";

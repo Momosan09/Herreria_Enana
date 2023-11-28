@@ -228,7 +228,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		int seleccion = entradas.seleccionarOpcion(interfazTexto, 2, 3);
 
 		if (seleccion == 2) {
-			game.setScreen(new Juego(game, false));
+			game.setScreen(new Juego(game));
 			dispose();
 		}else if (seleccion == 3){
 			game.setScreen(new PantallaConfiguracion(game));

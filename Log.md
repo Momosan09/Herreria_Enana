@@ -192,4 +192,7 @@
     - El proyecto fue aprobado el 21 de noviembre, este commit es la version que fue aprobada.
     - Desde aca sigo el proyecto para terminarlo
     - Eliminada toda la parte de red (Para recuperar ver commit anterior)
-    
+
+# 28 NOV
+    - Minimos cambios en el mapa
+    - Nuevo NPC
