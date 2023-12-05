@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -22,10 +24,12 @@ import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.enums.Items;
+import com.mygdx.pantallas.Juego;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
@@ -40,6 +44,8 @@ public class HUD implements HeadUpDisplay, Ocultable{
 
 	private Texture dinero_Tex;
 	private Texture reloj_Tex;
+	private Texture tiempo_Tex;
+	private Image tiempo_Img;
 	private Image reloj;
 	private ScreenViewport screenViewport;//Stage viene con un viewport pero no sirve, por eso usamos a este buen hombre
 	private Stage stage;
@@ -50,6 +56,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 	private Table pedidosTable;
 	private Table hudIzq, hudCen, hudDer;
 	private Table barraItems;
+	private Stack pila;
 	
 	private Sprite dineroImgSpr;
 	private Label dineroLbl;
@@ -70,13 +77,18 @@ public class HUD implements HeadUpDisplay, Ocultable{
 	
 	private ResultadosBatallasHUD resultadosHUD;
 	private ProximaBatallaHUD proximaBatallaHUD;
+	
+	private String dia = Recursos.bundle.get("dia.3");
+	
 
 	public boolean visible = true;
 	
 	private Jugador jugador;
+	private Juego juego;
 	
-    public HUD(Jugador jugador) {
+    public HUD(Jugador jugador, Juego juego) {
     	this.jugador = jugador;
+    	this.juego = juego;
     	resultadosHUD = new ResultadosBatallasHUD();
     	proximaBatallaHUD = new ProximaBatallaHUD();
     	cargarTexturas();
@@ -142,11 +154,15 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		hudDer = new Table();
 		pedidosTable = new Table();
 		
+		pila = new Stack();
+		
 		//pedidos
 		pedidosTable.add(pedidoLbl);
 		//pedidosTable.add(pedidoBtn);
 		
-		hudDer.add(reloj);
+		pila.add(reloj);
+		pila.add(tiempo_Img);
+		hudDer.add(pila);
 		hudDer.row();
 		hudDer.add(diaLbl);
 		hudDer.row();
@@ -185,7 +201,9 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		dinero_Tex = new Texture(Recursos.DINERO_HUD);
 		dineroImgSpr = new Sprite(dinero_Tex);
 		
-		reloj_Tex = new Texture(Recursos.RELOJ_HUD);
+		reloj_Tex = new Texture(Recursos.MARCO_RELOJ);
+		tiempo_Tex = new Texture(Recursos.DIBUJO_RELOJ);
+		tiempo_Img = new Image(tiempo_Tex);
 		reloj = new Image(reloj_Tex);
 	}
 
@@ -222,7 +240,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		centroLbl = new Label("Centro", labelStyle);
 		
 		//DERECHA
-		diaLbl = new Label("Luns", labelStyle);
+		diaLbl = new Label(dia, labelStyle);
 		pedidoLbl = new Label(Recursos.bundle.get("hud.verPedidos"), labelStyle);
 		//pedidoBtn = new TextButton("",skin);
 		
@@ -266,6 +284,8 @@ public class HUD implements HeadUpDisplay, Ocultable{
 				System.out.println(HelpDebug.debub(getClass())+"click");
 			}
 		});
+		
+		agregarAnimaciones();
 	}
 	
 	@Override
@@ -287,6 +307,9 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		resultadosHUD.render();
 		proximaBatallaHUD.render();//Nose porque no funciona el click de proximaBatallaHUD cuando lo quiero usar despues de haber abierto resultadosHUD
 		}
+		determinarDia(juego.getDia());
+		diaLbl.setText(dia);
+		
 		
 	}
 
@@ -313,6 +336,40 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		visible = false;
 		stage.unfocusAll();//Cuando esta oculto desenfoca el stage para que no procese eventos
 		
+	}
+	
+	private void determinarDia(int dia) {
+		switch (dia) {
+		case 1:
+			this.dia = Recursos.bundle.get("dia.1");
+			break;
+		case 2:
+			this.dia = Recursos.bundle.get("dia.2");
+			break;
+		case 3:
+			this.dia = Recursos.bundle.get("dia.3");
+			break;
+		case 4:
+			this.dia = Recursos.bundle.get("dia.4");
+			break;
+		case 5:
+			this.dia = Recursos.bundle.get("dia.5");
+			break;
+		case 6:
+			this.dia = Recursos.bundle.get("dia.6");
+			break;
+		case 7:
+			this.dia = Recursos.bundle.get("dia.7");
+			break;
+		}
+	}
+	
+	private void agregarAnimaciones() {
+	    tiempo_Img.setOrigin(tiempo_Img.getWidth() / 2f, tiempo_Img.getHeight() / 2f);
+
+	    tiempo_Img.addAction(Actions.forever(Actions.rotateBy(15, 1, Interpolation.linear)));//hacer esto bien
+	    	
+	    
 	}
 
 }

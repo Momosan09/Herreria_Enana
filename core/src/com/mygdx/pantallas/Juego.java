@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -39,12 +40,19 @@ import com.mygdx.utiles.HelpMapa;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 
+import box2dLight.RayHandler;
+import box2dLight.PointLight;
+
 public class Juego implements Screen{
 	
 	//Box2d
 	private World world;
 	private Box2DDebugRenderer box2Debug;
 	private HelpMapa helpMapa;
+	
+	//Box2dLight
+	private RayHandler rayHandler;
+	PointLight pl, pl2;
 	
 	//Mapa
 	private TiledMap tiledMap;
@@ -58,6 +66,10 @@ public class Juego implements Screen{
 	private Mineral piedra, hierro, hierro1, piedra2;
 	private Horno horno;
 	
+	//Tiempo
+	private int diaDelMundo = 3;
+	private float horaDelMundo = 0;
+	private float minutoDelMundo = 0;
 	
 	//Managers
 	private NPCManager npcManager;
@@ -100,8 +112,11 @@ public class Juego implements Screen{
 		//Box2d
 		helpMapa = new HelpMapa(this);
 		this.world = new World(new Vector2(0,0), false);
-		this.box2Debug = new Box2DDebugRenderer();
+		rayHandler = new RayHandler(world);
+		iluminacion();
 		
+		
+		this.box2Debug = new Box2DDebugRenderer();
 		Render.tiledMapRenderer = helpMapa.Inicializar();
 
 		
@@ -109,8 +124,7 @@ public class Juego implements Screen{
 		camaraJugador = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camaraJugador.setToOrtho(false);
 		camaraJugador.zoom = .6f;
-
-		
+		rayHandler.setCombinedMatrix(camaraJugador);
 		
 		camaraHud = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camaraHud.setToOrtho(false); 
@@ -123,8 +137,6 @@ public class Juego implements Screen{
 		
     	mux.addProcessor(combinacionJugador.getStage());
     	mux.addProcessor(combinacionJugador.getDragAndDrop().getStage());
-		
-	
 				
 		//Npc
 		crearNPCs();
@@ -138,18 +150,13 @@ public class Juego implements Screen{
 		
 				
 		mineralesManagerConfig();
-		//yunque = new Yunque(532,532,Recursos.YUNQUE);
-		
-
 		
 		//HUD
 
 		cartaHUD = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);//ee parece que cartaHUD tiene que ir primero, sino no anda la combinacion (nose pq)
 
-	    
 	    dialogoDeCompra = new DialogoDeCompra();
 	    pausaHud = new PausaHUD(game);
-
 	    
 	    mux.addProcessor(cartaHUD.getStage());
 	    mux.addProcessor(pausaHud.getStage());
@@ -157,7 +164,7 @@ public class Juego implements Screen{
 	   
 	    inventarioHUD = new InventarioHUD(jugador);
 	    
-		hud = new HUD(jugador);
+		hud = new HUD(jugador, this);
 		fundicionHUD = new Fundicion(jugador);
 			
 	    horno = new Horno(32*22,32*10, world, Recursos.HORNO, fundicionHUD);
@@ -172,13 +179,18 @@ public class Juego implements Screen{
 
 	@Override
 	public void render(float delta){
-			
+		horaDelMundo();
 		Render.batch.begin();
-		
+
+		rayHandler.update();
 		world.step(1/60f, 6, 2);
 		Render.tiledMapRenderer.setView(camaraJugador);
 		Render.tiledMapRenderer.render();
 		box2Debug.render(world, camaraJugador.combined);
+		rayHandler.setCombinedMatrix(camaraJugador.combined,0,0,1,1);
+		rayHandler.render();
+
+
 		
 		Render.batch.end();
 
@@ -328,6 +340,7 @@ public class Juego implements Screen{
 	@Override
 	public void dispose() {
 		Render.tiledMapRenderer.dispose();
+		rayHandler.dispose();
 	}
 	
 	public void crearNPCs() {
@@ -372,5 +385,59 @@ public class Juego implements Screen{
 	}
 	 public World getWorld() {
 		 return world;
+	 }
+	 
+	 private void iluminacion() {
+		
+			rayHandler.setBlurNum(3);
+			rayHandler.setShadows(true);
+			pl = new PointLight(rayHandler, 128, new Color(Color.valueOf("#ea8e0e")), 200,300,300);
+			pl.setStaticLight(false);
+			pl.setSoft(true);
+			rayHandler.setCulling(false);  // Esto es lo que me hace que no se vean las luces que inicien fuera de los bordes de la pantalla
+	
+	 }
+	 
+	 private void horaDelMundo() { 
+		 minutoDelMundo++;
+		 if(minutoDelMundo>= 60) {
+			 horaDelMundo++; 
+			 minutoDelMundo=0;
+		 }
+		 if(horaDelMundo >24) {
+			 diaDelMundo++;
+			 horaDelMundo=0;
+		 }
+		 if(diaDelMundo>7) {
+			 diaDelMundo=1;
+		 }
+		 
+		 
+		 if(horaDelMundo>=0 && horaDelMundo < 4.5f) {
+			 rayHandler.setAmbientLight(.2f);
+		 }else if( horaDelMundo < 12) {
+			 rayHandler.setAmbientLight(.7f);
+		 }else if(horaDelMundo < 15) {
+			 rayHandler.setAmbientLight(1f);
+		 }else if(horaDelMundo < 17) {
+			 rayHandler.setAmbientLight(.6f);
+		 }else if(horaDelMundo < 20) {
+			 rayHandler.setAmbientLight(.4f);
+		 }else if (horaDelMundo <= 24) {
+			 rayHandler.setAmbientLight(.2f);
+		 }
+			 
+			 
+		 System.out.println(horaDelMundo);
+	 }
+	 
+	 public int getDia() {
+		 return diaDelMundo;
+	 }
+	 public float getHora() {
+		 return horaDelMundo;
+	 }
+	 public float getMinuto() {
+		 return minutoDelMundo;
 	 }
 }

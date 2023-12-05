@@ -25,7 +25,7 @@ public class Jugador {
 
 	public Vector2 posicion; //la hice publica para poder setearle valor en el hiloCliente
 	private Body body;
-	private float velocidad = 70f;
+	private float velocidad = 100f;
 	public OrthographicCamera camara;
 	public boolean puedeMoverse = true;
 	private int tamañoPersonaje = 32;
@@ -42,7 +42,7 @@ public class Jugador {
     
 	public Direcciones direccionActual = Direcciones.QUIETO;
 	public Direcciones direccionDelChoque = null;
-	Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
+	private Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
 	
 	
 	public Jugador(OrthographicCamera camara, World world) {
@@ -52,12 +52,13 @@ public class Jugador {
 		// Crear el cuerpo del jugador
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(posicion.x, posicion.y);
+        bodyDef.position.set(16,16);
+
 
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(32/2, 32/2);
-
+        shape.setAsBox(16,16);
+        
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
@@ -100,26 +101,28 @@ public class Jugador {
             if (Gdx.input.isKeyPressed(Keys.W) && direccionDelChoque != Direcciones.ARRIBA) {
                 movimientoY += velocidad;
                 direccionActual = Direcciones.ARRIBA;
+                body.setLinearVelocity(movimientoX, movimientoY);
             } else if (Gdx.input.isKeyPressed(Keys.S) && direccionDelChoque != Direcciones.ABAJO) {
                 movimientoY -= velocidad;
                 direccionActual = Direcciones.ABAJO;
+                body.setLinearVelocity(movimientoX, movimientoY);
             }
 
             if (Gdx.input.isKeyPressed(Keys.A) && direccionDelChoque != Direcciones.IZQUIERDA) {
                 movimientoX -= velocidad;
                 direccionActual = Direcciones.IZQUIERDA;
+                body.setLinearVelocity(movimientoX, movimientoY);
             } else if (Gdx.input.isKeyPressed(Keys.D) && direccionDelChoque != Direcciones.DERECHA) {
                 movimientoX += velocidad;
                 direccionActual = Direcciones.DERECHA;
+                body.setLinearVelocity(movimientoX, movimientoY);
             }
-
-            body.applyForceToCenter(movimientoX, movimientoY, true);
-            body.setLinearVelocity(body.getLinearVelocity());
+            
             posicion.x = body.getPosition().x-16;
             posicion.y = body.getPosition().y-16;
             
             if (movimientoX != 0 || movimientoY != 0) {
-                body.setLinearVelocity(movimientoX, movimientoY);
+                //body.setLinearVelocity(movimientoX, movimientoY);
                 alternarSprites(direccionActual);
             } else {
                 body.setLinearVelocity(0, 0);
@@ -130,19 +133,10 @@ public class Jugador {
         if (movimientoX != 0 && movimientoY != 0) {
             movimientoX *= 0.7071f;
             movimientoY *= 0.7071f;
+            body.setLinearVelocity(movimientoX, movimientoY);
             //Esta es la velocidad que tiene cuando se mueva diagonalmente, ya que, sino su velocidad diagonal seria mayor que la horizontal o vertical
        }
 
-        posicion.x += movimientoX * deltaTime;
-        posicion.y += movimientoY * deltaTime;
-
-        // Actualizar animaciones y cámaras
-        if (movimientoX != 0 || movimientoY != 0) {
-            //alternarSprites(direccionActual);
-        } else {
-            //alternarSprites(Direcciones.QUIETO);
-            resetearAnimaciones(animacionArriba, animacionAbajo, animacionIzquierda, animacionDerecha);
-        }
         movimientoCamara();
         }
         

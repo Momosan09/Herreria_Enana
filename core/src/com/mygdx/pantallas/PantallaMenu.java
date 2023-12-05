@@ -98,10 +98,6 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	@Override
 	public void show() {
 
-
-
-		
-
 	}
 
 	@Override
