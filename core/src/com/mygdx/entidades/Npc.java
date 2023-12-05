@@ -25,6 +25,19 @@ public abstract class Npc extends Entidad implements NpcInterface{
 
 	public Npc(float x, float y, World world, String ruta, NpcData data){
 		super(x, y, world, ruta);
+		crearCuerpo(world);
+		this.data = data;
+		this.nombre = this.data.getNombre();
+		this.dialogos = data.getDialogos();
+		this.retrato = data.getTextura();
+
+		animacion = new Animator(ruta, posicion, 0);
+		animacion.create();
+	}
+	
+	public Npc(float x, float y, World world, String ruta, NpcData data, int ancho, int alto){//para los npc con colisiones mas grandes o mas chicas
+		super(x, y, world, ruta);
+		crearCuerpo(world, ancho, alto);
 		this.data = data;
 		this.nombre = this.data.getNombre();
 		this.dialogos = data.getDialogos();

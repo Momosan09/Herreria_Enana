@@ -118,8 +118,8 @@ public class Jugador {
                 body.setLinearVelocity(movimientoX, movimientoY);
             }
             
-            posicion.x = body.getPosition().x-16;
-            posicion.y = body.getPosition().y-16;
+            posicion.x = body.getPosition().x;
+            posicion.y = body.getPosition().y;
             
             if (movimientoX != 0 || movimientoY != 0) {
                 //body.setLinearVelocity(movimientoX, movimientoY);

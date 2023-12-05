@@ -29,34 +29,28 @@ public abstract class Entidad {
 	private boolean comprable = false;
 	private String nombre;
 	protected int colisionAncho=32, colisionAlto=32;//Por si tengo entidades mas grandes?
-	private Rectangle colision;
-	private Body body;
+	protected Body body;
 
 	private int distanciaInteraccion = 64;
 	
 	public Entidad(float x, float y, World world, String rutaTextura) {
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
-		colision = new Rectangle(posicion.x,posicion.y,colisionAncho,colisionAlto);
 		sprite = new Sprite(this.textura);
 		sprite.setPosition(this.posicion.x, this.posicion.y);
-		crearCuerpo(world);
 	}
 	
 	public Entidad(float x, float y, boolean comprable, World world ,String rutaTextura) {
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
-		colision = new Rectangle(x,y,textura.getWidth(),textura.getHeight());
 		this.comprable = comprable;
 		sprite = new Sprite(this.textura);
 		sprite.setPosition(this.posicion.x, this.posicion.y);
-		crearCuerpo(world);
 	}
 	
 	public Entidad(float x, float y, boolean comprable,String rutaTextura) {
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
-		colision = new Rectangle(x,y,textura.getWidth(),textura.getHeight());
 		this.comprable = comprable;
 		sprite = new Sprite(this.textura);
 		sprite.setPosition(this.posicion.x, this.posicion.y);
@@ -64,15 +58,31 @@ public abstract class Entidad {
 	}
 	
 	
-	private void crearCuerpo(World world) {
+	protected void crearCuerpo(World world) {// cuerpos basicos por defecto
 		// Crear el cuerpo del jugador
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(posicion.x+16, posicion.y+16);
+        bodyDef.position.set(posicion.x, posicion.y);
 
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(32/2, 32/2);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        body.createFixture(fixtureDef);
+        shape.dispose();
+	}
+	
+	protected void crearCuerpo(World world,float ancho, float alto) { //esta me permite hacer cuerpos con distintos tamaños
+		// Crear el cuerpo del jugador
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(posicion.x-(ancho/2), posicion.y+(alto/2));
+
+        body = world.createBody(bodyDef);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(ancho, alto);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;

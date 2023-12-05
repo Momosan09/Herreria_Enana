@@ -201,3 +201,5 @@
     - BOX2D
     - BOX2D Lights
     - Sistema de dia y noche (masomenos)
+    - Colisiones que vienen desde Tiled
+    - El vendedor de tienda ahora tiene una colision coherente

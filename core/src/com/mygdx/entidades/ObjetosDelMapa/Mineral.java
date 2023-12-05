@@ -2,6 +2,9 @@ package com.mygdx.entidades.ObjetosDelMapa;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
@@ -24,6 +27,7 @@ public class Mineral extends Entidad{
 		super(x, y, world, rutaTextura);
 		this.comprable = comprable;
 		this.nombre = nombre;
+		crearCuerpo(world);
 	}
 	
 	public Mineral(float x, float y, boolean comprable, String rutaTextura, String nombre) {
@@ -32,6 +36,21 @@ public class Mineral extends Entidad{
 		this.nombre = nombre;
 	}
 
+	protected void crearCuerpo(World world) {//esto lo puedo sacar mas adelante, si le hago animacion a los minerales...
+		// Crear el cuerpo del jugador
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(posicion.x+16, posicion.y+16);
+
+        body = world.createBody(bodyDef);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(32/2, 32/2);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        body.createFixture(fixtureDef);
+        shape.dispose();
+	}
 	
 	public void click(Jugador jugador) {
 		DibujarFiguras.dibujarRectanguloLleno(this.posicion.x,this.posicion.y, this.textura.getWidth(), this.textura.getHeight(), Color.valueOf(Colores.ROJO));

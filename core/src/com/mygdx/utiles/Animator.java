@@ -69,7 +69,7 @@ public class Animator implements ApplicationListener {
 
 		// Get current frame of animation for the current stateTime
 		TextureRegion currentFrame = animacion.getKeyFrame(stateTime, true);
-		Render.batch.draw(currentFrame, posicion.x, posicion.y);
+		Render.batch.draw(currentFrame, posicion.x-16, posicion.y-16);
 	}
 	
 	

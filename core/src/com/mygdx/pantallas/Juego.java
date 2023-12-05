@@ -346,7 +346,7 @@ public class Juego implements Screen{
 	public void crearNPCs() {
 		viejo = new Viejo(32*10,32*12, world,Recursos.VIEJO, NpcData.VIEJO);
 		vendedorAmbulate = new VendedorAmbulante(32*20,32*5, world,Recursos.VENDEDOR_AMBULANTE, NpcData.VENDEDOR_AMBULANTE);
-		vendedorTienda = new VendedorDeTienda(32*12, 32*15, world,Recursos.VENDEDOR_TIENDA, NpcData.VENDEDOR_TIENDA);
+		vendedorTienda = new VendedorDeTienda(32*12, 32*15.5f, world,Recursos.VENDEDOR_TIENDA, NpcData.VENDEDOR_TIENDA);
 		
 		//rey = new Rey(0,0,Recursos.VENDEDOR, NpcData.REY);
 	}
