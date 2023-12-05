@@ -4,19 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.scenes.scene2d.ui.Table.Debug;
-import com.badlogic.gdx.utils.I18NBundle;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.entidades.ColisionesManager;
-import com.mygdx.entidades.Entidad;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.NPCManager;
 import com.mygdx.entidades.Npc;
@@ -24,10 +17,8 @@ import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.entidades.ObjetosDelMapa.Horno;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.MineralesManager;
-import com.mygdx.entidades.ObjetosDelMapa.Yunque;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.Hierro;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.Piedra;
-import com.mygdx.entidades.npcs.Rey;
 import com.mygdx.entidades.npcs.VendedorAmbulante;
 import com.mygdx.entidades.npcs.VendedorDeTienda;
 import com.mygdx.entidades.npcs.Viejo;
@@ -43,12 +34,21 @@ import com.mygdx.hud.Fundicion;
 import com.mygdx.hud.HUD;
 import com.mygdx.hud.InventarioHUD;
 import com.mygdx.hud.PausaHUD;
-import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.HelpDebug;
+import com.mygdx.utiles.HelpMapa;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 
 public class Juego implements Screen{
+	
+	//Box2d
+	private World world;
+	private Box2DDebugRenderer box2Debug;
+	private HelpMapa helpMapa;
+	
+	//Mapa
+	private TiledMap tiledMap;
+	
 	
 	//Entidades
 	private Jugador jugador;
@@ -82,23 +82,30 @@ public class Juego implements Screen{
 	//Toggles (referido a HUDs), los uso cuando ese hud no se cierra con boton
 	private boolean toggleInventario = false;
 	private boolean togglePausa = false;
+	private boolean toggleBarraItems1 = false;
 	
 	//Screens
 	private final Principal game;
-	
-	//Colisiones
-	private ColisionesManager colisionesManager;
 
 	public Juego(final Principal game) {
 		this.game = game;
+
 	}
 
 	@Override
 	public void show() {
 		mux = new InputMultiplexer();//El input multiplexer es una especie de gestor de inputProcessors
 		
-		//camaras
 		
+		//Box2d
+		helpMapa = new HelpMapa(this);
+		this.world = new World(new Vector2(0,0), false);
+		this.box2Debug = new Box2DDebugRenderer();
+		
+		Render.tiledMapRenderer = helpMapa.Inicializar();
+
+		
+		//camaras
 		camaraJugador = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camaraJugador.setToOrtho(false);
 		camaraJugador.zoom = .6f;
@@ -109,13 +116,9 @@ public class Juego implements Screen{
 		camaraHud.setToOrtho(false); 
 		camaraHud.zoom = .6f;
 		
-	    //render
-		Render.tiledMapRenderer = new OrthogonalTiledMapRenderer(Recursos.MAPA);
-		
 
-		jugador = new Jugador(camaraJugador);
+		jugador = new Jugador(camaraJugador, world);
 
-		
 		combinacionJugador = new Combinacion(jugador);
 		
     	mux.addProcessor(combinacionJugador.getStage());
@@ -128,10 +131,10 @@ public class Juego implements Screen{
 		npcManagerConfig();
 		
 		//objetos del mapa
-		piedra = new Piedra(32*20,32*16,false,Recursos.PIEDRA);
-		piedra2 = new Piedra(32*18,32*18,false, Recursos.PIEDRA);
-		hierro = new Hierro(32*20,32*20,false, Recursos.HIERRO);
-		hierro1 = new Hierro(32*7,32*5,true, Recursos.HIERRO);
+		piedra = new Piedra(32*20,32*16, world,false,Recursos.PIEDRA);
+		piedra2 = new Piedra(32*18,32*18, world,false, Recursos.PIEDRA);
+		hierro = new Hierro(32*20,32*20, world,false, Recursos.HIERRO);
+		hierro1 = new Hierro(32*7,32*5, world,true, Recursos.HIERRO);
 		
 				
 		mineralesManagerConfig();
@@ -157,16 +160,13 @@ public class Juego implements Screen{
 		hud = new HUD(jugador);
 		fundicionHUD = new Fundicion(jugador);
 			
-	    horno = new Horno(32*22,32*10, Recursos.HORNO, fundicionHUD);
+	    horno = new Horno(32*22,32*10, world, Recursos.HORNO, fundicionHUD);
 	    mux.addProcessor(horno.getHUD().getStage());
 	    mux.addProcessor(hud.getStage());
 	    mux.addProcessor(hud.getResultadosBatallasHUD().getStage());
 	    mux.addProcessor(hud.getProximaBatallaHUD().getStage());
 	    
 		Gdx.input.setInputProcessor(mux);
-		
-		//Colisiones
-		colisionesManagerConfig();
 
 	}
 
@@ -174,7 +174,12 @@ public class Juego implements Screen{
 	public void render(float delta){
 			
 		Render.batch.begin();
+		
+		world.step(1/60f, 6, 2);
+		Render.tiledMapRenderer.setView(camaraJugador);
 		Render.tiledMapRenderer.render();
+		box2Debug.render(world, camaraJugador.combined);
+		
 		Render.batch.end();
 
 	    //Renderiza el Juego
@@ -183,12 +188,9 @@ public class Juego implements Screen{
 			
 		camaraJugador.update();
 		Render.batch.setProjectionMatrix(camaraJugador.combined);
-		Render.tiledMapRenderer.setView(camaraJugador);
+		
 
 		jugador.draw(Render.batch);
-
-		colisionesManager.checkearColisiones();
-
 		
 		Render.batch.end();
 		Render.batch.begin();
@@ -199,12 +201,10 @@ public class Juego implements Screen{
 		mineralesManager.renderizar();
 		mineralesManager.detectarJugador(jugador);
 		mineralesManager.minar(jugador);
+		mineralesManager.limpiarMinerales(world);
 		mineralesManager.comprar(jugador);
 		horno.detectarJugador(jugador);
 		horno.draw();
-		
-		mineralesManager.limpiarMinerales(colisionesManager,false);
-
 
 		Render.batch.end();
 
@@ -274,8 +274,13 @@ public class Juego implements Screen{
 		    	}
 		    }
 		    
-		if(Gdx.input.isKeyPressed(Keys.E)) {
-			jugador.getItems().add(Items.PICO);
+		if(Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
+			toggleBarraItems1 = !toggleBarraItems1;
+			if(toggleBarraItems1) {
+				jugador.getItems().add(Items.PICO);				
+			}else {
+				jugador.getItems().clear();
+			}
 		}
 		Render.batch.end();
 	    //System.out.println(HelpDebug.debub(this.getClass()) + "Hola");
@@ -322,16 +327,13 @@ public class Juego implements Screen{
 
 	@Override
 	public void dispose() {
-
 		Render.tiledMapRenderer.dispose();
-		Recursos.MAPA.dispose();
-		
 	}
 	
 	public void crearNPCs() {
-		viejo = new Viejo(32*10,32*12,Recursos.VIEJO, NpcData.VIEJO);
-		vendedorAmbulate = new VendedorAmbulante(32*20,32*5,Recursos.VENDEDOR_AMBULANTE, NpcData.VENDEDOR_AMBULANTE);
-		vendedorTienda = new VendedorDeTienda(32*12, 32*15, Recursos.VENDEDOR_TIENDA, NpcData.VENDEDOR_TIENDA);
+		viejo = new Viejo(32*10,32*12, world,Recursos.VIEJO, NpcData.VIEJO);
+		vendedorAmbulate = new VendedorAmbulante(32*20,32*5, world,Recursos.VENDEDOR_AMBULANTE, NpcData.VENDEDOR_AMBULANTE);
+		vendedorTienda = new VendedorDeTienda(32*12, 32*15, world,Recursos.VENDEDOR_TIENDA, NpcData.VENDEDOR_TIENDA);
 		
 		//rey = new Rey(0,0,Recursos.VENDEDOR, NpcData.REY);
 	}
@@ -352,14 +354,6 @@ public class Juego implements Screen{
 		mineralesManager.agregarMineral(hierro1);
 	}
 	
-	private void colisionesManagerConfig() {
-
-		colisionesManager = new ColisionesManager(jugador);
-		colisionesManager.agregarArrayDeColisiones(mineralesManager.getColisiones());
-		colisionesManager.agregarArrayDeColisiones(npcManager.getColisiones());
-		colisionesManager.agregarColision(horno.getColision());
-
-	}
 
 	public Jugador getJugador1() {
 		return jugador;
@@ -369,10 +363,6 @@ public class Juego implements Screen{
 		return mineralesManager;
 	}
 
-	public ColisionesManager getColisionesManager() {
-		return colisionesManager;
-	}
-
 	public void salirDelJuego() {
 		game.setScreen(new PantallaMenu(game));
 	}
@@ -380,4 +370,7 @@ public class Juego implements Screen{
 	public Horno getHorno() {
 		return horno;
 	}
+	 public World getWorld() {
+		 return world;
+	 }
 }

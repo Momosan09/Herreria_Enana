@@ -2,6 +2,7 @@ package com.mygdx.entidades.ObjetosDelMapa;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.enums.Items;
@@ -19,8 +20,14 @@ public class Mineral extends Entidad{
 
 
 	
+	public Mineral(float x, float y, World world, boolean comprable, String rutaTextura, String nombre) {
+		super(x, y, world, rutaTextura);
+		this.comprable = comprable;
+		this.nombre = nombre;
+	}
+	
 	public Mineral(float x, float y, boolean comprable, String rutaTextura, String nombre) {
-		super(x, y, comprable,rutaTextura);
+		super(x, y,comprable, rutaTextura);
 		this.comprable = comprable;
 		this.nombre = nombre;
 	}

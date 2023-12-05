@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.utiles.HelpDebug;
 
 public class NPCManager {
@@ -19,12 +20,11 @@ public class NPCManager {
 
     public void agregarEntidad(Npc entidad) {
     	npcs.add(entidad);
-    	colisiones.add(entidad.getColision());
     }
 
-    public void eliminarEntidad(Npc entidad) {
+    public void eliminarEntidad(Npc entidad, World world) {
     	npcs.remove(entidad);
-    	colisiones.remove(entidad.getColision());
+    	world.destroyBody(entidad.getBody());
     }
 
     public void detectarJugador(Jugador jugador) {

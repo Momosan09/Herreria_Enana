@@ -9,6 +9,9 @@ public abstract class Recursos {
 	
 	public static I18NBundle bundle = I18NBundle.createBundle(Gdx.files.internal("locale/locale"));
 	
+	//Box2d
+	public static final float PPM = 32.0f;//Pixeles por metro
+	
 	//Menu
 	public static final String FUENTE_TEMPORAL = "Fonts/Cardinal.ttf";
 	public static final String MUSICA_MENU = "Audio/saplingGarden.mp3";
@@ -25,7 +28,7 @@ public abstract class Recursos {
 	public static final String PICO_IZ = "Items/picoIz.png";
 	
 	//Mapas
-	public static final TiledMap MAPA = new TmxMapLoader().load("mapas/mapa.tmx");
+	public static final String MAPA = "mapas/mapa.tmx";
 	
 	//NPC
 	public static final String VIEJO = "objetosDelMundo/npc/viejo/viejoAnimacion.png";

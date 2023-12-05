@@ -11,6 +11,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.enums.Items;
 import com.mygdx.utiles.Render;
 
@@ -25,16 +30,27 @@ public abstract class Entidad {
 	private String nombre;
 	protected int colisionAncho=32, colisionAlto=32;//Por si tengo entidades mas grandes?
 	private Rectangle colision;
+	private Body body;
 
 	private int distanciaInteraccion = 64;
 	
-	public Entidad(float x, float y,String rutaTextura) {
+	public Entidad(float x, float y, World world, String rutaTextura) {
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
 		colision = new Rectangle(posicion.x,posicion.y,colisionAncho,colisionAlto);
 		sprite = new Sprite(this.textura);
 		sprite.setPosition(this.posicion.x, this.posicion.y);
-
+		crearCuerpo(world);
+	}
+	
+	public Entidad(float x, float y, boolean comprable, World world ,String rutaTextura) {
+		this.posicion = new Vector2(x,y);
+		this.textura = new Texture(rutaTextura);
+		colision = new Rectangle(x,y,textura.getWidth(),textura.getHeight());
+		this.comprable = comprable;
+		sprite = new Sprite(this.textura);
+		sprite.setPosition(this.posicion.x, this.posicion.y);
+		crearCuerpo(world);
 	}
 	
 	public Entidad(float x, float y, boolean comprable,String rutaTextura) {
@@ -44,6 +60,24 @@ public abstract class Entidad {
 		this.comprable = comprable;
 		sprite = new Sprite(this.textura);
 		sprite.setPosition(this.posicion.x, this.posicion.y);
+
+	}
+	
+	
+	private void crearCuerpo(World world) {
+		// Crear el cuerpo del jugador
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(posicion.x+16, posicion.y+16);
+
+        body = world.createBody(bodyDef);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(32/2, 32/2);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        body.createFixture(fixtureDef);
+        shape.dispose();
 	}
 	
 	public void draw() {
@@ -102,10 +136,8 @@ public abstract class Entidad {
 		return comprable;
 	}
 	
-	 public Rectangle getColision() {
-		 return colision;
-	 }
-	
-	
+	public Body getBody() {
+		return body;
+	}
 	
 }

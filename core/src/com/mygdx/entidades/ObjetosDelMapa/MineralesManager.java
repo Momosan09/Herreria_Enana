@@ -1,26 +1,20 @@
 package com.mygdx.entidades.ObjetosDelMapa;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ArrayList;
-
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.entidades.ColisionesManager;
+import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.entidades.Jugador;
 
 
 public class MineralesManager {
 	private ArrayList<Mineral> minerales;
-	private ArrayList<Rectangle> colisiones;
 
     public MineralesManager() {
     	minerales = new ArrayList<Mineral>();
-    	colisiones = new ArrayList<Rectangle>();
     }
 
     public void agregarMineral(Mineral mineral) {
     	minerales.add(mineral);
-    	colisiones.add(mineral.getColision());
     }
 
 //    public void eliminarMineral(Mineral mineral) {
@@ -28,28 +22,24 @@ public class MineralesManager {
 //    }
     
     
-    public void limpiarMinerales(ColisionesManager colisionesManager, boolean red) {
+    public void limpiarMinerales(World world) {
     	for(int i = 0; i<minerales.size();i++) {
     		if(minerales.get(i).vida <= 0) {
-    			if(!red) {
-    				colisionesManager.eliminarColision(colisiones.get(i));    				
-    			}
+    			world.destroyBody(minerales.get(i).getBody());
     			minerales.remove(i);
-    			colisiones.remove(i);
     		}
     	}
     }
     
-    public void eliminarMineral(float posX, float posY, ColisionesManager colisionesManager) {
+    public void eliminarMineral(float posX, float posY, World world) {
     	boolean fin=false;
     	int i=0;
     	
     	do {
     		if(minerales.get(i).getPosicion().x == posX && minerales.get(i).getPosicion().y == posY) {
     			minerales.get(i).vida=0;
-    			colisionesManager.eliminarColision(minerales.get(i).getColision());
+    			world.destroyBody(minerales.get(i).getBody());
     			minerales.remove(i);
-    			colisiones.remove(i);
     			fin = true;
     		}
     		
@@ -112,10 +102,6 @@ public class MineralesManager {
 
     public ArrayList<Mineral> getMinerales() {
         return minerales;
-    }
-    
-    public ArrayList<Rectangle> getColisiones() {
-    	return colisiones;
     }
     
 }

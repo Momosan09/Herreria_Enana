@@ -196,3 +196,6 @@
 # 28 NOV
     - Minimos cambios en el mapa
     - Nuevo NPC
+
+# 5 DIC
+    - BOX2D

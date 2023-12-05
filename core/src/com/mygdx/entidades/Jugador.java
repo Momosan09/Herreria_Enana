@@ -1,26 +1,22 @@
 package com.mygdx.entidades;
 
 import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.enums.Direcciones;
 import com.mygdx.enums.Items;
-import com.mygdx.hud.HUD;
 import com.mygdx.utiles.Animator;
-import com.mygdx.utiles.Colores;
-import com.mygdx.utiles.DibujarFiguras;
-import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
@@ -28,14 +24,14 @@ import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 public class Jugador {
 
 	public Vector2 posicion; //la hice publica para poder setearle valor en el hiloCliente
-	private float velocidad = 120f;
+	private Body body;
+	private float velocidad = 70f;
 	public OrthographicCamera camara;
 	public boolean puedeMoverse = true;
 	private int tamañoPersonaje = 32;
 	private Texture texturaItem;
 	private Sprite spriteItem;
 	public int dinero=10;
-	public Rectangle colision;
 	public boolean estaChocando = false;
 	public String spritesheet;
 	
@@ -49,14 +45,31 @@ public class Jugador {
 	Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
 	
 	
-	public Jugador(OrthographicCamera camara) {
-		posicion = new Vector2(Gdx.graphics.getWidth() / 2 - (tamañoPersonaje/ 2),Gdx.graphics.getHeight() / 2 - (tamañoPersonaje/ 2)); // posicion inicial
+	public Jugador(OrthographicCamera camara, World world) {
+		posicion = new Vector2(); // posicion inicial
 		this.camara = camara;
+		
+		// Crear el cuerpo del jugador
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(posicion.x, posicion.y);
+
+        body = world.createBody(bodyDef);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(32/2, 32/2);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        body.createFixture(fixtureDef);
+        shape.dispose();
+		
+		
 		texturaItem = new Texture(Recursos.PICO_DER);
 		spriteItem = new Sprite(texturaItem);
-		colision = new Rectangle(posicion.x, posicion.y, tamañoPersonaje, tamañoPersonaje);
 		this.spritesheet = Recursos.JUGADOR1_SPRITESHEET;
 		crearAnimaciones();
+		
+		
 	}
 
 	private void dibujarItemActual() {
@@ -83,30 +96,36 @@ public class Jugador {
         float movimientoX = 0;
         float movimientoY = 0;
 
-        if(puedeMoverse) {
-        	if(Gdx.input.isKeyPressed(Keys.W) != Gdx.input.isKeyPressed(Keys.S)) {
-        		if (Gdx.input.isKeyPressed(Keys.W) && direccionDelChoque != Direcciones.ARRIBA) {
-        			movimientoY += velocidad;
-        			direccionActual = Direcciones.ARRIBA;
-        		} else if (Gdx.input.isKeyPressed(Keys.S) && direccionDelChoque != Direcciones.ABAJO) {
-        			movimientoY -= velocidad;
-        			direccionActual = Direcciones.ABAJO;
-        		}
-        	}else {
-        		resetearAnimaciones(animacionQuieto);
-        	}
+        if (puedeMoverse) {
+            if (Gdx.input.isKeyPressed(Keys.W) && direccionDelChoque != Direcciones.ARRIBA) {
+                movimientoY += velocidad;
+                direccionActual = Direcciones.ARRIBA;
+            } else if (Gdx.input.isKeyPressed(Keys.S) && direccionDelChoque != Direcciones.ABAJO) {
+                movimientoY -= velocidad;
+                direccionActual = Direcciones.ABAJO;
+            }
 
-        if(Gdx.input.isKeyPressed(Keys.A) != Gdx.input.isKeyPressed(Keys.D)) {
-        	if (Gdx.input.isKeyPressed(Keys.A) && direccionDelChoque != Direcciones.IZQUIERDA) {
-        		movimientoX -= velocidad;
-        		direccionActual = Direcciones.IZQUIERDA;
-        	} else if (Gdx.input.isKeyPressed(Keys.D) && direccionDelChoque != Direcciones.DERECHA) {
-        		movimientoX += velocidad;
-        		direccionActual = Direcciones.DERECHA;
-        	}
-        }else {
-        	resetearAnimaciones(animacionQuieto);
-        }
+            if (Gdx.input.isKeyPressed(Keys.A) && direccionDelChoque != Direcciones.IZQUIERDA) {
+                movimientoX -= velocidad;
+                direccionActual = Direcciones.IZQUIERDA;
+            } else if (Gdx.input.isKeyPressed(Keys.D) && direccionDelChoque != Direcciones.DERECHA) {
+                movimientoX += velocidad;
+                direccionActual = Direcciones.DERECHA;
+            }
+
+            body.applyForceToCenter(movimientoX, movimientoY, true);
+            body.setLinearVelocity(body.getLinearVelocity());
+            posicion.x = body.getPosition().x-16;
+            posicion.y = body.getPosition().y-16;
+            
+            if (movimientoX != 0 || movimientoY != 0) {
+                body.setLinearVelocity(movimientoX, movimientoY);
+                alternarSprites(direccionActual);
+            } else {
+                body.setLinearVelocity(0, 0);
+                alternarSprites(Direcciones.QUIETO);
+                resetearAnimaciones(animacionArriba, animacionAbajo, animacionIzquierda, animacionDerecha);
+            }
 
         if (movimientoX != 0 && movimientoY != 0) {
             movimientoX *= 0.7071f;
@@ -119,13 +138,12 @@ public class Jugador {
 
         // Actualizar animaciones y cámaras
         if (movimientoX != 0 || movimientoY != 0) {
-            alternarSprites(direccionActual);
+            //alternarSprites(direccionActual);
         } else {
-            alternarSprites(Direcciones.QUIETO);
+            //alternarSprites(Direcciones.QUIETO);
             resetearAnimaciones(animacionArriba, animacionAbajo, animacionIzquierda, animacionDerecha);
         }
         movimientoCamara();
-        actualizarColision(posicion.x, posicion.y);
         }
         
 	}
@@ -134,21 +152,14 @@ public class Jugador {
 	public void movimientoCamara() {
 		if(camara != null) {
 			
-		camara.position.set(posicion.x + tamañoPersonaje / 2, posicion.y + tamañoPersonaje / 2, 0);
-		camara.update();
+            camara.position.set(body.getPosition().x, body.getPosition().y, 0);
+            camara.update();
 		}
 	}
 
 	public Vector2 getPosicion() {
 		return posicion;
 	}
-	
-	public void actualizarColision(float x,float y) {
-		colision.x = x;
-		colision.y = y;
-	}
-	
-
 
 	public void alternarSprites(Direcciones direccion) {
 		switch (direccion) {
@@ -244,4 +255,5 @@ public class Jugador {
 	    //indicesDeEliminacion.clear();
 		}
 	}
+
 }
