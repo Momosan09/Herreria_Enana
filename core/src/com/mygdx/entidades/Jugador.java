@@ -45,14 +45,14 @@ public class Jugador {
 	private Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
 	
 	
-	public Jugador(OrthographicCamera camara, World world) {
+	public Jugador(OrthographicCamera camara, World world, Vector2 spawnPosicion) {
 		posicion = new Vector2(); // posicion inicial
 		this.camara = camara;
 		
 		// Crear el cuerpo del jugador
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(16,16);
+        bodyDef.position.set(spawnPosicion.x+16,spawnPosicion.y+16);
 
 
         body = world.createBody(bodyDef);

@@ -131,7 +131,7 @@ public class Juego implements Screen{
 		camaraHud.zoom = .6f;
 		
 
-		jugador = new Jugador(camaraJugador, world);
+		jugador = new Jugador(camaraJugador, world, helpMapa.getJugadorSpawn());
 
 		combinacionJugador = new Combinacion(jugador);
 		

@@ -203,3 +203,4 @@
     - Sistema de dia y noche (masomenos)
     - Colisiones que vienen desde Tiled
     - El vendedor de tienda ahora tiene una colision coherente
+    - Ahora la clase HelpMapa lee tambien rectangulos de Tiled. Puse un rectangulo "puntoAparicion" que es donde el jugador empieza (para modificarlo hay que cambiarlo desde Tiled). Ahora puedo discriminar por nombre de rectangulo, esto me va a servir mas adelante.
