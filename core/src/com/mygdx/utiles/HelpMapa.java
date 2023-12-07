@@ -23,6 +23,7 @@ public class HelpMapa {
 	private TiledMap tiledMap;
 	private Juego juego;
 	private Vector2 jugadorSpawn;
+	private int[] capasDeFondo = {0,1,3}, capasDeFrente= {2};//Relativo a donde el personaje deberia estar ubicado
 	
 	
 	public HelpMapa(Juego juego) {
@@ -80,6 +81,14 @@ public class HelpMapa {
 
 	public Vector2 getJugadorSpawn() {
 		return jugadorSpawn;
+	}
+	
+	public int[] getCapasDeFondo() {
+		return capasDeFondo;
+	}
+	
+	public int[] getCapasDeFrente() {
+		return capasDeFrente;
 	}
 	
 }

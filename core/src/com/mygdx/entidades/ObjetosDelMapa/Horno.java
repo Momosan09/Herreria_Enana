@@ -11,6 +11,7 @@ public class Horno extends Entidad {
 
     public Horno(float x, float y, World world, String rutaTextura, Fundicion hud) {
         super(x, y, world, rutaTextura);
+        crearCuerpo(world,16,16);
         this.hud = hud;
     }
 

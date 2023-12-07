@@ -48,7 +48,7 @@ public abstract class Entidad {
 		sprite.setPosition(this.posicion.x, this.posicion.y);
 	}
 	
-	public Entidad(float x, float y, boolean comprable,String rutaTextura) {
+	public Entidad(float x, float y, boolean comprable, String rutaTextura) {
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
 		this.comprable = comprable;
@@ -74,7 +74,7 @@ public abstract class Entidad {
         shape.dispose();
 	}
 	
-	protected void crearCuerpo(World world,float ancho, float alto) { //esta me permite hacer cuerpos con distintos tamaños
+	protected void crearCuerpo(World world, float ancho, float alto) { //esta me permite hacer cuerpos con distintos tamaños
 		// Crear el cuerpo del jugador
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;

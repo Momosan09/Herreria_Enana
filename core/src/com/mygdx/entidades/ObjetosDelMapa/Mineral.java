@@ -2,6 +2,8 @@ package com.mygdx.entidades.ObjetosDelMapa;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -23,11 +25,11 @@ public class Mineral extends Entidad{
 
 
 	
-	public Mineral(float x, float y, World world, boolean comprable, String rutaTextura, String nombre) {
+	public Mineral(float x, float y, World world, boolean comprable, String rutaTextura, String nombre, int ancho, int alto) {
 		super(x, y, world, rutaTextura);
 		this.comprable = comprable;
 		this.nombre = nombre;
-		crearCuerpo(world);
+		crearCuerpo(world, ancho, alto);
 	}
 	
 	public Mineral(float x, float y, boolean comprable, String rutaTextura, String nombre) {
@@ -35,8 +37,8 @@ public class Mineral extends Entidad{
 		this.comprable = comprable;
 		this.nombre = nombre;
 	}
-
-	protected void crearCuerpo(World world) {//esto lo puedo sacar mas adelante, si le hago animacion a los minerales...
+	
+	protected void crearCuerpo(World world, int ancho, int alto) {//esto lo puedo sacar mas adelante, si le hago animacion a los minerales...
 		// Crear el cuerpo del jugador
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -44,7 +46,7 @@ public class Mineral extends Entidad{
 
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(32/2, 32/2);
+        shape.setAsBox(ancho, alto);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -53,31 +55,31 @@ public class Mineral extends Entidad{
 	}
 	
 	public void click(Jugador jugador) {
-		DibujarFiguras.dibujarRectanguloLleno(this.posicion.x,this.posicion.y, this.textura.getWidth(), this.textura.getHeight(), Color.valueOf(Colores.ROJO));
-		System.out.println(jugador.getPosicion().x);
-		if(Gdx.input.isTouched()) {
-			System.out.println("click");
-	        if (Gdx.input.getX() >= (this.posicion.x-textura.getWidth()) && Gdx.input.getX() <= (this.posicion.x+textura.getWidth())){
-	        		System.out.println("puntero x =" + Gdx.input.getX());
-	        		System.out.println(posicion.x);
-	                // El toque está dentro del rango del mineral
-	                this.vida -= 10;
-	            }
+	    if (Gdx.input.isTouched()) {
+	        float clickX = Gdx.input.getX();
+	        float clickY = Gdx.input.getY();
+	        Vector3 worldCoords = jugador.getCamara().unproject(new Vector3(clickX, clickY, 0));
+
+	        if (this.getBoundingRectangle().contains(worldCoords.x, worldCoords.y)) {
+	            // El toque está dentro del rango del mineral
+	            this.vida -= 10;
 	        }
+	    }
 	}
 
-	public void minar(Jugador jugador) {	
-		if((getJugadorEnRango() && buscarPorItemEnJugador(Items.PICO)) ) {
-			click(jugador);
-			if(this.vida <= 0) {
-				System.out.println(HelpDebug.debub(getClass())+"muerte");
-				jugador.getMinerales().add(this);
-			}
+	public void minar(Jugador jugador) {
+	    if ((getJugadorEnRango() && buscarPorItemEnJugador(Items.PICO))) {
+	        if (Gdx.input.isTouched()) {
+	            click(jugador);
+	        }
 
-		}else {
-			//System.out.println("No tiene pico");
-		}
+	        if (this.vida <= 0) {
+	            System.out.println(HelpDebug.debub(getClass()) + "muerte");
+	            jugador.getMinerales().add(this);
+	        }
+	    }
 	}
+
 	
 	public boolean comprar(Jugador jugador) {
 	    if ((getJugadorEnRango() && isComprable()) && Gdx.input.isTouched()) {
@@ -97,14 +99,14 @@ public class Mineral extends Entidad{
 	    }
 	 public void abrirDialogo() {
 		    dialogoAbierto = true;
-		    // Muestra el diálogo de compra aquí
 		}
 
 		public void cerrarDialogo() {
 		    dialogoAbierto = false;
-		    // Cierra el diálogo de compra aquí
 		}
 		
-
+	    public Rectangle getBoundingRectangle() {
+	        return new Rectangle(posicion.x, posicion.y, textura.getWidth(), textura.getHeight());
+	    }
 	
 }

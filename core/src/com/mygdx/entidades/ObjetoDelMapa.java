@@ -8,6 +8,7 @@ public abstract class ObjetoDelMapa extends Entidad{
 
 	public ObjetoDelMapa(float x, float y, World world, String rutaTextura) {
 		super(x, y, world,rutaTextura);
+		crearCuerpo(world);
 	}
 	
 	

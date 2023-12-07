@@ -57,7 +57,7 @@ public class Jugador {
 
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(16,16);
+        shape.setAsBox(14,16);
         
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -79,7 +79,7 @@ public class Jugador {
 				//spriteItem.flip(true, false);
 			}
 			spriteItem.draw(Render.batch);
-			spriteItem.setPosition(posicion.x, posicion.y);
+			spriteItem.setPosition(posicion.x-16, posicion.y-16);
 		}
 	}
 	
@@ -248,6 +248,10 @@ public class Jugador {
 	    }
 	    //indicesDeEliminacion.clear();
 		}
+	}
+
+	public OrthographicCamera getCamara() {
+		return camara;
 	}
 
 }

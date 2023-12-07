@@ -185,10 +185,10 @@ public class Juego implements Screen{
 		rayHandler.update();
 		world.step(1/60f, 6, 2);
 		Render.tiledMapRenderer.setView(camaraJugador);
-		Render.tiledMapRenderer.render();
+		Render.tiledMapRenderer.render(helpMapa.getCapasDeFondo());
 		box2Debug.render(world, camaraJugador.combined);
 		rayHandler.setCombinedMatrix(camaraJugador.combined,0,0,1,1);
-		rayHandler.render();
+
 
 
 		
@@ -202,7 +202,7 @@ public class Juego implements Screen{
 		Render.batch.setProjectionMatrix(camaraJugador.combined);
 		
 
-		jugador.draw(Render.batch);
+
 		
 		Render.batch.end();
 		Render.batch.begin();
@@ -218,12 +218,17 @@ public class Juego implements Screen{
 		horno.detectarJugador(jugador);
 		horno.draw();
 
-		Render.batch.end();
 
+		jugador.draw(Render.batch);
+		
+		Render.batch.end();
+		
+		Render.tiledMapRenderer.render(helpMapa.getCapasDeFrente());//Estas son las capas que esconden al jugador
+		rayHandler.render();
+		
 		Render.batch.begin();//HUD´s
 		
 		cartaHUD.render();
-
 		if(cartaHUD.getCerrar()) {//si ya leyo la carta...
 			cartaHUD.cerrar();
 			jugador.puedeMoverse=true;
@@ -296,6 +301,7 @@ public class Juego implements Screen{
 		}
 		Render.batch.end();
 	    //System.out.println(HelpDebug.debub(this.getClass()) + "Hola");
+
 
 	}
 
