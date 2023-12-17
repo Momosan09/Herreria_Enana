@@ -70,18 +70,19 @@ public class HUD implements HeadUpDisplay, Ocultable{
 	private Label siguienteBatallaDetalles;
 	private Label centroLbl;
 	private Label diaLbl;
-	private Label pedidoLbl;
+	private Label diarioLbl;
 	private Label barraAbajoLbl;
 	private Label.LabelStyle labelStyle;
 	private Label.LabelStyle labelMonedasStyle[];
 	
 	private ResultadosBatallasHUD resultadosHUD;
 	private ProximaBatallaHUD proximaBatallaHUD;
+	private DiarioHUD diarioHUD;
 	
 	private String dia = Recursos.bundle.get("dia.3");
 	
 
-	public boolean visible = true;
+	private boolean visible = true;
 	
 	private Jugador jugador;
 	private Juego juego;
@@ -91,6 +92,8 @@ public class HUD implements HeadUpDisplay, Ocultable{
     	this.juego = juego;
     	resultadosHUD = new ResultadosBatallasHUD();
     	proximaBatallaHUD = new ProximaBatallaHUD();
+    	diarioHUD = new DiarioHUD(jugador);
+    	
     	cargarTexturas();
     	crearFuentes();
     	crearActores();
@@ -157,7 +160,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		pila = new Stack();
 		
 		//pedidos
-		pedidosTable.add(pedidoLbl);
+		pedidosTable.add(diarioLbl);
 		//pedidosTable.add(pedidoBtn);
 		
 		pila.add(reloj);
@@ -192,6 +195,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		screenViewport.update(width, height, true);//actualizamos cuando la ventana se reescala
 		resultadosHUD.reEscalar(width, height);
 		proximaBatallaHUD.reEscalar(width, height);
+		diarioHUD.reEscalar(width, height);
 	}
 	public void dispose() {
 		stage.dispose();
@@ -241,7 +245,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		
 		//DERECHA
 		diaLbl = new Label(dia, labelStyle);
-		pedidoLbl = new Label(Recursos.bundle.get("hud.verPedidos"), labelStyle);
+		diarioLbl = new Label(Recursos.bundle.get("hud.verPedidos"), labelStyle);
 		//pedidoBtn = new TextButton("",skin);
 		
 		//BARRA ITEMS
@@ -256,7 +260,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 			
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if(!proximaBatallaHUD.getVisible()) {
+				if(!proximaBatallaHUD.getVisible() && !diarioHUD.getVisible()) {
 					resultadosHUD.mostrar(); // Abre resultadosHUD		
 					
 				}
@@ -270,22 +274,26 @@ public class HUD implements HeadUpDisplay, Ocultable{
 			
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if(!resultadosHUD.getVisible()) {
+				if(!resultadosHUD.getVisible() && !diarioHUD.getVisible()) {
 					proximaBatallaHUD.mostrar();
 					
 				}
 			}
 		});
 		
-		pedidoLbl.addListener(new ClickListener() {
+		diarioLbl.addListener(new ClickListener() {
 			
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				System.out.println(HelpDebug.debub(getClass())+"click");
+				if(!proximaBatallaHUD.getVisible() && !resultadosHUD.getVisible()) {
+					diarioHUD.agregarMisiones();
+					diarioHUD.mostrar();
+				}
 			}
 		});
 		
 		agregarAnimaciones();
+		
 	}
 	
 	@Override
@@ -306,6 +314,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		
 		resultadosHUD.render();
 		proximaBatallaHUD.render();//Nose porque no funciona el click de proximaBatallaHUD cuando lo quiero usar despues de haber abierto resultadosHUD
+		diarioHUD.render();
 		}
 		determinarDia(juego.getDia());
 		diaLbl.setText(dia);
@@ -323,6 +332,10 @@ public class HUD implements HeadUpDisplay, Ocultable{
 	
 	public ProximaBatallaHUD getProximaBatallaHUD() {
 		return proximaBatallaHUD;
+	}
+	
+	public DiarioHUD getDiarioHUD() {
+		return diarioHUD;
 	}
 
 	@Override
@@ -370,6 +383,11 @@ public class HUD implements HeadUpDisplay, Ocultable{
 	    tiempo_Img.addAction(Actions.forever(Actions.rotateBy(15, 1, Interpolation.linear)));//hacer esto bien
 	    	
 	    
+	}
+
+	@Override
+	public boolean getVisible() {
+		return visible;
 	}
 
 }

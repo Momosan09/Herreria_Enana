@@ -23,11 +23,12 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 	private Stage stage;
 	private Table contenedor, tabla, tablaMinerales, tablaArtefactos, tablaBarraItems;
 	private Label encabezadoMinerales, encabezadoArtefactos, cantidadMineral;
+	private Label[] nombreMineral;
 	private Jugador jugador;
 	
 	private Label.LabelStyle labelStyle, labelStyleCantidades;
 	
-	 public boolean visible=false;
+	 private boolean visible=false;
 	
 	public InventarioHUD(Jugador jugador) {
     	screenViewport = new ScreenViewport();
@@ -74,6 +75,12 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 		encabezadoMinerales = new Label(Recursos.bundle.get("inventario.minerales"), labelStyle);
 		encabezadoArtefactos = new Label(Recursos.bundle.get("inventario.artefactos"), labelStyle);
 		
+		nombreMineral = new Label[2];
+		nombreMineral[0] = new Label("Piedra", labelStyle);
+		nombreMineral[1] = new Label("Hierro", labelStyle);
+		nombreMineral[0].setVisible(false);
+		nombreMineral[1].setVisible(false);
+		
 	}
 
 	@Override
@@ -94,6 +101,7 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 		tabla.add(contenedor);
 		
 		stage.addActor(tabla);
+		stage.addActor(nombreMineral[0]);
 		
 	}
 
@@ -108,6 +116,7 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 	    	stage.act(Gdx.graphics.getDeltaTime());
 	    	stage.draw();
 	    	llenarMinerales(jugador);//Cada vez que se muestre el inventario llena las tablas
+	    	//infoMineral();
 		}
 		
 	}
@@ -134,10 +143,28 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 		}
 
 	}
+	
+	public void infoMineral() {
+		for(int i = 0; i<tablaMinerales.getChildren().size; i++) {
+			if(Gdx.input.getX() >= tablaMinerales.getChild(i).getX() && Gdx.input.getY() >= tablaMinerales.getChild(i).getY()) {
+				nombreMineral[0].setVisible(true);
+				nombreMineral[0].setPosition(Gdx.input.getX(), Gdx.input.getY()+300);
+				System.out.println(HelpDebug.debub(getClass())+"Mostrando");
+			}
+			
+		}
+		
+	}
 
 
 	@Override
 	public void render() {//No usar
+	}
+
+
+	@Override
+	public boolean getVisible() {
+		return visible;
 	}
 
 }

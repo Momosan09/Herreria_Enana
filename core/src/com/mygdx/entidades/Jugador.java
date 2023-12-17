@@ -14,12 +14,17 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.enums.Direcciones;
 import com.mygdx.enums.Items;
 import com.mygdx.utiles.Animator;
+import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
+import com.mygdx.historia.Mision;
+import com.mygdx.historia.TipoMision;
 
 public class Jugador {
 
@@ -39,7 +44,8 @@ public class Jugador {
 	private ArrayList<Items> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
 	private ArrayList<Mineral> mineralesInv = new ArrayList<>();  
 	private ArrayList<Integer> indicesDeEliminacion = new ArrayList<>();//Se guardan temporalmente los indices de los minerales a eliminar, despues este array se limpia
-    
+	private ArrayList<Mision> tareas = new ArrayList<>();
+	
 	public Direcciones direccionActual = Direcciones.QUIETO;
 	public Direcciones direccionDelChoque = null;
 	private Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
@@ -231,7 +237,7 @@ public class Jugador {
 	}
 	
 	public void eliminarPorNombreDadoYCantidad(String nombre, int cantidad) {
-		System.out.println("el tamano es " + mineralesInv.size() + "++++++++++++");
+		System.out.println(HelpDebug.debub(getClass())+"El tamano es " + mineralesInv.size() + "++++++++++++");
 		if(mineralesInv.size() > 0) {
 			
 			int cont = 0;
@@ -254,4 +260,14 @@ public class Jugador {
 		return camara;
 	}
 
+	public void agregarMision(Entidad requisor, TipoMision tipo, String objeto, int cantidad) {
+		tareas.add(new Mision(requisor, tipo, objeto, cantidad));
+
+	}
+	
+	public ArrayList<Mision> getTareas() {
+		return tareas;
+		
+	}
+	
 }

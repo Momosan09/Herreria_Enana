@@ -27,6 +27,7 @@ import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.entidades.npcs.dialogos.Npc_Dialogos_Rey;
 import com.mygdx.enums.Items;
 import com.mygdx.game.Principal;
+import com.mygdx.historia.TipoMision;
 import com.mygdx.hud.CartaHUD;
 import com.mygdx.hud.Combinacion;
 import com.mygdx.hud.Dialogo;
@@ -39,6 +40,7 @@ import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.HelpMapa;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
+import com.mygdx.historia.MisionesManager;
 
 import box2dLight.RayHandler;
 import box2dLight.PointLight;
@@ -74,6 +76,7 @@ public class Juego implements Screen{
 	//Managers
 	private NPCManager npcManager;
 	private MineralesManager mineralesManager;
+	private MisionesManager misionesManager;
 
 	//Camaras
 	private OrthographicCamera camaraJugador, camaraHud;
@@ -150,6 +153,7 @@ public class Juego implements Screen{
 		
 				
 		mineralesManagerConfig();
+		misionesMangerConfig();
 		
 		//HUD
 
@@ -174,6 +178,8 @@ public class Juego implements Screen{
 	    mux.addProcessor(hud.getProximaBatallaHUD().getStage());
 	    
 		Gdx.input.setInputProcessor(mux);
+		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, "piedra", 1);
+
 
 	}
 
@@ -217,7 +223,6 @@ public class Juego implements Screen{
 		mineralesManager.comprar(jugador);
 		horno.detectarJugador(jugador);
 		horno.draw();
-
 
 		jugador.draw(Render.batch);
 		
@@ -301,7 +306,7 @@ public class Juego implements Screen{
 		}
 		Render.batch.end();
 	    //System.out.println(HelpDebug.debub(this.getClass()) + "Hola");
-
+		misionesManager.checkearMisiones();
 
 	}
 
@@ -373,6 +378,11 @@ public class Juego implements Screen{
 		mineralesManager.agregarMineral(hierro1);
 	}
 	
+	private void misionesMangerConfig() {
+		misionesManager = new MisionesManager(jugador);
+		misionesManager.agregarMision();
+	}
+	
 
 	public Jugador getJugador1() {
 		return jugador;
@@ -405,7 +415,7 @@ public class Juego implements Screen{
 	 }
 	 
 	 private void horaDelMundo() { 
-		 minutoDelMundo++;
+		 minutoDelMundo+=0.5f;
 		 if(minutoDelMundo>= 60) {
 			 horaDelMundo++; 
 			 minutoDelMundo=0;
@@ -434,7 +444,7 @@ public class Juego implements Screen{
 		 }
 			 
 			 
-		 System.out.println(horaDelMundo);
+//		 System.out.println(HelpDebug.debub(getClass())+horaDelMundo);
 	 }
 	 
 	 public int getDia() {
@@ -446,4 +456,6 @@ public class Juego implements Screen{
 	 public float getMinuto() {
 		 return minutoDelMundo;
 	 }
+	 
+
 }

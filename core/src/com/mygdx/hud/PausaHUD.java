@@ -277,4 +277,10 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 		}
 	}
 
+	@Override
+	public boolean getVisible() {
+		// TODO Auto-generated method stub
+		return visible;
+	}
+
 }

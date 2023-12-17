@@ -150,4 +150,8 @@ public abstract class Entidad {
 		return body;
 	}
 	
+	public String getNombre() {
+		return nombre;
+	}
+	
 }

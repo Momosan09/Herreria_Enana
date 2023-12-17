@@ -209,3 +209,6 @@
     - Cambios en el orden de renderizacion de las capas del mapa
     - Algunos cambios en colisiones
     - El sistema de minado ahora funciona correctamente!
+
+# 17 DIC
+    - AHORA MISIONES!

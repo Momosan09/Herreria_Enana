@@ -39,7 +39,7 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
     private ArrayList<Image> combinables;
     
     private int pad = 20;
-    public boolean visible=false;
+    private boolean visible=false;
     
     public Combinacion(Jugador jugador) {
     	this.jugador = jugador;
@@ -159,5 +159,10 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
 	public void ocultar() {
 		visible = false;
 		stage.unfocusAll();//Cuando esta oculto desenfoca el stage para que no procese eventos
+	}
+
+	@Override
+	public boolean getVisible() {
+		return visible;
 	}
 }

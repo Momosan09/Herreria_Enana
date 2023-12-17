@@ -29,7 +29,7 @@ public class DialogoDeCompra implements HeadUpDisplay, Ocultable{
 	private Button cerrarBoton;
 	private TextButton aceptarBotton;
 	private Skin skin;
-	public boolean visible=false;
+	private boolean visible=false;
 	public boolean cerrar=false;
 	
 	private Label.LabelStyle labelStyle;
@@ -134,5 +134,10 @@ public class DialogoDeCompra implements HeadUpDisplay, Ocultable{
 	
 	public Stage getStage() {
 		return stage;
+	}
+
+	@Override
+	public boolean getVisible() {
+		return visible;
 	}
 }

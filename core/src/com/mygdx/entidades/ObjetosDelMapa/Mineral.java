@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.enums.Items;
+import com.mygdx.historia.TipoMision;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.HelpDebug;
@@ -76,6 +77,14 @@ public class Mineral extends Entidad{
 	        if (this.vida <= 0) {
 	            System.out.println(HelpDebug.debub(getClass()) + "muerte");
 	            jugador.getMinerales().add(this);
+	            for(int i = 0; i<jugador.getTareas().size();i++) {
+	            	if(jugador.getTareas().get(i).getTipoMision() == TipoMision.RECOLECTAR) {
+	            		if(jugador.getTareas().get(i).getObjeto().equals(this.nombre)) {
+	            			jugador.getTareas().get(i).setCantidadConseguida(+1);
+	            		}
+	            	}
+	            	
+	            }
 	        }
 	    }
 	}

@@ -26,7 +26,7 @@ public class Dialogo implements HeadUpDisplay{
 	private ScreenViewport screenViewport;
 	private Stage stage;
 	private Table cajaDeDialogo;
-	private Label nombre, mensaje;
+	private Label nombre, mensaje, respuestas[];
 	private Image retrato;
 	
 	private Label.LabelStyle labelStyle;
@@ -35,6 +35,7 @@ public class Dialogo implements HeadUpDisplay{
 	
 	public Dialogo(Npc locutor) {
 		this.locutor = locutor;
+		//respuestas = new Label[];
 		//System.out.println("mostrando dialgo");
 		poblarStage();
 		

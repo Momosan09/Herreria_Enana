@@ -40,7 +40,7 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 	public int cantidad = 0;
 	private int hierroEnElInventario=0;
 	public boolean elegido = false, fabricar = false;
-	 public boolean visible=false;
+	 private boolean visible=false;
 	
 	 
 	 public Fundicion(Jugador jugador) {
@@ -236,6 +236,13 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 	
 	public Stage getStage() {
 		return stage;
+	}
+
+
+
+	@Override
+	public boolean getVisible() {
+		return visible;
 	}
 
 
