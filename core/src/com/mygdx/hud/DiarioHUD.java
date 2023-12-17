@@ -35,10 +35,11 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 	private boolean visible;
 	
 	
-	private Label.LabelStyle labelStyle;
+	private Label.LabelStyle labelStyle, labelStyleCompletada, labelStylePendiente;
 	
 	public DiarioHUD(Jugador jugador) {
 		this.jugador = jugador;
+		misiones = jugador.getTareas();
     	screenViewport = new ScreenViewport();
         stage = new Stage(screenViewport);
 		crearFuentes();
@@ -49,6 +50,8 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 	@Override
 	public void crearFuentes() {
 		labelStyle = EstiloFuente.generarFuente(30, Colores.BLANCO, false);
+		labelStyleCompletada = EstiloFuente.generarFuente(30, Colores.VERDE, false);
+		labelStylePendiente = EstiloFuente.generarFuente(30, Colores.AU, false);
 	}
 
 	@Override
@@ -115,6 +118,7 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 
 	@Override
 	public void mostrar() {
+		actualizarContenedor();
 		visible = true;
 		
 	}
@@ -133,9 +137,7 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 	
 	public void agregarMisiones() {
 		tareas.clear();
-		misiones = jugador.getTareas();
-
-		
+	
 		for(int i=0; i<jugador.getTareas().size();i++) {
 			
 		Table tabla = new Table();
@@ -144,7 +146,6 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 		Label tipoMision = new Label(misiones.get(i).getTipoMision().toString() + ":", labelStyle);
 		Label objetoMision = new Label(misiones.get(i).getObjeto() + "x" + misiones.get(i).getCantidadObjetivo(), labelStyle);
 		Label dadorMision = new Label(misiones.get(i).getEntidad().getNombre(), labelStyle);
-		Label estadoMision = new Label((misiones.get(i).getCompletada()?"Completada":"Pendiente"), labelStyle);
 		
 		tabla.add(tipoMision);
 		tabla.add(objetoMision);
@@ -152,23 +153,36 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 		tabla.row();
 		tabla.add(dadorMision);
 		tabla.row();
-		tabla.add(estadoMision);
-		tabla.row();
 		
 		tareas.add(tabla);
-		actualizarContenedor();
+
 		}
 
 	}
 	
 	private void actualizarContenedor() {
-		if(tablaTareas.getChildren().size < tareas.size()) {
-			tablaTareas.clear();
-			for (Table table : tareas) {
-				tablaTareas.row();
-				tablaTareas.add(table).expand();
-			}
-		}
+	    tablaTareas.clear();
+
+	    for (int i = 0; i < tareas.size(); i++) {
+	        Table tarea = tareas.get(i);
+
+	        // Agregar la tarea actual
+	        tablaTareas.add(tarea).expand().row();
+
+	        // Agregar el estado de la misión
+	        Label estadoMision = new Label((misiones.get(i).getCompletada() ? "Completada" : "Pendiente"), (misiones.get(i).getCompletada() ? labelStyleCompletada : labelStylePendiente));
+	        tablaTareas.add(estadoMision).expand().row();
+	    }
+
+	    // Invalidar y volver a dibujar la tabla
+//	    tablaTareas.invalidateHierarchy();
+//	    tablaTareas.layout();
+//	    
+	}
+
+	
+	public Stage getStage() {
+		return stage;
 	}
 
 }

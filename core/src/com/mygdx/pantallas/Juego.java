@@ -20,6 +20,7 @@ import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.MineralesManager;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.Hierro;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.Piedra;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.entidades.npcs.VendedorAmbulante;
 import com.mygdx.entidades.npcs.VendedorDeTienda;
 import com.mygdx.entidades.npcs.Viejo;
@@ -176,9 +177,11 @@ public class Juego implements Screen{
 	    mux.addProcessor(hud.getStage());
 	    mux.addProcessor(hud.getResultadosBatallasHUD().getStage());
 	    mux.addProcessor(hud.getProximaBatallaHUD().getStage());
+	    mux.addProcessor(hud.getDiarioHUD().getStage());
 	    
 		Gdx.input.setInputProcessor(mux);
-		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, "piedra", 1);
+		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.HIERRO.toString(), 1);
+		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.PIEDRA.toString(), 2);
 
 
 	}

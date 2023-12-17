@@ -19,7 +19,7 @@ public class Mision {
 	}
 	
 	public void comprobarCondicion() {
-		if( cantidadConseguida == cantidadObjetivo) {
+		if(cantidadConseguida == cantidadObjetivo) {
 			completada = true;
 		}
 	}
