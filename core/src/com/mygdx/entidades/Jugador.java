@@ -36,7 +36,7 @@ public class Jugador {
 	private int tamañoPersonaje = 32;
 	private Texture texturaItem;
 	private Sprite spriteItem;
-	public int dinero=10;
+	public int[] dinero;
 	public boolean estaChocando = false;
 	public String spritesheet;
 	
@@ -75,6 +75,8 @@ public class Jugador {
 		spriteItem = new Sprite(texturaItem);
 		this.spritesheet = Recursos.JUGADOR1_SPRITESHEET;
 		crearAnimaciones();
+		
+		dinero = new int[3];
 		
 		
 	}
@@ -260,8 +262,8 @@ public class Jugador {
 		return camara;
 	}
 
-	public void agregarMision(Entidad requisor, TipoMision tipo, String objeto, int cantidad) {
-		tareas.add(new Mision(requisor, tipo, objeto, cantidad));
+	public void agregarMision(Entidad requisor, TipoMision tipo, String objeto, int cantidad, int oro, int plata, int cobre) {
+		tareas.add(new Mision(requisor, tipo, objeto, cantidad, oro, plata, cobre));
 
 	}
 	

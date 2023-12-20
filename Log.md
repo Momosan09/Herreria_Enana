@@ -212,3 +212,7 @@
 
 # 17 DIC
     - AHORA MISIONES!
+
+# 20 DIC
+    - Recompensas para las misiones
+    - Scrollpane que le da un toque como si fuese un pergamino largo que estas viendo (en el diarioHUD)

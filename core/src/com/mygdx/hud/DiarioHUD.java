@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -28,6 +29,7 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 	private Skin skin;
 	private Button cerrarBoton;
 	private Label titulo;
+	private ScrollPane scrollPane;
 	private ArrayList<Table> tareas = new ArrayList<>();
 	private ArrayList<Mision> misiones = new ArrayList<>();
 	private Jugador jugador;
@@ -35,7 +37,7 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 	private boolean visible;
 	
 	
-	private Label.LabelStyle labelStyle, labelStyleCompletada, labelStylePendiente;
+	private Label.LabelStyle labelStyle, labelStyleCompletada, labelStylePendiente, labelStyleOro, labelStylePlata, labelStyleCobre;
 	
 	public DiarioHUD(Jugador jugador) {
 		this.jugador = jugador;
@@ -51,7 +53,10 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 	public void crearFuentes() {
 		labelStyle = EstiloFuente.generarFuente(30, Colores.BLANCO, false);
 		labelStyleCompletada = EstiloFuente.generarFuente(30, Colores.VERDE, false);
-		labelStylePendiente = EstiloFuente.generarFuente(30, Colores.AU, false);
+		labelStylePendiente = EstiloFuente.generarFuente(30, Colores.ROJO , false);
+		labelStyleOro = EstiloFuente.generarFuente(30, Colores.AU, false);
+		labelStylePlata = EstiloFuente.generarFuente(30, Colores.AG, false);
+		labelStyleCobre = EstiloFuente.generarFuente(30, Colores.CU, false);
 	}
 
 	@Override
@@ -60,6 +65,7 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 		
 		contenedor = new Table();
 		contenedor.setDebug(true);
+		scrollPane  = new ScrollPane(contenedor);
 
 		tabla = new Table();
 		tabla.setFillParent(true);
@@ -77,6 +83,8 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 		
 		titulo = new Label(Recursos.bundle.get("diarioHUD.titulo"),labelStyle);
 		
+
+		
 	}
 
 	@Override
@@ -93,7 +101,7 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 			tablaTareas.add(table).expand();
 		}
 
-		tabla.add(contenedor).center();
+		tabla.add(scrollPane).center();
 		tabla.add(cerrarBoton).top();
 		
 		stage.addActor(tabla);
@@ -144,15 +152,20 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 //		tabla.setDebug(true);
 		
 		Label tipoMision = new Label(misiones.get(i).getTipoMision().toString() + ":", labelStyle);
-		Label objetoMision = new Label(misiones.get(i).getObjeto() + "x" + misiones.get(i).getCantidadObjetivo(), labelStyle);
+		Label objetoMision = new Label(misiones.get(i).getObjeto() + " " + misiones.get(i).getCantidadConseguida() +"/"+ misiones.get(i).getCantidadObjetivo(), labelStyle);
 		Label dadorMision = new Label(misiones.get(i).getEntidad().getNombre(), labelStyle);
-		
+		Label recompensaOro = new Label(" "+Recursos.bundle.get("moneda.oro")+ ": "+String.valueOf(misiones.get(i).getOro()),labelStyleOro);
+		Label recompensaPlata = new Label(" "+Recursos.bundle.get("moneda.plata") +": "+ String.valueOf(misiones.get(i).getPlata()),labelStylePlata);
+		Label recompensaCobre = new Label(" "+Recursos.bundle.get("moneda.cobre") +": " +String.valueOf(misiones.get(i).getCobre()),labelStyleCobre);
+
 		tabla.add(tipoMision);
 		tabla.add(objetoMision);
 		tabla.add().expand();
 		tabla.row();
 		tabla.add(dadorMision);
+		tabla.add(recompensaOro, recompensaPlata, recompensaCobre);
 		tabla.row();
+		
 		
 		tareas.add(tabla);
 

@@ -21,6 +21,7 @@ public class MisionesManager {
 	public void checkearMisiones() {
 		for (Mision mision : misiones) {
 			mision.comprobarCondicion();
+			mision.darRecompensa(jugador);
 		}
 	}
 	

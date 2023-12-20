@@ -180,8 +180,10 @@ public class Juego implements Screen{
 	    mux.addProcessor(hud.getDiarioHUD().getStage());
 	    
 		Gdx.input.setInputProcessor(mux);
-		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.HIERRO.toString(), 1);
-		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.PIEDRA.toString(), 2);
+		
+		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.HIERRO.toString(), 1, 1,50,300);
+		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.PIEDRA.toString(), 2,0,10,50);
+
 
 
 	}
