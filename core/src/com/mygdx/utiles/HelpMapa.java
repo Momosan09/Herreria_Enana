@@ -2,11 +2,14 @@ package com.mygdx.utiles;
 
 import java.util.Arrays;
 
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -34,12 +37,14 @@ public class HelpMapa {
 	public OrthogonalTiledMapRenderer Inicializar() {
 		tiledMap = new TmxMapLoader().load(Recursos.MAPA);
 		conseguirObjetosDelMapa(tiledMap.getLayers().get("colisiones").getObjects());
+		conseguirObjetosDeLaCapa((TiledMapTileLayer) tiledMap.getLayers().get("estructurasFondo"));
 		return new OrthogonalTiledMapRenderer(tiledMap);
 		}
 	
 	
 	public void conseguirObjetosDelMapa(MapObjects mapObjects) {
 	    for (MapObject mapObject : mapObjects) {
+	    	System.out.println("entro");
 	        if (mapObject instanceof PolygonMapObject) {
 	            crearCuerposDeColision((PolygonMapObject) mapObject);
 	        }
@@ -52,12 +57,41 @@ public class HelpMapa {
 	        		jugadorSpawn.y = rectangle.getY();
 	        	}
 	        }
+	        
+
 	    }
 	}
+	private void conseguirObjetosDeLaCapa(TiledMapTileLayer mapLayer) {
+	    for (int i = 0; i < mapLayer.getWidth(); i++) {
+	        for (int j = 0; j < mapLayer.getHeight(); j++) {
+	            Cell celda = mapLayer.getCell(i, j);
+	            
+	            if (celda != null && celda.getTile().getObjects().getCount() == 1) {
+					float worldY = j * mapLayer.getTileWidth();
+		            float worldX = i * mapLayer.getTileHeight();
+
+		            crearCuerposDeColision((PolygonMapObject) celda.getTile().getObjects().get(0), worldX, worldY);
+		           
+
+	            }
+	        }
+	    }
+	}
+
 
 	private void crearCuerposDeColision(PolygonMapObject polygonMapObject) {
 	    BodyDef bodyDef = new BodyDef();
 	    bodyDef.type = BodyDef.BodyType.StaticBody;
+	    Body body = juego.getWorld().createBody(bodyDef);
+	    Shape shape = createPolygonShape(polygonMapObject);
+	    body.createFixture(shape, 1000);
+	    shape.dispose();
+	}
+	
+	private void crearCuerposDeColision(PolygonMapObject polygonMapObject, float x, float y) {
+	    BodyDef bodyDef = new BodyDef();
+	    bodyDef.type = BodyDef.BodyType.StaticBody;
+	    bodyDef.position.set(x,y);
 	    Body body = juego.getWorld().createBody(bodyDef);
 	    Shape shape = createPolygonShape(polygonMapObject);
 	    body.createFixture(shape, 1000);

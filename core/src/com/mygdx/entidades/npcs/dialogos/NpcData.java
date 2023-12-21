@@ -15,6 +15,7 @@ public enum NpcData implements DialogosNPC{
 	private final String _nombre;
 	private final Texture _retrato;
 	private ArrayList<String> _dialogos;
+	private ArrayList<String> _respuestas;
 
 	
 	NpcData(String nombre, String retratoRuta, ArrayList<String> arrayList) {

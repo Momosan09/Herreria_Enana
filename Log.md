@@ -216,3 +216,6 @@
 # 20 DIC
     - Recompensas para las misiones
     - Scrollpane que le da un toque como si fuese un pergamino largo que estas viendo (en el diarioHUD)
+    
+# 21 DIC
+    - Modificada la clase del mapa, ahora lee los objetos de las tiles que vienen por cada capa (puedo poner los arboles y las colisiones se ponen automaticamente)
