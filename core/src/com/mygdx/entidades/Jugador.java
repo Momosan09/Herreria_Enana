@@ -23,6 +23,7 @@ import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.historia.Mision;
 import com.mygdx.historia.TipoMision;
 
@@ -228,23 +229,23 @@ public class Jugador {
 		return mineralesInv;
 	}
 	
-	public int buscarCantidadDeMineralesPorNombre(String nombre){
+	public int buscarCantidadDeMineralesPorTipo(TipoMinerales mineral){
 		int cont = 0;
 		for(int i = 0; i<mineralesInv.size();i++) {
-			if(mineralesInv.get(i).nombre.equals(nombre)) {
+			if(mineralesInv.get(i).tipo == mineral) {
 				cont++;
 			}
 		}
 		return cont;
 	}
 	
-	public void eliminarPorNombreDadoYCantidad(String nombre, int cantidad) {
+	public void eliminarPorNombreDadoYCantidad(TipoMinerales mineral, int cantidad) {
 		System.out.println(HelpDebug.debub(getClass())+"El tamano es " + mineralesInv.size() + "++++++++++++");
 		if(mineralesInv.size() > 0) {
 			
 			int cont = 0;
 			for(int i = 0; i<mineralesInv.size();i++) {
-				if(mineralesInv.get(i).nombre.equals(nombre) && cont < cantidad) {
+				if(mineralesInv.get(i).tipo == mineral && cont < cantidad) {
 					indicesDeEliminacion.add(i);
 					cont++;
 				}

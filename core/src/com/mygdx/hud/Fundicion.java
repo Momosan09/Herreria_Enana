@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.Hierro;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.LingoteHierro;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
@@ -126,7 +127,7 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 
 				fabricar = true;
 				System.out.println(cantidad);
-				jugador.eliminarPorNombreDadoYCantidad("hierro", cantidad);
+				jugador.eliminarPorNombreDadoYCantidad(TipoMinerales.HIERRO, cantidad);
 			}
 		});
 		
@@ -213,7 +214,7 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 
 	
 	public void tieneHierro(Jugador jugador) {
-		hierroEnElInventario=jugador.buscarCantidadDeMineralesPorNombre("hierro");
+		hierroEnElInventario=jugador.buscarCantidadDeMineralesPorTipo(TipoMinerales.HIERRO);
 //		System.out.println("hierro en el inventario " + hierroEnElInventario);
 		if(hierroEnElInventario >0) {
 			fundirBoton.setDisabled(false);

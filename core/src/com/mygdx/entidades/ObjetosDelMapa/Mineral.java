@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.enums.Items;
 import com.mygdx.historia.TipoMision;
 import com.mygdx.utiles.Colores;
@@ -18,7 +19,7 @@ import com.mygdx.utiles.HelpDebug;
 
 public class Mineral extends Entidad{
 	
-	public String nombre;
+	public TipoMinerales tipo;
 	public int vida = 100;
 	public int valor=5;
 	private boolean comprar = false, cerrar = false, comprable = false;
@@ -26,17 +27,17 @@ public class Mineral extends Entidad{
 
 
 	
-	public Mineral(float x, float y, World world, boolean comprable, String rutaTextura, String nombre, int ancho, int alto) {
+	public Mineral(float x, float y, World world, boolean comprable, String rutaTextura, TipoMinerales tipo, int ancho, int alto) {
 		super(x, y, world, rutaTextura);
 		this.comprable = comprable;
-		this.nombre = nombre;
+		this.tipo = tipo;
 		crearCuerpo(world, ancho, alto);
 	}
 	
-	public Mineral(float x, float y, boolean comprable, String rutaTextura, String nombre) {
+	public Mineral(float x, float y, boolean comprable, String rutaTextura, TipoMinerales tipo) {
 		super(x, y,comprable, rutaTextura);
 		this.comprable = comprable;
-		this.nombre = nombre;
+		this.tipo = tipo;
 	}
 	
 	protected void crearCuerpo(World world, int ancho, int alto) {//esto lo puedo sacar mas adelante, si le hago animacion a los minerales...
@@ -79,7 +80,7 @@ public class Mineral extends Entidad{
 	            jugador.getMinerales().add(this);
 	            for(int i = 0; i<jugador.getTareas().size();i++) {
 	            	if(jugador.getTareas().get(i).getTipoMision() == TipoMision.RECOLECTAR) {
-	            		if(jugador.getTareas().get(i).getObjeto().equals(this.nombre)) {
+	            		if(jugador.getTareas().get(i).getObjeto().equals(this.tipo.toString())) {
 	            			jugador.getTareas().get(i).setCantidadConseguida(+1);
 	            		}
 	            	}

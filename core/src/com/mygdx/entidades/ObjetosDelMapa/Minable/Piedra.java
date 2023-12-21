@@ -6,7 +6,7 @@ import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 public class Piedra extends Mineral{
 
 	public Piedra(float x, float y, World world, boolean comprable, String rutaTextura) {
-		super(x, y, world,comprable, rutaTextura, TipoMinerales.PIEDRA.toString(), 16,12);
+		super(x, y, world,comprable, rutaTextura, TipoMinerales.PIEDRA, 16,12);
 	}
 
 }

@@ -219,3 +219,4 @@
     
 # 21 DIC
     - Modificada la clase del mapa, ahora lee los objetos de las tiles que vienen por cada capa (puedo poner los arboles y las colisiones se ponen automaticamente)
+    - Arreglado un error que habia en la fundicion
