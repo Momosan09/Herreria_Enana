@@ -49,6 +49,7 @@ public abstract class Npc extends Entidad implements NpcInterface{
 		this.data = data;
 		this.nombre = this.data.getNombre();
 		this.dialogos = data.getDialogos();
+		this.respuestas = data.getRespuestas();
 		this.retrato = data.getTextura();
 
 		animacion = new Animator(ruta, posicion, 0);

@@ -16,12 +16,13 @@ public class Charla {
 	
 	public ArrayList<ArrayList<String>> bloques;
 	
-	public Charla(Npc locutor, int diaEspecifico, ArrayList<String> _dialogos, ArrayList<String> _respuestas) {
-		this.locutor = locutor;
+	public Charla( int diaEspecifico, ArrayList<String> _dialogos, ArrayList<String> _respuestas) {
 		this.diaEspecifico = diaEspecifico;
 		this._dialogos = _dialogos;
 		this._respuestas = _respuestas;
-	
+		bloques = new ArrayList<ArrayList<String>>();
+		
+		bloqueUno();
 	}
 
 	public void bloqueUno() {
@@ -32,6 +33,7 @@ public class Charla {
 		bloqueUno.add(_respuestas.get(1));
 		
 		bloques.add(bloqueUno);
+		System.out.println(bloques.get(0).size());
 
 	}
 	

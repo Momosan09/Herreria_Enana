@@ -58,16 +58,18 @@ public class Dialogo implements HeadUpDisplay{
 	}
 	
 	public void update() {
-		mensaje.setText(locutor.getDialogos(mensajeAMostrar));
+		mensaje.setText(locutor.getBloque(0, 0, 0));
+		respuestas[0].setText(locutor.getBloque(0, 0, 1));
+		respuestas[1].setText(locutor.getBloque(0, 0, 2));
 	}
 	
 	@Override
 	public void crearActores() {
 		nombre = new Label(locutor.getNombre(), labelStyle);
-		mensaje = new Label(locutor.getBloque(0,0,0), labelStyle);
+		mensaje = new Label("asd", labelStyle);
 		
-		respuestas[0] = new Label(locutor.getBloque(0,0,1), labelStyle);
-		respuestas[1] = new Label(locutor.getBloque(0,0,2), labelStyle);
+		respuestas[0] = new Label("das", labelStyle);
+		respuestas[1] = new Label("fsaf", labelStyle);
 	
 		retrato = new Image(locutor.getRetratoTextura());
 		
