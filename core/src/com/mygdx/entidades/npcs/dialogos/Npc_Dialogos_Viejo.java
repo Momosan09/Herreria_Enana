@@ -6,9 +6,9 @@ import com.mygdx.utiles.Recursos;
 
 public enum Npc_Dialogos_Viejo implements DialogosNPC{
 	
-	SALUDO(Recursos.bundle.get("viejo_Dialogo_1")),
-	DIALOGO_1(Recursos.bundle.get("viejo_Dialogo_2")),
-	DIALOGO_2(Recursos.bundle.get("viejo_Dialogo_3"));
+	DIALOGO_1(Recursos.bundle.get("viejo_Dialogo_1")),
+	DIALOGO_2(Recursos.bundle.get("viejo_Dialogo_2")),
+	DIALOGO_3(Recursos.bundle.get("viejo_Dialogo_3"));
 	
 	private final String _mensaje;
 	

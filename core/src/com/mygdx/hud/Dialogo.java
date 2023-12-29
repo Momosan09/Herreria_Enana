@@ -31,11 +31,13 @@ public class Dialogo implements HeadUpDisplay{
 	
 	private Label.LabelStyle labelStyle;
 	private int mensajeAMostrar, padding = 20;
+	private boolean tieneRespuesta = false;
 	
 	
 	public Dialogo(Npc locutor) {
 		this.locutor = locutor;
-		//respuestas = new Label[];
+		respuestas = new Label[2];
+
 		//System.out.println("mostrando dialgo");
 		poblarStage();
 		
@@ -62,7 +64,11 @@ public class Dialogo implements HeadUpDisplay{
 	@Override
 	public void crearActores() {
 		nombre = new Label(locutor.getNombre(), labelStyle);
-		mensaje = new Label(locutor.getDialogos(mensajeAMostrar), labelStyle);
+		mensaje = new Label(locutor.getBloque(0,0,0), labelStyle);
+		
+		respuestas[0] = new Label(locutor.getBloque(0,0,1), labelStyle);
+		respuestas[1] = new Label(locutor.getBloque(0,0,2), labelStyle);
+	
 		retrato = new Image(locutor.getRetratoTextura());
 		
 	}
@@ -83,6 +89,11 @@ public class Dialogo implements HeadUpDisplay{
 		cajaDeDialogo.add(retrato).size(retrato.getWidth()*2, Gdx.graphics.getHeight()/3);
 		cajaDeDialogo.bottom().setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/3);
 		cajaDeDialogo.pad(padding);
+
+		cajaDeDialogo.row();
+		cajaDeDialogo.add(respuestas[0]);
+		cajaDeDialogo.row();
+		cajaDeDialogo.add(respuestas[1]);
 		stage.addActor(cajaDeDialogo);
 		
 		

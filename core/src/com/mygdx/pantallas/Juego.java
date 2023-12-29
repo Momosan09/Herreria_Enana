@@ -24,6 +24,7 @@ import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.entidades.npcs.VendedorAmbulante;
 import com.mygdx.entidades.npcs.VendedorDeTienda;
 import com.mygdx.entidades.npcs.Viejo;
+import com.mygdx.entidades.npcs.dialogos.CharlaManager;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.entidades.npcs.dialogos.Npc_Dialogos_Rey;
 import com.mygdx.enums.Items;
@@ -92,6 +93,9 @@ public class Juego implements Screen{
 	private DialogoDeCompra dialogoDeCompra;
 	private Fundicion fundicionHUD;
 	
+	//Charlas
+	private CharlaManager charlaManager;
+	
 	//Input
 	private InputMultiplexer mux;
 	
@@ -155,6 +159,7 @@ public class Juego implements Screen{
 				
 		mineralesManagerConfig();
 		misionesMangerConfig();
+		charlaManagerConfig();
 		
 		//HUD
 
@@ -237,6 +242,9 @@ public class Juego implements Screen{
 		rayHandler.render();
 		
 		Render.batch.begin();//HUD´s
+		
+		
+
 		
 		cartaHUD.render();
 		if(cartaHUD.getCerrar()) {//si ya leyo la carta...
@@ -386,6 +394,10 @@ public class Juego implements Screen{
 	private void misionesMangerConfig() {
 		misionesManager = new MisionesManager(jugador);
 		misionesManager.agregarMision();
+	}
+	
+	private void charlaManagerConfig() {
+		charlaManager = new CharlaManager(vendedorTienda);
 	}
 	
 
