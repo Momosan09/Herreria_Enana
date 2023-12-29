@@ -160,7 +160,7 @@ public class Juego implements Screen{
 		mineralesManagerConfig();
 		misionesMangerConfig();
 		charlaManagerConfig();
-	    npcManager.crearDialogos();
+
 		
 		//HUD
 
@@ -381,6 +381,7 @@ public class Juego implements Screen{
 		npcManager.agregarEntidad(viejo);
 		npcManager.agregarEntidad(vendedorAmbulate);
 		npcManager.agregarEntidad(vendedorTienda);
+	    npcManager.crearDialogos();
 
 	}
 	
@@ -398,7 +399,7 @@ public class Juego implements Screen{
 	}
 	
 	private void charlaManagerConfig() {
-		charlaManager = new CharlaManager(vendedorTienda);
+		charlaManager = new CharlaManager(vendedorTienda, viejo);
 	}
 	
 

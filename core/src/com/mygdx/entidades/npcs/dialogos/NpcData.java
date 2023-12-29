@@ -11,7 +11,7 @@ public enum NpcData implements DialogosNPC{
 
 	VENDEDOR_AMBULANTE("Vendedor Ambulante",  Recursos.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Vendedor_Ambulante.obtenerTodosLosMensajes(), Npc_Respuestas_Viejo.obtenerTodosLosMensajes()),
 	VIEJO("Viejin", Recursos.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Viejo.obtenerTodosLosMensajes(), Npc_Respuestas_Viejo.obtenerTodosLosMensajes()),
-	VENDEDOR_TIENDA("Vendedor Tienda", Recursos.VENDEDOR_TIENDA_PORTRAIT, Npc_Dialogos_Vendedor_Tienda.obtenerTodosLosMensajes(), Npc_Respuestas_Viejo.obtenerTodosLosMensajes()),
+	VENDEDOR_TIENDA("Vendedor Tienda", Recursos.VENDEDOR_TIENDA_PORTRAIT, Npc_Dialogos_Vendedor_Tienda.obtenerTodosLosMensajes(), Npc_Respuestas_Vendedor_Tienda.obtenerTodosLosMensajes()),
 	REY("Rey", Recursos.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Rey.obtenerTodosLosMensajes(), Npc_Respuestas_Viejo.obtenerTodosLosMensajes());
 	
 	private final String _nombre;

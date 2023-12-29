@@ -10,12 +10,17 @@ public class CharlaManager {
 	public ArrayList<Charla> vendedorTiendaCharlas;
 	
 	
-	public CharlaManager(Npc npcs) {
-		npcVendedorTienda(npcs);
+	public CharlaManager(Npc ...npcs) {
+		npcVendedorTienda(npcs[0]);
+		npcViejo(npcs[1]);
 	}
 	
 	public void npcVendedorTienda(Npc vendedorTienda) {
-		vendedorTienda.charlas.add(new Charla( -1,vendedorTienda.getDialogos(), vendedorTienda.getRespuestas()));
+		vendedorTienda.charlas.add(new Charla(-1,vendedorTienda.getDialogos(), vendedorTienda.getRespuestas()));
+	}
+	
+	public void npcViejo(Npc viejo) {
+		viejo.charlas.add(new Charla(-1, viejo.getDialogos(), viejo.getRespuestas()));
 	}
 	
 }
