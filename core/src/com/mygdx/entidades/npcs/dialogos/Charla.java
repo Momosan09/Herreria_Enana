@@ -33,7 +33,6 @@ public class Charla {
 		bloqueUno.add(_respuestas.get(1));
 		
 		bloques.add(bloqueUno);
-		System.out.println(bloques.get(0).size());
 
 	}
 	

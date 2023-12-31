@@ -1,6 +1,9 @@
 package com.mygdx.hud;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.GL30;
@@ -8,10 +11,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Npc;
 import com.mygdx.utiles.Colores;
@@ -32,15 +38,17 @@ public class Dialogo implements HeadUpDisplay{
 	private Label.LabelStyle labelStyle;
 	private int mensajeAMostrar, padding = 20;
 	private boolean tieneRespuesta = false;
-	
-	
+
 	public Dialogo(Npc locutor) {
+
+		
 		this.locutor = locutor;
 		respuestas = new Label[2];
 
 		//System.out.println("mostrando dialgo");
 		poblarStage();
 		
+		Recursos.mux.addProcessor(stage);
 		
 	}
 	
@@ -61,6 +69,7 @@ public class Dialogo implements HeadUpDisplay{
 		mensaje.setText(locutor.getBloque(0, 0, 0));
 		respuestas[0].setText(locutor.getBloque(0, 0, 1));
 		respuestas[1].setText(locutor.getBloque(0, 0, 2));
+	
 	}
 	
 	@Override
@@ -69,7 +78,23 @@ public class Dialogo implements HeadUpDisplay{
 		mensaje = new Label("asd", labelStyle);
 		
 		respuestas[0] = new Label("das", labelStyle);
+		respuestas[0].addListener(new ClickListener() {
+			
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				System.out.println("respuesta 1");
+		
+	}});
+		
 		respuestas[1] = new Label("fsaf", labelStyle);
+		respuestas[1].addListener(new ClickListener() {
+			
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				System.out.println("respuesta 2");
+		
+	}});
+		
 	
 		retrato = new Image(locutor.getRetratoTextura());
 		
@@ -116,6 +141,5 @@ public class Dialogo implements HeadUpDisplay{
 		DibujarFiguras.dibujarRectanguloLleno(0, padding, cajaDeDialogo.getWidth(), cajaDeDialogo.getRowHeight(1), new Color(0,0,0,.5f));
 		
 	}
-
 
 }

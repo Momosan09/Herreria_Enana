@@ -1,6 +1,7 @@
 package com.mygdx.utiles;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.I18NBundle;
@@ -8,6 +9,8 @@ import com.badlogic.gdx.utils.I18NBundle;
 public abstract class Recursos {
 	
 	public static I18NBundle bundle = I18NBundle.createBundle(Gdx.files.internal("locale/locale"));
+	
+	public static InputMultiplexer mux = new InputMultiplexer();//El input multiplexer es una especie de gestor de inputProcessors
 	
 	//Box2d
 	public static final float PPM = 32.0f;//Pixeles por metro

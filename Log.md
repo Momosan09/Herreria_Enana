@@ -220,3 +220,6 @@
 # 21 DIC
     - Modificada la clase del mapa, ahora lee los objetos de las tiles que vienen por cada capa (puedo poner los arboles y las colisiones se ponen automaticamente)
     - Arreglado un error que habia en la fundicion
+
+# 31 DIC
+    - Me olvide de escribir lo que hice dias anteriores, estoy cambiando el sistema de dialogo para que haya respuestas y distintas charlas con los npcs

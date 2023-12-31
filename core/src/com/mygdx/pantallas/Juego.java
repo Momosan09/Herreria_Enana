@@ -85,7 +85,6 @@ public class Juego implements Screen{
 
 	//Scene2d.ui
 	private HUD hud;
-	private Dialogo dialogo;
 	private CartaHUD cartaHUD;
 	private PausaHUD pausaHud;
 	private Combinacion combinacionJugador;
@@ -95,9 +94,6 @@ public class Juego implements Screen{
 	
 	//Charlas
 	private CharlaManager charlaManager;
-	
-	//Input
-	private InputMultiplexer mux;
 	
 	//Toggles (referido a HUDs), los uso cuando ese hud no se cierra con boton
 	private boolean toggleInventario = false;
@@ -113,10 +109,7 @@ public class Juego implements Screen{
 	}
 
 	@Override
-	public void show() {
-		mux = new InputMultiplexer();//El input multiplexer es una especie de gestor de inputProcessors
-		
-		
+	public void show() {	
 		//Box2d
 		helpMapa = new HelpMapa(this);
 		this.world = new World(new Vector2(0,0), false);
@@ -143,8 +136,8 @@ public class Juego implements Screen{
 
 		combinacionJugador = new Combinacion(jugador);
 		
-    	mux.addProcessor(combinacionJugador.getStage());
-    	mux.addProcessor(combinacionJugador.getDragAndDrop().getStage());
+    	Recursos.mux.addProcessor(combinacionJugador.getStage());
+    	Recursos.mux.addProcessor(combinacionJugador.getDragAndDrop().getStage());
 				
 		//Npc
 		crearNPCs();
@@ -169,8 +162,8 @@ public class Juego implements Screen{
 	    dialogoDeCompra = new DialogoDeCompra();
 	    pausaHud = new PausaHUD(game);
 	    
-	    mux.addProcessor(cartaHUD.getStage());
-	    mux.addProcessor(pausaHud.getStage());
+	    Recursos.mux.addProcessor(cartaHUD.getStage());
+	    Recursos.mux.addProcessor(pausaHud.getStage());
 	    //mux.addProcessor(dialogoDeCompra.getStage());
 	   
 	    inventarioHUD = new InventarioHUD(jugador);
@@ -179,13 +172,14 @@ public class Juego implements Screen{
 		fundicionHUD = new Fundicion(jugador);
 			
 	    horno = new Horno(32*22,32*10, world, Recursos.HORNO, fundicionHUD);
-	    mux.addProcessor(horno.getHUD().getStage());
-	    mux.addProcessor(hud.getStage());
-	    mux.addProcessor(hud.getResultadosBatallasHUD().getStage());
-	    mux.addProcessor(hud.getProximaBatallaHUD().getStage());
-	    mux.addProcessor(hud.getDiarioHUD().getStage());
+	    Recursos.mux.addProcessor(horno.getHUD().getStage());
+	    Recursos.mux.addProcessor(hud.getStage());
+	    Recursos.mux.addProcessor(hud.getResultadosBatallasHUD().getStage());
+	    Recursos.mux.addProcessor(hud.getProximaBatallaHUD().getStage());
+	    Recursos.mux.addProcessor(hud.getDiarioHUD().getStage());
+
 	    
-		Gdx.input.setInputProcessor(mux);
+		Gdx.input.setInputProcessor(Recursos.mux);
 		
 		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.HIERRO.toString(), 1, 1,50,300);
 		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.PIEDRA.toString(), 2,0,10,50);
