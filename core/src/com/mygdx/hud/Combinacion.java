@@ -58,7 +58,6 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
     
     public void render() {
     	if(visible) {
-    	DibujarFiguras.dibujarRectanguloLleno(contenedor.getX()+pad, contenedor.getY()+pad, contenedor.getWidth()-(pad*2), contenedor.getHeight()-(pad*2), new Color(0,0,0,.7f));
     	stage.act(Gdx.graphics.getDeltaTime());
     	stage.draw();
     	dragNDrop.render();

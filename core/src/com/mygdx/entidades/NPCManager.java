@@ -32,6 +32,7 @@ public class NPCManager {
             entidad.detectarJugador(jugador);
         }
     }
+    
 
     public void renderizar(SpriteBatch batch) {
         for (Npc entidad : npcs) {
@@ -43,26 +44,21 @@ public class NPCManager {
     	for (Npc npcIndex: npcs) {
     		npcIndex.crearCajaDialogo();
     		System.out.println(HelpDebug.debub(getClass())+"Cargados los dialogos de " + npcIndex.getNombre() );
-
-    		
 		}
     }
     
-    public void mostrarDialogo(SpriteBatch batch, int index) {
+    public void mostrarDialogo() {
         for (Npc entidad : npcs) {
         	if(entidad.interaccion()) {
-        		batch.begin();
-        		entidad.getCajaDialogo().selectMensaje(index);
-        		entidad.dibujarCajaDialogo(batch);
-        		batch.end();
+        		//entidad.getCajaDialogo().selectMensaje(index);
+        		entidad.charla();
+
         	}
         	
         }
     }
     
-    public void hablar(Npc npc, int index) {
-    	npc.getDialogos(index);
-    }
+
 
     public List<Npc> getEntidades() {
         return npcs;

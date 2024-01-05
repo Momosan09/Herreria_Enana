@@ -7,9 +7,10 @@ import com.mygdx.utiles.Recursos;
 public enum Npc_Dialogos_Vendedor_Tienda implements DialogosNPC{
 	
 	
-	DIALOGO_1(Recursos.bundle.get("vendedor_tienda_Dialogo_1")),
-	DIALOGO_2(Recursos.bundle.get("vendedor_tienda_Dialogo_2")),
-	DIALOGO_3(Recursos.bundle.get("vendedor_tienda_Dialogo_3"));
+//	Charla 1 - Primer Dialogo - Saludo
+	SALUDO(Recursos.bundle.get("vendedorTienda_saludo_dialogo")),
+	RESPUESTA_1_SALUDO(Recursos.bundle.get("vendedorTienda_saludo_respuesta_1")),
+	RESPUESTA_2_SALUDO(Recursos.bundle.get("vendedorTienda_saludo_respuesta_2"));
 
 	
 	private final String _mensaje;

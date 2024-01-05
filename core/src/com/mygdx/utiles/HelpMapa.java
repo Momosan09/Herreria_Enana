@@ -44,7 +44,7 @@ public class HelpMapa {
 	
 	public void conseguirObjetosDelMapa(MapObjects mapObjects) {
 	    for (MapObject mapObject : mapObjects) {
-	    	System.out.println("entro");
+//	    	System.out.println(HelpDebug.debub(getClass())+"entro");
 	        if (mapObject instanceof PolygonMapObject) {
 	            crearCuerposDeColision((PolygonMapObject) mapObject);
 	        }

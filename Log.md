@@ -223,3 +223,8 @@
 
 # 31 DIC
     - Me olvide de escribir lo que hice dias anteriores, estoy cambiando el sistema de dialogo para que haya respuestas y distintas charlas con los npcs
+
+# 2024
+
+# 5 ENE
+    - DIALOGOSSS HIPER FLEXIBLESSSS CON RESPUESTA!!!

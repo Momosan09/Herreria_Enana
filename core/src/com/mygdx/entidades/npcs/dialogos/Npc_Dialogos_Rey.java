@@ -5,7 +5,9 @@ import com.mygdx.utiles.Recursos;
 
 public enum Npc_Dialogos_Rey implements DialogosNPC{
 	
-	CARTA_0(Recursos.bundle.get("rey_Carta_0"));
+	CARTA_0(Recursos.bundle.get("rey_Carta_0")),
+	CARTA_1(Recursos.bundle.get("rey_Carta_0")),
+	CARTA_2(Recursos.bundle.get("rey_Carta_0"));
 
 	
 	private final String _mensaje;

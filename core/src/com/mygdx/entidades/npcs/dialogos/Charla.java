@@ -12,14 +12,16 @@ public class Charla {
 	private int diaEspecifico = -1;
 	
 	//Texto
-	private ArrayList<String> _dialogos, _respuestas;
+	public String nombreCharla; //Un identificador de la charla, ej: "viejo_saludo", "vendedor_venta_1"
+	private String mensaje, respuesta1, respuesta2;
 	
 	public ArrayList<ArrayList<String>> bloques;
 	
-	public Charla( int diaEspecifico, ArrayList<String> _dialogos, ArrayList<String> _respuestas) {
-		this.diaEspecifico = diaEspecifico;
-		this._dialogos = _dialogos;
-		this._respuestas = _respuestas;
+	public Charla(String nombreCharla, String[] valores) {
+		this.nombreCharla = nombreCharla;
+		this.mensaje = valores[0];
+		this.respuesta1 = valores[1];
+		this.respuesta2 = valores[2];
 		bloques = new ArrayList<ArrayList<String>>();
 		
 		bloqueUno();
@@ -28,14 +30,14 @@ public class Charla {
 	public void bloqueUno() {
 		ArrayList<String> bloqueUno = new ArrayList();
 		
-		bloqueUno.add(_dialogos.get(0));
-		bloqueUno.add(_respuestas.get(0));
-		bloqueUno.add(_respuestas.get(1));
+		bloqueUno.add(mensaje);
+		bloqueUno.add(respuesta1);
+		bloqueUno.add(respuesta2);
 		
 		bloques.add(bloqueUno);
 
 	}
-	
+	/*
 	public void bloqueDos() {
 		ArrayList<String> bloqueDos = new ArrayList();
 		
@@ -45,5 +47,17 @@ public class Charla {
 		
 		bloques.add(bloqueDos);
 	}
+	*/
 	
+	public String getMensaje() {
+		return mensaje;
+	}
+	
+	public String getRespuesta1() {
+		return respuesta1;
+	}
+	
+	public String getRespuesta2() {
+		return respuesta2;
+	}
 }

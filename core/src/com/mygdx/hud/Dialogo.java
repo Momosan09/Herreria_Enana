@@ -1,5 +1,7 @@
 package com.mygdx.hud;
 
+import java.awt.Rectangle;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
@@ -20,6 +22,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Npc;
+import com.mygdx.entidades.npcs.dialogos.CharlaManager;
+import com.mygdx.pantallas.Juego;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.EstiloFuente;
@@ -41,10 +45,10 @@ public class Dialogo implements HeadUpDisplay{
 
 	public Dialogo(Npc locutor) {
 
-		
 		this.locutor = locutor;
 		respuestas = new Label[2];
 
+		
 		//System.out.println("mostrando dialgo");
 		poblarStage();
 		
@@ -55,7 +59,6 @@ public class Dialogo implements HeadUpDisplay{
 	@Override
 	public void render() {
 		update();
-		DibujarFiguras.dibujarRectanguloLleno(0, padding, cajaDeDialogo.getWidth(), cajaDeDialogo.getRowHeight(1), new Color(0,0,0,.5f));
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 		
@@ -66,32 +69,36 @@ public class Dialogo implements HeadUpDisplay{
 	}
 	
 	public void update() {
-		mensaje.setText(locutor.getBloque(0, 0, 0));
-		respuestas[0].setText(locutor.getBloque(0, 0, 1));
-		respuestas[1].setText(locutor.getBloque(0, 0, 2));
-	
+		System.out.println(locutor.getNombreCharlaActual());
+		mensaje.setText(locutor.getCharlaActual().getMensaje());
+		respuestas[0].setText(locutor.getCharlaActual().getRespuesta1());
+		respuestas[1].setText(locutor.getCharlaActual().getRespuesta2());
 	}
 	
 	@Override
 	public void crearActores() {
 		nombre = new Label(locutor.getNombre(), labelStyle);
-		mensaje = new Label("asd", labelStyle);
+		mensaje = new Label("mensaje", labelStyle);
 		
-		respuestas[0] = new Label("das", labelStyle);
+		respuestas[0] = new Label("respuesta1", labelStyle);
 		respuestas[0].addListener(new ClickListener() {
 			
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				System.out.println("respuesta 1");
+				locutor.respuesta1 = true;
+				locutor.respuesta2 = false;
 		
 	}});
 		
-		respuestas[1] = new Label("fsaf", labelStyle);
+		respuestas[1] = new Label("respuesta2", labelStyle);
 		respuestas[1].addListener(new ClickListener() {
 			
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				System.out.println("respuesta 2");
+				locutor.respuesta1 = false;
+				locutor.respuesta2 = true;
 		
 	}});
 		
@@ -138,7 +145,7 @@ public class Dialogo implements HeadUpDisplay{
 	@Override
 	public void reEscalar(int width, int heigth) {
 		screenViewport.update(width, heigth,true);
-		DibujarFiguras.dibujarRectanguloLleno(0, padding, cajaDeDialogo.getWidth(), cajaDeDialogo.getRowHeight(1), new Color(0,0,0,.5f));
+		
 		
 	}
 

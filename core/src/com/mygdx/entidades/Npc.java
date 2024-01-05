@@ -18,23 +18,25 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	
 	protected String nombre;
 	private Dialogo cajaDialogo;
-	private ArrayList<String> dialogos, respuestas;
+	private ArrayList<String[]> paqueteDeCharlas;//Tiene los datos de las charlas. Es muy importante el que tenga en el npc_dialogos_***
 	private Animator animacion;
 	private Texture retrato;
 	private NpcData data;
+	private String nombreCharlaActual;//nombre de la charla que se va a usar
 	
 	public ArrayList<Charla> charlas;
-
+	public boolean respuesta1 = false;
+	public boolean respuesta2 = false;
 
 	public Npc(float x, float y, World world, String ruta, NpcData data){
 		super(x, y, world, ruta);
 		crearCuerpo(world);
 		charlas = new ArrayList<Charla>();
+		paqueteDeCharlas = new ArrayList<String[]>();
 		
 		this.data = data;
 		this.nombre = this.data.getNombre();
-		this.dialogos = data.getDialogos();
-		this.respuestas = data.getRespuestas();
+		this.paqueteDeCharlas = data.getBloquesDeCharla();
 		this.retrato = data.getTextura();
 
 		animacion = new Animator(ruta, posicion, 0);
@@ -45,11 +47,11 @@ public abstract class Npc extends Entidad implements NpcInterface{
 		super(x, y, world, ruta);
 		crearCuerpo(world, ancho, alto);
 		charlas = new ArrayList<Charla>();
+		paqueteDeCharlas = new ArrayList<String[]>();
 		
 		this.data = data;
 		this.nombre = this.data.getNombre();
-		this.dialogos = data.getDialogos();
-		this.respuestas = data.getRespuestas();
+		this.paqueteDeCharlas = data.getBloquesDeCharla();
 		this.retrato = data.getTextura();
 
 		animacion = new Animator(ruta, posicion, 0);
@@ -80,50 +82,48 @@ public abstract class Npc extends Entidad implements NpcInterface{
 		cajaDialogo = new Dialogo(this);
 	}
 	
-	/*
-	public void agregarDialogo() {
-		for(int i = 0; i<data.getDialogos().length;i++) {
-			this.dialogos.add(data.getDialogos().toString());
-		}
-	}*/
-	   
-	public String getDialogos(int index) {//Devuelve el String que esta en el indice pasado
-		return dialogos.get(index);
+	public String getMensajeNroDePaqueteNro(int mensajeNro, int paqueteNro) {
+		return paqueteDeCharlas.get(paqueteNro)[mensajeNro];
 	}
 	
-	public ArrayList<String> getDialogos(){
-		return dialogos;
+	public String[] getPaqueteDeDialogosNro(int paqueteNro) {
+		return paqueteDeCharlas.get(paqueteNro);
 	}
 	
-	public ArrayList<String> getRespuestas(){
-		return respuestas;
-	}
-	
-	public Charla getCharlaNro(int index) {
-		return charlas.get(index);
-	}
-	
-	public String getBloque(int charlaNro, int nroBloque, int nroMensaje){
-		return charlas.get(charlaNro).bloques.get(nroBloque).get(nroMensaje);
-	}
-	
-	public void dibujarCajaDialogo(SpriteBatch batch) {
+	public void dibujarCajaDialogo() {
 		cajaDialogo.render();
 	}
 	
 	 public Dialogo getCajaDialogo() {
 		 return cajaDialogo;
 	 }
-	 
-	 public void charla(int index) {
+
+	 public void charla() {
 		 if(interaccion()) {
-			 cajaDialogo.selectMensaje(index);
+//			 cajaDialogo.selectMensaje(index);
 			 cajaDialogo.render();
 		 }
 	 }
 	 
 	 public void ejecutarAnimacion() {
 		 animacion.render();
+	 }
+	 
+	 public String getNombreCharlaActual() {
+		 return nombreCharlaActual;
+	 }
+	 
+	 public Charla getCharlaActual() {
+		 for(int i = 0; i<charlas.size(); i++) {
+			 if(charlas.get(i).nombreCharla.equals(nombreCharlaActual)) {
+				 return charlas.get(i);
+			 }
+		 }
+		return null;
+	 }
+	 
+	 public void setCharlaActual(String nombreCharla) {
+		 nombreCharlaActual = nombreCharla;
 	 }
 	 
 

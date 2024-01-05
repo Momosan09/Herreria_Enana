@@ -65,7 +65,7 @@ public class Juego implements Screen{
 	//Entidades
 	private Jugador jugador;
 	private ObjetoDelMapa carta;
-	private Npc viejo, vendedorAmbulate, vendedorTienda;
+	private Npc viejo, vendedorAmbulate, vendedorTienda, rey;
 	private Texture jugadorTextura;
 	private Mineral piedra, hierro, hierro1, piedra2;
 	private Horno horno;
@@ -93,7 +93,7 @@ public class Juego implements Screen{
 	private Fundicion fundicionHUD;
 	
 	//Charlas
-	private CharlaManager charlaManager;
+	public CharlaManager charlaManager;
 	
 	//Toggles (referido a HUDs), los uso cuando ese hud no se cierra con boton
 	private boolean toggleInventario = false;
@@ -142,6 +142,7 @@ public class Juego implements Screen{
 		//Npc
 		crearNPCs();
 		npcManagerConfig();
+		charlaManagerConfig();
 		
 		//objetos del mapa
 		piedra = new Piedra(32*20,32*16, world,false,Recursos.PIEDRA);
@@ -152,7 +153,7 @@ public class Juego implements Screen{
 				
 		mineralesManagerConfig();
 		misionesMangerConfig();
-		charlaManagerConfig();
+
 
 		
 		//HUD
@@ -192,7 +193,7 @@ public class Juego implements Screen{
 	public void render(float delta){
 		horaDelMundo();
 		Render.batch.begin();
-
+		
 		rayHandler.update();
 		world.step(1/60f, 6, 2);
 		Render.tiledMapRenderer.setView(camaraJugador);
@@ -207,19 +208,17 @@ public class Juego implements Screen{
 
 	    //Renderiza el Juego
 		Render.batch.begin();
-//		DibujarFiguras.dibujarRectanguloLleno(colisionPrueba.x, colisionPrueba.y, colisionPrueba.width, colisionPrueba.height, Color.CYAN);
 			
 		camaraJugador.update();
 		Render.batch.setProjectionMatrix(camaraJugador.combined);
 		
-
-
-		
 		Render.batch.end();
+		
 		Render.batch.begin();
 		
 		npcManager.renderizar(Render.batch);
-		npcManager.detectarJugador(jugador); 
+		npcManager.detectarJugador(jugador);
+
 		
 		mineralesManager.renderizar();
 		mineralesManager.detectarJugador(jugador);
@@ -245,18 +244,15 @@ public class Juego implements Screen{
 		if(cartaHUD.getCerrar()) {//si ya leyo la carta...
 			cartaHUD.cerrar();
 			jugador.puedeMoverse=true;
-
-			//npcManager.mostrarDialogo(Render.batch,0);//Aca tengo que modificar, pq todos los npcs me muestran el primer mensaje
-			vendedorAmbulate.charla(1);
-			viejo.charla(0);
-			vendedorTienda.charla(0);
-			//vendedor.getData().getMensaje(0);
 	    
+			npcManager.mostrarDialogo();//DEJALO ACA
+			charlaManager.checkearCharlas(vendedorTienda, vendedorAmbulate, viejo);
 			//Renderiza el HUD
 			camaraHud.update();
 			Render.batch.setProjectionMatrix(camaraHud.combined);//Una vez que renderiza el juego, se inicia el batch para la camara del HUD y lo dibuja
 	    
 			//Renderiza ocultables
+
 			hud.render();
 			pausaHud.render(jugador);
 			dialogoDeCompra.render(jugador);
@@ -265,6 +261,8 @@ public class Juego implements Screen{
 			fundicionHUD.render();
 			combinacionJugador.render();
 		    
+
+			
 		    if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT)) {
 		    	combinacionJugador.mostrar();
 		    }
@@ -366,8 +364,7 @@ public class Juego implements Screen{
 		viejo = new Viejo(32*10,32*12, world,Recursos.VIEJO, NpcData.VIEJO);
 		vendedorAmbulate = new VendedorAmbulante(32*20,32*5, world,Recursos.VENDEDOR_AMBULANTE, NpcData.VENDEDOR_AMBULANTE);
 		vendedorTienda = new VendedorDeTienda(32*12, 32*15.5f, world,Recursos.VENDEDOR_TIENDA, NpcData.VENDEDOR_TIENDA);
-		
-		//rey = new Rey(0,0,Recursos.VENDEDOR, NpcData.REY);
+//		rey = new Rey(0,0,Recursos.VENDEDOR, NpcData.REY);
 	}
 	
 	private void npcManagerConfig() {
@@ -377,6 +374,9 @@ public class Juego implements Screen{
 		npcManager.agregarEntidad(vendedorTienda);
 	    npcManager.crearDialogos();
 
+	}
+	private void charlaManagerConfig() {
+		charlaManager = new CharlaManager(vendedorTienda, vendedorAmbulate, viejo);
 	}
 	
 	private void mineralesManagerConfig() {
@@ -392,9 +392,6 @@ public class Juego implements Screen{
 		misionesManager.agregarMision();
 	}
 	
-	private void charlaManagerConfig() {
-		charlaManager = new CharlaManager(vendedorTienda, viejo);
-	}
 	
 
 	public Jugador getJugador1() {
