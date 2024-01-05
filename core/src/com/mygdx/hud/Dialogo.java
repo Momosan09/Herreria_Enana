@@ -27,6 +27,7 @@ import com.mygdx.pantallas.Juego;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.EstiloFuente;
+import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 
 public class Dialogo implements HeadUpDisplay{
@@ -69,7 +70,7 @@ public class Dialogo implements HeadUpDisplay{
 	}
 	
 	public void update() {
-		System.out.println(locutor.getNombreCharlaActual());
+//		System.out.println(HelpDebug.debub(getClass())+locutor.getNombreCharlaActual());
 		mensaje.setText(locutor.getCharlaActual().getMensaje());
 		respuestas[0].setText(locutor.getCharlaActual().getRespuesta1());
 		respuestas[1].setText(locutor.getCharlaActual().getRespuesta2());
