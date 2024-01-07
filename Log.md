@@ -228,3 +228,7 @@
 
 # 5 ENE
     - DIALOGOSSS HIPER FLEXIBLESSSS CON RESPUESTA!!!
+
+# 7 ENE
+    - Saque todo el debug feo del dialogo y lo reemplaze por un NinePatch (¿tendre que hacerlo TenPatch?)
+    - Color para la label con el cursor encima

@@ -1,33 +1,21 @@
 package com.mygdx.hud;
 
-import java.awt.Rectangle;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Colors;
-import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Npc;
-import com.mygdx.entidades.npcs.dialogos.CharlaManager;
-import com.mygdx.pantallas.Juego;
 import com.mygdx.utiles.Colores;
-import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.EstiloFuente;
-import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 
 public class Dialogo implements HeadUpDisplay{
@@ -36,9 +24,11 @@ public class Dialogo implements HeadUpDisplay{
 	
 	private ScreenViewport screenViewport;
 	private Stage stage;
-	private Table cajaDeDialogo;
+	private Table tabla, contenedor;
 	private Label nombre, mensaje, respuestas[];
 	private Image retrato;
+//	private TypingLabel label;
+	private NinePatchDrawable fondo;
 	
 	private Label.LabelStyle labelStyle;
 	private int mensajeAMostrar, padding = 20;
@@ -48,7 +38,6 @@ public class Dialogo implements HeadUpDisplay{
 
 		this.locutor = locutor;
 		respuestas = new Label[2];
-
 		
 		//System.out.println("mostrando dialgo");
 		poblarStage();
@@ -62,7 +51,6 @@ public class Dialogo implements HeadUpDisplay{
 		update();
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
-		
 	}
 	
 	public void dispose() {
@@ -74,38 +62,22 @@ public class Dialogo implements HeadUpDisplay{
 		mensaje.setText(locutor.getCharlaActual().getMensaje());
 		respuestas[0].setText(locutor.getCharlaActual().getRespuesta1());
 		respuestas[1].setText(locutor.getCharlaActual().getRespuesta2());
+
 	}
 	
 	@Override
 	public void crearActores() {
 		nombre = new Label(locutor.getNombre(), labelStyle);
 		mensaje = new Label("mensaje", labelStyle);
-		
+
 		respuestas[0] = new Label("respuesta1", labelStyle);
-		respuestas[0].addListener(new ClickListener() {
-			
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				System.out.println("respuesta 1");
-				locutor.respuesta1 = true;
-				locutor.respuesta2 = false;
-		
-	}});
-		
 		respuestas[1] = new Label("respuesta2", labelStyle);
-		respuestas[1].addListener(new ClickListener() {
-			
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				System.out.println("respuesta 2");
-				locutor.respuesta1 = false;
-				locutor.respuesta2 = true;
+		agregarEventos();
 		
-	}});
 		
-	
 		retrato = new Image(locutor.getRetratoTextura());
 		
+		fondo = new NinePatchDrawable(new NinePatch(new Texture(Recursos.DIALOGO_HUD)));
 	}
 	
 	@Override
@@ -114,23 +86,30 @@ public class Dialogo implements HeadUpDisplay{
 		crearActores();
 		screenViewport = new ScreenViewport();
 		stage = new Stage(screenViewport);
-		cajaDeDialogo = new Table();
-		cajaDeDialogo.setFillParent(true);
-		cajaDeDialogo.setDebug(true);
+		tabla = new Table();
 		
-		cajaDeDialogo.add(nombre).expandX().left();
-		cajaDeDialogo.row();
-		cajaDeDialogo.add(mensaje).size(Gdx.graphics.getWidth()/1.5f, Gdx.graphics.getHeight()/3).left();
-		cajaDeDialogo.add(retrato).size(retrato.getWidth()*2, Gdx.graphics.getHeight()/3);
-		cajaDeDialogo.bottom().setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/3);
-		cajaDeDialogo.pad(padding);
+		tabla.setFillParent(true);
+		
+		contenedor = new Table();
+		contenedor.setFillParent(false);
+		contenedor.setBackground(fondo);
+		
+		contenedor.add(nombre).left().expandX().padLeft(padding*2.25f);
+		contenedor.row();
+		contenedor.add(mensaje).expandY().left();
+		contenedor.add(retrato).size(retrato.getWidth()*2,retrato.getHeight()*2);
 
-		cajaDeDialogo.row();
-		cajaDeDialogo.add(respuestas[0]);
-		cajaDeDialogo.row();
-		cajaDeDialogo.add(respuestas[1]);
-		stage.addActor(cajaDeDialogo);
+		contenedor.row();
+		contenedor.add(respuestas[0]);
+		contenedor.row();
+		contenedor.add(respuestas[1]);
+		contenedor.padLeft(padding);
+		contenedor.padRight(padding);
+		contenedor.padBottom(padding);
 		
+		tabla.add(contenedor).bottom().expand();
+		tabla.padBottom(padding);
+		stage.addActor(tabla);
 		
 	}	
 	
@@ -147,7 +126,53 @@ public class Dialogo implements HeadUpDisplay{
 	public void reEscalar(int width, int heigth) {
 		screenViewport.update(width, heigth,true);
 		
-		
 	}
+	
+	public void agregarEventos() {
+		respuestas[0].addListener(new InputListener() { //No uso el EventListener porque me complica para hacer lo de cambiar de color las labels
+		    @Override
+		    public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+		        // Este método se llama cuando el cursor entra en el área de la Label
+		    	respuestas[0].setColor(Color.valueOf(Colores.SELECCIONADO));
+		    }
+
+		    @Override
+		    public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+		        // Este método se llama cuando el cursor sale del área de la Label
+		    	respuestas[0].setColor(Color.WHITE);
+		    }
+
+		    @Override
+		    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+		    		locutor.respuesta1 = true;
+		    		locutor.respuesta2 = false;
+		        return true;  // Devuelve true para indicar que el evento ha sido manejado
+		    }
+		});
+		
+		respuestas[1].addListener(new InputListener() {
+		    @Override
+		    public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+		        // Este método se llama cuando el cursor entra en el área de la Label
+		    	respuestas[1].setColor(Color.valueOf(Colores.SELECCIONADO));
+		    }
+
+		    @Override
+		    public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+		        // Este método se llama cuando el cursor sale del área de la Label
+		    	respuestas[1].setColor(Color.WHITE);
+		    }
+
+		    @Override
+		    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+		    		locutor.respuesta1 = false;
+		    		locutor.respuesta2 = true;
+		    		respuestas[1].setColor(Color.CYAN);
+		        return true;  // Devuelve true para indicar que el evento ha sido manejado
+		    }
+		});
+
+	}
+
 
 }
