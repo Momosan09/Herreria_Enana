@@ -3,11 +3,14 @@ package com.mygdx.hud;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.game.Principal;
@@ -22,12 +25,13 @@ import com.mygdx.utiles.Recursos;
 public class PausaHUD implements HeadUpDisplay, Ocultable{
 
 	
-	private final Principal game;
+	private final Juego game;
 	private ScreenViewport screenViewport;
 	private Stage stage;
 	private Table tabla, contenedor, tablaLienzo, tablaVideo, tablaGamePlay, tablaAudio, tablaSalir;
 	private Label titulo;
 	private Label videoLbl, gameplayLbl, audioLbl, salirLbl;
+	private NinePatchDrawable fondo;
 	
 	//sub-tabla Video
 	private Label lblVideoOpcion1, lblVideoOpcion2;
@@ -41,6 +45,7 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 	//sub-tabla Salir
 	private Label lblSalirOpcion1, lblSalirOpcion2;
 	
+	private int padding = 20;
 	
 	private Label.LabelStyle labelStyle, labelStyleVentana ,labelStyleVentanaSeleccionada;
 	
@@ -48,11 +53,10 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 	
 	private PausaVentanas ventanaActiva = PausaVentanas.GAMEPLAY; // empieza en la ventana de gameplay
 	
-	public PausaHUD(final Principal game) {
+	public PausaHUD(final Juego game) {
 		this.game = game;
 		screenViewport = new ScreenViewport();
         stage = new Stage(screenViewport);
-        
         crearFuentes();
         crearActores();
         poblarStage();
@@ -83,7 +87,6 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 		tabla.setFillParent(true);
 		
 		contenedor = new Table();
-		contenedor.setDebug(true);
 		
 		tablaLienzo = new Table();
 		
@@ -158,7 +161,7 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 			public void clicked(InputEvent event, float x, float y) {
 				System.out.println(HelpDebug.debub(getClass())+"Finalizar_conexion");
 				cambiarColorLabels(lblSalirOpcion1, lblSalirOpcion2);
-				game.setScreen(new PantallaMenu(game));
+//				game.setScreen(new PantallaMenu(game));
 				
 				}
 		});
@@ -169,17 +172,14 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 			public void clicked(InputEvent event, float x, float y) {
 				System.out.println(HelpDebug.debub(getClass())+"Menu principal");
 				cambiarColorLabels(lblSalirOpcion2, lblSalirOpcion1); 
-				game.setScreen(new PantallaMenu(game));
+				game.salirDelJuego();
 				}
 		});
+		
+		fondo = new NinePatchDrawable(new NinePatch(new Texture(Recursos.PAUSA_HUD)));
 	}
 	
-	public void dispose() {
-		stage.dispose();
-		game.font.dispose();
-		game.dispose();
 
-	}
 
 	@Override
 	public void poblarStage() {
@@ -187,13 +187,14 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 		tabla.add(contenedor);
 		stage.addActor(tabla);
 		
-		
-		
-		contenedor.add(titulo).colspan(4);
+		contenedor.add(titulo).colspan(4).padTop(padding);
 		contenedor.row();
-		contenedor.add(videoLbl, gameplayLbl, audioLbl, salirLbl);
+		contenedor.add(videoLbl).padLeft(padding);
+		contenedor.add(gameplayLbl);
+		contenedor.add(audioLbl);
+		contenedor.add(salirLbl).padRight(padding);
 		contenedor.row();
-		contenedor.add(tablaLienzo);
+		contenedor.add(tablaLienzo).pad(padding);
 		
 		tablaLienzo.add(tablaGamePlay);
 		
@@ -214,20 +215,9 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 		tablaSalir.row();
 		tablaSalir.add(lblSalirOpcion2);
 		
-	}
-	
-	public void render(Jugador jugador) {
-		if(visible) {
-				lblSalirOpcion1.setVisible(false);
-				lblSalirOpcion2.setVisible(true);
-			//DibujarFiguras.dibujarRectanguloLleno(contenedor.getX(), contenedor.getY(), contenedor.getWidth(), contenedor.getHeight(), new Color(0,0,0,.7f));
-	    	stage.act(Gdx.graphics.getDeltaTime());
-	    	stage.draw();
-	    	//DibujarFiguras.dibujarRectanguloLleno(tablaLienzo.getX(), tablaLienzo.getY(), tablaLienzo.getWidth(), tablaLienzo.getHeight(), Color.valueOf(Colores.NEGRO));
-		}
-		}
+		contenedor.setBackground(fondo);
 		
-	
+	}
 	
 	public void cambiarVentana() {
 		tablaLienzo.clear();
@@ -262,7 +252,12 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
+		if(visible) {
+			lblSalirOpcion1.setVisible(false);
+			lblSalirOpcion2.setVisible(true);
+    	stage.act(Gdx.graphics.getDeltaTime());
+    	stage.draw();
+	}
 		
 	}
 	
@@ -283,4 +278,11 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 		return visible;
 	}
 
+	public void dispose() {
+		Recursos.mux.removeProcessor(stage);
+		stage.dispose();
+		this.dispose();
+
+	}
+	
 }

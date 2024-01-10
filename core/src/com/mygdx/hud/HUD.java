@@ -198,6 +198,10 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		diarioHUD.reEscalar(width, height);
 	}
 	public void dispose() {
+		proximaBatallaHUD.dispose();
+		diarioHUD.dispose();
+		resultadosHUD.dispose();
+		Recursos.mux.removeProcessor(stage);//tengo que sacar el stage del inputprocesor porque el mux es estatico, entonces cuando entro y salgo del juego, el mux agrega el nuevo stage pero sigue guardando el anterior
 		stage.dispose();
 	}
 	

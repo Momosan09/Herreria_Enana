@@ -161,7 +161,7 @@ public class Juego implements Screen{
 		cartaHUD = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);//ee parece que cartaHUD tiene que ir primero, sino no anda la combinacion (nose pq)
 
 	    dialogoDeCompra = new DialogoDeCompra();
-	    pausaHud = new PausaHUD(game);
+	    pausaHud = new PausaHUD(this);
 	    
 	    Recursos.mux.addProcessor(cartaHUD.getStage());
 	    Recursos.mux.addProcessor(pausaHud.getStage());
@@ -254,7 +254,7 @@ public class Juego implements Screen{
 			//Renderiza ocultables
 
 			hud.render();
-			pausaHud.render(jugador);
+			pausaHud.render();
 			dialogoDeCompra.render(jugador);
 			inventarioHUD.render(jugador);
 			horno.mostarHUD(jugador);
@@ -354,11 +354,6 @@ public class Juego implements Screen{
 		
 	}
 
-	@Override
-	public void dispose() {
-		Render.tiledMapRenderer.dispose();
-		rayHandler.dispose();
-	}
 	
 	public void crearNPCs() {
 		viejo = new Viejo(32*10,32*12, world,Recursos.VIEJO, NpcData.VIEJO);
@@ -403,6 +398,7 @@ public class Juego implements Screen{
 	}
 
 	public void salirDelJuego() {
+		Recursos.mux.clear();//Pero aca voy a tener un prblema si uso el mismo mux para las otras partes del juego que no sean de la pantalla juego (pantallaMenu, etc) tengo que tener cuidado 
 		game.setScreen(new PantallaMenu(game));
 	}
 	
@@ -467,5 +463,15 @@ public class Juego implements Screen{
 		 return minutoDelMundo;
 	 }
 	 
+		@Override
+		public void dispose() {
+			System.out.println("ouch");
+			Render.tiledMapRenderer.dispose();
+			rayHandler.dispose();
+			pausaHud.dispose();
+			cartaHUD.dispose();
+			hud.dispose();
+			Recursos.mux.clear();
+		}
 
 }

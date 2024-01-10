@@ -26,7 +26,7 @@ public class ProximaBatallaHUD implements HeadUpDisplay, Ocultable{
 	private Button cerrarBoton;
 	private Label.LabelStyle labelStyle;
 	
-	private boolean visible;
+	private boolean visible = false;
 	
 	
 	public ProximaBatallaHUD() {
@@ -115,6 +115,12 @@ public class ProximaBatallaHUD implements HeadUpDisplay, Ocultable{
 	
 	public Stage getStage() {
 		return stage;
+	}
+	
+	public void dispose() {
+		Recursos.mux.removeProcessor(stage);//tengo que sacar el stage del inputprocesor porque el mux es estatico, entonces cuando entro y salgo del juego, el mux agrega el nuevo stage pero sigue guardando el anterior
+		stage.dispose();
+		skin.dispose();
 	}
 
 }

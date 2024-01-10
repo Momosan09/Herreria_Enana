@@ -34,7 +34,7 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 	private ArrayList<Mision> misiones = new ArrayList<>();
 	private Jugador jugador;
 	
-	private boolean visible;
+	private boolean visible = false;
 	
 	
 	private Label.LabelStyle labelStyle, labelStyleCompletada, labelStylePendiente, labelStyleOro, labelStylePlata, labelStyleCobre;
@@ -196,6 +196,12 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 	
 	public Stage getStage() {
 		return stage;
+	}
+	
+	public void dispose() {
+		Recursos.mux.removeProcessor(stage);//tengo que sacar el stage del inputprocesor porque el mux es estatico, entonces cuando entro y salgo del juego, el mux agrega el nuevo stage pero sigue guardando el anterior
+		stage.dispose();
+		skin.dispose();
 	}
 
 }

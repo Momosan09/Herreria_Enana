@@ -29,7 +29,7 @@ public class Dialogo implements HeadUpDisplay{
 	private Image retrato;
 //	private TypingLabel label;
 	private NinePatchDrawable fondo;
-	
+//	private TypingLabel typingLabel;
 	private Label.LabelStyle labelStyle;
 	private int mensajeAMostrar, padding = 20;
 	private boolean tieneRespuesta = false;

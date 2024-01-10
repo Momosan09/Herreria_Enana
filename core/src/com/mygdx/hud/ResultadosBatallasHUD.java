@@ -34,7 +34,7 @@ public class ResultadosBatallasHUD implements HeadUpDisplay, Ocultable{//Una cos
 	private Skin skin;
 	private Button cerrarBoton;
 	public boolean cerrar = false;
-	private boolean visible;
+	private boolean visible = false;
 	
 	public ResultadosBatallasHUD() {
 		historial = ResultadosBatallas.getHistorial();
@@ -139,6 +139,12 @@ public class ResultadosBatallasHUD implements HeadUpDisplay, Ocultable{//Una cos
 	}
 	public Stage getStage() {
 		return stage;
+	}
+	
+	public void dispose() {
+		Recursos.mux.removeProcessor(stage);//tengo que sacar el stage del inputprocesor porque el mux es estatico, entonces cuando entro y salgo del juego, el mux agrega el nuevo stage pero sigue guardando el anterior
+		stage.dispose();
+		skin.dispose();
 	}
 	
 	}

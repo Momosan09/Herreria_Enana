@@ -232,3 +232,7 @@
 # 7 ENE
     - Saque todo el debug feo del dialogo y lo reemplaze por un NinePatch (¿tendre que hacerlo TenPatch?)
     - Color para la label con el cursor encima
+
+# 9 ENE (no tengo internet, esto se va a subir despues)
+    - Cambie el debug del hud de pausa por un 9patch mas acorde
+    - Arrgle un error que habia al volver a entrar al juego luego salir de el mediante el hud de pausa 

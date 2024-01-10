@@ -39,9 +39,6 @@ public class CartaHUD implements HeadUpDisplay, Cerrable{
 
 	private boolean cerrar = false;
 	
-	
-	
-	
 	public CartaHUD(DialogosNPC datosCartaNpc) {
 		this.datosCartaNpc = datosCartaNpc;
 		screenViewport = new ScreenViewport();
@@ -114,6 +111,7 @@ public class CartaHUD implements HeadUpDisplay, Cerrable{
 	}
 	
 	public void dispose() {
+		Recursos.mux.removeProcessor(stage);//tengo que sacar el stage del inputprocesor porque el mux es estatico, entonces cuando entro y salgo del juego, el mux agrega el nuevo stage pero sigue guardando el anterior
 		stage.dispose();
 		skin.dispose();
 	}

@@ -59,6 +59,7 @@ public abstract class Recursos {
 	public static final String SKIN_BOTON_ARRIBA = "HUD/skin/botonArriba.json";
 	public static final String SKIN_BOTON_ABAJO = "HUD/skin/botonAbajo.json";
 	public static final String DIALOGO_HUD = "HUD/9patch/dialogo.9.png";
+	public static final String PAUSA_HUD = "HUD/9patch/pausa.9.png";
 	
 	
 	//HUD fondos
