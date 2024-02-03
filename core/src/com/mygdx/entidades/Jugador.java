@@ -20,6 +20,7 @@ import com.mygdx.enums.Direcciones;
 import com.mygdx.enums.Items;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.HelpDebug;
+import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
@@ -34,7 +35,7 @@ public class Jugador {
 	private float velocidad = 100f;
 	public OrthographicCamera camara;
 	public boolean puedeMoverse = true;
-	private int tamañoPersonaje = 32;
+	private int tamañoPersonaje = MundoConfig.tamanoTile;
 	private Texture texturaItem;
 	private Sprite spriteItem;
 	public int[] dinero;
@@ -60,7 +61,6 @@ public class Jugador {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(spawnPosicion.x+16,spawnPosicion.y+16);
-
 
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();

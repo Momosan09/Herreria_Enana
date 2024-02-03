@@ -43,12 +43,17 @@ public abstract class Recursos {
 	public static final String VENDEDOR_TIENDA_PORTRAIT = "objetosDelMundo/npc/tiendaNpc/tiendaNpcPortrait.png";
 	
 	//Objetos del mapa
-	public static final String YUNQUE = "objetosDelMundo/inanimados/interactuables/yunque.png";
+//	public static final String YUNQUE = "objetosDelMundo/inanimados/interactuables/yunque.png";
 	public static final String PIEDRA = "objetosDelMundo/inanimados/interactuables/piedra.png";
 	public static final String HIERRO = "objetosDelMundo/inanimados/interactuables/hierro.png";
 	public static final String VACIO = "objetosDelMundo/inanimados/vacio.png";
 	public static final String HORNO = "objetosDelMundo/inanimados/interactuables/horno.png";
 	public static final String LINGOTE_HIERRO = "objetosDelMundo/inanimados/hierroLingote.png";
+	public static final String ALTO_HORNO = "objetosDelMundo/inanimados/interactuables/altoHorno.png";
+	public static final String CAJA_ENTREGAS = "objetosDelMundo/inanimados/interactuables/cajaEntregas.png";
+	public static final String MESA = "objetosDelMundo/inanimados/interactuables/mesa.png";
+	public static final String SOPORTE_ARMADURAS = "objetosDelMundo/inanimados/interactuables/soporteArmadura.png";
+	public static final String YUNQUE = "objetosDelMundo/inanimados/interactuables/yunque2.png";
 	
 	//HUD
 	public static final String DINERO_HUD = "HUD/Dinero.png";

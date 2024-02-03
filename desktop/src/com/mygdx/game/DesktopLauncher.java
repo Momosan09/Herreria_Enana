@@ -16,8 +16,6 @@ public class DesktopLauncher {
 		DisplayMode displayMode = Gdx.graphics.getDisplayMode(currMonitor);
 		*/
 
-
-
 		config.setForegroundFPS(60);
 		config.setTitle("HerreriaEnana");
 		config.setIdleFPS(0);
@@ -26,5 +24,6 @@ public class DesktopLauncher {
 		config.setWindowedMode(1280, 768);
 		
 		new Lwjgl3Application(new Principal(), config);
+		
 	}
 }

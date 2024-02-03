@@ -17,6 +17,8 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.enums.Items;
+import com.mygdx.utiles.HelpMapa;
+import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Render;
 
 public abstract class Entidad {
@@ -28,12 +30,14 @@ public abstract class Entidad {
 	private boolean jugadorTienePico = false;//Deberia ir en mineral pero no se me ocurre como hacerlo
 	private boolean comprable = false;
 	private String nombre;
-	protected int colisionAncho=32, colisionAlto=32;//Por si tengo entidades mas grandes?
+	protected int colisionAncho= MundoConfig.tamanoTile, colisionAlto=colisionAncho;//Por si tengo entidades mas grandes?
 	protected Body body;
 
-	private int distanciaInteraccion = 64;
+	private int distanciaInteraccion = MundoConfig.tamanoTile*4;
 	
 	public Entidad(float x, float y, World world, String rutaTextura) {
+		x=x*MundoConfig.tamanoTile;
+		y=(MundoConfig.altoMundo - y) * MundoConfig.tamanoTile;
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
 		sprite = new Sprite(this.textura);
@@ -41,6 +45,8 @@ public abstract class Entidad {
 	}
 	
 	public Entidad(float x, float y, boolean comprable, World world ,String rutaTextura) {
+		x=x*MundoConfig.tamanoTile;
+		y=(MundoConfig.altoMundo - y) * MundoConfig.tamanoTile;
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
 		this.comprable = comprable;
@@ -49,6 +55,8 @@ public abstract class Entidad {
 	}
 	
 	public Entidad(float x, float y, boolean comprable, String rutaTextura) {
+		x=x*MundoConfig.tamanoTile;
+		y=(MundoConfig.altoMundo - y) * MundoConfig.tamanoTile;
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
 		this.comprable = comprable;
@@ -78,11 +86,11 @@ public abstract class Entidad {
 		// Crear el cuerpo del jugador
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(posicion.x-(ancho/2), posicion.y+(alto/2));
+        bodyDef.position.set(posicion.x+(ancho/2), posicion.y+(alto/2));
 
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(ancho, alto);
+        shape.setAsBox(ancho/2, alto/2-(MundoConfig.tamanoTile-2));
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;

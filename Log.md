@@ -236,3 +236,8 @@
 # 9 ENE (no tengo internet, esto se va a subir despues)
     - Cambie el debug del hud de pausa por un 9patch mas acorde
     - Arrgle un error que habia al volver a entrar al juego luego salir de el mediante el hud de pausa 
+
+# 3 FEB pequeño descanso...
+    - Nueva parte del mapa: interior de la montaña (falta mapa en el medio pero bue)
+    - Cambios en el posicionamiento de los objetos
+    - Agregados objetos interatuables en el taller

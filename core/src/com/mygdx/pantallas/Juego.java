@@ -15,9 +15,15 @@ import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.NPCManager;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.ObjetoDelMapa;
+import com.mygdx.entidades.ObjetosDelMapa.AltoHorno;
+import com.mygdx.entidades.ObjetosDelMapa.CajaEntregas;
 import com.mygdx.entidades.ObjetosDelMapa.Horno;
+import com.mygdx.entidades.ObjetosDelMapa.Mesa;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.MineralesManager;
+import com.mygdx.entidades.ObjetosDelMapa.ObjetosTallerManager;
+import com.mygdx.entidades.ObjetosDelMapa.SoporteArmadura;
+import com.mygdx.entidades.ObjetosDelMapa.Yunque;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.Hierro;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.Piedra;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
@@ -38,6 +44,7 @@ import com.mygdx.hud.Fundicion;
 import com.mygdx.hud.HUD;
 import com.mygdx.hud.InventarioHUD;
 import com.mygdx.hud.PausaHUD;
+import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.HelpMapa;
 import com.mygdx.utiles.Recursos;
@@ -61,7 +68,6 @@ public class Juego implements Screen{
 	//Mapa
 	private TiledMap tiledMap;
 	
-	
 	//Entidades
 	private Jugador jugador;
 	private ObjetoDelMapa carta;
@@ -69,16 +75,23 @@ public class Juego implements Screen{
 	private Texture jugadorTextura;
 	private Mineral piedra, hierro, hierro1, piedra2;
 	private Horno horno;
+	private AltoHorno altoHorno;
+	private SoporteArmadura soporteArmadura;
+	private Yunque yunque;
+	private Mesa mesa;
+	private CajaEntregas cajaEntregas;
+	
 	
 	//Tiempo
 	private int diaDelMundo = 3;
-	private float horaDelMundo = 0;
+	private float horaDelMundo = 10;
 	private float minutoDelMundo = 0;
 	
 	//Managers
 	private NPCManager npcManager;
 	private MineralesManager mineralesManager;
 	private MisionesManager misionesManager;
+	private ObjetosTallerManager objetosDelTallerManager;
 
 	//Camaras
 	private OrthographicCamera camaraJugador, camaraHud;
@@ -116,13 +129,14 @@ public class Juego implements Screen{
 		rayHandler = new RayHandler(world);
 		iluminacion();
 		
-		
 		this.box2Debug = new Box2DDebugRenderer();
 		Render.tiledMapRenderer = helpMapa.Inicializar();
+		MundoConfig.anchoMundo = helpMapa.getCantTilesAncho();
+		MundoConfig.altoMundo = helpMapa.getCantTilesAlto();
 
 		
 		//camaras
-		camaraJugador = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camaraJugador = new OrthographicCamera(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		camaraJugador.setToOrtho(false);
 		camaraJugador.zoom = .6f;
 		rayHandler.setCombinedMatrix(camaraJugador);
@@ -139,23 +153,6 @@ public class Juego implements Screen{
     	Recursos.mux.addProcessor(combinacionJugador.getStage());
     	Recursos.mux.addProcessor(combinacionJugador.getDragAndDrop().getStage());
 				
-		//Npc
-		crearNPCs();
-		npcManagerConfig();
-		charlaManagerConfig();
-		
-		//objetos del mapa
-		piedra = new Piedra(32*20,32*16, world,false,Recursos.PIEDRA);
-		piedra2 = new Piedra(32*18,32*18, world,false, Recursos.PIEDRA);
-		hierro = new Hierro(32*20,32*20, world,false, Recursos.HIERRO);
-		hierro1 = new Hierro(32*7,32*5, world,true, Recursos.HIERRO);
-		
-				
-		mineralesManagerConfig();
-		misionesMangerConfig();
-
-
-		
 		//HUD
 
 		cartaHUD = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);//ee parece que cartaHUD tiene que ir primero, sino no anda la combinacion (nose pq)
@@ -171,9 +168,27 @@ public class Juego implements Screen{
 	    
 		hud = new HUD(jugador, this);
 		fundicionHUD = new Fundicion(jugador);
+    	
+		//Npc
+		crearNPCs();
+		npcManagerConfig();
+		charlaManagerConfig();
+		
+		//objetos del mapa
+		piedra = new Piedra(20,16, world,false,Recursos.PIEDRA);//Eem los minerales voy a tener que hacer algun tipo de manager que los spawnee de manera aleatoria en alguna zona permitida
+		piedra2 = new Piedra(18,18, world,false, Recursos.PIEDRA);
+		hierro = new Hierro(20,20, world,false, Recursos.HIERRO);
+		hierro1 = new Hierro(7,5, world,true, Recursos.HIERRO);
+		
+		crearObjetosDelTaller();	
+				
+		mineralesManagerConfig();
+		misionesMangerConfig();
+		objetosDleTallerManagerConfig();
+		
+		//InputMultiplexer
 			
-	    horno = new Horno(32*22,32*10, world, Recursos.HORNO, fundicionHUD);
-	    Recursos.mux.addProcessor(horno.getHUD().getStage());
+	    Recursos.mux.addProcessor(altoHorno.getHUD().getStage());
 	    Recursos.mux.addProcessor(hud.getStage());
 	    Recursos.mux.addProcessor(hud.getResultadosBatallasHUD().getStage());
 	    Recursos.mux.addProcessor(hud.getProximaBatallaHUD().getStage());
@@ -201,7 +216,13 @@ public class Juego implements Screen{
 		box2Debug.render(world, camaraJugador.combined);
 		rayHandler.setCombinedMatrix(camaraJugador.combined,0,0,1,1);
 
-
+		
+		
+if(Gdx.input.isKeyPressed(Keys.P)) {//para debug
+	camaraJugador.zoom = 5;
+}else {
+	camaraJugador.zoom = .6f;
+}
 
 		
 		Render.batch.end();
@@ -220,14 +241,17 @@ public class Juego implements Screen{
 		npcManager.detectarJugador(jugador);
 
 		
+		//Managers
+		
 		mineralesManager.renderizar();
 		mineralesManager.detectarJugador(jugador);
 		mineralesManager.minar(jugador);
 		mineralesManager.limpiarMinerales(world);
 		mineralesManager.comprar(jugador);
-		horno.detectarJugador(jugador);
-		horno.draw();
 
+		objetosDelTallerManager.dibujar();
+		objetosDelTallerManager.detectarJugador(jugador);
+		
 		jugador.draw(Render.batch);
 		
 		Render.batch.end();
@@ -257,7 +281,7 @@ public class Juego implements Screen{
 			pausaHud.render();
 			dialogoDeCompra.render(jugador);
 			inventarioHUD.render(jugador);
-			horno.mostarHUD(jugador);
+			altoHorno.mostarHUD(jugador);
 			fundicionHUD.render();
 			combinacionJugador.render();
 		    
@@ -356,10 +380,29 @@ public class Juego implements Screen{
 
 	
 	public void crearNPCs() {
-		viejo = new Viejo(32*10,32*12, world,Recursos.VIEJO, NpcData.VIEJO);
-		vendedorAmbulate = new VendedorAmbulante(32*20,32*5, world,Recursos.VENDEDOR_AMBULANTE, NpcData.VENDEDOR_AMBULANTE);
-		vendedorTienda = new VendedorDeTienda(32*12, 32*15.5f, world,Recursos.VENDEDOR_TIENDA, NpcData.VENDEDOR_TIENDA);
+		viejo = new Viejo(19,34, world,Recursos.VIEJO, NpcData.VIEJO);
+		vendedorAmbulate = new VendedorAmbulante(22,40, world,Recursos.VENDEDOR_AMBULANTE, NpcData.VENDEDOR_AMBULANTE);
+		vendedorTienda = new VendedorDeTienda(12,33.5f, world,Recursos.VENDEDOR_TIENDA, NpcData.VENDEDOR_TIENDA);
 //		rey = new Rey(0,0,Recursos.VENDEDOR, NpcData.REY);
+	}
+	
+	public void crearObjetosDelTaller() {
+		altoHorno = new AltoHorno(34, 12, world, Recursos.ALTO_HORNO, fundicionHUD); //Estas coordenadas las saco de Tiled
+		soporteArmadura = new SoporteArmadura(32, 19, world, Recursos.SOPORTE_ARMADURAS);
+		yunque = new Yunque(34, 15, world, Recursos.YUNQUE);
+		mesa = new Mesa(39, 17, world, Recursos.MESA);
+		cajaEntregas = new CajaEntregas(39, 17.5f, world, Recursos.CAJA_ENTREGAS);
+		
+	}
+	
+	private void objetosDleTallerManagerConfig() {
+		objetosDelTallerManager = new ObjetosTallerManager();
+		objetosDelTallerManager.agregarObjeto(altoHorno);
+		objetosDelTallerManager.agregarObjeto(soporteArmadura);
+		objetosDelTallerManager.agregarObjeto(yunque);
+		objetosDelTallerManager.agregarObjeto(mesa);
+		objetosDelTallerManager.agregarObjeto(cajaEntregas);
+		
 	}
 	
 	private void npcManagerConfig() {
@@ -465,7 +508,7 @@ public class Juego implements Screen{
 	 
 		@Override
 		public void dispose() {
-			System.out.println("ouch");
+			System.out.println(HelpDebug.debub(getClass())+"ouch");
 			Render.tiledMapRenderer.dispose();
 			rayHandler.dispose();
 			pausaHud.dispose();
