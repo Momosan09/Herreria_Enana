@@ -36,6 +36,7 @@ import com.mygdx.entidades.npcs.dialogos.Npc_Dialogos_Rey;
 import com.mygdx.enums.Items;
 import com.mygdx.game.Principal;
 import com.mygdx.historia.TipoMision;
+import com.mygdx.hud.CajaEntregasHUD;
 import com.mygdx.hud.CartaHUD;
 import com.mygdx.hud.Combinacion;
 import com.mygdx.hud.Dialogo;
@@ -43,7 +44,10 @@ import com.mygdx.hud.DialogoDeCompra;
 import com.mygdx.hud.Fundicion;
 import com.mygdx.hud.HUD;
 import com.mygdx.hud.InventarioHUD;
+import com.mygdx.hud.MesaHUD;
 import com.mygdx.hud.PausaHUD;
+import com.mygdx.hud.SoporteArmaduraHUD;
+import com.mygdx.hud.YunqueHUD;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.HelpMapa;
@@ -104,6 +108,11 @@ public class Juego implements Screen{
 	private InventarioHUD inventarioHUD;
 	private DialogoDeCompra dialogoDeCompra;
 	private Fundicion fundicionHUD;
+	private MesaHUD mesaHUD;
+	private SoporteArmaduraHUD soporteArmaduraHUD;
+	private CajaEntregasHUD cajaEntregasHUD;
+	private YunqueHUD yunqueHUD;
+	
 	
 	//Charlas
 	public CharlaManager charlaManager;
@@ -168,6 +177,10 @@ public class Juego implements Screen{
 	    
 		hud = new HUD(jugador, this);
 		fundicionHUD = new Fundicion(jugador);
+		yunqueHUD = new YunqueHUD(jugador);
+		soporteArmaduraHUD = new SoporteArmaduraHUD(jugador);
+		cajaEntregasHUD = new CajaEntregasHUD(jugador);
+		mesaHUD = new MesaHUD(jugador);
     	
 		//Npc
 		crearNPCs();
@@ -281,10 +294,10 @@ if(Gdx.input.isKeyPressed(Keys.P)) {//para debug
 			pausaHud.render();
 			dialogoDeCompra.render(jugador);
 			inventarioHUD.render(jugador);
-			altoHorno.mostarHUD(jugador);
-			fundicionHUD.render();
 			combinacionJugador.render();
-		    
+			
+			renderizarHUDSTaller();
+			mostrarHUDSTaller();
 
 			
 		    if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT)) {
@@ -350,15 +363,15 @@ if(Gdx.input.isKeyPressed(Keys.P)) {//para debug
 		combinacionJugador.reEscalar(width, height);
 		inventarioHUD.reEscalar(width, height);
 
-		fundicionHUD.reEscalar(width, height);
-	    System.out.println(HelpDebug.debub(getClass())+"X =" +Gdx.graphics.getWidth() + " Y =" + Gdx.graphics.getHeight());
-	    hud.reEscalar(width, height);
+		reEscalarHUDSTaller(width, height);
+	    
+		hud.reEscalar(width, height);
 	    cartaHUD.reEscalar(width, height);
 	    pausaHud.reEscalar(width, height);
 
 	    npcManager.reEscalarDialogos(width, height);
 	    dialogoDeCompra.reEscalar(width, height);
-
+	    System.out.println(HelpDebug.debub(getClass())+"X =" +Gdx.graphics.getWidth() + " Y =" + Gdx.graphics.getHeight());
 
 	}
 
@@ -388,10 +401,10 @@ if(Gdx.input.isKeyPressed(Keys.P)) {//para debug
 	
 	public void crearObjetosDelTaller() {
 		altoHorno = new AltoHorno(34, 12, world, Recursos.ALTO_HORNO, fundicionHUD); //Estas coordenadas las saco de Tiled
-		soporteArmadura = new SoporteArmadura(32, 19, world, Recursos.SOPORTE_ARMADURAS);
-		yunque = new Yunque(34, 15, world, Recursos.YUNQUE);
-		mesa = new Mesa(39, 17, world, Recursos.MESA);
-		cajaEntregas = new CajaEntregas(39, 17.5f, world, Recursos.CAJA_ENTREGAS);
+		soporteArmadura = new SoporteArmadura(32, 19, world, Recursos.SOPORTE_ARMADURAS, soporteArmaduraHUD);
+		yunque = new Yunque(34, 15, world, Recursos.YUNQUE, yunqueHUD);
+		mesa = new Mesa(39, 17, world, Recursos.MESA, mesaHUD);
+		cajaEntregas = new CajaEntregas(39, 17.5f, world, Recursos.CAJA_ENTREGAS, cajaEntregasHUD);
 		
 	}
 	
@@ -403,6 +416,30 @@ if(Gdx.input.isKeyPressed(Keys.P)) {//para debug
 		objetosDelTallerManager.agregarObjeto(mesa);
 		objetosDelTallerManager.agregarObjeto(cajaEntregas);
 		
+	}
+	
+	private void mostrarHUDSTaller() {
+		altoHorno.mostrarHUD(jugador);
+		soporteArmadura.mostrarHUD(jugador);
+		yunque.mostarHUD(jugador);
+		mesa.mostrarHUD(jugador);
+		cajaEntregas.mostrarHUD(jugador);
+	}
+	
+	private void renderizarHUDSTaller() {
+		mesaHUD.render();
+		yunqueHUD.render();
+		fundicionHUD.render();
+		cajaEntregasHUD.render();
+		soporteArmaduraHUD.render();
+	}
+	
+	private void reEscalarHUDSTaller(int width, int height) {
+		mesaHUD.reEscalar(width, height);
+		yunqueHUD.reEscalar(width, height);
+		fundicionHUD.reEscalar(width, height);
+		cajaEntregasHUD.reEscalar(width, height);
+		soporteArmaduraHUD.reEscalar(width, height);
 	}
 	
 	private void npcManagerConfig() {

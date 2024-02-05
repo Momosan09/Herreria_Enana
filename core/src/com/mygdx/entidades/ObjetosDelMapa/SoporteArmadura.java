@@ -4,29 +4,29 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.hud.Fundicion;
+import com.mygdx.hud.SoporteArmaduraHUD;
 
 public class SoporteArmadura extends Entidad{
 	
-//	private SoporteArmaduraHUD hud;
+	private SoporteArmaduraHUD hud;
 
-	public SoporteArmadura(float x, float y, World world, String rutaTextura/*, SoporteArmaduraHUD hud*/) {
+	public SoporteArmadura(float x, float y, World world, String rutaTextura, SoporteArmaduraHUD hud) {
 		 super(x, y, world, rutaTextura);
-//	        crearCuerpo(world,this.textura.getWidth(),this.textura.getHeight());
-//	        this.hud = hud;
+	        crearCuerpo(world,this.textura.getWidth(),this.textura.getHeight());
+	        this.hud = hud;
 	}
 
-//    public void mostarHUD(Jugador jugador) {
-//        if (getJugadorEnRango() && apretoE) {
-//            hud.mostrar();
-//            hud.tieneHierro(jugador);
-//        } else if (hud != null) {
-//            hud.ocultar();
-//        }
-//    }
+    public void mostrarHUD(Jugador jugador) {
+        if (getJugadorEnRango() && apretoE) {
+            hud.mostrar();
+        } else if (hud != null) {
+            hud.ocultar();
+        }
+    }
 	
-//	   public Fundicion getHUD() {
-//	    	return hud;
-//	    }
+	   public SoporteArmaduraHUD getHUD() {
+	    	return hud;
+	    }
 		
     
 	

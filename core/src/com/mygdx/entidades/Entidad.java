@@ -33,7 +33,7 @@ public abstract class Entidad {
 	protected int colisionAncho= MundoConfig.tamanoTile, colisionAlto=colisionAncho;//Por si tengo entidades mas grandes?
 	protected Body body;
 
-	private int distanciaInteraccion = MundoConfig.tamanoTile*4;
+	private int distanciaInteraccion = MundoConfig.tamanoTile*1;
 	
 	public Entidad(float x, float y, World world, String rutaTextura) {
 		x=x*MundoConfig.tamanoTile;

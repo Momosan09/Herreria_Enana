@@ -241,3 +241,6 @@
     - Nueva parte del mapa: interior de la montaña (falta mapa en el medio pero bue)
     - Cambios en el posicionamiento de los objetos
     - Agregados objetos interatuables en el taller
+
+# 5 FEB
+    - Preparando la interaccion con los objetos del taller

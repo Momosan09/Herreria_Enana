@@ -15,7 +15,7 @@ public class Horno extends Entidad {
         this.hud = hud;
     }
 
-    public void mostarHUD(Jugador jugador) {
+    public void mostrarHUD(Jugador jugador) {
         if (getJugadorEnRango() && apretoE) {
             hud.mostrar();
             hud.tieneHierro(jugador);
