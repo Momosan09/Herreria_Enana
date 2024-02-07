@@ -176,11 +176,11 @@ public class Juego implements Screen{
 	    inventarioHUD = new InventarioHUD(jugador);
 	    
 		hud = new HUD(jugador, this);
-		fundicionHUD = new Fundicion(jugador);
-		yunqueHUD = new YunqueHUD(jugador);
-		soporteArmaduraHUD = new SoporteArmaduraHUD(jugador);
-		cajaEntregasHUD = new CajaEntregasHUD(jugador);
 		mesaHUD = new MesaHUD(jugador);
+		yunqueHUD = new YunqueHUD(jugador);
+		fundicionHUD = new Fundicion(jugador);
+		cajaEntregasHUD = new CajaEntregasHUD(jugador);
+		soporteArmaduraHUD = new SoporteArmaduraHUD(jugador);
     	
 		//Npc
 		crearNPCs();
@@ -189,9 +189,9 @@ public class Juego implements Screen{
 		
 		//objetos del mapa
 		piedra = new Piedra(20,16, world,false,Recursos.PIEDRA);//Eem los minerales voy a tener que hacer algun tipo de manager que los spawnee de manera aleatoria en alguna zona permitida
-		piedra2 = new Piedra(18,18, world,false, Recursos.PIEDRA);
 		hierro = new Hierro(20,20, world,false, Recursos.HIERRO);
 		hierro1 = new Hierro(7,5, world,true, Recursos.HIERRO);
+		piedra2 = new Piedra(18,18, world,false, Recursos.PIEDRA);
 		
 		crearObjetosDelTaller();	
 				
@@ -213,13 +213,10 @@ public class Juego implements Screen{
 		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.HIERRO.toString(), 1, 1,50,300);
 		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.PIEDRA.toString(), 2,0,10,50);
 
-
-
 	}
 
 	@Override
 	public void render(float delta){
-		
 		//DEBUG Y COSAS TEMPORALES (despues no van a estar mas)
 		if(Gdx.input.isKeyPressed(Keys.P)) {//para debug
 			camaraJugador.zoom = 5;
@@ -233,26 +230,34 @@ public class Juego implements Screen{
 			jugador.puedeMoverse = true;
 			MundoConfig.mostrarHUD = true;
 			MundoConfig.habilitadoHUDS = true;
-			
 		}
-		
 		
 		//CONDICIONES POR TECLAS
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE) && MundoConfig.habilitadoHUDS) {
 			togglePausa = !togglePausa;
 			if (togglePausa) {
-				jugador.puedeMoverse = false;
 				pausaHud.mostrar();
+				jugador.puedeMoverse = false;
 				MundoConfig.mostrarHUD = false;
 				MundoConfig.pausarTiempo = true;
 			} else {
-				jugador.puedeMoverse = true;
 				pausaHud.ocultar();
+				jugador.puedeMoverse = true;
 				MundoConfig.mostrarHUD = true;
 				MundoConfig.pausarTiempo = false;
 			}
 		}
-
+		
+	    if(Gdx.input.isKeyJustPressed(Keys.TAB) && MundoConfig.habilitadoHUDS) {
+	    	toggleInventario = !toggleInventario;
+	    	if(toggleInventario) {
+	    	inventarioHUD.mostrar();	
+	    	}else {
+	    	inventarioHUD.ocultar();
+	    	}
+	    }
+		
+		
 		if (Gdx.input.isKeyJustPressed(Keys.NUM_1) && MundoConfig.habilitadoHUDS) {
 			toggleBarraItems1 = !toggleBarraItems1;
 			if (toggleBarraItems1) {
@@ -261,6 +266,10 @@ public class Juego implements Screen{
 				jugador.getItems().clear();
 			}
 		}
+		
+	    if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT) && MundoConfig.habilitadoHUDS) {
+	    	combinacionJugador.mostrar();
+	    }
 		
 		//GAMELOOP
 		horaDelMundo();
@@ -312,7 +321,6 @@ public class Juego implements Screen{
 																	// para la camara del HUD y lo dibuja
 
 			// Renderiza ocultables
-
 			hud.render();
 			pausaHud.render();
 			dialogoDeCompra.render(jugador);
@@ -332,11 +340,13 @@ public class Juego implements Screen{
 					dialogoDeCompra.ocultar();
 				}
 			}
-
-		Render.batch.end();
+			
 		misionesManager.checkearMisiones();//Se fija si las condiciones se cumplen
 
+		}else {
+			cartaHUD.render();
 		}
+		Render.batch.end();
 		
 	}
 
@@ -381,36 +391,36 @@ public class Juego implements Screen{
 	
 	public void crearNPCs() {
 		viejo = new Viejo(19,34, world,Recursos.VIEJO, NpcData.VIEJO);
-		vendedorAmbulate = new VendedorAmbulante(22,40, world,Recursos.VENDEDOR_AMBULANTE, NpcData.VENDEDOR_AMBULANTE);
 		vendedorTienda = new VendedorDeTienda(12,33.5f, world,Recursos.VENDEDOR_TIENDA, NpcData.VENDEDOR_TIENDA);
+		vendedorAmbulate = new VendedorAmbulante(22,40, world,Recursos.VENDEDOR_AMBULANTE, NpcData.VENDEDOR_AMBULANTE);
 //		rey = new Rey(0,0,Recursos.VENDEDOR, NpcData.REY);
 	}
 	
 	public void crearObjetosDelTaller() {
-		altoHorno = new AltoHorno(34, 12, world, Recursos.ALTO_HORNO, fundicionHUD); //Estas coordenadas las saco de Tiled
-		soporteArmadura = new SoporteArmadura(32, 19, world, Recursos.SOPORTE_ARMADURAS, soporteArmaduraHUD);
-		yunque = new Yunque(34, 15, world, Recursos.YUNQUE, yunqueHUD);
 		mesa = new Mesa(39, 17, world, Recursos.MESA, mesaHUD);
+		yunque = new Yunque(34, 15, world, Recursos.YUNQUE, yunqueHUD);
+		altoHorno = new AltoHorno(34, 12, world, Recursos.ALTO_HORNO, fundicionHUD); //Estas coordenadas las saco de Tiled
 		cajaEntregas = new CajaEntregas(39, 17.5f, world, Recursos.CAJA_ENTREGAS, cajaEntregasHUD);
+		soporteArmadura = new SoporteArmadura(32, 19, world, Recursos.SOPORTE_ARMADURAS, soporteArmaduraHUD);
 		
 	}
 	
 	private void objetosDleTallerManagerConfig() {
 		objetosDelTallerManager = new ObjetosTallerManager();
-		objetosDelTallerManager.agregarObjeto(altoHorno);
-		objetosDelTallerManager.agregarObjeto(soporteArmadura);
-		objetosDelTallerManager.agregarObjeto(yunque);
 		objetosDelTallerManager.agregarObjeto(mesa);
+		objetosDelTallerManager.agregarObjeto(yunque);
+		objetosDelTallerManager.agregarObjeto(altoHorno);
 		objetosDelTallerManager.agregarObjeto(cajaEntregas);
+		objetosDelTallerManager.agregarObjeto(soporteArmadura);
 		
 	}
 	
 	private void mostrarHUDSTaller() {
-		altoHorno.mostrarHUD(jugador);
-		soporteArmadura.mostrarHUD(jugador);
-		yunque.mostarHUD(jugador);
 		mesa.mostrarHUD(jugador);
+		yunque.mostarHUD(jugador);
+		altoHorno.mostrarHUD(jugador);
 		cajaEntregas.mostrarHUD(jugador);
+		soporteArmadura.mostrarHUD(jugador);
 	}
 	
 	private void renderizarHUDSTaller() {
@@ -444,9 +454,9 @@ public class Juego implements Screen{
 	private void mineralesManagerConfig() {
 		mineralesManager = new MineralesManager();
 		mineralesManager.agregarMineral(piedra);
-		mineralesManager.agregarMineral(piedra2);
 		mineralesManager.agregarMineral(hierro);
 		mineralesManager.agregarMineral(hierro1);
+		mineralesManager.agregarMineral(piedra2);
 	}
 	
 	private void misionesMangerConfig() {
@@ -486,7 +496,6 @@ public class Juego implements Screen{
 		pl.setSoft(true);
 		rayHandler.setCulling(false); // Esto es lo que me hace que no se vean las luces que inicien fuera de los
 										// bordes de la pantalla
-
 	}
 	 
 	 private void horaDelMundo() { 
@@ -520,8 +529,6 @@ public class Juego implements Screen{
 			 rayHandler.setAmbientLight(.2f);
 		 }			 
 		 }
-			 
-//		 System.out.println(HelpDebug.debub(getClass())+horaDelMundo);
 	 }
 	 
 	 public int getDia() {
