@@ -70,5 +70,6 @@ public abstract class Recursos {
 	//HUD fondos
 	public static final String CARTA_TEXTURA = "Imagen/juego/carta/carta.png";
 	public static final String HORNO_TEXTURA = "Imagen/juego/horno/horno.png";
+	public static final String YUNQUE_TEXTURA = "HUD/yunque2HUD.png";
 	
 }

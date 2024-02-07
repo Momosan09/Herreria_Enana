@@ -277,10 +277,11 @@ if(Gdx.input.isKeyPressed(Keys.P)) {//para debug
 		
 
 		
-		cartaHUD.render();
+		
 		if(cartaHUD.getCerrar()) {//si ya leyo la carta...
 			cartaHUD.cerrar();
 			jugador.puedeMoverse=true;
+
 	    
 			npcManager.mostrarDialogo();//DEJALO ACA
 			charlaManager.checkearCharlas(vendedorTienda, vendedorAmbulate, viejo);
@@ -314,6 +315,8 @@ if(Gdx.input.isKeyPressed(Keys.P)) {//para debug
 		    		inventarioHUD.ocultar();
 		    	}
 		    }
+		    }else {
+		    	cartaHUD.render();
 		    }
 		    
 		    if (mineralesManager.comprar(jugador)) {
@@ -332,10 +335,10 @@ if(Gdx.input.isKeyPressed(Keys.P)) {//para debug
 		    	if(togglePausa) {
 		    		jugador.puedeMoverse = false;
 		    		pausaHud.mostrar();
-		    		hud.ocultar();
+		    		MundoConfig.mostrarHUD = false;
 		    		}else {
 		    		pausaHud.ocultar();
-		    		hud.mostrar();
+		    		MundoConfig.mostrarHUD = true;
 		    	}
 		    }
 		    

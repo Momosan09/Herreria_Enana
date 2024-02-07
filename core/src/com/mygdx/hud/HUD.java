@@ -33,6 +33,7 @@ import com.mygdx.pantallas.Juego;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
+import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 
 
@@ -82,7 +83,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 	private String dia = Recursos.bundle.get("dia.3");
 	
 
-	private boolean visible = true;
+	private boolean visible = MundoConfig.mostrarHUD;
 	
 	private Jugador jugador;
 	private Juego juego;
@@ -311,7 +312,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 
 	@Override
 	public void render() {
-		if(visible) {
+		if(MundoConfig.mostrarHUD) {
 		//screenViewport.apply();//no estoy muy seguro de que hace esto
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
@@ -348,7 +349,6 @@ public class HUD implements HeadUpDisplay, Ocultable{
 	@Override
 	public void mostrar() {
 		visible = true;
-
 		
 	}
 
