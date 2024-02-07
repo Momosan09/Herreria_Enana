@@ -38,6 +38,7 @@ public class CartaHUD implements HeadUpDisplay, Cerrable{
 	private DialogosNPC datosCartaNpc;
 
 	private boolean cerrar = false;
+	private boolean auxiliar = false; //es para mandar el mensaje una unica vez
 	
 	public CartaHUD(DialogosNPC datosCartaNpc) {
 		this.datosCartaNpc = datosCartaNpc;
@@ -122,5 +123,16 @@ public class CartaHUD implements HeadUpDisplay, Cerrable{
 	
 	public boolean getCerrar() {
 		return cerrar;
+	}
+
+	@Override
+	public boolean seCerro() {
+		if(cerrar && !auxiliar) {
+			auxiliar = true;
+			return true;
+		}else {
+			return false;
+		}
+		
 	}
 }

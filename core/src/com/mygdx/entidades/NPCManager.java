@@ -34,7 +34,7 @@ public class NPCManager {
     }
     
 
-    public void renderizar(SpriteBatch batch) {
+    public void renderizar() {
         for (Npc entidad : npcs) {
             entidad.ejecutarAnimacion();
         }

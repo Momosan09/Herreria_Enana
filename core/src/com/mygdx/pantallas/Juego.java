@@ -219,141 +219,125 @@ public class Juego implements Screen{
 
 	@Override
 	public void render(float delta){
+		
+		//DEBUG Y COSAS TEMPORALES (despues no van a estar mas)
+		if(Gdx.input.isKeyPressed(Keys.P)) {//para debug
+			camaraJugador.zoom = 5;
+		}else {
+			camaraJugador.zoom = .6f;
+		}
+		
+		//UNA SOLA VEZ
+		if(cartaHUD.seCerro()) {
+			cartaHUD.cerrar();
+			jugador.puedeMoverse = true;
+			MundoConfig.mostrarHUD = true;
+			MundoConfig.habilitadoHUDS = true;
+			
+		}
+		
+		
+		//CONDICIONES POR TECLAS
+		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE) && MundoConfig.habilitadoHUDS) {
+			togglePausa = !togglePausa;
+			if (togglePausa) {
+				jugador.puedeMoverse = false;
+				pausaHud.mostrar();
+				MundoConfig.mostrarHUD = false;
+				MundoConfig.pausarTiempo = true;
+			} else {
+				jugador.puedeMoverse = true;
+				pausaHud.ocultar();
+				MundoConfig.mostrarHUD = true;
+				MundoConfig.pausarTiempo = false;
+			}
+		}
+
+		if (Gdx.input.isKeyJustPressed(Keys.NUM_1) && MundoConfig.habilitadoHUDS) {
+			toggleBarraItems1 = !toggleBarraItems1;
+			if (toggleBarraItems1) {
+				jugador.getItems().add(Items.PICO);
+			} else {
+				jugador.getItems().clear();
+			}
+		}
+		
+		//GAMELOOP
 		horaDelMundo();
 		Render.batch.begin();
-		
 		rayHandler.update();
 		world.step(1/60f, 6, 2);
 		Render.tiledMapRenderer.setView(camaraJugador);
 		Render.tiledMapRenderer.render(helpMapa.getCapasDeFondo());
 		box2Debug.render(world, camaraJugador.combined);
-		rayHandler.setCombinedMatrix(camaraJugador.combined,0,0,1,1);
-
-		
-		
-if(Gdx.input.isKeyPressed(Keys.P)) {//para debug
-	camaraJugador.zoom = 5;
-}else {
-	camaraJugador.zoom = .6f;
-}
-
-		
+		rayHandler.setCombinedMatrix(camaraJugador.combined,0,0,1,1);	
 		Render.batch.end();
 
-	    //Renderiza el Juego
+		
 		Render.batch.begin();
-			
 		camaraJugador.update();
 		Render.batch.setProjectionMatrix(camaraJugador.combined);
-		
 		Render.batch.end();
-		
-		Render.batch.begin();
-		
-		npcManager.renderizar(Render.batch);
-		npcManager.detectarJugador(jugador);
 
-		
 		//Managers
-		
+		Render.batch.begin();
+		npcManager.renderizar();
 		mineralesManager.renderizar();
+		objetosDelTallerManager.renderizar();
+		
+		npcManager.detectarJugador(jugador);
 		mineralesManager.detectarJugador(jugador);
+		objetosDelTallerManager.detectarJugador(jugador);
+		
 		mineralesManager.minar(jugador);
 		mineralesManager.limpiarMinerales(world);
 		mineralesManager.comprar(jugador);
 
-		objetosDelTallerManager.dibujar();
-		objetosDelTallerManager.detectarJugador(jugador);
-		
 		jugador.draw(Render.batch);
 		
 		Render.batch.end();
 		
-		Render.tiledMapRenderer.render(helpMapa.getCapasDeFrente());//Estas son las capas que esconden al jugador
+		
+		Render.tiledMapRenderer.render(helpMapa.getCapasDeFrente());// Estas son las capas que esconden al jugador
 		rayHandler.render();
-		
-		Render.batch.begin();//HUD´s
-		
-		
 
+		Render.batch.begin();// HUD´s
 		
-		
-		if(cartaHUD.getCerrar()) {//si ya leyo la carta...
-			cartaHUD.cerrar();
-			jugador.puedeMoverse=true;
-
-	    
-			npcManager.mostrarDialogo();//DEJALO ACA
+		if (cartaHUD.getCerrar()) {// si ya leyo la carta...
+			npcManager.mostrarDialogo();// DEJALO ACA
 			charlaManager.checkearCharlas(vendedorTienda, vendedorAmbulate, viejo);
-			//Renderiza el HUD
+			// Renderiza el HUD
 			camaraHud.update();
-			Render.batch.setProjectionMatrix(camaraHud.combined);//Una vez que renderiza el juego, se inicia el batch para la camara del HUD y lo dibuja
-	    
-			//Renderiza ocultables
+			Render.batch.setProjectionMatrix(camaraHud.combined);// Una vez que renderiza el juego, se inicia el batch
+																	// para la camara del HUD y lo dibuja
+
+			// Renderiza ocultables
 
 			hud.render();
 			pausaHud.render();
 			dialogoDeCompra.render(jugador);
 			inventarioHUD.render(jugador);
 			combinacionJugador.render();
-			
+
 			renderizarHUDSTaller();
 			mostrarHUDSTaller();
 
-			
-		    if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT)) {
-		    	combinacionJugador.mostrar();
-		    }
-		    
-		    
-		    if(Gdx.input.isKeyJustPressed(Keys.TAB)) {
-		    	toggleInventario = !toggleInventario;
-		    	if(toggleInventario) {
-		    		
-		    	inventarioHUD.mostrar();	
-		    	}else {
-		    		inventarioHUD.ocultar();
-		    	}
-		    }
-		    }else {
-		    	cartaHUD.render();
-		    }
-		    
-		    if (mineralesManager.comprar(jugador)) {
-	            // Comprueba si el diálogo de compra debe abrirse o cerrarse
-	            if (!dialogoDeCompra.isVisible()) {
-	                // Abre el diálogo de compra
-	                dialogoDeCompra.mostrar();
-	            } else {
-	                // Cierra el diálogo de compra
-	                dialogoDeCompra.ocultar();
-	            }
-	        }
-		    
-		    if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-		    	togglePausa = !togglePausa;
-		    	if(togglePausa) {
-		    		jugador.puedeMoverse = false;
-		    		pausaHud.mostrar();
-		    		MundoConfig.mostrarHUD = false;
-		    		}else {
-		    		pausaHud.ocultar();
-		    		MundoConfig.mostrarHUD = true;
-		    	}
-		    }
-		    
-		if(Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
-			toggleBarraItems1 = !toggleBarraItems1;
-			if(toggleBarraItems1) {
-				jugador.getItems().add(Items.PICO);				
-			}else {
-				jugador.getItems().clear();
+			if (mineralesManager.comprar(jugador)) {
+				// Comprueba si el diálogo de compra debe abrirse o cerrarse
+				if (!dialogoDeCompra.isVisible()) {
+					// Abre el diálogo de compra
+					dialogoDeCompra.mostrar();
+				} else {
+					// Cierra el diálogo de compra
+					dialogoDeCompra.ocultar();
+				}
 			}
-		}
-		Render.batch.end();
-	    //System.out.println(HelpDebug.debub(this.getClass()) + "Hola");
-		misionesManager.checkearMisiones();
 
+		Render.batch.end();
+		misionesManager.checkearMisiones();//Se fija si las condiciones se cumplen
+
+		}
+		
 	}
 
 
@@ -469,41 +453,45 @@ if(Gdx.input.isKeyPressed(Keys.P)) {//para debug
 		misionesManager = new MisionesManager(jugador);
 		misionesManager.agregarMision();
 	}
-	
-	
 
 	public Jugador getJugador1() {
 		return jugador;
 	}
-	
+
 	public MineralesManager getMineralesManager() {
 		return mineralesManager;
 	}
 
 	public void salirDelJuego() {
-		Recursos.mux.clear();//Pero aca voy a tener un prblema si uso el mismo mux para las otras partes del juego que no sean de la pantalla juego (pantallaMenu, etc) tengo que tener cuidado 
+		Recursos.mux.clear();// Pero aca voy a tener un prblema si uso el mismo mux para las otras partes del
+								// juego que no sean de la pantalla juego (pantallaMenu, etc) tengo que tener
+								// cuidado
 		game.setScreen(new PantallaMenu(game));
 	}
-	
+
 	public Horno getHorno() {
 		return horno;
 	}
-	 public World getWorld() {
-		 return world;
-	 }
-	 
-	 private void iluminacion() {
-		
-			rayHandler.setBlurNum(3);
-			rayHandler.setShadows(true);
-			pl = new PointLight(rayHandler, 128, new Color(Color.valueOf("#ea8e0e")), 200,300,300);
-			pl.setStaticLight(false);
-			pl.setSoft(true);
-			rayHandler.setCulling(false);  // Esto es lo que me hace que no se vean las luces que inicien fuera de los bordes de la pantalla
-	
-	 }
+
+	public World getWorld() {
+		return world;
+	}
+
+	private void iluminacion() {
+
+		rayHandler.setBlurNum(3);
+		rayHandler.setShadows(true);
+		pl = new PointLight(rayHandler, 128, new Color(Color.valueOf("#ea8e0e")), 200, 300, 300);
+		pl.setStaticLight(false);
+		pl.setSoft(true);
+		rayHandler.setCulling(false); // Esto es lo que me hace que no se vean las luces que inicien fuera de los
+										// bordes de la pantalla
+
+	}
 	 
 	 private void horaDelMundo() { 
+		 if(!MundoConfig.pausarTiempo) {//Para cuando apretas escape o lo que sea
+		 
 		 minutoDelMundo+=0.5f;
 		 if(minutoDelMundo>= 60) {
 			 horaDelMundo++; 
@@ -530,8 +518,8 @@ if(Gdx.input.isKeyPressed(Keys.P)) {//para debug
 			 rayHandler.setAmbientLight(.4f);
 		 }else if (horaDelMundo <= 24) {
 			 rayHandler.setAmbientLight(.2f);
+		 }			 
 		 }
-			 
 			 
 //		 System.out.println(HelpDebug.debub(getClass())+horaDelMundo);
 	 }

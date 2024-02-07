@@ -23,7 +23,7 @@ public class ObjetosTallerManager{
         }
     }
     
-    public void dibujar() {
+    public void renderizar() {
         for (Entidad entidad: objetos) {
         	entidad.draw();
         }

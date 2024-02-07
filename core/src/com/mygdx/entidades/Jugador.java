@@ -34,7 +34,7 @@ public class Jugador {
 	private Body body;
 	private float velocidad = 100f;
 	public OrthographicCamera camara;
-	public boolean puedeMoverse = true;
+	public boolean puedeMoverse = false;
 	private int tamañoPersonaje = MundoConfig.tamanoTile;
 	private Texture texturaItem;
 	private Sprite spriteItem;
