@@ -244,3 +244,12 @@
 
 # 5 FEB
     - Preparando la interaccion con los objetos del taller
+
+# 7 FEB
+    ```diff
++¡Arregla el bug milenario!
+    ```
+    - Agrega el area de interaccion para los objetos del taller
+    - Agrega area de interaccion para el jugador
+    - Agrega algunos HUDS para los objetos del taller
+    - Agrega un boton para silenciar la musica en el menu

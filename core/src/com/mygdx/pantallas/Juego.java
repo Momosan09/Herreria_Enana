@@ -127,7 +127,7 @@ public class Juego implements Screen{
 
 	public Juego(final Principal game) {
 		this.game = game;
-
+		Gdx.input.setInputProcessor(Recursos.mux);
 	}
 
 	@Override
@@ -203,13 +203,8 @@ public class Juego implements Screen{
 			
 	    Recursos.mux.addProcessor(altoHorno.getHUD().getStage());
 	    Recursos.mux.addProcessor(hud.getStage());
-	    Recursos.mux.addProcessor(hud.getResultadosBatallasHUD().getStage());
-	    Recursos.mux.addProcessor(hud.getProximaBatallaHUD().getStage());
 	    Recursos.mux.addProcessor(hud.getDiarioHUD().getStage());
 
-	    
-		Gdx.input.setInputProcessor(Recursos.mux);
-		
 		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.HIERRO.toString(), 1, 1,50,300);
 		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.PIEDRA.toString(), 2,0,10,50);
 
@@ -543,7 +538,6 @@ public class Juego implements Screen{
 	 
 		@Override
 		public void dispose() {
-			System.out.println(HelpDebug.debub(getClass())+"ouch");
 			Render.tiledMapRenderer.dispose();
 			rayHandler.dispose();
 			pausaHud.dispose();

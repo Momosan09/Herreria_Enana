@@ -6,11 +6,21 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -36,7 +46,9 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	private Label[] interfazTexto;
 	private Label mensajePerdidaConexion;
 	private Label.LabelStyle tituloEstilo, subTituloEstilo, opcionEstilo, selccionadoEstilo, bottomEstilo, perdidaConexion;
-	Entradas entradas = new Entradas();
+	private Entradas entradas = new Entradas();
+	private ImageButton musicaImg;
+	private Skin skinImageButton;
 	
 	private Texture fondoImg;
 	private Sprite fondo;
@@ -52,6 +64,8 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
     
 	public PantallaMenu(final Principal game) {
 		this.game = game;
+		Gdx.input.setInputProcessor(Recursos.muxMenu);
+
 		
 		camara = new OrthographicCamera();
 		camara.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -60,10 +74,10 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		crearFuentes();
 		crearActores();
 		poblarStage();
-		
 		musicaMenu = Gdx.audio.newMusic(Gdx.files.internal(Recursos.MUSICA_MENU));
-
-		Gdx.input.setInputProcessor(entradas);
+		
+		Recursos.muxMenu.addProcessor(stage);
+		Recursos.muxMenu.addProcessor(entradas);
 
 		// Inicializar la instancia de SpriteBatch en Render con la del juego
 		Render.batch = game.batch;
@@ -72,39 +86,39 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	}
 	
 	
-	public PantallaMenu(final Principal game, boolean mostrarMensajeDeDesconectado) {
-		this.game = game;
-		
-		camara = new OrthographicCamera();
-		camara.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		fondoImg = new Texture(Recursos.FONDO_MENU);
-		fondo = new Sprite(fondoImg);
-		crearFuentes();
-		crearActores();
-		poblarStage();
-		
-		musicaMenu = Gdx.audio.newMusic(Gdx.files.internal(Recursos.MUSICA_MENU));
-
-		Gdx.input.setInputProcessor(entradas);
-
-		// Inicializar la instancia de SpriteBatch en Render con la del juego
-		Render.batch = game.batch;
-		fondo.setPosition(0, stage.getViewport().getWorldHeight() - fondoImg.getHeight()); // creo que el segundo parametro lo hace una medida mas relativa, nose, investigar
-		
-		this.mostrarMensajeDeDesconectado = mostrarMensajeDeDesconectado;
-
-	}
+//	public PantallaMenu(final Principal game, boolean mostrarMensajeDeDesconectado) {
+//		this.game = game;
+//		
+//		camara = new OrthographicCamera();
+//		camara.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//		fondoImg = new Texture(Recursos.FONDO_MENU);
+//		fondo = new Sprite(fondoImg);
+//		crearFuentes();
+//		crearActores();
+//		poblarStage();
+//		
+//		musicaMenu = Gdx.audio.newMusic(Gdx.files.internal(Recursos.MUSICA_MENU));
+//
+//		Gdx.input.setInputProcessor(entradas);
+//
+//		// Inicializar la instancia de SpriteBatch en Render con la del juego
+//		Render.batch = game.batch;
+//		fondo.setPosition(0, stage.getViewport().getWorldHeight() - fondoImg.getHeight()); // creo que el segundo parametro lo hace una medida mas relativa, nose, investigar
+//		
+//		this.mostrarMensajeDeDesconectado = mostrarMensajeDeDesconectado;
+//
+//	}
 
 	@Override
 	public void show() {
-
+		musicaMenu.setLooping(true);
+		musicaMenu.play();
 	}
 
 	@Override
 	public void render(float delta) {
 		ScreenUtils.clear(0, 0, 0.2f, 1);
-		musicaMenu.setLooping(true);
-		musicaMenu.play();
+
 
 		camara.update();
 		Render.batch.setProjectionMatrix(camara.combined);
@@ -152,6 +166,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	@Override
 	public void dispose() {
 //		fondoImg.dispose();
+		Recursos.muxMenu.clear();
 		stage.dispose();
 		game.font.dispose();
 		entradas.efectoSonidoTeclas.dispose();
@@ -172,15 +187,16 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	
 	@Override
 	public void crearActores() {
+		skinImageButton = new Skin(Gdx.files.internal(Recursos.SKIN_NOTA_MUSICAL));
 		screenViewPort = new ScreenViewport();
 		stage = new Stage(screenViewPort);
+		Recursos.mux.addProcessor(stage);
 			
 		interfaz = new Table();
 		interfaz.setFillParent(true);
 //		interfaz.debug();
 		
 		interfazTexto = new Label[5];
-		
 		interfazTexto[0] = new Label("Herreria Enana", tituloEstilo);
 		interfazTexto[1] = new Label(Recursos.bundle.get("menuPrincipal.menuPrincipal"), subTituloEstilo);
 		interfazTexto[4] = new Label(Recursos.bundle.get("menuPrincipal.textoRespira"), bottomEstilo);
@@ -193,6 +209,23 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		interfazTexto[3] = new Label(Recursos.bundle.get("menuPrincipal.configuraciones"), opcionEstilo);
 
 		mensajePerdidaConexion = new Label(Recursos.bundle.get("menuPrincipal.perdidaConexion"), perdidaConexion);
+		
+		 // Configuración del ImageButton
+        musicaImg = new ImageButton(skinImageButton);
+        musicaImg.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // Manejar el evento de clic aquí
+            	if(musicaMenu.isPlaying()) {
+            		musicaMenu.pause();            		
+            		System.out.println(HelpDebug.debub(getClass())+"musica pausada");
+            	}else {
+            		musicaMenu.play();
+            		System.out.println(HelpDebug.debub(getClass())+"musica reanudada");
+            	}
+                
+            }
+        });
 	}
 
 	@Override
@@ -215,6 +248,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		interfaz.add(opciones).expand();
 		interfaz.row();
 		interfaz.add(interfazTexto[4]).bottom().padBottom(20);
+		 interfaz.add(musicaImg).size(64).padTop(20); // Ajusta el tamaño y el espaciado superior según sea necesario
 		agregarAnimaciones();
 		
 		stage.addActor(interfaz);
@@ -224,9 +258,11 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		int seleccion = entradas.seleccionarOpcion(interfazTexto, 2, 3);
 
 		if (seleccion == 2) {
+			Recursos.muxMenu.clear();
 			game.setScreen(new Juego(game));
 			dispose();
 		}else if (seleccion == 3){
+			Recursos.muxMenu.clear();
 			game.setScreen(new PantallaConfiguracion(game));
 			dispose();
 		}

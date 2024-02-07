@@ -41,6 +41,7 @@ public class Jugador {
 	public int[] dinero;
 	public boolean estaChocando = false;
 	public String spritesheet;
+	public Rectangle areaJugador;
 	
 	//Inventarios
 	private ArrayList<Items> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
@@ -79,7 +80,7 @@ public class Jugador {
 		
 		dinero = new int[3];
 		
-		
+		areaJugador = new Rectangle(posicion.x, posicion.y, 32, 32);
 	}
 
 	private void dibujarItemActual() {
@@ -96,6 +97,7 @@ public class Jugador {
 		// sprite.draw(batch);
 		update();
 		dibujarItemActual();
+		areaJugador.set(posicion.x, posicion.y, 32, 32);
 	}
 
 	private void update() {

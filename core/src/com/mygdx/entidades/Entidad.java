@@ -32,8 +32,9 @@ public abstract class Entidad {
 	private String nombre;
 	protected int colisionAncho= MundoConfig.tamanoTile, colisionAlto=colisionAncho;//Por si tengo entidades mas grandes?
 	protected Body body;
+	protected Rectangle areaDeInteraccion;
 
-	private int distanciaInteraccion = MundoConfig.tamanoTile*1;
+	private int distanciaInteraccion = 20;
 	
 	public Entidad(float x, float y, World world, String rutaTextura) {
 		x=x*MundoConfig.tamanoTile;
@@ -42,6 +43,12 @@ public abstract class Entidad {
 		this.textura = new Texture(rutaTextura);
 		sprite = new Sprite(this.textura);
 		sprite.setPosition(this.posicion.x, this.posicion.y);
+		
+		areaDeInteraccion = new Rectangle(posicion.x - distanciaInteraccion/2, posicion.y - distanciaInteraccion/2,
+                sprite.getWidth()+distanciaInteraccion, (sprite.getHeight()) + distanciaInteraccion);
+		
+
+
 	}
 	
 	public Entidad(float x, float y, boolean comprable, World world ,String rutaTextura) {
@@ -100,12 +107,24 @@ public abstract class Entidad {
 	
 	public void draw() {
 		sprite.draw(Render.batch);
+//		dibujarAreaInteraccion();
+	}
+	
+	public void dibujarAreaInteraccion() {
+		ShapeRenderer shapeRenderer = new ShapeRenderer();
+		shapeRenderer.setProjectionMatrix(Render.batch.getProjectionMatrix());
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.setColor(Color.RED);
+		shapeRenderer.rect(areaDeInteraccion.x, areaDeInteraccion.y, areaDeInteraccion.width, areaDeInteraccion.height);
+		shapeRenderer.end();
 	}
 	
 	
 	public void detectarJugador(Jugador jugador) {
 		buscarItemEnJugador(jugador);//Cuando el jugador esta dentro del rango de la entidad, esta busca en los items del jugador. Esto me puede servir para objetos de mision y el minado
-		if(((jugador.getPosicion().x - this.posicion.x) < distanciaInteraccion && (jugador.getPosicion().x - this.posicion.x) > -distanciaInteraccion) && ((jugador.getPosicion().y - this.posicion.y) < distanciaInteraccion && (jugador.getPosicion().y - this.posicion.y) > -distanciaInteraccion)){
+
+		if(areaDeInteraccion.overlaps(jugador.areaJugador)) {		
+		//		if(((jugador.getPosicion().x - this.posicion.x) < distanciaInteraccion && (jugador.getPosicion().x - this.posicion.x) > -distanciaInteraccion) && ((jugador.getPosicion().y - this.posicion.y) < distanciaInteraccion && (jugador.getPosicion().y - this.posicion.y) > -distanciaInteraccion)){	
 			jugadorEnRango = true;
 			if(jugador.isEPressed()) {
 				apretoE = true;

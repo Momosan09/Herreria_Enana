@@ -11,6 +11,7 @@ public abstract class Recursos {
 	public static I18NBundle bundle = I18NBundle.createBundle(Gdx.files.internal("locale/locale"));
 	
 	public static InputMultiplexer mux = new InputMultiplexer();//El input multiplexer es una especie de gestor de inputProcessors
+	public static InputMultiplexer muxMenu = new InputMultiplexer();
 	
 	//Box2d
 	public static final float PPM = 32.0f;//Pixeles por metro
@@ -20,6 +21,9 @@ public abstract class Recursos {
 	public static final String MUSICA_MENU = "Audio/saplingGarden.mp3";
 	public static final String EFECTO_TECLA_MENU = "Audio/sonidoEnMenu.wav";
 	public static final String FONDO_MENU = "Imagen/menu/imagenfondo.png";
+	public static final String MUSICA_SI = "Imagen/menu/notaMusical.png";
+	public static final String MUSICA_NO = "Imagen/menu/notaMusicalNo.png";
+	public static final String SKIN_NOTA_MUSICAL = "Imagen/menu/skinImageButtonNotaMusical.json";
 	
 	//Jugador
 	public static final String JUGADOR_TEXTURA = "Jugador/quieto_0.png";
@@ -69,7 +73,8 @@ public abstract class Recursos {
 	
 	//HUD fondos
 	public static final String CARTA_TEXTURA = "Imagen/juego/carta/carta.png";
+	public static final String MESA_TEXTURA = "HUD/mesaHUD.png";
 	public static final String HORNO_TEXTURA = "Imagen/juego/horno/horno.png";
 	public static final String YUNQUE_TEXTURA = "HUD/yunque2HUD.png";
-	
+	public static final String CAJA_ENTREGAS_TEXTURA = "HUD/cajaEntregasHUD.png";
 }

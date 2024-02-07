@@ -267,10 +267,12 @@ public class HUD implements HeadUpDisplay, Ocultable{
 			public void clicked(InputEvent event, float x, float y) {
 				if(!proximaBatallaHUD.getVisible() && !diarioHUD.getVisible()) {
 					resultadosHUD.mostrar(); // Abre resultadosHUD		
+					Recursos.mux.removeProcessor(proximaBatallaHUD.getStage());//Arregla el bug ese que no deja usar el otro boton
+					Recursos.mux.addProcessor(resultadosHUD.getStage());
+					
 					
 				}
-				//resultadosHUD.cerrar = !mostrarResultadosBatalla;
-				
+				//resultadosHUD.cerrar = !mostrarResultadosBatalla;		
 				//System.out.println(HelpDebug.debub(getClass())+"click");
 			}
 		});
@@ -281,6 +283,8 @@ public class HUD implements HeadUpDisplay, Ocultable{
 			public void clicked(InputEvent event, float x, float y) {
 				if(!resultadosHUD.getVisible() && !diarioHUD.getVisible()) {
 					proximaBatallaHUD.mostrar();
+					Recursos.mux.removeProcessor(resultadosHUD.getStage());//Arregla el bug ese que no deja usar el otro boton
+					Recursos.mux.addProcessor(proximaBatallaHUD.getStage());
 					
 				}
 			}
