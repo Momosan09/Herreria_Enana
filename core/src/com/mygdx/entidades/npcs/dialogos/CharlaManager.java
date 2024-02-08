@@ -3,7 +3,6 @@ package com.mygdx.entidades.npcs.dialogos;
 import java.util.ArrayList;
 
 import com.mygdx.entidades.Npc;
-import com.mygdx.utiles.HelpDebug;
 
 public class CharlaManager {
 

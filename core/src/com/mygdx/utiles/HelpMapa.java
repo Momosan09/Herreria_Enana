@@ -1,9 +1,6 @@
 package com.mygdx.utiles;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -36,7 +33,7 @@ public class HelpMapa {
 	public HelpMapa(Juego juego) {
 		this.juego = juego;
 		jugadorSpawn = new Vector2();
-		posicionObjetosInteratuablesTaller = new ArrayList<>();
+		posicionObjetosInteratuablesTaller = new ArrayList<Vector2>();
 	}
 	
 	public OrthogonalTiledMapRenderer Inicializar() {
@@ -74,26 +71,27 @@ public class HelpMapa {
 	    }
 	}
 	
-	private void conseguirObjetosInteractuablesDeLaCapa(TiledMapTileLayer mapLayer) {
-	    for (int i = 0; i < mapLayer.getWidth(); i++) {
-	        for (int j = 0; j < mapLayer.getHeight(); j++) {
-	            Cell celda = mapLayer.getCell(i, j);
-	            
-	            if (celda != null && celda.getTile().getObjects().getCount() == 1) {
-					float worldY = j * mapLayer.getTileWidth();
-		            float worldX = i * mapLayer.getTileHeight();
-		            float rotacion = celda.getRotation();
+//	private void conseguirObjetosInteractuablesDeLaCapa(TiledMapTileLayer mapLayer) {
+//	    for (int i = 0; i < mapLayer.getWidth(); i++) {
+//	        for (int j = 0; j < mapLayer.getHeight(); j++) {
+//	            Cell celda = mapLayer.getCell(i, j);
+//	            
+//	            if (celda != null && celda.getTile().getObjects().getCount() == 1) {
+//					float worldY = j * mapLayer.getTileWidth();
+//		            float worldX = i * mapLayer.getTileHeight();
+//		            float rotacion = celda.getRotation();
+//
+//		            if(celda.getTile().getObjects().get(0).getName().equals("horno")) {
+//		            	System.out.println("siii");
+//		            }
+//		            crearCuerposDeColision((PolygonMapObject) celda.getTile().getObjects().get(0), worldX, worldY, rotacion);
+//		           
+//
+//	            }
+//	        }
+//	    }
+//	}
 
-		            if(celda.getTile().getObjects().get(0).getName().equals("horno")) {
-		            	System.out.println("siii");
-		            }
-		            crearCuerposDeColision((PolygonMapObject) celda.getTile().getObjects().get(0), worldX, worldY, rotacion);
-		           
-
-	            }
-	        }
-	    }
-	}
 	private void conseguirObjetosDeLaCapa(TiledMapTileLayer mapLayer) {
 	    for (int i = 0; i < mapLayer.getWidth(); i++) {
 	        for (int j = 0; j < mapLayer.getHeight(); j++) {

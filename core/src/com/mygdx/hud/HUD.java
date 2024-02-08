@@ -1,29 +1,17 @@
 package com.mygdx.hud;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
-import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -32,7 +20,6 @@ import com.mygdx.enums.Items;
 import com.mygdx.pantallas.Juego;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
-import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 
@@ -64,15 +51,15 @@ public class HUD implements HeadUpDisplay, Ocultable{
 	private Label[][] monedas;
 	private Label[] ultimaBatalla;
 	private Label verBatallasAnteriores;
-	private TextButton verBatallasAnterioresBtn;
-	private TextButton pedidoBtn;
+//	private TextButton verBatallasAnterioresBtn;
+//	private TextButton pedidoBtn;
 	private Label siguienteBatallaLbl;
 	private Label nombreSiguienteBatalla;
 	private Label siguienteBatallaDetalles;
 	private Label centroLbl;
 	private Label diaLbl;
 	private Label diarioLbl;
-	private Label barraAbajoLbl;
+//	private Label barraAbajoLbl;
 	private Label.LabelStyle labelStyle;
 	private Label.LabelStyle labelMonedasStyle[];
 	
@@ -107,10 +94,10 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		screenViewport = new ScreenViewport();//Stage viene con un viewport pero no sirve, por eso usamos a este buen hombre
 		stage = new Stage(screenViewport);//le pasamos a este buen hombre
 		//Gdx.input.setInputProcessor(stage);
+
 		hud = new Table();
 		hud.setFillParent(true);
 		//hud.debug();
-		
 		//Izquierda
 		hudIzq = new Table();
 
@@ -202,7 +189,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		proximaBatallaHUD.dispose();
 		diarioHUD.dispose();
 		resultadosHUD.dispose();
-		Recursos.mux.removeProcessor(stage);//tengo que sacar el stage del inputprocesor porque el mux es estatico, entonces cuando entro y salgo del juego, el mux agrega el nuevo stage pero sigue guardando el anterior
+		Recursos.muxJuego.removeProcessor(stage);//tengo que sacar el stage del inputprocesor porque el mux es estatico, entonces cuando entro y salgo del juego, el mux agrega el nuevo stage pero sigue guardando el anterior
 		stage.dispose();
 	}
 	
@@ -267,8 +254,8 @@ public class HUD implements HeadUpDisplay, Ocultable{
 			public void clicked(InputEvent event, float x, float y) {
 				if(!proximaBatallaHUD.getVisible() && !diarioHUD.getVisible()) {
 					resultadosHUD.mostrar(); // Abre resultadosHUD		
-					Recursos.mux.removeProcessor(proximaBatallaHUD.getStage());//Arregla el bug ese que no deja usar el otro boton
-					Recursos.mux.addProcessor(resultadosHUD.getStage());
+					Recursos.muxJuego.removeProcessor(proximaBatallaHUD.getStage());//Arregla el bug ese que no deja usar el otro boton
+					Recursos.muxJuego.addProcessor(resultadosHUD.getStage());
 					
 					
 				}
@@ -283,8 +270,8 @@ public class HUD implements HeadUpDisplay, Ocultable{
 			public void clicked(InputEvent event, float x, float y) {
 				if(!resultadosHUD.getVisible() && !diarioHUD.getVisible()) {
 					proximaBatallaHUD.mostrar();
-					Recursos.mux.removeProcessor(resultadosHUD.getStage());//Arregla el bug ese que no deja usar el otro boton
-					Recursos.mux.addProcessor(proximaBatallaHUD.getStage());
+					Recursos.muxJuego.removeProcessor(resultadosHUD.getStage());//Arregla el bug ese que no deja usar el otro boton
+					Recursos.muxJuego.addProcessor(proximaBatallaHUD.getStage());
 					
 				}
 			}

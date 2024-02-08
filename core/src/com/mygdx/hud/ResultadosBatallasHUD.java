@@ -142,7 +142,7 @@ public class ResultadosBatallasHUD implements HeadUpDisplay, Ocultable{//Una cos
 	}
 	
 	public void dispose() {
-		Recursos.mux.removeProcessor(stage);//tengo que sacar el stage del inputprocesor porque el mux es estatico, entonces cuando entro y salgo del juego, el mux agrega el nuevo stage pero sigue guardando el anterior
+		Recursos.muxJuego.removeProcessor(stage);//tengo que sacar el stage del inputprocesor porque el mux es estatico, entonces cuando entro y salgo del juego, el mux agrega el nuevo stage pero sigue guardando el anterior
 		stage.dispose();
 		skin.dispose();
 	}

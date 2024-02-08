@@ -4,14 +4,13 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 
 public class Entradas implements InputProcessor {
 
-	private boolean arriba = false, abajo = false, izq = false, der = false, enter = false;
+	private boolean arriba = false, abajo = false, /*izq = false, der = false,*/ enter = false;
 	public Sound efectoSonidoTeclas = Gdx.audio.newSound(Gdx.files.internal(Recursos.EFECTO_TECLA_MENU)); //lo hice public para poder disposearlo cuando en donde sea necesario (en Juego, cuando era llamado por PantallaMenu, se escuchaban los sonidos de las teclas)
 	private boolean isSoundPlaying = false;
 	private int cont = 0;

@@ -3,7 +3,6 @@ package com.mygdx.hud;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -12,17 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.utiles.Colores;
-import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.EstiloFuente;
-import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MyDragAndDrop;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.entidades.Jugador;
-import com.mygdx.entidades.ObjetosDelMapa.Mineral;
-import com.mygdx.io.Entradas;
 
 public class Combinacion implements HeadUpDisplay, Ocultable{
 

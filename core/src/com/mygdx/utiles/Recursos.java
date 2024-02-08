@@ -2,15 +2,13 @@ package com.mygdx.utiles;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.I18NBundle;
 
 public abstract class Recursos {
 	
 	public static I18NBundle bundle = I18NBundle.createBundle(Gdx.files.internal("locale/locale"));
 	
-	public static InputMultiplexer mux = new InputMultiplexer();//El input multiplexer es una especie de gestor de inputProcessors
+	public static InputMultiplexer muxJuego = new InputMultiplexer();//El input multiplexer es una especie de gestor de inputProcessors
 	public static InputMultiplexer muxMenu = new InputMultiplexer();
 	
 	//Box2d
@@ -67,8 +65,8 @@ public abstract class Recursos {
 	public static final String SKIN = "HUD/skin/skin.json";
 	public static final String SKIN_BOTON_ARRIBA = "HUD/skin/botonArriba.json";
 	public static final String SKIN_BOTON_ABAJO = "HUD/skin/botonAbajo.json";
-	public static final String DIALOGO_HUD = "HUD/9patch/dialogo.9.png";
-	public static final String PAUSA_HUD = "HUD/9patch/pausa.9.png";
+	public static final String DIALOGO_HUD = "HUD/9Patch/dialogo.9.png";
+	public static final String PAUSA_HUD = "HUD/9Patch/pausa.9.png";
 	
 	
 	//HUD fondos

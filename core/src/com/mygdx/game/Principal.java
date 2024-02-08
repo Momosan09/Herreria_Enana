@@ -1,16 +1,11 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.pantallas.Juego;
 import com.mygdx.pantallas.PantallaMenu;
-import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 
 public class Principal extends Game {

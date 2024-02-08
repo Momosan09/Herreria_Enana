@@ -127,7 +127,7 @@ public class Juego implements Screen{
 
 	public Juego(final Principal game) {
 		this.game = game;
-		Gdx.input.setInputProcessor(Recursos.mux);
+		Gdx.input.setInputProcessor(Recursos.muxJuego);
 	}
 
 	@Override
@@ -159,8 +159,8 @@ public class Juego implements Screen{
 
 		combinacionJugador = new Combinacion(jugador);
 		
-    	Recursos.mux.addProcessor(combinacionJugador.getStage());
-    	Recursos.mux.addProcessor(combinacionJugador.getDragAndDrop().getStage());
+    	Recursos.muxJuego.addProcessor(combinacionJugador.getStage());
+    	Recursos.muxJuego.addProcessor(combinacionJugador.getDragAndDrop().getStage());
 				
 		//HUD
 
@@ -169,9 +169,9 @@ public class Juego implements Screen{
 	    dialogoDeCompra = new DialogoDeCompra();
 	    pausaHud = new PausaHUD(this);
 	    
-	    Recursos.mux.addProcessor(cartaHUD.getStage());
-	    Recursos.mux.addProcessor(pausaHud.getStage());
-	    //mux.addProcessor(dialogoDeCompra.getStage());
+	    Recursos.muxJuego.addProcessor(cartaHUD.getStage());
+	    Recursos.muxJuego.addProcessor(pausaHud.getStage());
+	    //muxJuego.addProcessor(dialogoDeCompra.getStage());
 	   
 	    inventarioHUD = new InventarioHUD(jugador);
 	    
@@ -201,9 +201,9 @@ public class Juego implements Screen{
 		
 		//InputMultiplexer
 			
-	    Recursos.mux.addProcessor(altoHorno.getHUD().getStage());
-	    Recursos.mux.addProcessor(hud.getStage());
-	    Recursos.mux.addProcessor(hud.getDiarioHUD().getStage());
+	    Recursos.muxJuego.addProcessor(altoHorno.getHUD().getStage());
+	    Recursos.muxJuego.addProcessor(hud.getStage());
+	    Recursos.muxJuego.addProcessor(hud.getDiarioHUD().getStage());
 
 		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.HIERRO.toString(), 1, 1,50,300);
 		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.PIEDRA.toString(), 2,0,10,50);
@@ -468,7 +468,7 @@ public class Juego implements Screen{
 	}
 
 	public void salirDelJuego() {
-		Recursos.mux.clear();// Pero aca voy a tener un prblema si uso el mismo mux para las otras partes del
+		Recursos.muxJuego.clear();// Pero aca voy a tener un prblema si uso el mismo muxJuego para las otras partes del
 								// juego que no sean de la pantalla juego (pantallaMenu, etc) tengo que tener
 								// cuidado
 		game.setScreen(new PantallaMenu(game));
@@ -543,7 +543,7 @@ public class Juego implements Screen{
 			pausaHud.dispose();
 			cartaHUD.dispose();
 			hud.dispose();
-			Recursos.mux.clear();
+			Recursos.muxJuego.clear();
 		}
 
 }

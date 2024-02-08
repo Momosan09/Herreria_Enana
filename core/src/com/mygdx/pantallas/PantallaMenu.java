@@ -3,26 +3,18 @@ package com.mygdx.pantallas;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Principal;
@@ -55,9 +47,9 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 
 	private Music musicaMenu;
 
-	private int cont = 2;
+//	private int cont = 2;
 	
-    private float fondoPosX, offSetX, transparencia=0;
+    private float fondoPosX, offSetX/*,transparencia=0*/;
     
     private boolean mostrarMensajeDeDesconectado=false;
     
@@ -119,7 +111,6 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	public void render(float delta) {
 		ScreenUtils.clear(0, 0, 0.2f, 1);
 
-
 		camara.update();
 		Render.batch.setProjectionMatrix(camara.combined);
 		Render.batch.begin();
@@ -166,7 +157,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	@Override
 	public void dispose() {
 //		fondoImg.dispose();
-		Recursos.muxMenu.clear();
+//		Recursos.muxMenu.clear();
 		stage.dispose();
 		game.font.dispose();
 		entradas.efectoSonidoTeclas.dispose();
@@ -190,7 +181,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		skinImageButton = new Skin(Gdx.files.internal(Recursos.SKIN_NOTA_MUSICAL));
 		screenViewPort = new ScreenViewport();
 		stage = new Stage(screenViewPort);
-		Recursos.mux.addProcessor(stage);
+		Recursos.muxJuego.addProcessor(stage);
 			
 		interfaz = new Table();
 		interfaz.setFillParent(true);

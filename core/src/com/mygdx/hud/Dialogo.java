@@ -42,7 +42,7 @@ public class Dialogo implements HeadUpDisplay{
 		//System.out.println("mostrando dialgo");
 		poblarStage();
 		
-		Recursos.mux.addProcessor(stage);
+		Recursos.muxJuego.addProcessor(stage);
 		
 	}
 	

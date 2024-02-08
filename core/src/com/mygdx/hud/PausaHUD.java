@@ -279,7 +279,7 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 	}
 
 	public void dispose() {
-		Recursos.mux.removeProcessor(stage);
+		Recursos.muxJuego.removeProcessor(stage);
 		stage.dispose();
 		this.dispose();
 

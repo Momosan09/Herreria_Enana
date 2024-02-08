@@ -1,18 +1,12 @@
 package com.mygdx.entidades;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.entidades.npcs.dialogos.Charla;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.hud.Dialogo;
 import com.mygdx.utiles.Animator;
-import com.mygdx.utiles.Render;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public abstract class Npc extends Entidad implements NpcInterface{
 	

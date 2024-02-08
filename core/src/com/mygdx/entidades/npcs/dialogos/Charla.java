@@ -6,16 +6,17 @@ import com.mygdx.entidades.Npc;
 
 public class Charla {
 
-	private Npc locutor;
+//	private Npc locutor;
 	
 	//Requisitos para que se de la charla
-	private int diaEspecifico = -1;
+//	private int diaEspecifico = -1;
 	
 	//Texto
 	public String nombreCharla; //Un identificador de la charla, ej: "viejo_saludo", "vendedor_venta_1"
 	private String mensaje, respuesta1, respuesta2;
 	
 	public ArrayList<ArrayList<String>> bloques;
+	private ArrayList<String> bloqueUno;
 	
 	public Charla(String nombreCharla, String[] valores) {
 		this.nombreCharla = nombreCharla;
@@ -28,8 +29,7 @@ public class Charla {
 	}
 
 	public void bloqueUno() {
-		ArrayList<String> bloqueUno = new ArrayList();
-		
+		bloqueUno = new ArrayList<String>();
 		bloqueUno.add(mensaje);
 		bloqueUno.add(respuesta1);
 		bloqueUno.add(respuesta2);
