@@ -258,7 +258,6 @@
     ```diff
 -Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con algo de git y volvi al ultimo commit, espero no haber perdido nada
     ```
-
     - Agrega una clase que genera un informe de fallos
     - Agrega el panel de combinacion al hud del yunque
     - Modifica un poco las combinaciones
