@@ -144,8 +144,6 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
 		visible = true;
 		dragNDrop.refrescar();
 		dragNDrop.create();
-
-		
 	}
 
 	@Override

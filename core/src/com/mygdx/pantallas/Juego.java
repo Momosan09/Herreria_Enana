@@ -207,7 +207,10 @@ public class Juego implements Screen{
 
 		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.HIERRO.toString(), 1, 1,50,300);
 		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.PIEDRA.toString(), 2,0,10,50);
-
+		
+		jugador.getMinerales().add(hierro);
+		jugador.getMinerales().add(hierro1);
+		
 	}
 
 	@Override
@@ -393,7 +396,7 @@ public class Juego implements Screen{
 	
 	public void crearObjetosDelTaller() {
 		mesa = new Mesa(39, 17, world, Recursos.MESA, mesaHUD);
-		yunque = new Yunque(34, 15, world, Recursos.YUNQUE, yunqueHUD);
+		yunque = new Yunque(34, 15, world, Recursos.YUNQUE, yunqueHUD, jugador);
 		altoHorno = new AltoHorno(34, 12, world, Recursos.ALTO_HORNO, fundicionHUD); //Estas coordenadas las saco de Tiled
 		cajaEntregas = new CajaEntregas(39, 17.5f, world, Recursos.CAJA_ENTREGAS, cajaEntregasHUD);
 		soporteArmadura = new SoporteArmadura(32, 19, world, Recursos.SOPORTE_ARMADURAS, soporteArmaduraHUD);

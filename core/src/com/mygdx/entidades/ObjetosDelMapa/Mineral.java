@@ -118,5 +118,9 @@ public class Mineral extends Entidad{
 	    public Rectangle getBoundingRectangle() {
 	        return new Rectangle(posicion.x, posicion.y, textura.getWidth(), textura.getHeight());
 	    }
+
+		public TipoMinerales getTipoMineral() {
+			return tipo;
+		}
 	
 }

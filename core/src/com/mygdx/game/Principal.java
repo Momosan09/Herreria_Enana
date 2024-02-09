@@ -17,7 +17,7 @@ public class Principal extends Game {
 		batch = new SpriteBatch();
 		Render.batch = batch;
 		font = new BitmapFont();
-	    this.setScreen(new PantallaMenu(this));
+	    this.setScreen(new Juego(this));
 	}
 
 	@Override
