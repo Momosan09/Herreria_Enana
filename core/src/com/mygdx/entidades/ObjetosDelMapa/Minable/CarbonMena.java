@@ -5,10 +5,10 @@ import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.enums.EstadosMinerales;
 import com.mygdx.utiles.Recursos;
 
-public class Hierro extends Mineral{
+public class CarbonMena extends Mineral{
 
-	public Hierro(int x, int y, World world, boolean comprable) {
-		super(x, y, world, comprable, Recursos.MENA_HIERRO, TipoMinerales.HIERRO, EstadosMinerales.MENA, 11, 11);
+	public CarbonMena(int x, int y, World world, boolean comprable) {
+		super(x, y, world, comprable, Recursos.MENA_CARBON, TipoMinerales.CARBON, EstadosMinerales.MENA, 11, 11);
 	}
 
 }

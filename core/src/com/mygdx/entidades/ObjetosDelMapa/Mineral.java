@@ -33,6 +33,7 @@ public class Mineral extends Entidad{
 		super(x, y, world, rutaTextura);
 		this.comprable = comprable;
 		this.tipo = tipo;
+		this.estado = estado;
 		crearCuerpo(world, ancho, alto);
 	}
 	
@@ -42,7 +43,14 @@ public class Mineral extends Entidad{
 		this.tipo = tipo;
 		this.estado = estado;
 	}
-	
+
+	public Mineral( boolean comprable, String rutaTextura, TipoMinerales tipo, EstadosMinerales estado) {
+		super(0, 0,comprable, rutaTextura);
+		this.comprable = comprable;
+		this.tipo = tipo;
+		this.estado = estado;
+	}
+
 	protected void crearCuerpo(World world, int ancho, int alto) {//esto lo puedo sacar mas adelante, si le hago animacion a los minerales...
 		// Crear el cuerpo del jugador
         BodyDef bodyDef = new BodyDef();

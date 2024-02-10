@@ -24,10 +24,11 @@ import com.mygdx.entidades.ObjetosDelMapa.MineralesManager;
 import com.mygdx.entidades.ObjetosDelMapa.ObjetosTallerManager;
 import com.mygdx.entidades.ObjetosDelMapa.SoporteArmadura;
 import com.mygdx.entidades.ObjetosDelMapa.Yunque;
-import com.mygdx.entidades.ObjetosDelMapa.Minable.Carbon;
-import com.mygdx.entidades.ObjetosDelMapa.Minable.Hierro;
-import com.mygdx.entidades.ObjetosDelMapa.Minable.Piedra;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.CarbonMena;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.HierroMena;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.PiedraMena;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
+import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroPuro;
 import com.mygdx.entidades.npcs.VendedorAmbulante;
 import com.mygdx.entidades.npcs.VendedorDeTienda;
 import com.mygdx.entidades.npcs.Viejo;
@@ -190,11 +191,11 @@ public class Juego implements Screen{
 		charlaManagerConfig();
 		
 		//objetos del mapa
-		piedra = new Piedra(20,16, world,false);//Eem los minerales voy a tener que hacer algun tipo de manager que los spawnee de manera aleatoria en alguna zona permitida
-		hierro = new Hierro(20,20, world,false);
-		hierro1 = new Hierro(7,5, world,true);
-		piedra2 = new Piedra(18,18, world,false);
-		carbon = new Carbon(23, 32, world, false);
+		piedra = new PiedraMena(20,16, world,false);//Eem los minerales voy a tener que hacer algun tipo de manager que los spawnee de manera aleatoria en alguna zona permitida
+		hierro = new HierroMena(20,20, world,false);
+		hierro1 = new HierroMena(7,5, world,true);
+		piedra2 = new PiedraMena(18,18, world,false);
+		carbon = new CarbonMena(23, 32, world, false);
 		
 		crearObjetosDelTaller();	
 				

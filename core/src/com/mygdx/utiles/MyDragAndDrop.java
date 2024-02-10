@@ -18,7 +18,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
-import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroMineral;
+import com.mygdx.entidades.ObjetosDelMapa.procesados.CarbonPuro;
+import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroPuro;
+import com.mygdx.enums.EstadosMinerales;
 import com.mygdx.enums.Items;
 import com.mygdx.enums.TipoCombinacion;
 
@@ -143,7 +145,7 @@ public class MyDragAndDrop {
 		                	//Esto es medio generico, pero bueno cuando necesite mas especifico lo cambio
 		                	inventario.remove(mineralSource);
 		                	jugador.getMinerales().remove(mineralSource);
-		                	jugador.getMinerales().add(new HierroMineral(x, y, false, Recursos.HIERRO_MINERAL));
+		                	
 		                	
 		                    System.out.println("Combinacion valida: " + mineralSource + " sobre " + herramienta);
 		                } else {
@@ -164,8 +166,11 @@ public class MyDragAndDrop {
 				}
 				
 				private boolean esCombinacionValida(Items herramineta, Mineral mineral) {
-					if(herramineta == Items.CINCEL && mineral.tipo == TipoMinerales.HIERRO) {
-						System.out.println("Exito Cincel");
+					if(herramineta == Items.CINCEL && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.MENA) {
+						jugador.getMinerales().add(new HierroPuro(false));
+						return true;
+					}else if(herramineta == Items.CINCEL && mineral.tipo == TipoMinerales.CARBON && mineral.estado == EstadosMinerales.MENA){
+						jugador.getMinerales().add(new CarbonPuro(false));
 						return true;
 					}else {
 						return false;

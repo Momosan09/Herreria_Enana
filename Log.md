@@ -269,3 +269,4 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
     - Modifica las combinaciones, ahora herramientas y minerales se pueden combinar
     - Modificaciones en las clases hijas de Mineral
     - Modificaciones en la fundicion
+    - Agrega enum de estados del mineral para mayor precision

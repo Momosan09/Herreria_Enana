@@ -52,8 +52,8 @@ public abstract class Recursos {
 	public static final String MENA_HIERRO = "objetosDelMundo/inanimados/interactuables/hierroMena.png";
 	public static final String MENA_CARBON = "objetosDelMundo/inanimados/interactuables/carbonMena.png";
 	public static final String LINGOTE_HIERRO = "objetosDelMundo/inanimados/hierroLingote.png";
-	public static final String HIERRO_MINERAL = "objetosDelMundo/inanimados/hierroMineral.png";
-	public static final String CARBON = "objetosDelMundo/inanimados/carbon.png";
+	public static final String HIERRO_PURO = "objetosDelMundo/inanimados/hierroPuro.png";
+	public static final String CARBON_PURO = "objetosDelMundo/inanimados/carbonPuro.png";
 			
 	public static final String VACIO = "objetosDelMundo/inanimados/vacio.png";
 	public static final String HORNO = "objetosDelMundo/inanimados/interactuables/horno.png";
