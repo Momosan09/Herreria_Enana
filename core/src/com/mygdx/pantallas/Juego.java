@@ -34,6 +34,7 @@ import com.mygdx.entidades.npcs.Viejo;
 import com.mygdx.entidades.npcs.dialogos.CharlaManager;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.entidades.npcs.dialogos.Npc_Dialogos_Rey;
+import com.mygdx.enums.EstadosMinerales;
 import com.mygdx.enums.Items;
 import com.mygdx.game.Principal;
 import com.mygdx.historia.TipoMision;
@@ -189,11 +190,11 @@ public class Juego implements Screen{
 		charlaManagerConfig();
 		
 		//objetos del mapa
-		piedra = new Piedra(20,16, world,false,Recursos.PIEDRA_PIEDRA);//Eem los minerales voy a tener que hacer algun tipo de manager que los spawnee de manera aleatoria en alguna zona permitida
-		hierro = new Hierro(20,20, world,false, Recursos.MENA_HIERRO);
-		hierro1 = new Hierro(7,5, world,true, Recursos.MENA_HIERRO);
-		piedra2 = new Piedra(18,18, world,false, Recursos.PIEDRA_PIEDRA);
-		carbon = new Carbon(23, 32, world, false, Recursos.MENA_CARBON);
+		piedra = new Piedra(20,16, world,false);//Eem los minerales voy a tener que hacer algun tipo de manager que los spawnee de manera aleatoria en alguna zona permitida
+		hierro = new Hierro(20,20, world,false);
+		hierro1 = new Hierro(7,5, world,true);
+		piedra2 = new Piedra(18,18, world,false);
+		carbon = new Carbon(23, 32, world, false);
 		
 		crearObjetosDelTaller();	
 				

@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.LingoteHierro;
+import com.mygdx.enums.EstadosMinerales;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
@@ -79,8 +80,8 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 		botonAbajo = new Button(skinAbajo);
 		fundirBoton = new TextButton("Fundir x" + cantidad, skinTextButton);
 		
-		hierro = new Image(new Texture(Recursos.MENA_HIERRO));
-		imgElegido = new Image(new Texture(Recursos.MENA_HIERRO));
+		hierro = new Image(new Texture(Recursos.HIERRO_MINERAL));
+		imgElegido = new Image(new Texture(Recursos.HIERRO_MINERAL));
 		imgElegido.scaleBy(3);
 		
 		imgResultado = new Image(new Texture(Recursos.LINGOTE_HIERRO));
@@ -124,7 +125,7 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 
 				fabricar = true;
 				System.out.println(cantidad);
-				jugador.eliminarPorNombreDadoYCantidad(TipoMinerales.HIERRO, cantidad);
+				jugador.eliminarPorNombreDadoCantidadYEstado(TipoMinerales.HIERRO, cantidad, EstadosMinerales.PURO);
 			}
 		});
 		
@@ -211,7 +212,7 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 
 	
 	public void tieneHierro(Jugador jugador) {
-		hierroEnElInventario=jugador.buscarCantidadDeMineralesPorTipo(TipoMinerales.HIERRO);
+		hierroEnElInventario=jugador.buscarCantidadDeMineralesPorTipoYEstado(TipoMinerales.HIERRO, EstadosMinerales.PURO);
 //		System.out.println("hierro en el inventario " + hierroEnElInventario);
 		if(hierroEnElInventario >0) {
 			fundirBoton.setDisabled(false);

@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
+import com.mygdx.enums.EstadosMinerales;
 import com.mygdx.enums.Items;
 import com.mygdx.historia.TipoMision;
 import com.mygdx.utiles.Colores;
@@ -20,6 +21,7 @@ import com.mygdx.utiles.HelpDebug;
 public class Mineral extends Entidad{
 	
 	public TipoMinerales tipo;
+	public EstadosMinerales estado;
 	public int vida = 100;
 	public int valor=5;
 	private boolean comprar = false, cerrar = false, comprable = false;
@@ -27,17 +29,18 @@ public class Mineral extends Entidad{
 
 
 	
-	public Mineral(float x, float y, World world, boolean comprable, String rutaTextura, TipoMinerales tipo, int ancho, int alto) {
+	public Mineral(float x, float y, World world, boolean comprable, String rutaTextura, TipoMinerales tipo, EstadosMinerales estado, int ancho, int alto) {
 		super(x, y, world, rutaTextura);
 		this.comprable = comprable;
 		this.tipo = tipo;
 		crearCuerpo(world, ancho, alto);
 	}
 	
-	public Mineral(float x, float y, boolean comprable, String rutaTextura, TipoMinerales tipo) {
+	public Mineral(float x, float y, boolean comprable, String rutaTextura, TipoMinerales tipo, EstadosMinerales estado) {
 		super(x, y,comprable, rutaTextura);
 		this.comprable = comprable;
 		this.tipo = tipo;
+		this.estado = estado;
 	}
 	
 	protected void crearCuerpo(World world, int ancho, int alto) {//esto lo puedo sacar mas adelante, si le hago animacion a los minerales...

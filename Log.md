@@ -267,3 +267,5 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
     - Agrega un nuevo tipo de hierro
     - agrega Maza y Cincel
     - Modifica las combinaciones, ahora herramientas y minerales se pueden combinar
+    - Modificaciones en las clases hijas de Mineral
+    - Modificaciones en la fundicion

@@ -2,11 +2,13 @@ package com.mygdx.entidades.ObjetosDelMapa.Minable;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
+import com.mygdx.enums.EstadosMinerales;
+import com.mygdx.utiles.Recursos;
 
 public class Carbon extends Mineral{
 
-	public Carbon(int x, int y, World world, boolean comprable, String rutaTextura) {
-		super(x, y, world, comprable, rutaTextura, TipoMinerales.CARBON, 11, 11);
+	public Carbon(int x, int y, World world, boolean comprable) {
+		super(x, y, world, comprable, Recursos.MENA_CARBON, TipoMinerales.CARBON, EstadosMinerales.MENA, 11, 11);
 	}
 
 }

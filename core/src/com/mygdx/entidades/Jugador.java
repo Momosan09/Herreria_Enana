@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.enums.Direcciones;
+import com.mygdx.enums.EstadosMinerales;
 import com.mygdx.enums.Items;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.HelpDebug;
@@ -237,23 +238,23 @@ public class Jugador {
 		return mineralesInv;
 	}
 	
-	public int buscarCantidadDeMineralesPorTipo(TipoMinerales mineral){
+	public int buscarCantidadDeMineralesPorTipoYEstado(TipoMinerales mineral, EstadosMinerales estado){
 		int cont = 0;
 		for(int i = 0; i<mineralesInv.size();i++) {
-			if(mineralesInv.get(i).tipo == mineral) {
+			if(mineralesInv.get(i).tipo == mineral && mineralesInv.get(i).estado == estado) {
 				cont++;
 			}
 		}
 		return cont;
 	}
 	
-	public void eliminarPorNombreDadoYCantidad(TipoMinerales mineral, int cantidad) {
+	public void eliminarPorNombreDadoCantidadYEstado(TipoMinerales mineral, int cantidad, EstadosMinerales estado) {
 		System.out.println(HelpDebug.debub(getClass())+"El tamano es " + mineralesInv.size() + "++++++++++++");
 		if(mineralesInv.size() > 0) {
 			
 			int cont = 0;
 			for(int i = 0; i<mineralesInv.size();i++) {
-				if(mineralesInv.get(i).tipo == mineral && cont < cantidad) {
+				if(mineralesInv.get(i).tipo == mineral && cont < cantidad && mineralesInv.get(i).estado == estado) {
 					indicesDeEliminacion.add(i);
 					cont++;
 				}

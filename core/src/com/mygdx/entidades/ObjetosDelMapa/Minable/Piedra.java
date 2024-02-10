@@ -2,11 +2,13 @@ package com.mygdx.entidades.ObjetosDelMapa.Minable;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
+import com.mygdx.enums.EstadosMinerales;
+import com.mygdx.utiles.Recursos;
 
 public class Piedra extends Mineral{
 
-	public Piedra(float x, float y, World world, boolean comprable, String rutaTextura) {
-		super(x, y, world,comprable, rutaTextura, TipoMinerales.PIEDRA, 16,12);
+	public Piedra(float x, float y, World world, boolean comprable) {
+		super(x, y, world,comprable, Recursos.PIEDRA_PIEDRA, TipoMinerales.PIEDRA, EstadosMinerales.MENA, 16,12);
 	}
 
 }
