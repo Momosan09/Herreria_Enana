@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
+import com.mygdx.enums.Items;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.EstiloFuente;
@@ -115,8 +116,8 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 			//DibujarFiguras.dibujarRectanguloLleno(contenedor.getX(), contenedor.getY(), contenedor.getWidth(), contenedor.getHeight(), new Color(0,0,0,.7f));
 	    	stage.act(Gdx.graphics.getDeltaTime());
 	    	stage.draw();
-	    	llenarMinerales(jugador);//Cada vez que se muestre el inventario llena las tablas
-	    	//infoMineral();
+	    	llenarInventario();//Cada vez que se muestre el inventario llena las tablas
+//	    	infoMineral();
 		}
 		
 	}
@@ -125,11 +126,12 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 		return stage;
 	}
 	
-	public void llenarInventario(Jugador jugador) {
-		llenarMinerales(jugador);
+	public void llenarInventario() {
+		llenarMinerales();
+		llenarArtefactos();
 	}
 	
-	public void llenarMinerales(Jugador jugador) {
+	public void llenarMinerales() {
 		tablaMinerales.clear();
 		tablaMinerales.add(encabezadoMinerales).row();
 		//Este if me permite saber si el la tabla no esta actualizada y si no lo esta, actualizarla
@@ -144,11 +146,27 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 
 	}
 	
+	public void llenarArtefactos() {
+		tablaArtefactos.clear();
+		tablaArtefactos.add(encabezadoArtefactos).row();
+		//Este if me permite saber si el la tabla no esta actualizada y si no lo esta, actualizarla
+		if(tablaArtefactos.getChildren().size-1 != jugador.getItems().size()) {//Le resto 1 porque la Label es un children tambien
+	    for (Items artefacto : jugador.getItems()) {
+	    	//System.out.println(HelpDebug.debub(getClass())+"Hay mineral");
+	        // Crea una imagen para el mineral y la agrega a la tabla
+	        Image artefactoImage = new Image(artefacto.getTextura());
+	        tablaArtefactos.add(artefactoImage).size(64, 64).pad(5);
+	    }
+		}
+	}
+	
 	public void infoMineral() {
 		for(int i = 0; i<tablaMinerales.getChildren().size; i++) {
 			if(Gdx.input.getX() >= tablaMinerales.getChild(i).getX() && Gdx.input.getY() >= tablaMinerales.getChild(i).getY()) {
+				
+				nombreMineral[0].setText(tablaMinerales.getChildren().get(i).getName()+ " no anda");
 				nombreMineral[0].setVisible(true);
-				nombreMineral[0].setPosition(Gdx.input.getX(), Gdx.input.getY()+300);
+				nombreMineral[0].setPosition(Gdx.input.getX(), Gdx.graphics.getHeight()- Gdx.input.getY());
 				System.out.println(HelpDebug.debub(getClass())+"Mostrando");
 			}
 			

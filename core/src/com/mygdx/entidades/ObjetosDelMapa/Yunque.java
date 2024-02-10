@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
+import com.mygdx.enums.TipoCombinacion;
 import com.mygdx.hud.YunqueHUD;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.MyDragAndDrop;

@@ -31,6 +31,8 @@ public abstract class Recursos {
 	//Items
 	public static final String PICO_DER = "Items/picoDer.png";
 	public static final String PICO_IZ = "Items/picoIz.png";
+	public static final String CINCEL = "Items/cincel.png";
+	public static final String MAZA = "Items/maza.png";
 	
 	//Mapas
 	public static final String MAPA = "mapas/mapa.tmx";
@@ -46,11 +48,15 @@ public abstract class Recursos {
 	
 	//Objetos del mapa
 //	public static final String YUNQUE = "objetosDelMundo/inanimados/interactuables/yunque.png";
-	public static final String PIEDRA = "objetosDelMundo/inanimados/interactuables/piedra.png";
-	public static final String HIERRO = "objetosDelMundo/inanimados/interactuables/hierro.png";
+	public static final String PIEDRA_PIEDRA = "objetosDelMundo/inanimados/interactuables/piedra.png";
+	public static final String MENA_HIERRO = "objetosDelMundo/inanimados/interactuables/hierroMena.png";
+	public static final String MENA_CARBON = "objetosDelMundo/inanimados/interactuables/carbonMena.png";
+	public static final String LINGOTE_HIERRO = "objetosDelMundo/inanimados/hierroLingote.png";
+	public static final String HIERRO_MINERAL = "objetosDelMundo/inanimados/hierroMineral.png";
+	public static final String CARBON = "objetosDelMundo/inanimados/carbon.png";
+			
 	public static final String VACIO = "objetosDelMundo/inanimados/vacio.png";
 	public static final String HORNO = "objetosDelMundo/inanimados/interactuables/horno.png";
-	public static final String LINGOTE_HIERRO = "objetosDelMundo/inanimados/hierroLingote.png";
 	public static final String ALTO_HORNO = "objetosDelMundo/inanimados/interactuables/altoHorno.png";
 	public static final String CAJA_ENTREGAS = "objetosDelMundo/inanimados/interactuables/cajaEntregas.png";
 	public static final String MESA = "objetosDelMundo/inanimados/interactuables/mesa.png";

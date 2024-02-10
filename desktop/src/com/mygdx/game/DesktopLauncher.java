@@ -23,6 +23,7 @@ public class DesktopLauncher {
 		try {
 			new Lwjgl3Application(new Principal(), config);
 		} catch (Exception e) {
+			e.printStackTrace();
 			CrashReport.report(e);
 		}
 

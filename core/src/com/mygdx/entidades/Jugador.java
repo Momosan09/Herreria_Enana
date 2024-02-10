@@ -81,6 +81,12 @@ public class Jugador {
 		dinero = new int[3];
 		
 		areaJugador = new Rectangle(posicion.x, posicion.y, 32, 32);
+		
+		
+		//ESTO ES TEMPORAL, DESPUES EL JUGADOR NO VA A EMPEZAR CON LAS HERRAMIENTAS
+		items.add(Items.PICO);
+		items.add(Items.MAZA);
+		items.add(Items.CINCEL);
 	}
 
 	private void dibujarItemActual() {
@@ -88,7 +94,7 @@ public class Jugador {
 			if(direccionActual == Direcciones.IZQUIERDA) {
 				//spriteItem.flip(true, false);
 			}
-			spriteItem.draw(Render.batch);
+//			spriteItem.draw(Render.batch);
 			spriteItem.setPosition(posicion.x-16, posicion.y-16);
 		}
 	}

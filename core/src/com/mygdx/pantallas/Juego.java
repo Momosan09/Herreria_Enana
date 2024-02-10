@@ -24,6 +24,7 @@ import com.mygdx.entidades.ObjetosDelMapa.MineralesManager;
 import com.mygdx.entidades.ObjetosDelMapa.ObjetosTallerManager;
 import com.mygdx.entidades.ObjetosDelMapa.SoporteArmadura;
 import com.mygdx.entidades.ObjetosDelMapa.Yunque;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.Carbon;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.Hierro;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.Piedra;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
@@ -77,7 +78,7 @@ public class Juego implements Screen{
 	private ObjetoDelMapa carta;
 	private Npc viejo, vendedorAmbulate, vendedorTienda, rey;
 	private Texture jugadorTextura;
-	private Mineral piedra, hierro, hierro1, piedra2;
+	private Mineral piedra, hierro, hierro1, piedra2, carbon;
 	private Horno horno;
 	private AltoHorno altoHorno;
 	private SoporteArmadura soporteArmadura;
@@ -188,10 +189,11 @@ public class Juego implements Screen{
 		charlaManagerConfig();
 		
 		//objetos del mapa
-		piedra = new Piedra(20,16, world,false,Recursos.PIEDRA);//Eem los minerales voy a tener que hacer algun tipo de manager que los spawnee de manera aleatoria en alguna zona permitida
-		hierro = new Hierro(20,20, world,false, Recursos.HIERRO);
-		hierro1 = new Hierro(7,5, world,true, Recursos.HIERRO);
-		piedra2 = new Piedra(18,18, world,false, Recursos.PIEDRA);
+		piedra = new Piedra(20,16, world,false,Recursos.PIEDRA_PIEDRA);//Eem los minerales voy a tener que hacer algun tipo de manager que los spawnee de manera aleatoria en alguna zona permitida
+		hierro = new Hierro(20,20, world,false, Recursos.MENA_HIERRO);
+		hierro1 = new Hierro(7,5, world,true, Recursos.MENA_HIERRO);
+		piedra2 = new Piedra(18,18, world,false, Recursos.PIEDRA_PIEDRA);
+		carbon = new Carbon(23, 32, world, false, Recursos.MENA_CARBON);
 		
 		crearObjetosDelTaller();	
 				
@@ -256,14 +258,14 @@ public class Juego implements Screen{
 	    }
 		
 		
-		if (Gdx.input.isKeyJustPressed(Keys.NUM_1) && MundoConfig.habilitadoHUDS) {
-			toggleBarraItems1 = !toggleBarraItems1;
-			if (toggleBarraItems1) {
-				jugador.getItems().add(Items.PICO);
-			} else {
-				jugador.getItems().clear();
-			}
-		}
+//		if (Gdx.input.isKeyJustPressed(Keys.NUM_1) && MundoConfig.habilitadoHUDS) {
+//			toggleBarraItems1 = !toggleBarraItems1;
+//			if (toggleBarraItems1) {
+//				jugador.getItems().add(Items.PICO);
+//			} else {
+//				jugador.getItems().clear();
+//			}
+//		}
 		
 	    if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT) && MundoConfig.habilitadoHUDS) {
 	    	combinacionJugador.mostrar();
@@ -455,6 +457,7 @@ public class Juego implements Screen{
 		mineralesManager.agregarMineral(hierro);
 		mineralesManager.agregarMineral(hierro1);
 		mineralesManager.agregarMineral(piedra2);
+		mineralesManager.agregarMineral(carbon);
 	}
 	
 	private void misionesMangerConfig() {

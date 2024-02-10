@@ -246,18 +246,24 @@
     - Preparando la interaccion con los objetos del taller
 
 # 7 FEB
-    ```diff
-+¡Arregla el bug milenario!
-    ```
+
+    - ¡Arregla el bug milenario!
+
     - Agrega el area de interaccion para los objetos del taller
     - Agrega area de interaccion para el jugador
     - Agrega algunos HUDS para los objetos del taller
     - Agrega un boton para silenciar la musica en el menu
 
 # 9 FEB
-    ```diff
--Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con algo de git y volvi al ultimo commit, espero no haber perdido nada
-    ```
+Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con algo de git y volvi al ultimo commit, espero no haber perdido nada
+
     - Agrega una clase que genera un informe de fallos
     - Agrega el panel de combinacion al hud del yunque
     - Modifica un poco las combinaciones
+
+# 10 FEB
+
+    - Agrega carbon
+    - Agrega un nuevo tipo de hierro
+    - agrega Maza y Cincel
+    - Modifica las combinaciones, ahora herramientas y minerales se pueden combinar

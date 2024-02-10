@@ -17,6 +17,7 @@ import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.MyDragAndDrop;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.entidades.Jugador;
+import com.mygdx.enums.TipoCombinacion;
 
 public class Combinacion implements HeadUpDisplay, Ocultable{
 

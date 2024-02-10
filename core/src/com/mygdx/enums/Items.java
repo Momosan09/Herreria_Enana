@@ -9,7 +9,10 @@ public enum Items {
 	//Ejemplo: AMULETO1, es necesario para x motivo
 	
 	
-	VACIO(new Texture(Recursos.VACIO)),PICO(new Texture(Recursos.PICO_DER));
+	VACIO(new Texture(Recursos.VACIO)),
+	PICO(new Texture(Recursos.PICO_DER)),
+	CINCEL(new Texture(Recursos.CINCEL)),
+	MAZA(new Texture(Recursos.MAZA));
 	
 	private Texture textura;
 

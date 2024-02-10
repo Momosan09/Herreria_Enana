@@ -1,0 +1,20 @@
+com.badlogic.gdx.utils.GdxRuntimeException: java.lang.Error: Unresolved compilation problem: 
+	Cannot refer to the non-final local variable mineral defined in an enclosing scope
+
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:172)
+	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)
+Caused by: java.lang.Error: Unresolved compilation problem: 
+	Cannot refer to the non-final local variable mineral defined in an enclosing scope
+
+	at com.mygdx.utiles.MyDragAndDrop$4.dragStart(MyDragAndDrop.java:235)
+	at com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop$1.dragStart(DragAndDrop.java:65)
+	at com.badlogic.gdx.scenes.scene2d.utils.DragListener.touchDragged(DragListener.java:52)
+	at com.badlogic.gdx.scenes.scene2d.InputListener.handle(InputListener.java:74)
+	at com.badlogic.gdx.scenes.scene2d.Stage.touchDragged(Stage.java:319)
+	at com.badlogic.gdx.InputMultiplexer.touchDragged(InputMultiplexer.java:135)
+	at com.badlogic.gdx.InputEventQueue.drain(InputEventQueue.java:73)
+	at com.badlogic.gdx.backends.lwjgl3.DefaultLwjgl3Input.update(DefaultLwjgl3Input.java:189)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:378)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:192)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:166)
+	... 1 more

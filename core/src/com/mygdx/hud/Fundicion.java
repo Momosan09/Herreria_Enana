@@ -79,8 +79,8 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 		botonAbajo = new Button(skinAbajo);
 		fundirBoton = new TextButton("Fundir x" + cantidad, skinTextButton);
 		
-		hierro = new Image(new Texture(Recursos.HIERRO));
-		imgElegido = new Image(new Texture(Recursos.HIERRO));
+		hierro = new Image(new Texture(Recursos.MENA_HIERRO));
+		imgElegido = new Image(new Texture(Recursos.MENA_HIERRO));
 		imgElegido.scaleBy(3);
 		
 		imgResultado = new Image(new Texture(Recursos.LINGOTE_HIERRO));
