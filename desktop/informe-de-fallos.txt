@@ -1,20 +1,11 @@
-com.badlogic.gdx.utils.GdxRuntimeException: java.lang.Error: Unresolved compilation problem: 
-	Cannot refer to the non-final local variable mineral defined in an enclosing scope
-
-	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:172)
-	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)
-Caused by: java.lang.Error: Unresolved compilation problem: 
-	Cannot refer to the non-final local variable mineral defined in an enclosing scope
-
-	at com.mygdx.utiles.MyDragAndDrop$4.dragStart(MyDragAndDrop.java:235)
-	at com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop$1.dragStart(DragAndDrop.java:65)
-	at com.badlogic.gdx.scenes.scene2d.utils.DragListener.touchDragged(DragListener.java:52)
-	at com.badlogic.gdx.scenes.scene2d.InputListener.handle(InputListener.java:74)
-	at com.badlogic.gdx.scenes.scene2d.Stage.touchDragged(Stage.java:319)
-	at com.badlogic.gdx.InputMultiplexer.touchDragged(InputMultiplexer.java:135)
-	at com.badlogic.gdx.InputEventQueue.drain(InputEventQueue.java:73)
-	at com.badlogic.gdx.backends.lwjgl3.DefaultLwjgl3Input.update(DefaultLwjgl3Input.java:189)
-	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:378)
+java.lang.ClassCastException: class com.badlogic.gdx.maps.objects.RectangleMapObject cannot be cast to class com.badlogic.gdx.maps.objects.PolygonMapObject (com.badlogic.gdx.maps.objects.RectangleMapObject and com.badlogic.gdx.maps.objects.PolygonMapObject are in unnamed module of loader 'app')
+	at com.mygdx.utiles.HelpMapa.conseguirObjetosDeLaCapa(HelpMapa.java:105)
+	at com.mygdx.utiles.HelpMapa.Inicializar(HelpMapa.java:43)
+	at com.mygdx.pantallas.Juego.show(Juego.java:145)
+	at com.badlogic.gdx.Game.setScreen(Game.java:63)
+	at com.mygdx.game.Principal.create(Principal.java:20)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.initializeListener(Lwjgl3Window.java:416)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:366)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:192)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:166)
-	... 1 more
+	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)

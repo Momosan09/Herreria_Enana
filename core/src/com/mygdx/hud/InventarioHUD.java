@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -27,6 +29,7 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 	private Label[] nombreMineral;
 	private Jugador jugador;
 	
+	private Skin skin = new Skin(Gdx.files.internal(Recursos.SKIN_TOOLTIP));
 	private Label.LabelStyle labelStyle, labelStyleCantidades;
 	
 	 private boolean visible=false;
@@ -140,6 +143,8 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 	    	//System.out.println(HelpDebug.debub(getClass())+"Hay mineral");
 	        // Crea una imagen para el mineral y la agrega a la tabla
 	        Image mineralImage = new Image(mineral.getTextura());
+//	        mineralImage.addListener(new TextTooltip("el pene", skin));
+
 	        tablaMinerales.add(mineralImage).size(64, 64).pad(5);
 	    }
 		}
@@ -155,6 +160,7 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 	    	//System.out.println(HelpDebug.debub(getClass())+"Hay mineral");
 	        // Crea una imagen para el mineral y la agrega a la tabla
 	        Image artefactoImage = new Image(artefacto.getTextura());
+
 	        tablaArtefactos.add(artefactoImage).size(64, 64).pad(5);
 	    }
 		}

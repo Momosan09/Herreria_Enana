@@ -25,7 +25,7 @@ public class HelpMapa {
 	private Juego juego;
 	private Vector2 jugadorSpawn;
 	private ArrayList<Vector2> posicionObjetosInteratuablesTaller;
-	private int[] capasDeFondo = {0,1,3,4,5,6}, capasDeFrente= {2,7,8};//Relativo a donde el personaje deberia estar ubicado //si agrego mas capas acordarse de modificar esto
+	private int[] capasDeFondo = {0,1,3,4,5,6,10}, capasDeFrente= {2,7,8};//Relativo a donde el personaje deberia estar ubicado //si agrego mas capas acordarse de modificar esto
 	float unitScale = 1 / 1f;
 
 

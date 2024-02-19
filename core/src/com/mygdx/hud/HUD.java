@@ -255,6 +255,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 				if(!proximaBatallaHUD.getVisible() && !diarioHUD.getVisible()) {
 					resultadosHUD.mostrar(); // Abre resultadosHUD		
 					Recursos.muxJuego.removeProcessor(proximaBatallaHUD.getStage());//Arregla el bug ese que no deja usar el otro boton
+					Recursos.muxJuego.removeProcessor(resultadosHUD.getStage());
 					Recursos.muxJuego.addProcessor(resultadosHUD.getStage());
 					
 					
@@ -271,6 +272,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 				if(!resultadosHUD.getVisible() && !diarioHUD.getVisible()) {
 					proximaBatallaHUD.mostrar();
 					Recursos.muxJuego.removeProcessor(resultadosHUD.getStage());//Arregla el bug ese que no deja usar el otro boton
+					Recursos.muxJuego.removeProcessor(proximaBatallaHUD.getStage());
 					Recursos.muxJuego.addProcessor(proximaBatallaHUD.getStage());
 					
 				}

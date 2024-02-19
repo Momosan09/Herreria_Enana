@@ -270,3 +270,7 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
     - Modificaciones en las clases hijas de Mineral
     - Modificaciones en la fundicion
     - Agrega enum de estados del mineral para mayor precision
+
+# 19 FEB
+    - Camino a la beta
+    - Cambios menores en el mapa e iluminacion

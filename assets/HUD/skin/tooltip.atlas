@@ -1,0 +1,22 @@
+
+tooltip.png
+size: 512, 512
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+fondoTooltip
+  rotate: false
+  xy: 1, 402
+  size: 96, 32
+  split: 2, 3, 2, 2
+  pad: 0, 0, 0, 0
+  orig: 96, 32
+  offset: 0, 0
+  index: -1
+Cardinal
+  rotate: false
+  xy: 1, 436
+  size: 506, 69
+  orig: 506, 69
+  offset: 0, 0
+  index: -1

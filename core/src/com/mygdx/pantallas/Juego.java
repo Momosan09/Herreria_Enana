@@ -70,7 +70,9 @@ public class Juego implements Screen{
 	
 	//Box2dLight
 	private RayHandler rayHandler;
-	PointLight pl, pl2;
+	private PointLight pl, pl2;
+	private float valorLuz = 0;
+	 
 	
 	//Mapa
 	private TiledMap tiledMap;
@@ -494,9 +496,13 @@ public class Juego implements Screen{
 
 		rayHandler.setBlurNum(3);
 		rayHandler.setShadows(true);
-		pl = new PointLight(rayHandler, 128, new Color(Color.valueOf("#ea8e0e")), 200, 300, 300);
+		pl = new PointLight(rayHandler, 128, new Color(Color.valueOf("#ea8e0e")), 300, 43*32, 55*32);
 		pl.setStaticLight(false);
-		pl.setSoft(true);
+		pl.setSoft(false);
+		
+		pl2 = new PointLight(rayHandler, 128, new Color(Color.valueOf("#ef9413")),90, 35.5f*32, 57.5f*32);
+		pl2.setStaticLight(false);
+		pl2.setSoft(false);
 		rayHandler.setCulling(false); // Esto es lo que me hace que no se vean las luces que inicien fuera de los
 										// bordes de la pantalla
 	}
@@ -517,19 +523,35 @@ public class Juego implements Screen{
 			 diaDelMundo=1;
 		 }
 		 
-		 
+
 		 if(horaDelMundo>=0 && horaDelMundo < 4.5f) {
-			 rayHandler.setAmbientLight(.2f);
-		 }else if( horaDelMundo < 12) {
-			 rayHandler.setAmbientLight(.7f);
+			 if(valorLuz <.2f) {
+				 valorLuz = valorLuz +.001f;
+			 }
+			 rayHandler.setAmbientLight(valorLuz);
+		 }else if(horaDelMundo < 12) {
+			 if(valorLuz <.7f) {
+				 valorLuz = valorLuz +.001f;
+			 }
+			 rayHandler.setAmbientLight(valorLuz);
 		 }else if(horaDelMundo < 15) {
-			 rayHandler.setAmbientLight(1f);
+			 if(valorLuz <1f) {
+				 valorLuz = valorLuz +.001f;
+			 }
+			 rayHandler.setAmbientLight(valorLuz);
 		 }else if(horaDelMundo < 17) {
-			 rayHandler.setAmbientLight(.6f);
+			 if(valorLuz >.6f) {
+				 valorLuz = valorLuz - .001f;
+			 }
+			 rayHandler.setAmbientLight(valorLuz);
 		 }else if(horaDelMundo < 20) {
-			 rayHandler.setAmbientLight(.4f);
-		 }else if (horaDelMundo <= 24) {
-			 rayHandler.setAmbientLight(.2f);
+			 if(valorLuz >.4f) {
+				 valorLuz = valorLuz - .001f;
+			 }
+		 }else if (horaDelMundo < 24) {
+			 if(valorLuz >.2f) {
+				 valorLuz = valorLuz - .001f;
+			 }
 		 }			 
 		 }
 	 }
