@@ -274,3 +274,8 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
 # 19 FEB
     - Camino a la beta
     - Cambios menores en el mapa e iluminacion
+
+# 20 FEB
+    - Cambios en la colision del jugador
+    - Cambios en las colisiones del mapa
+    - Auto Sorting para los sprites

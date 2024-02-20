@@ -17,11 +17,11 @@ public class Animator implements ApplicationListener {
 	private int filaDelSpriteSheet;
 
 	// Objects used
-	Animation<TextureRegion> animacion; // Must declare frame type (TextureRegion)
-	Texture spriteSheet;
-	String rutaSpriteSheet;
+	private Animation<TextureRegion> animacion; // Must declare frame type (TextureRegion)
+	private Texture spriteSheet;
+	private String rutaSpriteSheet;
 	
-	Vector2 posicion;
+	private Vector2 posicion;
 	
 	// A variable for tracking elapsed time for the animation
 	float stateTime;
@@ -72,6 +72,21 @@ public class Animator implements ApplicationListener {
 		Render.batch.draw(currentFrame, posicion.x-16, posicion.y-16);
 	}
 	
+	
+	public SpriteOrdenableIndiceZ getFrameActual() {
+	    TextureRegion currentFrame = animacion.getKeyFrame(stateTime, true);
+
+	    // Crea un nuevo SpriteOrdenableIndiceZ usando la textura del TextureRegion
+	    SpriteOrdenableIndiceZ sprite = new SpriteOrdenableIndiceZ(currentFrame.getTexture());
+
+	    // Configura la posición del nuevo sprite
+	    sprite.setPosition(posicion.x - 16, posicion.y - 16);
+
+	    // También puedes copiar otras propiedades si es necesario, como la escala, rotación, etc.
+
+	    return sprite;
+	}
+
 	
 	public void reset() {
 		stateTime = 0;

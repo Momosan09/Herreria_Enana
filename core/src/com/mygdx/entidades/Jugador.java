@@ -24,6 +24,7 @@ import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
+import com.mygdx.utiles.SpriteOrdenableIndiceZ;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.historia.Mision;
@@ -53,6 +54,7 @@ public class Jugador {
 	public Direcciones direccionActual = Direcciones.QUIETO;
 	public Direcciones direccionDelChoque = null;
 	private Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
+	private Animator animacionActual;
 	
 	
 	public Jugador(OrthographicCamera camara, World world, Vector2 spawnPosicion) {
@@ -62,11 +64,11 @@ public class Jugador {
 		// Crear el cuerpo del jugador
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(spawnPosicion.x+16,spawnPosicion.y+16);
+        bodyDef.position.set(spawnPosicion.x+16,spawnPosicion.y);
 
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(14,16);
+        shape.setAsBox(6,2);
         
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -137,14 +139,14 @@ public class Jugador {
             }
             
             posicion.x = body.getPosition().x;
-            posicion.y = body.getPosition().y;
+            posicion.y = body.getPosition().y+14;//ajusta la colision a los pies del jugador, la camara se centra en la posicion por tanto el sprite del jugador quedaria mas arriba, pero me parece que queda mejor asi
             
             if (movimientoX != 0 || movimientoY != 0) {
                 //body.setLinearVelocity(movimientoX, movimientoY);
-                alternarSprites(direccionActual);
+//                alternarSprites(direccionActual);
             } else {
                 body.setLinearVelocity(0, 0);
-                alternarSprites(Direcciones.QUIETO);
+//                alternarSprites(Direcciones.QUIETO);
                 resetearAnimaciones(animacionArriba, animacionAbajo, animacionIzquierda, animacionDerecha);
             }
 
@@ -164,7 +166,7 @@ public class Jugador {
 	public void movimientoCamara() {
 		if(camara != null) {
 			
-            camara.position.set(body.getPosition().x, body.getPosition().y, 0);
+            camara.position.set(posicion.x, posicion.y, 0);
             camara.update();
 		}
 	}
@@ -173,24 +175,20 @@ public class Jugador {
 		return posicion;
 	}
 
-	public void alternarSprites(Direcciones direccion) {
+	public Animator alternarSprites(Direcciones direccion) {
 		switch (direccion) {
 		case ABAJO:
-			animacionAbajo.render();
-			break;
+			return animacionAbajo;
 		case ARRIBA:
-			animacionArriba.render();
-			break;
+			return animacionArriba;
 		case IZQUIERDA:
-			animacionIzquierda.render();
-			break;
+			return animacionIzquierda;
 		case DERECHA:
-			animacionDerecha.render();
-			break;
+			return animacionDerecha;
 		case QUIETO:
-			animacionQuieto.render();
-			break;
+			return animacionQuieto;
 		}
+		return null;
 	}
 
 	private void crearAnimaciones() {
@@ -205,6 +203,10 @@ public class Jugador {
 		animacionIzquierda.create();
 		animacionDerecha.create();
 		animacionQuieto.create();
+	}
+	
+	public SpriteOrdenableIndiceZ getFrame() {
+		return alternarSprites(direccionActual).getFrameActual();
 	}
 
 	private void resetearAnimaciones(Animator ... animaciones) {	//varargs, ya que nose cuantas animaciones voy a usar

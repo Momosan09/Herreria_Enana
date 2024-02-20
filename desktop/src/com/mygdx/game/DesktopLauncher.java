@@ -18,7 +18,7 @@ public class DesktopLauncher {
 		config.setIdleFPS(0);
 		config.setDecorated(true);
 		// config.setMaximized(true);
-		config.setWindowedMode(1280, 768);
+		config.setWindowedMode(1280, 720);
 
 		try {
 			new Lwjgl3Application(new Principal(), config);

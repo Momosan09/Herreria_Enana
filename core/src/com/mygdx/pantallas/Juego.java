@@ -52,6 +52,7 @@ import com.mygdx.hud.PausaHUD;
 import com.mygdx.hud.SoporteArmaduraHUD;
 import com.mygdx.hud.YunqueHUD;
 import com.mygdx.utiles.MundoConfig;
+import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.HelpMapa;
 import com.mygdx.utiles.Recursos;
@@ -76,6 +77,7 @@ public class Juego implements Screen{
 	
 	//Mapa
 	private TiledMap tiledMap;
+	private OrganizadorSpritesIndiceZ organizador;
 	
 	//Entidades
 	private Jugador jugador;
@@ -217,10 +219,15 @@ public class Juego implements Screen{
 		jugador.getMinerales().add(hierro);
 		jugador.getMinerales().add(hierro1);
 		
+		
+		organizador = new OrganizadorSpritesIndiceZ();
+		organizador.agregarSprite(carbon.getSprite());
+		
 	}
 
 	@Override
 	public void render(float delta){
+		
 		//DEBUG Y COSAS TEMPORALES (despues no van a estar mas)
 		if(Gdx.input.isKeyPressed(Keys.P)) {//para debug
 			camaraJugador.zoom = 5;
@@ -295,7 +302,7 @@ public class Juego implements Screen{
 		//Managers
 		Render.batch.begin();
 		npcManager.renderizar();
-		mineralesManager.renderizar();
+		//mineralesManager.renderizar();
 		objetosDelTallerManager.renderizar();
 		
 		npcManager.detectarJugador(jugador);
@@ -307,6 +314,8 @@ public class Juego implements Screen{
 		mineralesManager.comprar(jugador);
 
 		jugador.draw(Render.batch);
+		
+		organizador.dibujarYComparar(jugador.getFrame());
 		
 		Render.batch.end();
 		

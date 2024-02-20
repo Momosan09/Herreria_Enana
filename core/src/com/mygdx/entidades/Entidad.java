@@ -15,12 +15,13 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.enums.Items;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Render;
+import com.mygdx.utiles.SpriteOrdenableIndiceZ;
 
 public abstract class Entidad {
 
 	protected Vector2 posicion;//La necesito en las hijas
 	protected Texture textura;//La necesito en las hijas
-	private Sprite sprite;
+	private SpriteOrdenableIndiceZ sprite;
 	protected boolean jugadorEnRango = false, apretoE = false;
 	private boolean jugadorTienePico = false;//Deberia ir en mineral pero no se me ocurre como hacerlo
 	private boolean comprable = false;
@@ -36,7 +37,7 @@ public abstract class Entidad {
 		y=(MundoConfig.altoMundo - y) * MundoConfig.tamanoTile;
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
-		sprite = new Sprite(this.textura);
+		sprite = new SpriteOrdenableIndiceZ(this.textura);
 		sprite.setPosition(this.posicion.x, this.posicion.y);
 		
 		areaDeInteraccion = new Rectangle(posicion.x - distanciaInteraccion/2, posicion.y - distanciaInteraccion/2,
@@ -52,7 +53,7 @@ public abstract class Entidad {
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
 		this.comprable = comprable;
-		sprite = new Sprite(this.textura);
+		sprite = new SpriteOrdenableIndiceZ(this.textura);
 		sprite.setPosition(this.posicion.x, this.posicion.y);
 	}
 	
@@ -62,7 +63,7 @@ public abstract class Entidad {
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
 		this.comprable = comprable;
-		sprite = new Sprite(this.textura);
+		sprite = new SpriteOrdenableIndiceZ(this.textura);
 		sprite.setPosition(this.posicion.x, this.posicion.y);
 
 	}
@@ -92,7 +93,7 @@ public abstract class Entidad {
 
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(ancho/2, alto/2-(MundoConfig.tamanoTile-2));
+        shape.setAsBox(ancho/2, alto/2-(MundoConfig.tamanoTile-2)-16);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -174,6 +175,10 @@ public abstract class Entidad {
 	
 	public String getNombre() {
 		return nombre;
+	}
+
+	public SpriteOrdenableIndiceZ getSprite() {
+		return sprite;
 	}
 	
 }
