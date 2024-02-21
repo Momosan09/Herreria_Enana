@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.entidades.Jugador;
+import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 
 
 public class MineralesManager {
@@ -27,6 +28,7 @@ public class MineralesManager {
     		if(minerales.get(i).vida <= 0) {
     			world.destroyBody(minerales.get(i).getBody());
     			minerales.remove(i);
+
     		}
     	}
     }

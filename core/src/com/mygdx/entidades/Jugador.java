@@ -143,10 +143,10 @@ public class Jugador {
             
             if (movimientoX != 0 || movimientoY != 0) {
                 //body.setLinearVelocity(movimientoX, movimientoY);
-//                alternarSprites(direccionActual);
+                alternarSprites(direccionActual).render();
             } else {
                 body.setLinearVelocity(0, 0);
-//                alternarSprites(Direcciones.QUIETO);
+                alternarSprites(Direcciones.QUIETO).render();;
                 resetearAnimaciones(animacionArriba, animacionAbajo, animacionIzquierda, animacionDerecha);
             }
 

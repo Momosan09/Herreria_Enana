@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.enums.Items;
 import com.mygdx.utiles.MundoConfig;
+import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 import com.mygdx.utiles.Render;
 import com.mygdx.utiles.SpriteOrdenableIndiceZ;
 
@@ -38,6 +39,7 @@ public abstract class Entidad {
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
 		sprite = new SpriteOrdenableIndiceZ(this.textura);
+		OrganizadorSpritesIndiceZ.sprites.add(sprite);
 		sprite.setPosition(this.posicion.x, this.posicion.y);
 		
 		areaDeInteraccion = new Rectangle(posicion.x - distanciaInteraccion/2, posicion.y - distanciaInteraccion/2,
@@ -93,7 +95,7 @@ public abstract class Entidad {
 
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(ancho/2, alto/2-(MundoConfig.tamanoTile-2)-16);
+        shape.setAsBox(ancho/2, 0);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;

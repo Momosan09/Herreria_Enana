@@ -145,6 +145,7 @@ public class Juego implements Screen{
 		rayHandler = new RayHandler(world);
 		iluminacion();
 		
+		
 		this.box2Debug = new Box2DDebugRenderer();
 		Render.tiledMapRenderer = helpMapa.Inicializar();
 		MundoConfig.anchoMundo = helpMapa.getCantTilesAncho();
@@ -219,9 +220,6 @@ public class Juego implements Screen{
 		jugador.getMinerales().add(hierro);
 		jugador.getMinerales().add(hierro1);
 		
-		
-		organizador = new OrganizadorSpritesIndiceZ();
-		organizador.agregarSprite(carbon.getSprite());
 		
 	}
 
@@ -313,9 +311,9 @@ public class Juego implements Screen{
 		mineralesManager.limpiarMinerales(world);
 		mineralesManager.comprar(jugador);
 
-		jugador.draw(Render.batch);
+		//jugador.draw(Render.batch);
 		
-		organizador.dibujarYComparar(jugador.getFrame());
+		organizador.dibujarYComparar(jugador.getFrame(), jugador);
 		
 		Render.batch.end();
 		
@@ -425,6 +423,7 @@ public class Juego implements Screen{
 		objetosDelTallerManager.agregarObjeto(altoHorno);
 		objetosDelTallerManager.agregarObjeto(cajaEntregas);
 		objetosDelTallerManager.agregarObjeto(soporteArmadura);
+		
 		
 	}
 	

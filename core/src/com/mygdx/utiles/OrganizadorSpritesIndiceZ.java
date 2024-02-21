@@ -2,11 +2,13 @@ package com.mygdx.utiles;
 
 import java.util.ArrayList;
 
+import com.mygdx.entidades.Jugador;
 
 
-public class OrganizadorSpritesIndiceZ {
+
+public abstract class OrganizadorSpritesIndiceZ {
 	
-	private ArrayList<SpriteOrdenableIndiceZ> sprites = new ArrayList<SpriteOrdenableIndiceZ>();
+	public static ArrayList<SpriteOrdenableIndiceZ> sprites = new ArrayList<SpriteOrdenableIndiceZ>();
 
 	
 	public void agregarSprite(SpriteOrdenableIndiceZ spriteOrdenable) {
@@ -17,7 +19,7 @@ public class OrganizadorSpritesIndiceZ {
 		sprites.remove(spriteOrdenable);
 	}
 	
-	public void comparar(SpriteOrdenableIndiceZ elDinamico) {
+	public static void comparar(SpriteOrdenableIndiceZ elDinamico) {
 		for(int i = 0; i < sprites.size(); i++) {
 			if(elDinamico.getY() < sprites.get(i).getY()) {
 				sprites.get(i).setIndiceZ(0);//0 = en el fondo
@@ -27,7 +29,7 @@ public class OrganizadorSpritesIndiceZ {
 		}
 	}
 	
-	public void dibujarYComparar(SpriteOrdenableIndiceZ elDinamico) {
+	public static void dibujarYComparar(SpriteOrdenableIndiceZ elDinamico, Jugador jugador) {
 		comparar(elDinamico);
 		//Revisa los
 		for(int i = 0; i < sprites.size(); i++){
@@ -35,14 +37,18 @@ public class OrganizadorSpritesIndiceZ {
 		if(sprites.get(i).getIndiceZ() == 0) {
 			sprites.get(i).draw(Render.batch);
 		}
+		}
 		
-		elDinamico.draw(Render.batch);
+		//elDinamico.draw(Render.batch);
+		jugador.draw(Render.batch);
 		
+		
+		for(int i = 0; i < sprites.size(); i++){
 		if(sprites.get(i).getIndiceZ() == 1) {
 			sprites.get(i).draw(Render.batch);
 		}
-		
 		}
+		
 	}
 
 }
