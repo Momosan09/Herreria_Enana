@@ -24,7 +24,6 @@ import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
-import com.mygdx.utiles.SpriteOrdenableIndiceZ;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.historia.Mision;
@@ -203,10 +202,6 @@ public class Jugador {
 		animacionIzquierda.create();
 		animacionDerecha.create();
 		animacionQuieto.create();
-	}
-	
-	public SpriteOrdenableIndiceZ getFrame() {
-		return alternarSprites(direccionActual).getFrameActual();
 	}
 
 	private void resetearAnimaciones(Animator ... animaciones) {	//varargs, ya que nose cuantas animaciones voy a usar

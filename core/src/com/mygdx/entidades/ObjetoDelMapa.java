@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
-import com.mygdx.utiles.SpriteOrdenableIndiceZ;
 
 public abstract class ObjetoDelMapa extends Entidad{
 

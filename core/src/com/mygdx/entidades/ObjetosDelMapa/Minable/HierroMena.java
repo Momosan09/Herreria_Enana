@@ -8,7 +8,7 @@ import com.mygdx.utiles.Recursos;
 public class HierroMena extends Mineral{
 
 	public HierroMena(int x, int y, World world, boolean comprable) {
-		super(x, y, world, comprable, Recursos.MENA_HIERRO, TipoMinerales.HIERRO, EstadosMinerales.MENA, 11, 11);
+		super(x, y, world, comprable, Recursos.MENA_HIERRO, TipoMinerales.HIERRO, EstadosMinerales.MENA, 11, 7);
 	}
 
 }

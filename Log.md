@@ -283,3 +283,5 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
 # 23 FEB
     - Cambios en el Auto Sorting
     - Auto Sorting para los npcs 
+
+    Ahora con el autosorting tengo que acordarme que la clase OrganizadorSpritesIndiceZ es la unica que puede dibujar sobre el mapa

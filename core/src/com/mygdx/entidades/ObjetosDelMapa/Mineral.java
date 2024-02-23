@@ -19,7 +19,6 @@ import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
-import com.mygdx.utiles.SpriteOrdenableIndiceZ;
 
 public class Mineral extends ObjetoDelMapa{
 	

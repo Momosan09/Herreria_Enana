@@ -72,20 +72,6 @@ public class Animator implements ApplicationListener {
 		Render.batch.draw(currentFrame, posicion.x-16, posicion.y-16);
 	}
 	
-	
-	public SpriteOrdenableIndiceZ getFrameActual() {
-	    TextureRegion currentFrame = animacion.getKeyFrame(stateTime, true);
-
-	    // Crea un nuevo SpriteOrdenableIndiceZ usando la textura del TextureRegion
-	    SpriteOrdenableIndiceZ sprite = new SpriteOrdenableIndiceZ(currentFrame.getTexture());
-
-	    // Configura la posición del nuevo sprite
-	    sprite.setPosition(posicion.x - 16, posicion.y - 16);
-
-	    // También puedes copiar otras propiedades si es necesario, como la escala, rotación, etc.
-
-	    return sprite;
-	}
 
 	
 	public void reset() {

@@ -16,7 +16,6 @@ import com.mygdx.enums.Items;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 import com.mygdx.utiles.Render;
-import com.mygdx.utiles.SpriteOrdenableIndiceZ;
 
 public abstract class Entidad {
 
