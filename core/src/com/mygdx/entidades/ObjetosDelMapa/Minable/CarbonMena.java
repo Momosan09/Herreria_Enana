@@ -8,7 +8,7 @@ import com.mygdx.utiles.Recursos;
 public class CarbonMena extends Mineral{
 
 	public CarbonMena(int x, int y, World world, boolean comprable) {
-		super(x, y, world, comprable, Recursos.MENA_CARBON, TipoMinerales.CARBON, EstadosMinerales.MENA, 3, 1);
+		super(x, y, world, comprable, Recursos.MENA_CARBON, TipoMinerales.CARBON, EstadosMinerales.MENA, 10, 8);
 	}
 
 }

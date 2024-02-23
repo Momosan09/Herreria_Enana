@@ -7,7 +7,7 @@ import com.mygdx.entidades.npcs.dialogos.NpcData;
 public class Viejo extends Npc{
 
 	public Viejo(float x, float y, World world, String ruta, NpcData data) {
-		super(x, y, world, ruta, data);
+		super(x, y, world, ruta, data,8,8);
 		
 	}
 	

@@ -1,10 +1,17 @@
-java.lang.NullPointerException: Cannot invoke "com.mygdx.utiles.OrganizadorSpritesIndiceZ.agregarSprite(com.mygdx.utiles.SpriteOrdenableIndiceZ)" because "this.organizador" is null
-	at com.mygdx.pantallas.Juego.objetosDleTallerManagerConfig(Juego.java:426)
-	at com.mygdx.pantallas.Juego.show(Juego.java:208)
-	at com.badlogic.gdx.Game.setScreen(Game.java:63)
-	at com.mygdx.game.Principal.create(Principal.java:20)
-	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.initializeListener(Lwjgl3Window.java:416)
-	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:366)
+com.badlogic.gdx.utils.GdxRuntimeException: java.lang.Error: Unresolved compilation problem: 
+	indiceZ cannot be resolved to a variable
+
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:172)
+	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)
+Caused by: java.lang.Error: Unresolved compilation problem: 
+	indiceZ cannot be resolved to a variable
+
+	at com.mygdx.entidades.Entidad.detectarJugador(Entidad.java:133)
+	at com.mygdx.entidades.NPCManager.detectarJugador(NPCManager.java:32)
+	at com.mygdx.pantallas.Juego.render(Juego.java:306)
+	at com.badlogic.gdx.Game.render(Game.java:48)
+	at com.mygdx.game.Principal.render(Principal.java:26)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:387)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:192)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:166)
-	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)
+	... 1 more

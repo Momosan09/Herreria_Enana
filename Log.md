@@ -279,3 +279,7 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
     - Cambios en la colision del jugador
     - Cambios en las colisiones del mapa
     - Auto Sorting para los sprites
+
+# 23 FEB
+    - Cambios en el Auto Sorting
+    - Auto Sorting para los npcs 

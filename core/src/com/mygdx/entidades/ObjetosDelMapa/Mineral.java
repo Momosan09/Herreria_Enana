@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
+import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.enums.EstadosMinerales;
 import com.mygdx.enums.Items;
@@ -17,8 +18,10 @@ import com.mygdx.historia.TipoMision;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.HelpDebug;
+import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
+import com.mygdx.utiles.SpriteOrdenableIndiceZ;
 
-public class Mineral extends Entidad{
+public class Mineral extends ObjetoDelMapa{
 	
 	public TipoMinerales tipo;
 	public EstadosMinerales estado;
@@ -26,7 +29,6 @@ public class Mineral extends Entidad{
 	public int valor=5;
 	private boolean comprar = false, cerrar = false, comprable = false;
 	private boolean dialogoAbierto = false;
-
 
 	
 	public Mineral(float x, float y, World world, boolean comprable, String rutaTextura, TipoMinerales tipo, EstadosMinerales estado, int ancho, int alto) {
@@ -55,7 +57,7 @@ public class Mineral extends Entidad{
 		// Crear el cuerpo del jugador
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(posicion.x+16, posicion.y+16);
+        bodyDef.position.set(posicion.x+16, posicion.y+alto);
 
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();

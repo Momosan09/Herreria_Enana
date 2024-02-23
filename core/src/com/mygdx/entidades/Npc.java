@@ -6,6 +6,8 @@ import com.mygdx.entidades.npcs.dialogos.Charla;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.hud.Dialogo;
 import com.mygdx.utiles.Animator;
+import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
+
 import java.util.ArrayList;
 
 public abstract class Npc extends Entidad implements NpcInterface{
@@ -17,6 +19,7 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	private Texture retrato;
 	private NpcData data;
 	private String nombreCharlaActual;//nombre de la charla que se va a usar
+
 	
 	public ArrayList<Charla> charlas;
 	public boolean respuesta1 = false;
@@ -24,7 +27,7 @@ public abstract class Npc extends Entidad implements NpcInterface{
 
 	public Npc(float x, float y, World world, String ruta, NpcData data){
 		super(x, y, world, ruta);
-		crearCuerpo(world);
+		crearCuerpo(world,8,8);
 		charlas = new ArrayList<Charla>();
 		paqueteDeCharlas = new ArrayList<String[]>();
 		
@@ -33,6 +36,7 @@ public abstract class Npc extends Entidad implements NpcInterface{
 		this.paqueteDeCharlas = data.getBloquesDeCharla();
 		this.retrato = data.getTextura();
 
+		OrganizadorSpritesIndiceZ.NPCS.add(this);
 		animacion = new Animator(ruta, posicion, 0);
 		animacion.create();
 	}
@@ -48,6 +52,7 @@ public abstract class Npc extends Entidad implements NpcInterface{
 		this.paqueteDeCharlas = data.getBloquesDeCharla();
 		this.retrato = data.getTextura();
 
+		OrganizadorSpritesIndiceZ.NPCS.add(this);
 		animacion = new Animator(ruta, posicion, 0);
 		animacion.create();
 	}

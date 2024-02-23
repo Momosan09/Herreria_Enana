@@ -6,7 +6,7 @@ import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.hud.Fundicion;
 
-public class Horno extends Entidad {
+public class Horno extends ObjetoDelMapa {
     private Fundicion hud;
 
     public Horno(float x, float y, World world, String rutaTextura, Fundicion hud) {

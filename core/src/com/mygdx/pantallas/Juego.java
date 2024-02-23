@@ -299,7 +299,7 @@ public class Juego implements Screen{
 
 		//Managers
 		Render.batch.begin();
-		npcManager.renderizar();
+		//npcManager.renderizar();
 		//mineralesManager.renderizar();
 		objetosDelTallerManager.renderizar();
 		
@@ -313,7 +313,7 @@ public class Juego implements Screen{
 
 		//jugador.draw(Render.batch);
 		
-		organizador.dibujarYComparar(jugador.getFrame(), jugador);
+		organizador.dibujarYComparar(jugador);
 		
 		Render.batch.end();
 		

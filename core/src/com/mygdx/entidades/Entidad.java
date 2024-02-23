@@ -22,7 +22,7 @@ public abstract class Entidad {
 
 	protected Vector2 posicion;//La necesito en las hijas
 	protected Texture textura;//La necesito en las hijas
-	private SpriteOrdenableIndiceZ sprite;
+
 	protected boolean jugadorEnRango = false, apretoE = false;
 	private boolean jugadorTienePico = false;//Deberia ir en mineral pero no se me ocurre como hacerlo
 	private boolean comprable = false;
@@ -30,6 +30,8 @@ public abstract class Entidad {
 	protected int colisionAncho= MundoConfig.tamanoTile, colisionAlto=colisionAncho;//Por si tengo entidades mas grandes?
 	protected Body body;
 	protected Rectangle areaDeInteraccion;
+	protected int indiceZ;
+	protected Sprite sprite;
 
 	private int distanciaInteraccion = 20;
 	
@@ -38,15 +40,10 @@ public abstract class Entidad {
 		y=(MundoConfig.altoMundo - y) * MundoConfig.tamanoTile;
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
-		sprite = new SpriteOrdenableIndiceZ(this.textura);
-		OrganizadorSpritesIndiceZ.sprites.add(sprite);
-		sprite.setPosition(this.posicion.x, this.posicion.y);
+
 		
 		areaDeInteraccion = new Rectangle(posicion.x - distanciaInteraccion/2, posicion.y - distanciaInteraccion/2,
-                sprite.getWidth()+distanciaInteraccion, (sprite.getHeight()) + distanciaInteraccion);
-		
-
-
+				MundoConfig.tamanoTile+distanciaInteraccion, (MundoConfig.tamanoTile+ distanciaInteraccion));
 	}
 	
 	public Entidad(float x, float y, boolean comprable, World world ,String rutaTextura) {
@@ -55,8 +52,8 @@ public abstract class Entidad {
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
 		this.comprable = comprable;
-		sprite = new SpriteOrdenableIndiceZ(this.textura);
-		sprite.setPosition(this.posicion.x, this.posicion.y);
+//		sprite = new SpriteOrdenableIndiceZ(this.textura);
+//		sprite.setPosition(this.posicion.x, this.posicion.y);
 	}
 	
 	public Entidad(float x, float y, boolean comprable, String rutaTextura) {
@@ -65,8 +62,8 @@ public abstract class Entidad {
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
 		this.comprable = comprable;
-		sprite = new SpriteOrdenableIndiceZ(this.textura);
-		sprite.setPosition(this.posicion.x, this.posicion.y);
+//		sprite = new SpriteOrdenableIndiceZ(this.textura);
+//		sprite.setPosition(this.posicion.x, this.posicion.y);
 
 	}
 	
@@ -91,11 +88,11 @@ public abstract class Entidad {
 		// Crear el cuerpo del jugador
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(posicion.x+(ancho/2), posicion.y+(alto/2));
+        bodyDef.position.set(posicion.x, posicion.y-alto);
 
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(ancho/2, 0);
+        shape.setAsBox(ancho, alto);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -131,6 +128,9 @@ public abstract class Entidad {
 			jugadorEnRango = false;
 			apretoE = false;
 		}
+		
+		indiceZ = (posicion.y > jugador.getPosicion().y-16 ? 0 : 1);
+		
 	}
 	
 	public boolean getJugadorEnRango() {
@@ -179,8 +179,12 @@ public abstract class Entidad {
 		return nombre;
 	}
 
-	public SpriteOrdenableIndiceZ getSprite() {
-		return sprite;
+	public int getIndiceZ() {
+		return indiceZ;
 	}
+	
+//	public SpriteOrdenableIndiceZ getSprite() {
+//		return sprite;
+//	}
 	
 }
