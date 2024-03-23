@@ -23,4 +23,9 @@ public enum Items {
 	public Texture getTextura() {
 		return textura;
 	}
+	
+	public String getNombre() {
+		String nombre = this.toString();
+		return nombre.substring(0, 1).toUpperCase() + nombre.substring(1).toLowerCase();
+	}
 }

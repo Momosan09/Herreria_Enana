@@ -3,6 +3,9 @@ package com.mygdx.hud;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -13,12 +16,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.enums.Items;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
+import java.util.HashMap;
+import java.util.Map;
 
 public class InventarioHUD implements HeadUpDisplay, Ocultable{
 
@@ -29,10 +36,15 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 	private Label[] nombreMineral;
 	private Jugador jugador;
 	
+	private ObjetoDelInventarioApilable hierroMena;
+	
 	private Skin skin = new Skin(Gdx.files.internal(Recursos.SKIN_TOOLTIP));
 	private Label.LabelStyle labelStyle, labelStyleCantidades;
-	
-	 private boolean visible=false;
+	private int[] cantidadDeCadaMineral = new int[2];	
+	private boolean visible=false;
+	  private boolean mineralesCargados = false;
+	 
+	 private HashMap<String, Integer> mineralesApilados = new HashMap<>();
 	
 	public InventarioHUD(Jugador jugador) {
     	screenViewport = new ScreenViewport();
@@ -84,7 +96,8 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 		nombreMineral[1] = new Label("Hierro", labelStyle);
 		nombreMineral[0].setVisible(false);
 		nombreMineral[1].setVisible(false);
-		
+
+		//hierroMena = new ObjetoDelInventarioApilable("Hierro Mena", Recursos.MENA_HIERRO);
 	}
 
 	@Override
@@ -106,6 +119,7 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 		
 		stage.addActor(tabla);
 		stage.addActor(nombreMineral[0]);
+
 		
 	}
 
@@ -115,15 +129,22 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
     }
 
 	public void render(Jugador jugador) {
+
 		if(visible) {
+			if(!mineralesCargados) {
+		    	llenarInventario();//Cada vez que se muestre el inventario llena las tablas
+				mineralesCargados = true;				
+			}
 			//DibujarFiguras.dibujarRectanguloLleno(contenedor.getX(), contenedor.getY(), contenedor.getWidth(), contenedor.getHeight(), new Color(0,0,0,.7f));
 	    	stage.act(Gdx.graphics.getDeltaTime());
 	    	stage.draw();
-	    	llenarInventario();//Cada vez que se muestre el inventario llena las tablas
+		}else {
+			mineralesCargados = false;
+		}
 //	    	infoMineral();
 		}
 		
-	}
+	
 	
 	public Stage getStage() {
 		return stage;
@@ -137,6 +158,7 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 	public void llenarMinerales() {
 		tablaMinerales.clear();
 		tablaMinerales.add(encabezadoMinerales).row();
+		tablaMinerales.setDebug(true);
 		//Este if me permite saber si el la tabla no esta actualizada y si no lo esta, actualizarla
 		if(tablaMinerales.getChildren().size-1 != jugador.getMinerales().size()) {//Le resto 1 porque la Label es un children tambien
 	    for (Mineral mineral : jugador.getMinerales()) {
@@ -146,10 +168,74 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 //	        mineralImage.addListener(new TextTooltip("el pene", skin));
 
 	        tablaMinerales.add(mineralImage).size(64, 64).pad(5);
+	        
 	    }
-		}
+	    }
+		
+		/*
+		for(int i = 0; i < jugador.getMinerales().size(); i++) {
+	
+			
+			switch (jugador.getMinerales().get(i).tipo) {
+			case PIEDRA:
+				switch (jugador.getMinerales().get(i).estado) {
+				case MENA:
+		            mineralesApilados.put(TipoMinerales.PIEDRA.toString() + "_" + EstadosMinerales.MENA.toString(), mineralesApilados.getOrDefault(TipoMinerales.PIEDRA.toString() + "_" + EstadosMinerales.MENA.toString(), 0) + 1);
+					break;
 
-	}
+				default:
+					break;
+				}
+
+				break;
+			
+			case CARBON:
+				
+				break;
+			
+			case HIERRO:
+				switch (jugador.getMinerales().get(i).estado) {
+				case MENA:
+					 mineralesApilados.put(TipoMinerales.HIERRO.toString() + "_" + EstadosMinerales.MENA.toString(), mineralesApilados.getOrDefault(TipoMinerales.HIERRO.toString() + "_" + EstadosMinerales.MENA.toString(), 0) + 1);
+					 hierroMena.aumentarCantidad(mineralesApilados.get(TipoMinerales.HIERRO.toString() + "_" + EstadosMinerales.MENA.toString()));
+					 break;
+				case PURO:
+					
+					break;
+					
+				case LINGOTE:
+					
+					break;
+				default:
+					break;
+				}
+				break;
+			default:
+				break;
+			}
+
+		}
+		System.out.println();
+		
+
+		tablaMinerales.add(hierroMena.tabla).size(96,96);
+	*/
+
+		}
+	
+	 private void actualizarMineralesApilados() {
+	        // Limpiar el mapa antes de actualizar
+	        mineralesApilados.clear();
+	        
+	        // Recorrer la lista de minerales del inventario
+	        for (Mineral mineral : jugador.getMinerales()) {
+	            // Obtener la combinación de tipo y estado del mineral
+	            String clave = mineral.tipo.toString() + "_" + mineral.getEstado().toString();
+	            
+	            // Actualizar la cantidad correspondiente en el mapa
+	            mineralesApilados.put(clave, mineralesApilados.getOrDefault(clave, 0) + 1);
+	        }
+	    }
 	
 	public void llenarArtefactos() {
 		tablaArtefactos.clear();

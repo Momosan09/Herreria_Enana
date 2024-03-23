@@ -25,6 +25,7 @@ import com.mygdx.entidades.ObjetosDelMapa.ObjetosTallerManager;
 import com.mygdx.entidades.ObjetosDelMapa.SoporteArmadura;
 import com.mygdx.entidades.ObjetosDelMapa.Yunque;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.CarbonMena;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.HierroMena;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.PiedraMena;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
@@ -35,7 +36,6 @@ import com.mygdx.entidades.npcs.Viejo;
 import com.mygdx.entidades.npcs.dialogos.CharlaManager;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.entidades.npcs.dialogos.Npc_Dialogos_Rey;
-import com.mygdx.enums.EstadosMinerales;
 import com.mygdx.enums.Items;
 import com.mygdx.game.Principal;
 import com.mygdx.historia.TipoMision;
@@ -408,11 +408,11 @@ public class Juego implements Screen{
 	}
 	
 	public void crearObjetosDelTaller() {
-		mesa = new Mesa(39, 17, world, Recursos.MESA, mesaHUD);
-		yunque = new Yunque(34, 15, world, Recursos.YUNQUE, yunqueHUD, jugador);
-		altoHorno = new AltoHorno(34, 12, world, Recursos.ALTO_HORNO, fundicionHUD); //Estas coordenadas las saco de Tiled
-		cajaEntregas = new CajaEntregas(39, 17.5f, world, Recursos.CAJA_ENTREGAS, cajaEntregasHUD);
-		soporteArmadura = new SoporteArmadura(32, 19, world, Recursos.SOPORTE_ARMADURAS, soporteArmaduraHUD);
+		mesa = new Mesa(39, 15, world, Recursos.MESA, mesaHUD);
+		yunque = new Yunque(34, 13, world, Recursos.YUNQUE, yunqueHUD, jugador);
+		altoHorno = new AltoHorno(34, 10, world, Recursos.ALTO_HORNO, fundicionHUD); //Estas coordenadas las saco de Tiled
+		cajaEntregas = new CajaEntregas(39, 15.5f, world, Recursos.CAJA_ENTREGAS, cajaEntregasHUD);
+		soporteArmadura = new SoporteArmadura(32, 18, world, Recursos.SOPORTE_ARMADURAS, soporteArmaduraHUD);
 		
 	}
 	

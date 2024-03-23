@@ -285,3 +285,8 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
     - Auto Sorting para los npcs 
 
     Ahora con el autosorting tengo que acordarme que la clase OrganizadorSpritesIndiceZ es la unica que puede dibujar sobre el mapa
+
+# 23 MAR ;(
+    - Agrega nuevos assets para el mapa
+    - Ahora se ve el nombre del item o mineral que se le ponga encima el cursor en las combinaciones
+    - Agrega codigo para hacer pilas de minerales (no se esta usando)

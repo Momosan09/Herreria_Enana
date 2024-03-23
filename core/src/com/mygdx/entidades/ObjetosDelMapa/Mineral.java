@@ -11,8 +11,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetoDelMapa;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
-import com.mygdx.enums.EstadosMinerales;
 import com.mygdx.enums.Items;
 import com.mygdx.historia.TipoMision;
 import com.mygdx.utiles.Colores;
@@ -90,6 +90,7 @@ public class Mineral extends ObjetoDelMapa{
 	        if (this.vida <= 0) {
 	            System.out.println(HelpDebug.debub(getClass()) + "muerte");
 	            jugador.getMinerales().add(this);
+	            OrganizadorSpritesIndiceZ.eliminarMineral(this);
 	            for(int i = 0; i<jugador.getTareas().size();i++) {
 	            	if(jugador.getTareas().get(i).getTipoMision() == TipoMision.RECOLECTAR) {
 	            		if(jugador.getTareas().get(i).getObjeto().equals(this.tipo.toString())) {
@@ -134,5 +135,14 @@ public class Mineral extends ObjetoDelMapa{
 		public TipoMinerales getTipoMineral() {
 			return tipo;
 		}
+		
+		public String getNombre() {
+			String nombre = tipo.toString();
+			return nombre.substring(0, 1).toUpperCase() + nombre.substring(1).toLowerCase();
+		}
 	
+		public String getEstado() {
+			String estado = this.estado.toString();
+			return estado.substring(0, 1).toUpperCase() + estado.substring(1).toLowerCase();
+		}
 }

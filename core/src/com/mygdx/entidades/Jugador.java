@@ -17,7 +17,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.enums.Direcciones;
-import com.mygdx.enums.EstadosMinerales;
 import com.mygdx.enums.Items;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.HelpDebug;
@@ -25,6 +24,7 @@ import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.historia.Mision;
 import com.mygdx.historia.TipoMision;
@@ -235,6 +235,58 @@ public class Jugador {
 		return mineralesInv;
 	}
 	
+	
+	public void devolverMineralesEnElInventario(TipoMinerales mineral, EstadosMinerales estado){
+		String[][] minerales = new String[TipoMinerales.values().length][EstadosMinerales.values().length];
+		for(int i = 0; i<mineralesInv.size();i++) {
+			
+			switch (mineralesInv.get(i).tipo) {
+			case PIEDRA:
+				minerales[0][0] = TipoMinerales.PIEDRA.toString().toLowerCase();
+				break;
+				
+
+			case CARBON:
+				minerales[1][0] = TipoMinerales.CARBON.toString().toLowerCase();
+				switch (mineralesInv.get(i).estado) {
+				case MENA:
+					minerales[1][0] = EstadosMinerales.MENA.toString().toLowerCase();
+					break;
+				case PURO:
+					minerales[1][1] = EstadosMinerales.PURO.toString().toLowerCase();
+					break;
+				default:
+					break;
+				}
+				
+				
+			case HIERRO:
+				minerales[2][0] = TipoMinerales.HIERRO.toString().toLowerCase();
+				switch (mineralesInv.get(i).estado) {
+				case MENA:
+					minerales[2][0] = EstadosMinerales.MENA.toString().toLowerCase();
+					break;
+				case PURO:
+					minerales[2][1] = EstadosMinerales.PURO.toString().toLowerCase();
+					break;
+					
+				case LINGOTE:
+					minerales[2][2] = EstadosMinerales.LINGOTE.toString().toLowerCase();
+					break;
+				default:
+					
+					break;
+				}
+				
+			default:
+				break;
+			}
+			}
+
+	}
+	
+
+	
 	public int buscarCantidadDeMineralesPorTipoYEstado(TipoMinerales mineral, EstadosMinerales estado){
 		int cont = 0;
 		for(int i = 0; i<mineralesInv.size();i++) {
@@ -278,5 +330,7 @@ public class Jugador {
 		return tareas;
 		
 	}
+
+
 	
 }

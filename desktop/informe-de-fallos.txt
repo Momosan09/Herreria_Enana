@@ -1,17 +1,11 @@
-com.badlogic.gdx.utils.GdxRuntimeException: java.lang.Error: Unresolved compilation problem: 
-	indiceZ cannot be resolved to a variable
-
-	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:172)
-	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)
-Caused by: java.lang.Error: Unresolved compilation problem: 
-	indiceZ cannot be resolved to a variable
-
-	at com.mygdx.entidades.Entidad.detectarJugador(Entidad.java:133)
-	at com.mygdx.entidades.NPCManager.detectarJugador(NPCManager.java:32)
-	at com.mygdx.pantallas.Juego.render(Juego.java:306)
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because the return value of "java.util.HashMap.get(Object)" is null
+	at com.mygdx.hud.InventarioHUD.llenarMinerales(InventarioHUD.java:219)
+	at com.mygdx.hud.InventarioHUD.llenarInventario(InventarioHUD.java:152)
+	at com.mygdx.hud.InventarioHUD.render(InventarioHUD.java:135)
+	at com.mygdx.pantallas.Juego.render(Juego.java:338)
 	at com.badlogic.gdx.Game.render(Game.java:48)
 	at com.mygdx.game.Principal.render(Principal.java:26)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:387)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:192)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:166)
-	... 1 more
+	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)

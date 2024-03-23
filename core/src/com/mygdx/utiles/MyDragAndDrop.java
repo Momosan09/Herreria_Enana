@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -17,10 +19,10 @@ import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.CarbonPuro;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroPuro;
-import com.mygdx.enums.EstadosMinerales;
 import com.mygdx.enums.Items;
 import com.mygdx.enums.TipoCombinacion;
 
@@ -29,6 +31,7 @@ public class MyDragAndDrop {
 	private ScreenViewport screenViewport;
 	private Stage stage;
 	private Label.LabelStyle labelStyle;
+	private Label actorLabelNombre;
 	private ArrayList<Image> inventario, herramientas;
 	private Jugador jugador;
 	private DragAndDrop dragAndDrop;
@@ -40,6 +43,10 @@ public class MyDragAndDrop {
 		stage = new Stage(screenViewport);
 		
 		labelStyle = EstiloFuente.generarFuente(32, Colores.BLANCO, false);
+		
+		actorLabelNombre = new Label("", labelStyle);
+		actorLabelNombre.setVisible(true);
+
 		
 		inventario = new ArrayList<Image>();
 		herramientas = new ArrayList<Image>();
@@ -57,10 +64,14 @@ public class MyDragAndDrop {
         }
 		
 	}
+	
+	
+	
 
 	public void create () {
 		stage.setDebugAll(true);
 		System.out.println(HelpDebug.debub(getClass())+ "creado");
+		
 		for (int i = 0; i < inventario.size(); i++) {
 			 final Mineral mineral = jugador.getMinerales().get(i);
 			    dragAndDrop.addSource(new Source(inventario.get(i)) {//addSource permite que la imagen sea arrastrable, por eso necesito que cada imagen del inventario sea source
@@ -109,6 +120,8 @@ public class MyDragAndDrop {
                     return payload;
                 }
             });
+            
+            
         }
 		
 		for (int i = 0; i < inventario.size(); i++) {
@@ -195,6 +208,8 @@ public class MyDragAndDrop {
 			public void drop (Source source, Payload payload, float x, float y, int pointer) {
 			}
 		});*/
+		
+		mostrarLabelOnEnter();
 	}
 
 	
@@ -235,6 +250,56 @@ public class MyDragAndDrop {
         }
 		System.out.println(HelpDebug.debub(getClass()) + stage.getActors().size);
 		create();
+	    stage.addActor(actorLabelNombre);
 	}
+
+
+	private void mostrarLabelOnEnter() {
+		//Label nombre 
+		 for (int i = 0; i < inventario.size(); i++) {
+		        final Mineral mineral = jugador.getMinerales().get(i);
+		        final Image image = inventario.get(i);
+		        image.addListener(new InputListener() {
+		            @Override
+		            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+		                // Muestra la etiqueta con el nombre del actor cuando el cursor entra en la imagen
+		                actorLabelNombre.setText(mineral.getNombre() + " " + mineral.getEstado());
+		                actorLabelNombre.setPosition(event.getStageX(), event.getStageY());
+		                actorLabelNombre.setVisible(true);
+		            }
+
+		            @Override
+		            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+		                // Oculta la etiqueta cuando el cursor sale de la imagen
+		                actorLabelNombre.setVisible(false);
+		            }
+		        });
+		    }
+		 
+		 
+		 
+		 for (int i = 0; i < jugador.getItems().size(); i++) {
+
+	            final Items herramienta = jugador.getItems().get(i);
+		        final Image image = herramientas.get(i);
+		        image.addListener(new InputListener() {
+		            @Override
+		            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+		                // Muestra la etiqueta con el nombre del actor cuando el cursor entra en la imagen
+		                actorLabelNombre.setText(herramienta.getNombre());
+		                actorLabelNombre.setPosition(event.getStageX(), event.getStageY());
+		                actorLabelNombre.setVisible(true);
+		            }
+
+		            @Override
+		            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+		                // Oculta la etiqueta cuando el cursor sale de la imagen
+		                actorLabelNombre.setVisible(false);
+		            }
+		        });
+		    }
+	}
+
+
 
 }

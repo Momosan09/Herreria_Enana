@@ -25,7 +25,7 @@ public class HelpMapa {
 	private Juego juego;
 	private Vector2 jugadorSpawn;
 	private ArrayList<Vector2> posicionObjetosInteratuablesTaller;
-	private int[] capasDeFondo = {0,1,3,4,5,6,10}, capasDeFrente= {2,7,8};//Relativo a donde el personaje deberia estar ubicado //si agrego mas capas acordarse de modificar esto
+	private int[] capasDeFondo = {0,1,3,4,5,6,7,8,9,10}, capasDeFrente= {2};//Relativo a donde el personaje deberia estar ubicado //si agrego mas capas acordarse de modificar esto
 	float unitScale = 1 / 1f;
 
 
@@ -43,8 +43,10 @@ public class HelpMapa {
 		conseguirObjetosDeLaCapa((TiledMapTileLayer) tiledMap.getLayers().get("taller"));
 		conseguirObjetosDeLaCapa((TiledMapTileLayer) tiledMap.getLayers().get("columnas"));
 		conseguirObjetosDeLaCapa((TiledMapTileLayer) tiledMap.getLayers().get("pisoInterior"));
-		conseguirObjetosDeLaCapa((TiledMapTileLayer) tiledMap.getLayers().get("objetosTaller"));
+//		conseguirObjetosDeLaCapa((TiledMapTileLayer) tiledMap.getLayers().get("objetosTaller"));
 		conseguirObjetosDeLaCapa((TiledMapTileLayer) tiledMap.getLayers().get("estructurasFondo"));
+		conseguirObjetosDeLaCapa((TiledMapTileLayer) tiledMap.getLayers().get("habitacion"));
+		conseguirObjetosDeLaCapa((TiledMapTileLayer) tiledMap.getLayers().get("habitacionDetalles"));
 		return new OrthogonalTiledMapRenderer(tiledMap, unitScale);
 		}
 	

@@ -2,7 +2,6 @@ package com.mygdx.entidades.ObjetosDelMapa.Minable;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
-import com.mygdx.enums.EstadosMinerales;
 import com.mygdx.utiles.Recursos;
 
 public class PiedraMena extends Mineral{

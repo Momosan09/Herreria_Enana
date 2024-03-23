@@ -71,7 +71,7 @@ public class YunqueHUD implements Ocultable, HeadUpDisplay{
 		if(visible) {
 	    	stage.act(Gdx.graphics.getDeltaTime());
 	    	stage.draw();
-	    	System.out.println(HelpDebug.debub(getClass())+"el yunque");
+	    	//System.out.println(HelpDebug.debub(getClass())+"el yunque");
 		}
 	}
 

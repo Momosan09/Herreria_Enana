@@ -13,7 +13,7 @@ public class AltoHorno extends ObjetoDelMapa{
 	public AltoHorno(float x, float y, World world, String rutaTextura, Fundicion hud) {
 		 super(x, y, world, rutaTextura);
 	        this.hud = hud;
-	}
+	       	}
 	
     public void mostrarHUD(Jugador jugador) {
         if (getJugadorEnRango() && apretoE) {

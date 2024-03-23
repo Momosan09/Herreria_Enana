@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.ObjetoDelMapa;
+import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 
 
 
@@ -47,6 +48,10 @@ public abstract class OrganizadorSpritesIndiceZ {
 		}
 		}
 		
+	}
+	
+	public static void eliminarMineral(Mineral mineral) {
+		objetosDelMapa.remove(mineral);
 	}
 
 }
