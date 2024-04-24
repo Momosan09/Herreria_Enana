@@ -33,6 +33,7 @@ public class Dialogo implements HeadUpDisplay{
 	private Label.LabelStyle labelStyle;
 	private int mensajeAMostrar, padding = 20;
 	private boolean tieneRespuesta = false;
+	public boolean mostrar = false;
 
 	public Dialogo(Npc locutor) {
 
@@ -48,9 +49,11 @@ public class Dialogo implements HeadUpDisplay{
 	
 	@Override
 	public void render() {
+		if(mostrar) {
 		update();
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
+		}
 	}
 	
 	public void dispose() {
@@ -60,6 +63,7 @@ public class Dialogo implements HeadUpDisplay{
 	public void update() {
 //		System.out.println(HelpDebug.debub(getClass())+locutor.getNombreCharlaActual());
 		mensaje.setText(locutor.getCharlaActual().getMensaje());
+		mensaje.setWrap(true);
 		respuestas[0].setText(locutor.getCharlaActual().getRespuesta1());
 		respuestas[1].setText(locutor.getCharlaActual().getRespuesta2());
 
@@ -96,7 +100,7 @@ public class Dialogo implements HeadUpDisplay{
 		
 		contenedor.add(nombre).left().expandX().padLeft(padding*2.25f);
 		contenedor.row();
-		contenedor.add(mensaje).expandY().left();
+		contenedor.add(mensaje).left().expand().fill();
 		contenedor.add(retrato).size(retrato.getWidth()*2,retrato.getHeight()*2);
 
 		contenedor.row();

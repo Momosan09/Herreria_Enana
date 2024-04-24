@@ -91,10 +91,10 @@ public class Mineral extends ObjetoDelMapa{
 	            System.out.println(HelpDebug.debub(getClass()) + "muerte");
 	            jugador.getMinerales().add(this);
 	            OrganizadorSpritesIndiceZ.eliminarMineral(this);
-	            for(int i = 0; i<jugador.getTareas().size();i++) {
-	            	if(jugador.getTareas().get(i).getTipoMision() == TipoMision.RECOLECTAR) {
-	            		if(jugador.getTareas().get(i).getObjeto().equals(this.tipo.toString())) {
-	            			jugador.getTareas().get(i).setCantidadConseguida(+1);
+	            for(int i = 0; i<jugador.getMisiones().size();i++) {
+	            	if(jugador.getMisiones().get(i).getTipoMision() == TipoMision.RECOLECTAR) {
+	            		if(jugador.getMisiones().get(i).getObjeto().equals(this.tipo.toString())) {
+	            			jugador.getMisiones().get(i).setCantidadConseguida(+1);
 	            		}
 	            	}
 	            	

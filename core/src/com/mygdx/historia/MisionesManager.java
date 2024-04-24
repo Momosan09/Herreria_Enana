@@ -15,7 +15,7 @@ public class MisionesManager {
 	
 	public void agregarMision() {
 		misiones.clear();
-		misiones = jugador.getTareas();
+		misiones = jugador.getMisiones();
 	}
 	
 	public void checkearMisiones() {

@@ -7,7 +7,14 @@ import com.mygdx.entidades.npcs.dialogos.DialogosNPC;
 import com.mygdx.utiles.Recursos;
 
 public enum Npc_Respuestas_Viejo implements DialogosNPC{
-	
+	;
+
+	@Override
+	public String getMensaje(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	/*
 	RESPUESTA_1_DIALOGO_3(Recursos.bundle.get("viejo_Respuesta_1_Dialogo_3")),
 	RESPUESTA_2_DIALOGO_3(Recursos.bundle.get("viejo_Respuesta_2_Dialogo_3"))
 	;
@@ -32,5 +39,5 @@ public enum Npc_Respuestas_Viejo implements DialogosNPC{
         return mensajes;
     }
 
-	
+	*/
 }

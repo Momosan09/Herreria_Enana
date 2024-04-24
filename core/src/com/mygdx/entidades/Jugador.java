@@ -27,6 +27,7 @@ import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.historia.Mision;
+import com.mygdx.historia.MisionesDelJuego;
 import com.mygdx.historia.TipoMision;
 
 public class Jugador {
@@ -321,14 +322,29 @@ public class Jugador {
 		return camara;
 	}
 
-	public void agregarMision(Entidad requisor, TipoMision tipo, String objeto, int cantidad, int oro, int plata, int cobre) {
-		tareas.add(new Mision(requisor, tipo, objeto, cantidad, oro, plata, cobre));
+	public void agregarMision(MisionesDelJuego mision) {
+		tareas.add(new Mision(mision));
 
 	}
 	
-	public ArrayList<Mision> getTareas() {
+	public ArrayList<Mision> getMisiones() {
 		return tareas;
 		
+	}
+	
+	public boolean buscarMisionPorId(String id) {
+		if(!tareas.isEmpty()) {
+		for(int i = 0; i<tareas.size();i++) {
+			if(tareas.get(i).getId().equals(id)) {
+				System.out.println("Mision encontrada------------");
+				return true;
+			}
+		}
+		System.out.println("Mision NO encontrada------------");
+		return false;
+		}else {
+			return false;
+		}
 	}
 
 

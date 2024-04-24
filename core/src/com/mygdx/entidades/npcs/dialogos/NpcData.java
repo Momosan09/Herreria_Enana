@@ -15,6 +15,7 @@ public enum NpcData implements DialogosNPC{
 	VENDEDOR_AMBULANTE("Vendedor Ambulante",  Recursos.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Vendedor_Ambulante.obtenerTodosLosMensajes()),
 	VIEJO("Viejin", Recursos.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Viejo.obtenerTodosLosMensajes()),
 	VENDEDOR_TIENDA("Vendedor Tienda", Recursos.VENDEDOR_TIENDA_PORTRAIT, Npc_Dialogos_Vendedor_Tienda.obtenerTodosLosMensajes()),
+	CARPINTERO("Carpintero", Recursos.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Carpintero.obtenerTodosLosMensajes()),
 	REY("Rey", Recursos.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Rey.obtenerTodosLosMensajes());
 	
 	private final String _nombre;
@@ -49,7 +50,7 @@ public enum NpcData implements DialogosNPC{
 		return _dialogos.get(index);
 	}
 	
-	public void empaquetarDialogos() {
+	public void empaquetarDialogos() {		
 	    int bloqueTamano = 3; // Tamaño de cada bloque
 	    for (int i = 0; i < _dialogos.size() / bloqueTamano; i++) {
 	        String[] datos = new String[bloqueTamano];

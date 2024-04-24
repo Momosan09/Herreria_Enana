@@ -290,3 +290,10 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
     - Agrega nuevos assets para el mapa
     - Ahora se ve el nombre del item o mineral que se le ponga encima el cursor en las combinaciones
     - Agrega codigo para hacer pilas de minerales (no se esta usando)
+
+# 24 ABR 
+    bueno volvio a pasar mucho tiempo pero que se le va a hacer
+    - Agrega la casa del carpintero
+    - Agrega al carpintero
+    - Modifica el sistema de las misiones
+    - Agrega la primera mision de fabricar

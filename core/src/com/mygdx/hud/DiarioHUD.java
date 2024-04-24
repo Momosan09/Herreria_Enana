@@ -41,7 +41,7 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 	
 	public DiarioHUD(Jugador jugador) {
 		this.jugador = jugador;
-		misiones = jugador.getTareas();
+		misiones = jugador.getMisiones();
     	screenViewport = new ScreenViewport();
         stage = new Stage(screenViewport);
 		crearFuentes();
@@ -146,14 +146,14 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 	public void agregarMisiones() {
 		tareas.clear();
 	
-		for(int i=0; i<jugador.getTareas().size();i++) {
+		for(int i=0; i<jugador.getMisiones().size();i++) {
 			
 		Table tabla = new Table();
 //		tabla.setDebug(true);
 		
 		Label tipoMision = new Label(misiones.get(i).getTipoMision().toString() + ":", labelStyle);
 		Label objetoMision = new Label(misiones.get(i).getObjeto() + " " + misiones.get(i).getCantidadConseguida() +"/"+ misiones.get(i).getCantidadObjetivo(), labelStyle);
-		Label dadorMision = new Label(misiones.get(i).getEntidad().getNombre(), labelStyle);
+		Label dadorMision = new Label(misiones.get(i).getEntidad(), labelStyle);
 		Label recompensaOro = new Label(" "+Recursos.bundle.get("moneda.oro")+ ": "+String.valueOf(misiones.get(i).getOro()),labelStyleOro);
 		Label recompensaPlata = new Label(" "+Recursos.bundle.get("moneda.plata") +": "+ String.valueOf(misiones.get(i).getPlata()),labelStylePlata);
 		Label recompensaCobre = new Label(" "+Recursos.bundle.get("moneda.cobre") +": " +String.valueOf(misiones.get(i).getCobre()),labelStyleCobre);

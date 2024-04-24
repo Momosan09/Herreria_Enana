@@ -6,21 +6,24 @@ import com.mygdx.utiles.HelpDebug;
 
 public class Mision {
 
-	private Entidad requisor;//quien nos da la mision
+	private String requisor;//quien nos da la mision
 	private TipoMision tipo;
 	private String objeto;
 	private int cantidadConseguida = 0, cantidadObjetivo;//La cantidad de lo que pide
 	private boolean completada = false, recompensaAdquirida = false;
 	private int cobre, plata, oro;
+	private String id;
 	
-	public Mision(Entidad requisor, TipoMision tipo, String objeto, int cantidadObjetivo, int oro, int plata, int cobre) {
-		this.requisor = requisor;
-		this.tipo = tipo;
-		this.objeto = objeto;
-		this.cantidadObjetivo = cantidadObjetivo;
-		this.oro = oro;
-		this.plata = plata;
-		this.cobre = cobre;
+	public Mision(MisionesDelJuego datosMision) {
+		this.requisor = datosMision.getRequisor();
+		this.tipo = datosMision.getTipo();
+		this.objeto = datosMision.getObjeto();
+		this.cantidadObjetivo = datosMision.getCantidadObjetivo();
+		this.oro = datosMision.getOro();
+		this.plata = datosMision.getPlata();
+		this.cobre = datosMision.getCobre();
+		this.id = datosMision.getId();
+		System.out.println(HelpDebug.debub(getClass())+"Creada correctamente la mision ["+id+"]");
 	}
 	
 	public void comprobarCondicion() {
@@ -38,7 +41,7 @@ public class Mision {
 		}
 	}
 	
-	public Entidad getEntidad() {
+	public String getEntidad() {
 		return requisor;
 	}
 	
@@ -76,5 +79,9 @@ public class Mision {
 	
 	public int getCobre() {
 		return cobre;
+	}
+	
+	public String getId() {
+		return id;
 	}
 }

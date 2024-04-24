@@ -19,7 +19,6 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	private Texture retrato;
 	private NpcData data;
 	private String nombreCharlaActual;//nombre de la charla que se va a usar
-
 	
 	public ArrayList<Charla> charlas;
 	public boolean respuesta1 = false;
@@ -57,10 +56,25 @@ public abstract class Npc extends Entidad implements NpcInterface{
 		animacion.create();
 	}
 	
+	public Npc(float x, float y, World world, String ruta, int ancho, int alto){//para los npc con colisiones mas grandes o mas chicas
+		super(x, y, world, ruta);
+		crearCuerpo(world, ancho, alto);
+		
+		this.nombre = this.data.getNombre();
+		this.paqueteDeCharlas = data.getBloquesDeCharla();
+		this.retrato = data.getTextura();
+
+		OrganizadorSpritesIndiceZ.NPCS.add(this);
+		animacion = new Animator(ruta, posicion, 0);
+		animacion.create();
+	}
+	
 	public boolean interaccion() {
 		while(jugadorEnRango && apretoE) {
+			cajaDialogo.mostrar=true;
 			return true;
 		}
+		cajaDialogo.mostrar=false;
 		return false;
 	}
 	
@@ -122,8 +136,18 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	 }
 	 
 	 public void setCharlaActual(String nombreCharla) {
+		 respuesta1 = false;
+		 respuesta2 = false;
 		 nombreCharlaActual = nombreCharla;
 	 }
 	 
+	 
+	 public void resetearRespuestas() {
+		 respuesta1 = false;
+		 respuesta2 = false;
+	 }
+	 public void ocultarDialogo() {
+		 cajaDialogo.mostrar=false;
+	 }
 
 }
