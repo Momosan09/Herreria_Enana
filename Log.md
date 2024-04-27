@@ -297,3 +297,9 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
     - Agrega al carpintero
     - Modifica el sistema de las misiones
     - Agrega la primera mision de fabricar
+
+# 27 ABR
+    de ayer y hoy
+    - Cambia un poco la forma de detectar las teclas que presiona y la logica para mostrar el inventario, etc.
+    - Achica un poco el HUD general, reemplazando las tablas de la batalla por un "libro" que muestra las batallas.
+    - Agrega una clase UI, la cual quiero usar como manager de todos los huds. De apoco voy modificando eso. Todos los huds los va a manejar esta clase

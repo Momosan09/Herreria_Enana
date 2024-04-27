@@ -90,6 +90,7 @@ public class Jugador {
 		items.add(Items.PICO);
 		items.add(Items.MAZA);
 		items.add(Items.CINCEL);
+		//items.add(Items.ESQUEMA_SIERRA_CIRCULAR);
 	}
 
 	private void dibujarItemActual() {
@@ -145,9 +146,7 @@ public class Jugador {
                 //body.setLinearVelocity(movimientoX, movimientoY);
                 alternarSprites(direccionActual).render();
             } else {
-                body.setLinearVelocity(0, 0);
-                alternarSprites(Direcciones.QUIETO).render();;
-                resetearAnimaciones(animacionArriba, animacionAbajo, animacionIzquierda, animacionDerecha);
+                quieto();
             }
 
         if (movimientoX != 0 && movimientoY != 0) {
@@ -158,12 +157,19 @@ public class Jugador {
        }
 
         movimientoCamara();
+        }else {
+        	quieto();
         }
         
 	}
 	
+	private void quieto() {
+     	 body.setLinearVelocity(0, 0);
+         alternarSprites(Direcciones.QUIETO).render();;
+         resetearAnimaciones(animacionArriba, animacionAbajo, animacionIzquierda, animacionDerecha);
+	}
 	
-	public void movimientoCamara() {
+	private void movimientoCamara() {
 		if(camara != null) {
 			
             camara.position.set(posicion.x, posicion.y, 0);
@@ -230,6 +236,10 @@ public class Jugador {
 	
 	public ArrayList<Items> getItems(){
 		return items;
+	}
+	
+	public void agregarItem(Items item) {
+		items.add(item);
 	}
 	
 	public ArrayList<Mineral> getMinerales(){

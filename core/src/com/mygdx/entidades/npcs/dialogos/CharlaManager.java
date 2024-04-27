@@ -2,8 +2,11 @@ package com.mygdx.entidades.npcs.dialogos;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.Npc;
+import com.mygdx.enums.CaracterMensajes;
+import com.mygdx.enums.Items;
 import com.mygdx.historia.FabricablesMision;
 import com.mygdx.historia.MisionesDelJuego;
 import com.mygdx.historia.TipoMision;
@@ -13,6 +16,8 @@ public class CharlaManager {
 	//Aca van todas las charlas
 	public ArrayList<Charla> vendedorTiendaCharlas;
 	private Jugador jugador;
+	
+	private Mensaje mensajeAnadido;
 	
 	
 	public CharlaManager(Jugador jugador, Npc vendedorTienda, Npc vendedorAmbulante, Npc viejo, Npc carpintero) {
@@ -25,6 +30,7 @@ public class CharlaManager {
 		checkearCharlas(vendedorTienda, vendedorAmbulante, viejo, carpintero);
 		
 		this.jugador = jugador;
+		mensajeAnadido = new Mensaje(CaracterMensajes.ANADIDO);
 	}
 	
 	public void checkearCharlas(Npc vendedorTienda, Npc vendedorAmbulante, Npc viejo, Npc carpintero) {
@@ -103,6 +109,8 @@ public class CharlaManager {
 			if (carpintero.getNombreCharlaActual().equals("mision_sierra_circular") && carpintero.respuesta1) {
 				if (!jugador.buscarMisionPorId("CARP_00")) {
 					jugador.agregarMision(MisionesDelJuego.CARP_00);
+					mensajeAnadido.mostrarMensajeTemporal("Añadido " + MisionesDelJuego.CARP_00.getObjeto(), 3);
+					jugador.getItems().add(Items.ESQUEMA_SIERRA_CIRCULAR);
 					carpintero.resetearRespuestas();//Tengo que resetearle las respuestas aca pq por ahora es el ultimo dialogo de este npc, y se resetean desde la clase npc pero solo cuando se llama a un nuevo dialogo
 				}
 			} else {

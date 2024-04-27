@@ -1,0 +1,6 @@
+package com.mygdx.enums;
+
+public enum EstadosDelJuego {
+
+	JUEGO, PAUSA, INVENTARIO, INVENTARIO_BATALLAS,DIALOGO, INTERCAMBIO, INICIO, FIN, ESCENA, IDLE;
+}

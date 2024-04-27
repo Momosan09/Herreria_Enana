@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
@@ -115,17 +117,17 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		
 		hudIzq.row().spaceTop(20);
 			//Ultimas batallas
-		ultimasBatallasTable = new Table();
+		/*ultimasBatallasTable = new Table();
 		ultimasBatallasTable.add(ultimaBatalla[0], ultimaBatalla[1]);
 		ultimasBatallasTable.row();
 		ultimasBatallasTable.add(verBatallasAnteriores);
 		//ultimasBatallasTable.setBackground(new TextureRegionDrawable(new Texture(Recursos.CUADRO_HUD)));
-		hudIzq.add(ultimasBatallasTable);
+		hudIzq.add(ultimasBatallasTable);*/
 		
 			//Siguiente batalla
-		siguienteBatalla = new Table();
 		
 		hudIzq.row().spaceTop(20);
+		/*siguienteBatalla = new Table();
 		
 		siguienteBatalla.add(siguienteBatallaLbl);
 		siguienteBatalla.add(nombreSiguienteBatalla);
@@ -133,13 +135,14 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		siguienteBatalla.add(siguienteBatallaDetalles).left();
 		//siguienteBatalla.setBackground(new TextureRegionDrawable(new Texture(Recursos.CUADRO_HUD)));
 		
-		hudIzq.add(siguienteBatalla).left();
-		
+		hudIzq.add(siguienteBatalla).left();*/
 		
 		//Centro
 		
 		hudCen = new Table();
-		hudCen.add().expand();
+		hudCen.add(centroLbl).expand();
+		hudCen.setDebug(true);
+		hud.setDebug(true);
 		
 		//Derecha
 		hudDer = new Table();
@@ -293,6 +296,8 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		agregarAnimaciones();
 		
 	}
+	
+	
 	
 	@Override
 	public void crearFuentes() {

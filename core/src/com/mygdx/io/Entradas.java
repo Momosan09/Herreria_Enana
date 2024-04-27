@@ -4,7 +4,12 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.mygdx.enums.EstadosDelJuego;
+import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
+
+import java.awt.RenderingHints.Key;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 
@@ -15,6 +20,19 @@ public class Entradas implements InputProcessor {
 	private boolean isSoundPlaying = false;
 	private int cont = 0;
 
+	public void estadosDelJuego() {
+
+		if(Gdx.input.isKeyJustPressed(Keys.TAB)) {
+			MundoConfig.estadoJuego = (MundoConfig.estadoJuego == EstadosDelJuego.JUEGO ? EstadosDelJuego.INVENTARIO : EstadosDelJuego.JUEGO);
+		}
+		if(Gdx.input.isKeyJustPressed(Keys.CONTROL_LEFT)) {
+			MundoConfig.estadoJuego = (MundoConfig.estadoJuego == EstadosDelJuego.JUEGO ? EstadosDelJuego.INVENTARIO_BATALLAS : EstadosDelJuego.JUEGO);
+		}
+		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			MundoConfig.estadoJuego = (MundoConfig.estadoJuego == EstadosDelJuego.PAUSA ? EstadosDelJuego.JUEGO : EstadosDelJuego.PAUSA);
+		}
+	}
+	
 	private void reproducirEfectoSonido() {// ademas de reproducir el sonido, lo que hace es que no se toman las teclas que no tienen sonido, es decir que si deja el la tecla apretada no se va a escuchar miles de veces, solo cuando se levante y se vuelva a presionar va a volver a sonar
 		if (!isSoundPlaying) {
 			efectoSonidoTeclas.play();

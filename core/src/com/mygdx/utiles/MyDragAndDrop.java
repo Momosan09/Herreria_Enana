@@ -60,6 +60,7 @@ public class MyDragAndDrop {
         if (jugador.getItems().size() > 0) {
             for (Items herramienta : jugador.getItems()) {
                 herramientas.add(new Image(new Sprite(herramienta.getTextura())));
+                
             }
         }
 		
@@ -103,7 +104,7 @@ public class MyDragAndDrop {
             dragAndDrop.addSource(new Source(herramientas.get(i)) {
                 @Null
                 public Payload dragStart(InputEvent event, float x, float y, int pointer) {
-                    System.out.println("detecta herramienta");
+                    System.out.println(HelpDebug.debub(getClass())+"detecta herramienta");
                     Payload payload = new Payload();
                     payload.setObject(herramienta);
 
@@ -239,6 +240,7 @@ public class MyDragAndDrop {
 	public void refrescar() {
 		stage.clear();
 		inventario.clear();
+		herramientas.clear();
 		for (int i=0; i<jugador.getMinerales().size();i++) {
 			inventario.add(new Image(new Sprite(jugador.getMinerales().get(i).getTextura())));//Agrega los minearales del inventario del personaje, aca puede haber un error cuando quiera combinar mas cosas que solo minerales
 			stage.addActor(inventario.get(i));

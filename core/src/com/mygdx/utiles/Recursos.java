@@ -33,6 +33,8 @@ public abstract class Recursos {
 	public static final String PICO_IZ = "Items/picoIz.png";
 	public static final String CINCEL = "Items/cincel.png";
 	public static final String MAZA = "Items/maza.png";
+	public static final String LIMA = "Items/lima.png";
+	public static final String ESQUEMA_TEXT = "Items/esquema.png";
 	
 	//Mapas
 	public static final String MAPA = "mapas/mapa.tmx";
@@ -87,4 +89,5 @@ public abstract class Recursos {
 	public static final String HORNO_TEXTURA = "Imagen/juego/horno/horno.png";
 	public static final String YUNQUE_TEXTURA = "HUD/yunque2HUD.png";
 	public static final String CAJA_ENTREGAS_TEXTURA = "HUD/cajaEntregasHUD.png";
+	public static final String LIBRO_HUD = "HUD/libroHUD.png";
 }

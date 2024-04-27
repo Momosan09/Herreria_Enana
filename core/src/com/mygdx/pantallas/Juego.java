@@ -39,6 +39,7 @@ import com.mygdx.entidades.npcs.Viejo;
 import com.mygdx.entidades.npcs.dialogos.CharlaManager;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.entidades.npcs.dialogos.Npc_Dialogos_Rey;
+import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
 import com.mygdx.game.Principal;
 import com.mygdx.historia.TipoMision;
@@ -53,7 +54,9 @@ import com.mygdx.hud.InventarioHUD;
 import com.mygdx.hud.MesaHUD;
 import com.mygdx.hud.PausaHUD;
 import com.mygdx.hud.SoporteArmaduraHUD;
+import com.mygdx.hud.UI;
 import com.mygdx.hud.YunqueHUD;
+import com.mygdx.io.Entradas;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 import com.mygdx.utiles.HelpDebug;
@@ -112,7 +115,7 @@ public class Juego implements Screen{
 	private OrthographicCamera camaraJugador, camaraHud;
 
 	//Scene2d.ui
-	private HUD hud;
+	private UI ui;
 	private CartaHUD cartaHUD;
 	private PausaHUD pausaHud;
 	private Combinacion combinacionJugador;
@@ -124,6 +127,8 @@ public class Juego implements Screen{
 	private CajaEntregasHUD cajaEntregasHUD;
 	private YunqueHUD yunqueHUD;
 	
+	//Entradas 
+	private Entradas entradas;
 	
 	//Charlas
 	public CharlaManager charlaManager;
@@ -132,6 +137,7 @@ public class Juego implements Screen{
 	private boolean toggleInventario = false;
 	private boolean togglePausa = false;
 	private boolean toggleBarraItems1 = false;
+
 	
 	//Screens
 	private final Principal game;
@@ -187,7 +193,8 @@ public class Juego implements Screen{
 	   
 	    inventarioHUD = new InventarioHUD(jugador);
 	    
-		hud = new HUD(jugador, this);
+		ui = new UI(jugador,this);
+		
 		mesaHUD = new MesaHUD(jugador);
 		yunqueHUD = new YunqueHUD(jugador);
 		fundicionHUD = new Fundicion(jugador);
@@ -215,8 +222,8 @@ public class Juego implements Screen{
 		//InputMultiplexer
 			
 	    Recursos.muxJuego.addProcessor(altoHorno.getHUD().getStage());
-	    Recursos.muxJuego.addProcessor(hud.getStage());
-	    Recursos.muxJuego.addProcessor(hud.getDiarioHUD().getStage());
+	    Recursos.muxJuego.addProcessor(ui.getHUD().getStage());
+	    Recursos.muxJuego.addProcessor(ui.getHUD().getDiarioHUD().getStage());
 
 	    /*
 		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.HIERRO.toString(), 1, 1,50,300);
@@ -226,11 +233,39 @@ public class Juego implements Screen{
 		jugador.getMinerales().add(hierro);
 		jugador.getMinerales().add(hierro1);
 		
+		entradas = new Entradas();
 		
 	}
 
 	@Override
 	public void render(float delta){
+		entradas.estadosDelJuego();
+		
+		//hacer cosas dependiendo de los estados del juego
+		switch (MundoConfig.estadoJuego) {
+		case INVENTARIO:
+			inventarioHUD.mostrar();
+			break;
+
+		case PAUSA:
+			pausaHud.mostrar();
+			jugador.puedeMoverse = false;
+			MundoConfig.mostrarHUD = false;
+			MundoConfig.pausarTiempo = true;
+			break;
+		case JUEGO:
+			pausaHud.ocultar();
+			inventarioHUD.ocultar();
+			ui.ocultarLibro();
+			jugador.puedeMoverse = true;
+			MundoConfig.mostrarHUD = true;
+			MundoConfig.pausarTiempo = false;
+			break;
+			
+		case INVENTARIO_BATALLAS:	
+			ui.mostrarLibro();
+			break;
+		}
 		
 		//DEBUG Y COSAS TEMPORALES (despues no van a estar mas)
 		if(Gdx.input.isKeyPressed(Keys.P)) {//para debug
@@ -246,32 +281,8 @@ public class Juego implements Screen{
 			MundoConfig.mostrarHUD = true;
 			MundoConfig.habilitadoHUDS = true;
 		}
-		
-		//CONDICIONES POR TECLAS
-		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE) && MundoConfig.habilitadoHUDS) {
-			togglePausa = !togglePausa;
-			if (togglePausa) {
-				pausaHud.mostrar();
-				jugador.puedeMoverse = false;
-				MundoConfig.mostrarHUD = false;
-				MundoConfig.pausarTiempo = true;
-			} else {
-				pausaHud.ocultar();
-				jugador.puedeMoverse = true;
-				MundoConfig.mostrarHUD = true;
-				MundoConfig.pausarTiempo = false;
-			}
-		}
-		
-	    if(Gdx.input.isKeyJustPressed(Keys.TAB) && MundoConfig.habilitadoHUDS) {
-	    	toggleInventario = !toggleInventario;
-	    	if(toggleInventario) {
-	    	inventarioHUD.mostrar();	
-	    	}else {
-	    	inventarioHUD.ocultar();
-	    	}
-	    }
-		
+	    
+	  
 		
 //		if (Gdx.input.isKeyJustPressed(Keys.NUM_1) && MundoConfig.habilitadoHUDS) {
 //			toggleBarraItems1 = !toggleBarraItems1;
@@ -338,7 +349,8 @@ public class Juego implements Screen{
 																	// para la camara del HUD y lo dibuja
 
 			// Renderiza ocultables
-			hud.render();
+			  ui.render();
+				
 			pausaHud.render();
 			dialogoDeCompra.render(jugador);
 			inventarioHUD.render(jugador);
@@ -370,16 +382,17 @@ public class Juego implements Screen{
 
 	@Override
 	public void resize(int width, int height) {
-
 		camaraJugador.viewportWidth = width;
 		camaraJugador.viewportHeight = height;
 		camaraJugador.update();	
+		
+		ui.reEscalar(width, height);
 		combinacionJugador.reEscalar(width, height);
 		inventarioHUD.reEscalar(width, height);
 
 		reEscalarHUDSTaller(width, height);
 	    
-		hud.reEscalar(width, height);
+		//hud.reEscalar(width, height);
 	    cartaHUD.reEscalar(width, height);
 	    pausaHud.reEscalar(width, height);
 
@@ -588,7 +601,7 @@ public class Juego implements Screen{
 			rayHandler.dispose();
 			pausaHud.dispose();
 			cartaHUD.dispose();
-			hud.dispose();
+			ui.dispose();
 			Recursos.muxJuego.clear();
 		}
 

@@ -12,8 +12,13 @@ public enum Items {
 	VACIO(new Texture(Recursos.VACIO)),
 	PICO(new Texture(Recursos.PICO_DER)),
 	CINCEL(new Texture(Recursos.CINCEL)),
-	MAZA(new Texture(Recursos.MAZA));
+	MAZA(new Texture(Recursos.MAZA)),
+	LIMA_PLANA(new Texture(Recursos.LIMA)),
 	
+	
+	//Esquemas
+	ESQUEMA_SIERRA_CIRCULAR(new Texture(Recursos.ESQUEMA_TEXT));
+
 	private Texture textura;
 
 	Items(Texture textura){

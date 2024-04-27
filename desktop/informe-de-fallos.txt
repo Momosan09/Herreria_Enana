@@ -1,18 +1,14 @@
-com.badlogic.gdx.utils.GdxRuntimeException: java.lang.Error: Unresolved compilation problems: 
-	MisionesDelJuego.CARP_00 cannot be resolved to a type
-	Syntax error on token ".", class expected after this token
-
-	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:172)
-	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)
-Caused by: java.lang.Error: Unresolved compilation problems: 
-	MisionesDelJuego.CARP_00 cannot be resolved to a type
-	Syntax error on token ".", class expected after this token
-
-	at com.mygdx.pantallas.Juego.show(Juego.java:229)
+java.lang.IllegalArgumentException: style cannot be null.
+	at com.badlogic.gdx.scenes.scene2d.ui.Label.setStyle(Label.java:79)
+	at com.badlogic.gdx.scenes.scene2d.ui.Label.<init>(Label.java:74)
+	at com.mygdx.entidades.npcs.dialogos.Mensaje.<init>(Mensaje.java:24)
+	at com.mygdx.entidades.npcs.dialogos.CharlaManager.<init>(CharlaManager.java:33)
+	at com.mygdx.pantallas.Juego.charlaManagerConfig(Juego.java:479)
+	at com.mygdx.pantallas.Juego.show(Juego.java:207)
 	at com.badlogic.gdx.Game.setScreen(Game.java:63)
 	at com.mygdx.game.Principal.create(Principal.java:20)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.initializeListener(Lwjgl3Window.java:416)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:366)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:192)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:166)
-	... 1 more
+	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)
