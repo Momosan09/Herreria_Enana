@@ -17,7 +17,11 @@ public enum Items {
 	
 	
 	//Esquemas
-	ESQUEMA_SIERRA_CIRCULAR(new Texture(Recursos.ESQUEMA_TEXT));
+	ESQUEMA_SIERRA_CIRCULAR(new Texture(Recursos.ESQUEMA_TEXT)),
+	
+	//MISION
+	DISCO_HIERRO(new Texture(Recursos.DISCO_HIERRO)),
+	SIERRA_CIRCULAR(new Texture(Recursos.SIERRA_CIRCULAR));
 
 	private Texture textura;
 

@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.enums.Direcciones;
+import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.HelpDebug;
@@ -26,9 +27,16 @@ import com.mygdx.utiles.Render;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
+import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroPlancha;
 import com.mygdx.historia.Mision;
 import com.mygdx.historia.MisionesDelJuego;
 import com.mygdx.historia.TipoMision;
+import com.mygdx.entidades.ObjetosDelMapa.Items.Cincel;
+import com.mygdx.entidades.ObjetosDelMapa.Items.Esquema;
+import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
+import com.mygdx.entidades.ObjetosDelMapa.Items.LimaPlana;
+import com.mygdx.entidades.ObjetosDelMapa.Items.Maza;
+import com.mygdx.entidades.ObjetosDelMapa.Items.Pico;
 
 public class Jugador {
 
@@ -46,7 +54,7 @@ public class Jugador {
 	public Rectangle areaJugador;
 	
 	//Inventarios
-	private ArrayList<Items> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
+	private ArrayList<Item> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
 	private ArrayList<Mineral> mineralesInv = new ArrayList<>();  
 	private ArrayList<Integer> indicesDeEliminacion = new ArrayList<>();//Se guardan temporalmente los indices de los minerales a eliminar, despues este array se limpia
 	private ArrayList<Mision> tareas = new ArrayList<>();
@@ -87,10 +95,13 @@ public class Jugador {
 		
 		
 		//ESTO ES TEMPORAL, DESPUES EL JUGADOR NO VA A EMPEZAR CON LAS HERRAMIENTAS
-		items.add(Items.PICO);
-		items.add(Items.MAZA);
-		items.add(Items.CINCEL);
-		//items.add(Items.ESQUEMA_SIERRA_CIRCULAR);
+		items.add(new Pico(Items.PICO));
+		items.add(new Maza(Items.MAZA));
+		items.add(new Cincel(Items.CINCEL,2));//Tiene dos usos, la idea es que despues todas las herramientas tengan cierta cantidad de usos y que se deban comprar o HACER
+		items.add(new LimaPlana(Items.LIMA_PLANA));
+		items.add(new Esquema(Items.ESQUEMA_SIERRA_CIRCULAR));
+		
+		mineralesInv.add(new HierroPlancha(false));
 	}
 
 	private void dibujarItemActual() {
@@ -112,6 +123,7 @@ public class Jugador {
 
 	private void update() {
 		movimiento(Gdx.graphics.getDeltaTime());
+		eliminarItemRoto();
 	}
 
 	private void movimiento(float deltaTime) {
@@ -234,11 +246,11 @@ public class Jugador {
 		return false;
 	}
 	
-	public ArrayList<Items> getItems(){
+	public ArrayList<Item> getItems(){
 		return items;
 	}
 	
-	public void agregarItem(Items item) {
+	public void agregarItem(Item item) {
 		items.add(item);
 	}
 	
@@ -354,6 +366,18 @@ public class Jugador {
 		return false;
 		}else {
 			return false;
+		}
+	}
+	
+	public void eliminarItemRoto() {
+		if(MundoConfig.estadoJuego == EstadosDelJuego.INVENTARIO ) {
+			
+		for(int i=0;i<items.size();i++) {
+			if(items.get(i).getUsos() == 0) {
+				System.out.println("Eliminado " + items.get(i).getNombre());
+				items.remove(i);
+			}
+		}
 		}
 	}
 

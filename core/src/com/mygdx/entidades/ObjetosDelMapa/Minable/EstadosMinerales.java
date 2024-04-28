@@ -3,7 +3,7 @@ package com.mygdx.entidades.ObjetosDelMapa.Minable;
 public enum EstadosMinerales {
 
 	
-	MENA, PURO, LINGOTE;//OXIDADO?
+	MENA, PURO, LINGOTE, PLANCHA;//OXIDADO?
 	
 	
 }

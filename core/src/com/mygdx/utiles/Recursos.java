@@ -59,6 +59,7 @@ public abstract class Recursos {
 	public static final String MENA_HIERRO = "objetosDelMundo/inanimados/interactuables/hierroMena.png";
 	public static final String MENA_CARBON = "objetosDelMundo/inanimados/interactuables/carbonMena.png";
 	public static final String LINGOTE_HIERRO = "objetosDelMundo/inanimados/hierroLingote.png";
+	public static final String PLANCHA_HIERRO = "objetosDelMundo/inanimados/hierroPlancha.png";
 	public static final String HIERRO_PURO = "objetosDelMundo/inanimados/hierroPuro.png";
 	public static final String CARBON_PURO = "objetosDelMundo/inanimados/carbonPuro.png";
 			
@@ -69,6 +70,10 @@ public abstract class Recursos {
 	public static final String MESA = "objetosDelMundo/inanimados/interactuables/mesa.png";
 	public static final String SOPORTE_ARMADURAS = "objetosDelMundo/inanimados/interactuables/soporteArmadura.png";
 	public static final String YUNQUE = "objetosDelMundo/inanimados/interactuables/yunque2.png";
+	
+		//ITEMS Y DE MISION
+	public static final String DISCO_HIERRO = "objetosDelMundo/inanimados/hierroDisco.png";
+	public static final String SIERRA_CIRCULAR= "objetosDelMundo/inanimados/sierraCircular.png";
 	
 	//HUD
 	public static final String DINERO_HUD = "HUD/Dinero.png";

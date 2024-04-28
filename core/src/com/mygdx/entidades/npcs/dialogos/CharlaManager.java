@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.Npc;
+import com.mygdx.entidades.ObjetosDelMapa.Items.Esquema;
 import com.mygdx.enums.CaracterMensajes;
 import com.mygdx.enums.Items;
 import com.mygdx.historia.FabricablesMision;
@@ -110,7 +111,7 @@ public class CharlaManager {
 				if (!jugador.buscarMisionPorId("CARP_00")) {
 					jugador.agregarMision(MisionesDelJuego.CARP_00);
 					mensajeAnadido.mostrarMensajeTemporal("Añadido " + MisionesDelJuego.CARP_00.getObjeto(), 3);
-					jugador.getItems().add(Items.ESQUEMA_SIERRA_CIRCULAR);
+					jugador.getItems().add(new Esquema(Items.ESQUEMA_SIERRA_CIRCULAR));
 					carpintero.resetearRespuestas();//Tengo que resetearle las respuestas aca pq por ahora es el ultimo dialogo de este npc, y se resetean desde la clase npc pero solo cuando se llama a un nuevo dialogo
 				}
 			} else {

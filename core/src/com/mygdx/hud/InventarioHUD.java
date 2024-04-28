@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
+import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.enums.Items;
@@ -242,7 +243,7 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 		tablaArtefactos.add(encabezadoArtefactos).row();
 		//Este if me permite saber si el la tabla no esta actualizada y si no lo esta, actualizarla
 		if(tablaArtefactos.getChildren().size-1 != jugador.getItems().size()) {//Le resto 1 porque la Label es un children tambien
-	    for (Items artefacto : jugador.getItems()) {
+	    for (Item artefacto : jugador.getItems()) {
 	    	//System.out.println(HelpDebug.debub(getClass())+"Hay mineral");
 	        // Crea una imagen para el mineral y la agrega a la tabla
 	        Image artefactoImage = new Image(artefacto.getTextura());

@@ -303,3 +303,6 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
     - Cambia un poco la forma de detectar las teclas que presiona y la logica para mostrar el inventario, etc.
     - Achica un poco el HUD general, reemplazando las tablas de la batalla por un "libro" que muestra las batallas.
     - Agrega una clase UI, la cual quiero usar como manager de todos los huds. De apoco voy modificando eso. Todos los huds los va a manejar esta clase
+    - Agrega clase Item para poder crear las herramientas y objetos de mision mas facil y sin tener que hacerlos hijas de la clase mineral o lo que sea
+    - Agrega la posibilidad de herramientas que se rompan con cierta cantidad de usos
+    - Agrega algunas combinaciones para poder completar la primera mision
