@@ -306,3 +306,7 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
     - Agrega clase Item para poder crear las herramientas y objetos de mision mas facil y sin tener que hacerlos hijas de la clase mineral o lo que sea
     - Agrega la posibilidad de herramientas que se rompan con cierta cantidad de usos
     - Agrega algunas combinaciones para poder completar la primera mision
+
+# 29 ABR
+    - Ya se puede crear la sierra circular, y hacer combinaciones item con item
+    - Se completa la mision cuando se crea la sierra

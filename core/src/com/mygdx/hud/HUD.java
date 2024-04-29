@@ -140,9 +140,9 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		//Centro
 		
 		hudCen = new Table();
-		hudCen.add(centroLbl).expand();
-		hudCen.setDebug(true);
-		hud.setDebug(true);
+//		hudCen.add(centroLbl).expand();
+//		hudCen.setDebug(true);
+//		hud.setDebug(true);
 		
 		//Derecha
 		hudDer = new Table();

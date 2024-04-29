@@ -10,7 +10,7 @@ public class Mision {
 	private TipoMision tipo;
 	private String objeto;
 	private int cantidadConseguida = 0, cantidadObjetivo;//La cantidad de lo que pide
-	private boolean completada = false, recompensaAdquirida = false;
+	private boolean completada = false, recompensaAdquirida = false, objetoFabricado = false;
 	private int cobre, plata, oro;
 	private String id;
 	
@@ -27,9 +27,22 @@ public class Mision {
 	}
 	
 	public void comprobarCondicion() {
-		if(cantidadConseguida == cantidadObjetivo) {
-			completada = true;
+		
+		switch (tipo) {
+		case RECOLECTAR:
+			if(cantidadConseguida == cantidadObjetivo) {
+				completada = true;
+			}			
+			break;
+
+		case FABRICAR:
+			if(objetoFabricado) {
+				completada = true;
+			}
+			break;
 		}
+		
+
 	}
 	
 	public void darRecompensa(Jugador jugador) {
@@ -67,6 +80,10 @@ public class Mision {
 	
 	public void setCantidadConseguida(int cant) {
 		cantidadConseguida += cant;
+	}
+	
+	public void setObjetoFabricado() {
+		objetoFabricado = true;
 	}
 	
 	public int getOro() {

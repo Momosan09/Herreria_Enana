@@ -99,9 +99,6 @@ public class Jugador {
 		items.add(new Maza(Items.MAZA));
 		items.add(new Cincel(Items.CINCEL,2));//Tiene dos usos, la idea es que despues todas las herramientas tengan cierta cantidad de usos y que se deban comprar o HACER
 		items.add(new LimaPlana(Items.LIMA_PLANA));
-		items.add(new Esquema(Items.ESQUEMA_SIERRA_CIRCULAR));
-		
-		mineralesInv.add(new HierroPlancha(false));
 	}
 
 	private void dibujarItemActual() {
@@ -367,6 +364,17 @@ public class Jugador {
 		}else {
 			return false;
 		}
+	}
+	
+	public Mision conseguirMisionPorId(MisionesDelJuego mision) {
+		if(!tareas.isEmpty()) {
+			for(int i = 0; i<tareas.size();i++) {
+				if(tareas.get(i).getId().equals(mision.getId())) {
+					return tareas.get(i);
+				}
+			}	
+		}
+		return null;
 	}
 	
 	public void eliminarItemRoto() {

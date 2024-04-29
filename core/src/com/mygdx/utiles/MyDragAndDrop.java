@@ -28,6 +28,7 @@ import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroPlancha;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroPuro;
 import com.mygdx.enums.Items;
 import com.mygdx.enums.TipoCombinacion;
+import com.mygdx.historia.MisionesDelJuego;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
 
 public class MyDragAndDrop {
@@ -83,7 +84,6 @@ public class MyDragAndDrop {
 				
 				@Null
 				public Payload dragStart (InputEvent event, float x, float y, int pointer) {
-					System.out.println("detecta");
 					Payload payload = new Payload();
 					payload.setObject(mineral);
 
@@ -125,100 +125,100 @@ public class MyDragAndDrop {
                     return payload;
                 }
             });
-            
-            
-        }
+            }
+		
+
 		
 		for (int i = 0; i < inventario.size(); i++) {
-		    final Mineral mineralSource = jugador.getMinerales().get(i);
-		    dragAndDrop.addTarget(new Target(inventario.get(i)) {
-				public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
-					getActor().setColor(Color.GREEN);
+			final Mineral mineralSource;
+			 mineralSource = jugador.getMinerales().get(i);
+				dragAndDrop.addTarget(new Target(inventario.get(i)) {
+
+					public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
+						getActor().setColor(Color.GREEN);
+
+						return true;
+					}
+
+					public void reset(Source source, Payload payload) {
+						getActor().setColor(Color.WHITE);
+					}
+
+					public void drop(Source source, Payload payload, float x, float y, int pointer) {
+
+						if (payload.getObject() instanceof Mineral) {// Aca para cosas que involucren dos minerales
+							Mineral mineralTarget = (Mineral) payload.getObject();
+
+							if (esCombinacionValida(mineralSource, mineralTarget)) {
+
+							} else {
+
+							}
+
+						}
+
+						if (payload.getObject() instanceof Item) {// Aca para cosas que involucren una herramienta y un
+																	// mineral
+							Item herramienta = (Item) payload.getObject();
+
+							if (esCombinacionValida(herramienta, mineralSource)) {
+								// Esto es medio generico, pero bueno cuando necesite mas especifico lo cambio
+								inventario.remove(mineralSource);
+								jugador.getMinerales().remove(mineralSource);
+
+							}
+
+
+						}
+
+						refrescar();
+
+			        }
 					
+					
+				
+			    });
+			
+		}
+		
+		for(int i = 0; i < herramientas.size(); i++) {
+			final Item itemSource;
+			itemSource = jugador.getItems().get(i);
+			dragAndDrop.addTarget(new Target(herramientas.get(i)) {
+
+				@Override
+				public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
+					getActor().setColor(Color.GREEN);
+
 					return true;
 				}
 
-				public void reset (Source source, Payload payload) {
+				@Override
+				public void reset(Source source, Payload payload) {
 					getActor().setColor(Color.WHITE);
 				}
 
-				public void drop (Source source, Payload payload, float x, float y, int pointer) {
+				public void drop(Source source, Payload payload, float x, float y, int pointer) {
+					if(payload.getObject() instanceof Item) {
+						Item itemTarget = (Item) payload.getObject();
+					if (esCombinacionValida(itemTarget, itemSource)) {//ITEM CON ITEM
+						herramientas.remove(itemSource);
+						jugador.getItems().remove(itemSource);
+
+					}
 					
-					if (payload.getObject() instanceof Mineral) {//Aca para cosas que involucren dos minerales
-		                Mineral mineralTarget = (Mineral) payload.getObject();
+					}
 
-		                if (esCombinacionValida(mineralSource, mineralTarget)) {
-		                    // Hacer algo si la combinación es válida
-		                    System.out.println("Combinacion valida: " + mineralSource + " sobre " + mineralTarget);
-		                } else {
-		                    // Hacer algo si la combinación no es valida
-		                    System.out.println("Combinacion no valida: " + mineralSource + " sobre " + mineralTarget);
-		                }
-		                System.out.println("Accepted: " + payload.getObject() + " " + x + ", " + y);
-		                
-		            } else if (payload.getObject() instanceof Item) {//Aca para cosas que involucren una herramienta y un mineral
-		                Item herramienta = (Item) payload.getObject();
-
-		                if (esCombinacionValida(herramienta, mineralSource)) {
-		                	//Esto es medio generico, pero bueno cuando necesite mas especifico lo cambio
-		                	inventario.remove(mineralSource);
-		                	jugador.getMinerales().remove(mineralSource);
-
-		                	
-		                	
-		                    System.out.println("Combinacion valida: " + mineralSource + " sobre " + herramienta);
-		                } else {
-		                    System.out.println("Combinacion no valida: " + mineralSource + " sobre " + herramienta);
-		                }
-		                System.out.println("Accepted: " + payload.getObject() + " " + x + ", " + y);
-		            }
-					
 					refrescar();
 		        }
 				
-				private boolean esCombinacionValida(Mineral mineralFuente, Mineral mineralObjetivo) {
-					if(mineralFuente.tipo == mineralObjetivo.tipo) {
-						System.out.println("Exito");
-						return true;
-					}else {
-						return false;
-					}
-				}
-				
-				private boolean esCombinacionValida(Item herramientaFuente, Item herramientaObjetivo) {
-					if(herramientaFuente.getTipo() == Items.LIMA_PLANA && herramientaObjetivo.getTipo() == Items.DISCO_HIERRO) {
-						jugador.getItems().remove(herramientaObjetivo);
-						jugador.getItems().add(new SierraCircular(Items.SIERRA_CIRCULAR));
-						return true;
-					}else {
-						return false;
-					}
-				}
-				
-				private boolean esCombinacionValida(Item herramienta, Mineral mineral) {
-					if(herramienta.getTipo() == Items.CINCEL && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.MENA) {
-						jugador.getMinerales().add(new HierroPuro(false));
-						herramienta.restarUsos();
-						return true;
-					}else if(herramienta.getTipo() == Items.CINCEL && mineral.tipo == TipoMinerales.CARBON && mineral.estado == EstadosMinerales.MENA){
-						jugador.getMinerales().add(new CarbonPuro(false));
-						return true;
-					}else if(herramienta.getTipo() == Items.MAZA && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.LINGOTE){
-						jugador.getMinerales().add(new HierroPlancha(false));
-						return true;
-					}else if(herramienta.getTipo() == Items.ESQUEMA_SIERRA_CIRCULAR && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.PLANCHA){
-						jugador.getItems().add(new HierroDisco(Items.DISCO_HIERRO));
-						jugador.getMinerales().remove(mineral);
-						jugador.getItems().remove(herramienta);
-						return false;
-					}else {
-						return false;
-					}
-						
-				}
-		    });
-
+			});
 		}
+		
+
+				
+
+		
 		
 		
 /*	Aca estan las no permitidas
@@ -241,7 +241,50 @@ public class MyDragAndDrop {
 
 	
 
-
+	
+	private boolean esCombinacionValida(Mineral mineralFuente, Mineral mineralObjetivo) {
+		if(mineralFuente.tipo == mineralObjetivo.tipo) {
+			System.out.println("Exito");
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	private boolean esCombinacionValida(Item herramientaFuente, Item herramientaObjetivo) {
+		if(herramientaFuente.getTipo() == Items.LIMA_PLANA && herramientaObjetivo.getTipo() == Items.DISCO_HIERRO) {
+			jugador.getItems().remove(herramientaObjetivo);
+			jugador.getItems().add(new SierraCircular(Items.SIERRA_CIRCULAR));
+			jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).setObjetoFabricado();;
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	private boolean esCombinacionValida(Item herramienta, Mineral mineral) {
+		if(herramienta.getTipo() == Items.CINCEL && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.MENA) {
+			jugador.getMinerales().add(new HierroPuro(false));
+			herramienta.restarUsos();
+			return true;
+		}else if(herramienta.getTipo() == Items.CINCEL && mineral.tipo == TipoMinerales.CARBON && mineral.estado == EstadosMinerales.MENA){
+			jugador.getMinerales().add(new CarbonPuro(false));
+			return true;
+		}else if(herramienta.getTipo() == Items.MAZA && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.LINGOTE){
+			jugador.getMinerales().add(new HierroPlancha(false));
+			return true;
+		}else if(herramienta.getTipo() == Items.ESQUEMA_SIERRA_CIRCULAR && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.PLANCHA){
+			jugador.getItems().add(new HierroDisco(Items.DISCO_HIERRO));
+			jugador.getMinerales().remove(mineral);
+			jugador.getItems().remove(herramienta);
+			return false;
+		}else {
+			return false;
+		}
+			
+	}
+	
+	
 	public void render () {
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
