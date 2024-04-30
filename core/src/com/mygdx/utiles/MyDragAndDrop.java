@@ -256,6 +256,7 @@ public class MyDragAndDrop {
 			jugador.getItems().remove(herramientaObjetivo);
 			jugador.getItems().add(new SierraCircular(Items.SIERRA_CIRCULAR));
 			jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).setObjetoFabricado();;
+			jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).setCantidadConseguida(1);
 			return true;
 		}else {
 			return false;

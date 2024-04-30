@@ -60,6 +60,8 @@ public class CharlaManager {
 		carpintero.charlas.add(new Charla("saludo", carpintero.getPaqueteDeDialogosNro(0)));
 		carpintero.charlas.add(new Charla("sobre_la_guerra", carpintero.getPaqueteDeDialogosNro(1)));
 		carpintero.charlas.add(new Charla("mision_sierra_circular", carpintero.getPaqueteDeDialogosNro(2)));
+		carpintero.charlas.add(new Charla("carpintero_entrega_primera_mision", carpintero.getPaqueteDeDialogosNro(3)));
+		carpintero.charlas.add(new Charla("carpintero_venta", carpintero.getPaqueteDeDialogosNro(4)));
 		
 	}
 	
@@ -95,6 +97,7 @@ public class CharlaManager {
 	
 	public void npcCarpintero(Npc carpintero) {
 		if (carpintero.getJugadorEnRango()) {
+			
 
 			if (carpintero.getNombreCharlaActual().equals("saludo") && carpintero.respuesta1) {
 				carpintero.setCharlaActual("sobre_la_guerra");
@@ -112,10 +115,26 @@ public class CharlaManager {
 					jugador.agregarMision(MisionesDelJuego.CARP_00);
 					mensajeAnadido.mostrarMensajeTemporal("Añadido " + MisionesDelJuego.CARP_00.getObjeto(), 3);
 					jugador.getItems().add(new Esquema(Items.ESQUEMA_SIERRA_CIRCULAR));
-					carpintero.resetearRespuestas();//Tengo que resetearle las respuestas aca pq por ahora es el ultimo dialogo de este npc, y se resetean desde la clase npc pero solo cuando se llama a un nuevo dialogo
+					
 				}
 			} else {
 				carpintero.ocultarDialogo();
+				
+			}
+			
+			if(jugador.buscarMisionPorId(MisionesDelJuego.CARP_00.getId())) {				
+			if(!jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).getCompletada()) {
+				carpintero.setCharlaActual("carpintero_entrega_primera_mision");
+				carpintero.resetearRespuestas();//Tengo que resetearle las respuestas aca pq por ahora es el ultimo dialogo de este npc, y se resetean desde la clase npc pero solo cuando se llama a un nuevo dialogo
+			}
+			}
+			
+			if(carpintero.getNombreCharlaActual().equals("carpintero_entrega_primera_mision") && carpintero.respuesta1) {
+				carpintero.ocultarDialogo();
+			}else if(carpintero.getNombreCharlaActual().equals("carpintero_entrega_primera_mision") && carpintero.respuesta2 && jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).getCompletada()) {
+				jugador.getItems().remove(jugador.getItem(Items.SIERRA_CIRCULAR));
+				carpintero.setCharlaActual("carpintero_venta");
+				carpintero.resetearRespuestas();//Tengo que resetearle las respuestas aca pq por ahora es el ultimo dialogo de este npc, y se resetean desde la clase npc pero solo cuando se llama a un nuevo dialogo
 			}
 		}
 	}

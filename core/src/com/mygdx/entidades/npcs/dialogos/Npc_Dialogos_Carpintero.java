@@ -19,7 +19,18 @@ public enum Npc_Dialogos_Carpintero implements DialogosNPC{
 		//Charla 3 - Mision: Sierra circular
 		MISION_CARPINTERO_SIERRA_CIRCULAR(Recursos.bundle.get("carpintero_mision_sierra_circular")),
 		MISION_CARPINTERO_SIERRA_CIRCULAR_RESPUESTA_1(Recursos.bundle.get("carpintero_mision_sierra_circular_respuesta_1")),
-		MISION_CARPINTERO_SIERRA_CIRCULAR_RESPUESTA_2(Recursos.bundle.get("carpintero_mision_sierra_circular_respuesta_2"));
+		MISION_CARPINTERO_SIERRA_CIRCULAR_RESPUESTA_2(Recursos.bundle.get("carpintero_mision_sierra_circular_respuesta_2")),
+	
+		//Charla 4 - Entregando sierra
+		ENTREGANDO_MISION_SIERRA_CIRCULAR(Recursos.bundle.get("carpintero_entrega_primera_mision")),
+		ENTREGANDO_MISION_SIERRA_CIRCULAR_RESPUESTA_1(Recursos.bundle.get("carpintero_entrega_primera_mision_respuesta_1")),
+		ENTREGANDO_MISION_SIERRA_CIRCULAR_RESPUESTA_2(Recursos.bundle.get("carpintero_entrega_primera_mision_respuesta_2")),
+		
+		//Charla 5 - General de venta
+		VENTA(Recursos.bundle.get("carpintero_venta")),
+		RESPUESTA_1(Recursos.bundle.get("carpintero_venta_respuesta_1")),
+		RESPUESTA_2(Recursos.bundle.get("carpintero_venta_respuesta_2"));
+		
 		
 		private final String _mensaje;
 		

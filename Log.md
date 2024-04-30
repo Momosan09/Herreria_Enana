@@ -310,3 +310,6 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
 # 29 ABR
     - Ya se puede crear la sierra circular, y hacer combinaciones item con item
     - Se completa la mision cuando se crea la sierra
+
+# 30 ABR
+    - Mas dialogos para el carpintero, ahora se puede entregar la sierra y ya esta listo el dialogo general de venta

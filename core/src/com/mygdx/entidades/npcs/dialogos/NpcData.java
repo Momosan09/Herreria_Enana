@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.entidades.npcs.respuestas.Npc_Respuestas_Vendedor_Tienda;
-import com.mygdx.entidades.npcs.respuestas.Npc_Respuestas_Viejo;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 

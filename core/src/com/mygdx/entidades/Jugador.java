@@ -377,6 +377,18 @@ public class Jugador {
 		return null;
 	}
 	
+	public Item getItem(Items item) {
+		if(!items.isEmpty()) {			
+		for(int i = 0; i<items.size();i++) {
+			if(item == items.get(i).getTipo()) {
+				return items.get(i);
+			}
+		}
+		}
+		
+		return null;
+	}
+	
 	public void eliminarItemRoto() {
 		if(MundoConfig.estadoJuego == EstadosDelJuego.INVENTARIO ) {
 			
