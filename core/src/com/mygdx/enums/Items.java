@@ -9,11 +9,11 @@ public enum Items {
 	//Ejemplo: AMULETO1, es necesario para x motivo
 	
 	
-	VACIO(new Texture(Recursos.VACIO)),
-	PICO(new Texture(Recursos.PICO_DER)),
-	CINCEL(new Texture(Recursos.CINCEL)),
-	MAZA(new Texture(Recursos.MAZA)),
-	LIMA_PLANA(new Texture(Recursos.LIMA)),
+	VACIO(new Texture(Recursos.VACIO),0,-1),
+	PICO(new Texture(Recursos.PICO_DER),0,-1),
+	CINCEL(new Texture(Recursos.CINCEL),0,-1),
+	MAZA(new Texture(Recursos.MAZA),0,-1),
+	LIMA_PLANA(new Texture(Recursos.LIMA),0,-1),
 	
 	
 	//Esquemas
@@ -24,9 +24,19 @@ public enum Items {
 	SIERRA_CIRCULAR(new Texture(Recursos.SIERRA_CIRCULAR));
 
 	private Texture textura;
+	private int valor;
+	private int usos;
 
+	Items(Texture textura, int valor, int usos){
+		this.textura = textura;
+		this.valor = valor;
+		this.usos = usos;
+	}
+	
 	Items(Texture textura){
 		this.textura = textura;
+		this.valor = -1;
+		this.usos = -1;
 	}
 
 	public Texture getTextura() {
@@ -36,5 +46,13 @@ public enum Items {
 	public String getNombre() {
 		String nombre = this.toString();
 		return nombre.substring(0, 1).toUpperCase() + nombre.substring(1).toLowerCase();
+	}
+	
+	public int getValor() {
+		return valor;
+	}
+	
+	public int getUsos() {
+		return usos;
 	}
 }

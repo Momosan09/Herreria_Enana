@@ -313,3 +313,7 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
 
 # 30 ABR
     - Mas dialogos para el carpintero, ahora se puede entregar la sierra y ya esta listo el dialogo general de venta
+
+# 4 MAY
+    - Progreso en el sistema de venta
+    - Un cambio boludo en la clase Item

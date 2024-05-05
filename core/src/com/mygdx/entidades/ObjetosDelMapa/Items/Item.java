@@ -10,12 +10,15 @@ public class Item {
 	private String nombre;
 	private Items tipo;
 	private int usos;
+	private int valor = 0;
 	
 	public Item(Items tipo) {
 		this.tipo = tipo;
 		this.textura = tipo.getTextura();
 		this.nombre = tipo.getNombre();
-		this.usos = -1;
+		this.usos = tipo.getUsos();
+		this.valor = tipo.getValor();
+		
 	}
 	
 	public Item(Items tipo, String nombre) {
@@ -23,20 +26,6 @@ public class Item {
 		this.nombre = nombre;
 		this.textura = tipo.getTextura();
 		this.usos = -1;
-	}
-	
-	public Item(Items tipo, String nombre, int usos) {
-		this.tipo = tipo;
-		this.nombre = nombre;
-		this.textura = tipo.getTextura();
-		this.usos = usos;
-	}
-	
-	public Item(Items tipo, int usos) {
-		this.tipo = tipo;
-		this.nombre = tipo.getNombre();
-		this.textura = tipo.getTextura();
-		this.usos = usos;
 	}
 	
 	public Items getTipo() {
@@ -57,5 +46,9 @@ public class Item {
 	
 	public void restarUsos() {
 		usos--;
+	}
+	
+	public int getValor() {
+		return valor;
 	}
 }

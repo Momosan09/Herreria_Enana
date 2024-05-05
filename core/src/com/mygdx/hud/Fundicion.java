@@ -210,7 +210,8 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 		}
 	}
 
-	
+
+	//Este metodo lo tengo que re cambiar...
 	public void tieneHierro(Jugador jugador) {
 		hierroEnElInventario=jugador.buscarCantidadDeMineralesPorTipoYEstado(TipoMinerales.HIERRO, EstadosMinerales.PURO);
 //		System.out.println("hierro en el inventario " + hierroEnElInventario);

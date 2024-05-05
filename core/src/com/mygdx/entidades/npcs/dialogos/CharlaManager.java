@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.Npc;
+import com.mygdx.entidades.Vendedor;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Esquema;
+import com.mygdx.entidades.npcs.Carpintero;
 import com.mygdx.enums.CaracterMensajes;
 import com.mygdx.enums.Items;
 import com.mygdx.historia.FabricablesMision;
@@ -96,8 +98,8 @@ public class CharlaManager {
 	}
 	
 	public void npcCarpintero(Npc carpintero) {
+		((Vendedor)carpintero).mostrarVenta();
 		if (carpintero.getJugadorEnRango()) {
-			
 
 			if (carpintero.getNombreCharlaActual().equals("saludo") && carpintero.respuesta1) {
 				carpintero.setCharlaActual("sobre_la_guerra");
@@ -117,7 +119,7 @@ public class CharlaManager {
 					jugador.getItems().add(new Esquema(Items.ESQUEMA_SIERRA_CIRCULAR));
 					
 				}
-			} else {
+			} else if(carpintero.getNombreCharlaActual().equals("mision_sierra_circular") && carpintero.respuesta2){
 				carpintero.ocultarDialogo();
 				
 			}
@@ -135,6 +137,11 @@ public class CharlaManager {
 				jugador.getItems().remove(jugador.getItem(Items.SIERRA_CIRCULAR));
 				carpintero.setCharlaActual("carpintero_venta");
 				carpintero.resetearRespuestas();//Tengo que resetearle las respuestas aca pq por ahora es el ultimo dialogo de este npc, y se resetean desde la clase npc pero solo cuando se llama a un nuevo dialogo
+			}
+			
+			if(carpintero.getNombre().equals("carpintero_venta") && carpintero.respuesta1) {
+				((Vendedor)carpintero).mostrarVenta();
+				carpintero.ocultarDialogo();
 			}
 		}
 	}

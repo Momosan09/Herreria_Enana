@@ -254,7 +254,7 @@ public class MyDragAndDrop {
 	private boolean esCombinacionValida(Item herramientaFuente, Item herramientaObjetivo) {
 		if(herramientaFuente.getTipo() == Items.LIMA_PLANA && herramientaObjetivo.getTipo() == Items.DISCO_HIERRO) {
 			jugador.getItems().remove(herramientaObjetivo);
-			jugador.getItems().add(new SierraCircular(Items.SIERRA_CIRCULAR));
+			jugador.getItems().add(new SierraCircular());
 			jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).setObjetoFabricado();;
 			jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).setCantidadConseguida(1);
 			return true;
@@ -275,7 +275,7 @@ public class MyDragAndDrop {
 			jugador.getMinerales().add(new HierroPlancha(false));
 			return true;
 		}else if(herramienta.getTipo() == Items.ESQUEMA_SIERRA_CIRCULAR && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.PLANCHA){
-			jugador.getItems().add(new HierroDisco(Items.DISCO_HIERRO));
+			jugador.getItems().add(new HierroDisco());
 			jugador.getMinerales().remove(mineral);
 			jugador.getItems().remove(herramienta);
 			return false;

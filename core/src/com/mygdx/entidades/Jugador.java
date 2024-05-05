@@ -27,6 +27,7 @@ import com.mygdx.utiles.Render;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
+import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroDisco;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroPlancha;
 import com.mygdx.historia.Mision;
 import com.mygdx.historia.MisionesDelJuego;
@@ -37,6 +38,7 @@ import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
 import com.mygdx.entidades.ObjetosDelMapa.Items.LimaPlana;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Maza;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Pico;
+import com.mygdx.entidades.ObjetosDelMapa.Items.SierraCircular;
 
 public class Jugador {
 
@@ -95,10 +97,11 @@ public class Jugador {
 		
 		
 		//ESTO ES TEMPORAL, DESPUES EL JUGADOR NO VA A EMPEZAR CON LAS HERRAMIENTAS
-		items.add(new Pico(Items.PICO));
-		items.add(new Maza(Items.MAZA));
-		items.add(new Cincel(Items.CINCEL,2));//Tiene dos usos, la idea es que despues todas las herramientas tengan cierta cantidad de usos y que se deban comprar o HACER
-		items.add(new LimaPlana(Items.LIMA_PLANA));
+		items.add(new Pico());
+		items.add(new Maza());
+		items.add(new Cincel());
+		items.add(new LimaPlana());
+		items.add(new HierroDisco());
 	}
 
 	private void dibujarItemActual() {

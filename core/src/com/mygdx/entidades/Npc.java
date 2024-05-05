@@ -2,8 +2,10 @@ package com.mygdx.entidades;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.entidades.npcs.VendedorData;
 import com.mygdx.entidades.npcs.dialogos.Charla;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
+import com.mygdx.enums.Items;
 import com.mygdx.hud.Dialogo;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
@@ -18,11 +20,13 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	private Animator animacion;
 	private Texture retrato;
 	private NpcData data;
+	private ArrayList<Items> inventario;
 	private String nombreCharlaActual;//nombre de la charla que se va a usar
 	
 	public ArrayList<Charla> charlas;
 	public boolean respuesta1 = false;
 	public boolean respuesta2 = false;
+	public boolean mostrarDialogo = true;
 
 	public Npc(float x, float y, World world, String ruta, NpcData data){
 		super(x, y, world, ruta);
@@ -34,6 +38,23 @@ public abstract class Npc extends Entidad implements NpcInterface{
 		this.nombre = this.data.getNombre();
 		this.paqueteDeCharlas = data.getBloquesDeCharla();
 		this.retrato = data.getTextura();
+
+		OrganizadorSpritesIndiceZ.NPCS.add(this);
+		animacion = new Animator(ruta, posicion, 0);
+		animacion.create();
+	}
+	
+	public Npc(float x, float y, World world, String ruta, NpcData data, VendedorData itemsData){
+		super(x, y, world, ruta);
+		crearCuerpo(world,8,8);
+		charlas = new ArrayList<Charla>();
+		paqueteDeCharlas = new ArrayList<String[]>();
+		
+		this.data = data;
+		this.nombre = this.data.getNombre();
+		this.paqueteDeCharlas = data.getBloquesDeCharla();
+		this.retrato = data.getTextura();
+		this.inventario = itemsData.getInventario();
 
 		OrganizadorSpritesIndiceZ.NPCS.add(this);
 		animacion = new Animator(ruta, posicion, 0);
@@ -69,9 +90,13 @@ public abstract class Npc extends Entidad implements NpcInterface{
 		animacion.create();
 	}
 	
+	
+	
 	public boolean interaccion() {
 		while(jugadorEnRango && apretoE) {
-			cajaDialogo.mostrar=true;
+			if(mostrarDialogo) {
+				cajaDialogo.mostrar=true;				
+			}
 			return true;
 		}
 		cajaDialogo.mostrar=false;
@@ -104,7 +129,9 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	}
 	
 	public void dibujarCajaDialogo() {
+		if(cajaDialogo.mostrar) {			
 		cajaDialogo.render();
+		}
 	}
 	
 	 public Dialogo getCajaDialogo() {
@@ -146,8 +173,9 @@ public abstract class Npc extends Entidad implements NpcInterface{
 		 respuesta1 = false;
 		 respuesta2 = false;
 	 }
+	 
 	 public void ocultarDialogo() {
-		 cajaDialogo.mostrar=false;
+		 mostrarDialogo = true;
 	 }
 
 }

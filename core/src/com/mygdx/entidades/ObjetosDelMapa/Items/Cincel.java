@@ -4,12 +4,8 @@ import com.mygdx.enums.Items;
 
 public class Cincel extends Item{
 
-	public Cincel(Items tipo) {
-		super(tipo);
+	public Cincel() {
+		super(Items.CINCEL);
 	}
 	
-	public Cincel(Items tipo, int usos) {
-		super(tipo, usos);
-	}
-
 }

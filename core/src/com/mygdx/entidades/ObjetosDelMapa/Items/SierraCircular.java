@@ -4,8 +4,8 @@ import com.mygdx.enums.Items;
 
 public class SierraCircular extends Item{
 
-	public SierraCircular(Items tipo) {
-		super(tipo);
+	public SierraCircular() {
+		super(Items.SIERRA_CIRCULAR);
 	}
 
 }
