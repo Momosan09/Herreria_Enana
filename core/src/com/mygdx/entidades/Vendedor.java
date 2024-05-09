@@ -26,11 +26,20 @@ public class Vendedor extends Npc{
 		return inventario;
 	}
 
-	public void mostrarVenta() {
-		venta.mostrar();
+	public void resetearVenta() {
+		if(!jugadorEnRango && venta.getVisible()) {
+			venta.ocultar();
+		}
+	}
+	
+	public void renderVenta() {
 		venta.render();
 	}
 	
+	
+	public void mostrarVenta() {
+		venta.mostrar();
+	}
 	public void ocultarVenta() {
 		venta.ocultar();
 	}

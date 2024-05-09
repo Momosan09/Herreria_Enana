@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Npc;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
+import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 
 public class Dialogo implements HeadUpDisplay{
@@ -33,18 +34,22 @@ public class Dialogo implements HeadUpDisplay{
 	private Label.LabelStyle labelStyle;
 	private int mensajeAMostrar, padding = 20;
 	private boolean tieneRespuesta = false;
-	public boolean mostrar = false;
+	private boolean mostrar = false;
 
-	public Dialogo(Npc locutor) {
-
-		this.locutor = locutor;
+	public Dialogo() {
 		respuestas = new Label[2];
-		
-		//System.out.println("mostrando dialgo");
 		poblarStage();
-		
 		Recursos.muxJuego.addProcessor(stage);
 		
+	}
+	
+	public void setLocutor(Npc locutor) {
+		this.locutor = locutor;
+		update();	
+	}
+	
+	public Npc getLocutor() {
+		return locutor;
 	}
 	
 	@Override
@@ -56,22 +61,32 @@ public class Dialogo implements HeadUpDisplay{
 		}
 	}
 	
+	public void mostrar() {
+		mostrar = true;
+	}
+	
+	public void ocultar() {
+		mostrar = false;
+	}
+	
 	public void dispose() {
 		stage.dispose();
 	}
 	
 	public void update() {
 //		System.out.println(HelpDebug.debub(getClass())+locutor.getNombreCharlaActual());
+		nombre.setText(locutor.getNombre());
 		mensaje.setText(locutor.getCharlaActual().getMensaje());
 		mensaje.setWrap(true);
 		respuestas[0].setText(locutor.getCharlaActual().getRespuesta1());
 		respuestas[1].setText(locutor.getCharlaActual().getRespuesta2());
+		System.out.println(HelpDebug.debub(getClass())+"el locutor es " + locutor.getNombre());
 
 	}
 	
 	@Override
 	public void crearActores() {
-		nombre = new Label(locutor.getNombre(), labelStyle);
+		nombre = new Label("", labelStyle);
 		mensaje = new Label("mensaje", labelStyle);
 
 		respuestas[0] = new Label("respuesta1", labelStyle);
@@ -79,7 +94,7 @@ public class Dialogo implements HeadUpDisplay{
 		agregarEventos();
 		
 		
-		retrato = new Image(locutor.getRetratoTextura());
+		retrato = new Image(new Texture(Recursos.VENDEDOR_AMBULANTE_PORTRAIT));
 		
 		fondo = new NinePatchDrawable(new NinePatch(new Texture(Recursos.DIALOGO_HUD)));
 	}
@@ -177,6 +192,9 @@ public class Dialogo implements HeadUpDisplay{
 		});
 
 	}
-
+	
+	public Stage getStage() {
+	 return stage;
+ }
 
 }

@@ -98,7 +98,7 @@ public class CharlaManager {
 	}
 	
 	public void npcCarpintero(Npc carpintero) {
-		((Vendedor)carpintero).mostrarVenta();
+		
 		if (carpintero.getJugadorEnRango()) {
 
 			if (carpintero.getNombreCharlaActual().equals("saludo") && carpintero.respuesta1) {
@@ -139,15 +139,22 @@ public class CharlaManager {
 				carpintero.resetearRespuestas();//Tengo que resetearle las respuestas aca pq por ahora es el ultimo dialogo de este npc, y se resetean desde la clase npc pero solo cuando se llama a un nuevo dialogo
 			}
 			
-			if(carpintero.getNombre().equals("carpintero_venta") && carpintero.respuesta1) {
-				((Vendedor)carpintero).mostrarVenta();
-				carpintero.ocultarDialogo();
+			if(carpintero.getNombreCharlaActual().equals("carpintero_venta") && carpintero.respuesta1) {
+				
+				System.out.println("Correcto");
+				((Vendedor)carpintero).renderVenta();
+
+				((Vendedor)carpintero).mostrarVenta();;
+				
 			}
-		}
+	}else {
+		((Vendedor)carpintero).ocultarVenta();
+		carpintero.resetearRespuestas();
 	}
 	
 
 	
 	
 	
-}
+	}
+	}

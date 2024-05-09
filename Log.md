@@ -317,3 +317,6 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
 # 4 MAY
     - Progreso en el sistema de venta
     - Un cambio boludo en la clase Item
+
+# 9 MAY
+    - Mudando todo lo que tenga que ver con hud para la clase Ui

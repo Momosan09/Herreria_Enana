@@ -310,7 +310,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 
 	@Override
 	public void render() {
-		if(MundoConfig.mostrarHUD) {
+		if(visible) {
 		//screenViewport.apply();//no estoy muy seguro de que hace esto
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();

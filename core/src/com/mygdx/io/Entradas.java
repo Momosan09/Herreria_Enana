@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.enums.EstadosDelJuego;
+import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 
@@ -24,12 +25,14 @@ public class Entradas implements InputProcessor {
 
 		if(Gdx.input.isKeyJustPressed(Keys.TAB)) {
 			MundoConfig.estadoJuego = (MundoConfig.estadoJuego == EstadosDelJuego.JUEGO ? EstadosDelJuego.INVENTARIO : EstadosDelJuego.JUEGO);
+			System.out.println(HelpDebug.debub(getClass())+ "Inventario");
 		}
 		if(Gdx.input.isKeyJustPressed(Keys.CONTROL_LEFT)) {
 			MundoConfig.estadoJuego = (MundoConfig.estadoJuego == EstadosDelJuego.JUEGO ? EstadosDelJuego.INVENTARIO_BATALLAS : EstadosDelJuego.JUEGO);
 		}
 		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			MundoConfig.estadoJuego = (MundoConfig.estadoJuego == EstadosDelJuego.PAUSA ? EstadosDelJuego.JUEGO : EstadosDelJuego.PAUSA);
+			System.out.println(HelpDebug.debub(getClass())+ "Pausa");
 		}
 	}
 	

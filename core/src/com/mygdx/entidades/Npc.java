@@ -5,9 +5,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.entidades.npcs.VendedorData;
 import com.mygdx.entidades.npcs.dialogos.Charla;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
+import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
 import com.mygdx.hud.Dialogo;
 import com.mygdx.utiles.Animator;
+import com.mygdx.utiles.Config;
+import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 
 import java.util.ArrayList;
@@ -93,14 +96,16 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	
 	
 	public boolean interaccion() {
-		while(jugadorEnRango && apretoE) {
-			if(mostrarDialogo) {
-				cajaDialogo.mostrar=true;				
-			}
+		if(jugadorEnRango && apretoE) {
+				MundoConfig.estadoJuego = EstadosDelJuego.DIALOGO;
+				MundoConfig.locutor = this;		
+
 			return true;
+		}else {
+			return false;
+			
 		}
-		cajaDialogo.mostrar=false;
-		return false;
+		
 	}
 	
 	public String getNombre() {
@@ -117,7 +122,7 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	}
 	
 	public void crearCajaDialogo() {
-		cajaDialogo = new Dialogo(this);
+		cajaDialogo = new Dialogo();
 	}
 	
 	public String getMensajeNroDePaqueteNro(int mensajeNro, int paqueteNro) {
@@ -128,11 +133,6 @@ public abstract class Npc extends Entidad implements NpcInterface{
 		return paqueteDeCharlas.get(paqueteNro);
 	}
 	
-	public void dibujarCajaDialogo() {
-		if(cajaDialogo.mostrar) {			
-		cajaDialogo.render();
-		}
-	}
 	
 	 public Dialogo getCajaDialogo() {
 		 return cajaDialogo;

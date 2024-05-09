@@ -8,7 +8,8 @@ import com.mygdx.enums.Items;
 public enum VendedorData {
 
 	
-	CARPINTERO(Items.PICO, Items.ESQUEMA_SIERRA_CIRCULAR, Items.DISCO_HIERRO, Items.CINCEL,Items.MAZA);
+	CARPINTERO(Items.PICO, Items.ESQUEMA_SIERRA_CIRCULAR, Items.DISCO_HIERRO, Items.CINCEL,Items.MAZA),
+	AMBULANTE(Items.SIERRA_CIRCULAR);
 	
 	private ArrayList<Items> inventario = new ArrayList();
 	

@@ -26,6 +26,7 @@ public class CuadraditoItem extends Table{
     private Label.LabelStyle labelStyle;
     
     public CuadraditoItem(Items item) {
+    	this.setDebug(true);
         contenedor = new Table();
         labelStyle = EstiloFuente.generarFuente(30, Colores.BLANCO, false);
         nombre = new Label(item.getNombre(), labelStyle);
@@ -41,20 +42,26 @@ public class CuadraditoItem extends Table{
         add(contenedor);
         
         
-        agregarListener();
+        //agregarListener();
         
     }
     
     public void agregarListener() {
-    	addListener(new InputListener(){
+    	this.addListener(new InputListener(){
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
-                System.out.println("El cursor está sobre "+nombre);
+                System.out.println("El cursor está sobre "+ nombre);
             }
 
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor){
                 System.out.println("El cursor ha salido de " + nombre);
+            }
+            
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            	System.out.println("auch");
+            	return true;
             }
         });
     }

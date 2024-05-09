@@ -10,10 +10,10 @@ public enum Items {
 	
 	
 	VACIO(new Texture(Recursos.VACIO),0,-1),
-	PICO(new Texture(Recursos.PICO_DER),0,-1),
-	CINCEL(new Texture(Recursos.CINCEL),0,-1),
-	MAZA(new Texture(Recursos.MAZA),0,-1),
-	LIMA_PLANA(new Texture(Recursos.LIMA),0,-1),
+	PICO(new Texture(Recursos.PICO_DER),100,-1),
+	CINCEL(new Texture(Recursos.CINCEL),90,-1),
+	MAZA(new Texture(Recursos.MAZA),120,-1),
+	LIMA_PLANA(new Texture(Recursos.LIMA),30,-1),
 	
 	
 	//Esquemas

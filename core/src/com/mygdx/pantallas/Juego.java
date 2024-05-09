@@ -59,6 +59,7 @@ import com.mygdx.hud.YunqueHUD;
 import com.mygdx.io.Entradas;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
+import com.mygdx.utiles.Config;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.HelpMapa;
 import com.mygdx.utiles.Recursos;
@@ -117,9 +118,9 @@ public class Juego implements Screen{
 	//Scene2d.ui
 	private UI ui;
 	private CartaHUD cartaHUD;
-	private PausaHUD pausaHud;
+
 	private Combinacion combinacionJugador;
-	private InventarioHUD inventarioHUD;
+
 	private DialogoDeCompra dialogoDeCompra;
 	private Fundicion fundicionHUD;
 	private MesaHUD mesaHUD;
@@ -185,13 +186,13 @@ public class Juego implements Screen{
 		cartaHUD = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);//ee parece que cartaHUD tiene que ir primero, sino no anda la combinacion (nose pq)
 
 	    dialogoDeCompra = new DialogoDeCompra();
-	    pausaHud = new PausaHUD(this);
+
 	    
 	    Recursos.muxJuego.addProcessor(cartaHUD.getStage());
-	    Recursos.muxJuego.addProcessor(pausaHud.getStage());
+
 	    //muxJuego.addProcessor(dialogoDeCompra.getStage());
 	   
-	    inventarioHUD = new InventarioHUD(jugador);
+	    
 	    
 		ui = new UI(jugador,this);
 		
@@ -235,26 +236,25 @@ public class Juego implements Screen{
 		
 		entradas = new Entradas();
 		
+		MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
 	}
 
 	@Override
 	public void render(float delta){
 		entradas.estadosDelJuego();
-		
+		System.out.println(HelpDebug.debub(getClass())+ "Estado actual = " + MundoConfig.estadoJuego);
 		//hacer cosas dependiendo de los estados del juego
+		/*
 		switch (MundoConfig.estadoJuego) {
 		case INVENTARIO:
 			inventarioHUD.mostrar();
 			break;
 
 		case PAUSA:
-			pausaHud.mostrar();
-			jugador.puedeMoverse = false;
-			MundoConfig.mostrarHUD = false;
-			MundoConfig.pausarTiempo = true;
+
 			break;
 		case JUEGO:
-			pausaHud.ocultar();
+
 			inventarioHUD.ocultar();
 			ui.ocultarLibro();
 			jugador.puedeMoverse = true;
@@ -265,7 +265,7 @@ public class Juego implements Screen{
 		case INVENTARIO_BATALLAS:	
 			ui.mostrarLibro();
 			break;
-		}
+		}*/
 		
 		//DEBUG Y COSAS TEMPORALES (despues no van a estar mas)
 		if(Gdx.input.isKeyPressed(Keys.P)) {//para debug
@@ -339,6 +339,7 @@ public class Juego implements Screen{
 		rayHandler.render();
 
 		Render.batch.begin();// HUD´s
+		ui.render();
 		
 		if (cartaHUD.getCerrar()) {// si ya leyo la carta...
 			npcManager.mostrarDialogo();// DEJALO ACA
@@ -349,11 +350,10 @@ public class Juego implements Screen{
 																	// para la camara del HUD y lo dibuja
 
 			// Renderiza ocultables
-			  ui.render();
 				
-			pausaHud.render();
+
 			dialogoDeCompra.render(jugador);
-			inventarioHUD.render(jugador);
+			
 			combinacionJugador.render();
 
 			renderizarHUDSTaller();
@@ -388,13 +388,13 @@ public class Juego implements Screen{
 		
 		ui.reEscalar(width, height);
 		combinacionJugador.reEscalar(width, height);
-		inventarioHUD.reEscalar(width, height);
+
 
 		reEscalarHUDSTaller(width, height);
 	    
 		//hud.reEscalar(width, height);
 	    cartaHUD.reEscalar(width, height);
-	    pausaHud.reEscalar(width, height);
+
 
 	    npcManager.reEscalarDialogos(width, height);
 	    dialogoDeCompra.reEscalar(width, height);
@@ -599,7 +599,7 @@ public class Juego implements Screen{
 		public void dispose() {
 			Render.tiledMapRenderer.dispose();
 			rayHandler.dispose();
-			pausaHud.dispose();
+
 			cartaHUD.dispose();
 			ui.dispose();
 			Recursos.muxJuego.clear();

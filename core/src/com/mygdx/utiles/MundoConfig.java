@@ -1,5 +1,6 @@
 package com.mygdx.utiles;
 
+import com.mygdx.entidades.Npc;
 import com.mygdx.enums.EstadosDelJuego;
 
 public abstract class MundoConfig {
@@ -11,5 +12,6 @@ public abstract class MundoConfig {
 	public static boolean mostrarHUD = false;
 	public static boolean habilitadoHUDS = false;
 	public static boolean pausarTiempo = false; // El tiempo del mundo, los minutos y las horas no cambian, la luz tampoco. Eso no significa que se frena el juego
-	public static EstadosDelJuego estadoJuego = EstadosDelJuego.JUEGO;
+	public static EstadosDelJuego estadoJuego;
+	public static Npc locutor;
 }
