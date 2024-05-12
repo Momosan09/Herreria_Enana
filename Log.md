@@ -320,3 +320,6 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
 
 # 9 MAY
     - Mudando todo lo que tenga que ver con hud para la clase Ui
+
+# 12 MAY
+    - Los dialogos ahora funcionan correctamente con respuestas y todo.

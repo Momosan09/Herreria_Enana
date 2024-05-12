@@ -1,6 +1,9 @@
-java.lang.NullPointerException: Cannot invoke "com.mygdx.enums.EstadosDelJuego.ordinal()" because "com.mygdx.utiles.MundoConfig.estadoJuego" is null
-	at com.mygdx.hud.UI.render(UI.java:44)
-	at com.mygdx.pantallas.Juego.render(Juego.java:342)
+java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because "this.nombreCharlaActual" is null
+	at com.mygdx.hud.Dialogo.actualizarDatosCajaDialogo(Dialogo.java:89)
+	at com.mygdx.hud.Dialogo.update(Dialogo.java:82)
+	at com.mygdx.hud.Dialogo.setLocutor(Dialogo.java:53)
+	at com.mygdx.hud.UI.render(UI.java:64)
+	at com.mygdx.pantallas.Juego.render(Juego.java:332)
 	at com.badlogic.gdx.Game.render(Game.java:48)
 	at com.mygdx.game.Principal.render(Principal.java:26)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:387)

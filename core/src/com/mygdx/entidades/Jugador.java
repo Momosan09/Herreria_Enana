@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.enums.Direcciones;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
+import com.mygdx.enums.Respuestas;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
@@ -66,6 +67,8 @@ public class Jugador {
 	private Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
 	private Animator animacionActual;
 	
+	
+	public Respuestas respuesta1 = Respuestas.NOVALOR, respuesta2 = Respuestas.NOVALOR;
 	
 	public Jugador(OrthographicCamera camara, World world, Vector2 spawnPosicion) {
 		posicion = new Vector2(); // posicion inicial
@@ -228,14 +231,6 @@ public class Jugador {
 	        animacion.reset();
 	    }
 
-	}
-	
-	public boolean isEPressed() {
-		if(Gdx.input.isKeyPressed(Keys.E)) {
-//			System.out.println("E");
-			return true;
-		}
-		return false;
 	}
 	
 	public boolean isTabPressed() {
@@ -403,7 +398,10 @@ public class Jugador {
 		}
 		}
 	}
-
-
+	
+	public void resetearRespuestas() {
+		respuesta1 = Respuestas.NOVALOR;
+		respuesta2 = Respuestas.NOVALOR;
+	}
 	
 }

@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public abstract class Npc extends Entidad implements NpcInterface{
 	
 	protected String nombre;
-	private Dialogo cajaDialogo;
 	private ArrayList<String[]> paqueteDeCharlas;//Tiene los datos de las charlas. Es muy importante el que tenga en el npc_dialogos_***
 	private Animator animacion;
 	private Texture retrato;
@@ -30,6 +29,7 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	public boolean respuesta1 = false;
 	public boolean respuesta2 = false;
 	public boolean mostrarDialogo = true;
+	private boolean cerroDialogo = false;
 
 	public Npc(float x, float y, World world, String ruta, NpcData data){
 		super(x, y, world, ruta);
@@ -95,17 +95,15 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	
 	
 	
-	public boolean interaccion() {
-		if(jugadorEnRango && apretoE) {
+	public void interaccion() {
+		if(jugadorEnRango && MundoConfig.apretoE) {
 				MundoConfig.estadoJuego = EstadosDelJuego.DIALOGO;
-				MundoConfig.locutor = this;		
-
-			return true;
-		}else {
-			return false;
-			
+				MundoConfig.locutor = this;	
 		}
 		
+		if(!jugadorEnRango) {
+			resetearRespuestas();
+		}
 	}
 	
 	public String getNombre() {
@@ -121,9 +119,6 @@ public abstract class Npc extends Entidad implements NpcInterface{
 		return data;
 	}
 	
-	public void crearCajaDialogo() {
-		cajaDialogo = new Dialogo();
-	}
 	
 	public String getMensajeNroDePaqueteNro(int mensajeNro, int paqueteNro) {
 		return paqueteDeCharlas.get(paqueteNro)[mensajeNro];
@@ -132,18 +127,6 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	public String[] getPaqueteDeDialogosNro(int paqueteNro) {
 		return paqueteDeCharlas.get(paqueteNro);
 	}
-	
-	
-	 public Dialogo getCajaDialogo() {
-		 return cajaDialogo;
-	 }
-
-	 public void charla() {
-		 if(interaccion()) {
-//			 cajaDialogo.selectMensaje(index);
-			 cajaDialogo.render();
-		 }
-	 }
 	 
 	 public void ejecutarAnimacion() {
 		 animacion.render();
@@ -163,8 +146,6 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	 }
 	 
 	 public void setCharlaActual(String nombreCharla) {
-		 respuesta1 = false;
-		 respuesta2 = false;
 		 nombreCharlaActual = nombreCharla;
 	 }
 	 
@@ -177,5 +158,5 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	 public void ocultarDialogo() {
 		 mostrarDialogo = true;
 	 }
-
+	 
 }

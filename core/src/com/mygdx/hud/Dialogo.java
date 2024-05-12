@@ -13,15 +13,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.Npc;
+import com.mygdx.enums.Respuestas;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 
-public class Dialogo implements HeadUpDisplay{
+public class Dialogo implements HeadUpDisplay, Ocultable{
 
 	private Npc locutor;
+	private Jugador jugador;
 	
 	private ScreenViewport screenViewport;
 	private Stage stage;
@@ -35,11 +38,13 @@ public class Dialogo implements HeadUpDisplay{
 	private int mensajeAMostrar, padding = 20;
 	private boolean tieneRespuesta = false;
 	private boolean mostrar = false;
+	private String nombreCharlaActual = "";
 
-	public Dialogo() {
+	public Dialogo(Jugador jugador) {
 		respuestas = new Label[2];
 		poblarStage();
 		Recursos.muxJuego.addProcessor(stage);
+		this.jugador = jugador;
 		
 	}
 	
@@ -55,7 +60,6 @@ public class Dialogo implements HeadUpDisplay{
 	@Override
 	public void render() {
 		if(mostrar) {
-		update();
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 		}
@@ -75,13 +79,24 @@ public class Dialogo implements HeadUpDisplay{
 	
 	public void update() {
 //		System.out.println(HelpDebug.debub(getClass())+locutor.getNombreCharlaActual());
-		nombre.setText(locutor.getNombre());
-		mensaje.setText(locutor.getCharlaActual().getMensaje());
-		mensaje.setWrap(true);
-		respuestas[0].setText(locutor.getCharlaActual().getRespuesta1());
-		respuestas[1].setText(locutor.getCharlaActual().getRespuesta2());
-		System.out.println(HelpDebug.debub(getClass())+"el locutor es " + locutor.getNombre());
+		actualizarDatosCajaDialogo();
+		
 
+
+	}
+	
+	private void actualizarDatosCajaDialogo() {
+		if(!nombreCharlaActual.equals(locutor.getNombreCharlaActual())) {
+			nombreCharlaActual = locutor.getNombreCharlaActual();
+			nombre.setText(locutor.getNombre());
+			mensaje.setText(locutor.getCharlaActual().getMensaje());
+			mensaje.setWrap(true);
+			respuestas[0].setText(locutor.getCharlaActual().getRespuesta1());//texto de las respuestas NO ES EL VALOR DE LAS RESPUESTAS
+			respuestas[1].setText(locutor.getCharlaActual().getRespuesta2());//texto de las respuestas NO ES EL VALOR DE LAS RESPUESTAS
+			System.out.println(HelpDebug.debub(getClass())+"el locutor es " + locutor.getNombre());
+			jugador.resetearRespuestas();
+		}
+		
 	}
 	
 	@Override
@@ -163,8 +178,11 @@ public class Dialogo implements HeadUpDisplay{
 
 		    @Override
 		    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-		    		locutor.respuesta1 = true;
-		    		locutor.respuesta2 = false;
+		    		
+		    		jugador.respuesta1 = Respuestas.VERDADERO;
+		    		jugador.respuesta2 = Respuestas.FALSO;
+		    		respuestas[0].setColor(Color.CYAN);
+		    	
 		        return true;  // Devuelve true para indicar que el evento ha sido manejado
 		    }
 		});
@@ -184,9 +202,11 @@ public class Dialogo implements HeadUpDisplay{
 
 		    @Override
 		    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-		    		locutor.respuesta1 = false;
-		    		locutor.respuesta2 = true;
+			
+	    			jugador.respuesta1 = Respuestas.FALSO;
+	    			jugador.respuesta2 = Respuestas.VERDADERO;
 		    		respuestas[1].setColor(Color.CYAN);
+		    	
 		        return true;  // Devuelve true para indicar que el evento ha sido manejado
 		    }
 		});
@@ -196,5 +216,10 @@ public class Dialogo implements HeadUpDisplay{
 	public Stage getStage() {
 	 return stage;
  }
+
+	@Override
+	public boolean getVisible() {
+		return mostrar;
+	}
 
 }

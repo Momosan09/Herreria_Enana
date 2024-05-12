@@ -119,7 +119,7 @@ public class Juego implements Screen{
 	private UI ui;
 	private CartaHUD cartaHUD;
 
-	private Combinacion combinacionJugador;
+
 
 	private DialogoDeCompra dialogoDeCompra;
 	private Fundicion fundicionHUD;
@@ -133,12 +133,6 @@ public class Juego implements Screen{
 	
 	//Charlas
 	public CharlaManager charlaManager;
-	
-	//Toggles (referido a HUDs), los uso cuando ese hud no se cierra con boton
-	private boolean toggleInventario = false;
-	private boolean togglePausa = false;
-	private boolean toggleBarraItems1 = false;
-
 	
 	//Screens
 	private final Principal game;
@@ -176,10 +170,9 @@ public class Juego implements Screen{
 
 		jugador = new Jugador(camaraJugador, world, helpMapa.getJugadorSpawn());
 
-		combinacionJugador = new Combinacion(jugador);
+
 		
-    	Recursos.muxJuego.addProcessor(combinacionJugador.getStage());
-    	Recursos.muxJuego.addProcessor(combinacionJugador.getDragAndDrop().getStage());
+
 				
 		//HUD
 
@@ -293,9 +286,6 @@ public class Juego implements Screen{
 //			}
 //		}
 		
-	    if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT) && MundoConfig.habilitadoHUDS) {
-	    	combinacionJugador.mostrar();
-	    }
 		
 		//GAMELOOP
 		horaDelMundo();
@@ -342,7 +332,6 @@ public class Juego implements Screen{
 		ui.render();
 		
 		if (cartaHUD.getCerrar()) {// si ya leyo la carta...
-			npcManager.mostrarDialogo();// DEJALO ACA
 			charlaManager.checkearCharlas(vendedorTienda, vendedorAmbulate, viejo, carpintero);
 			// Renderiza el HUD
 			camaraHud.update();
@@ -354,7 +343,7 @@ public class Juego implements Screen{
 
 			dialogoDeCompra.render(jugador);
 			
-			combinacionJugador.render();
+	
 
 			renderizarHUDSTaller();
 			mostrarHUDSTaller();
@@ -387,8 +376,6 @@ public class Juego implements Screen{
 		camaraJugador.update();	
 		
 		ui.reEscalar(width, height);
-		combinacionJugador.reEscalar(width, height);
-
 
 		reEscalarHUDSTaller(width, height);
 	    
@@ -396,7 +383,6 @@ public class Juego implements Screen{
 	    cartaHUD.reEscalar(width, height);
 
 
-	    npcManager.reEscalarDialogos(width, height);
 	    dialogoDeCompra.reEscalar(width, height);
 	    System.out.println(HelpDebug.debub(getClass())+"X =" +Gdx.graphics.getWidth() + " Y =" + Gdx.graphics.getHeight());
 
@@ -477,8 +463,6 @@ public class Juego implements Screen{
 		npcManager.agregarEntidad(vendedorAmbulate);
 		npcManager.agregarEntidad(vendedorTienda);
 		npcManager.agregarEntidad(carpintero);
-	    npcManager.crearDialogos();
-
 	}
 	private void charlaManagerConfig() {
 		charlaManager = new CharlaManager(jugador, vendedorTienda, vendedorAmbulate, viejo, carpintero);

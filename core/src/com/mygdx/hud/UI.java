@@ -16,6 +16,7 @@ public class UI {
 	private Dialogo dialogo;
 	private PausaHUD pausa;
 	private InventarioHUD inventario;
+	private Combinacion combinacionJugador;
 	
 	private Jugador jugador;
 	private Juego juego;
@@ -29,13 +30,17 @@ public class UI {
 		
 		screenViewport = new ScreenViewport();
 		hud = new HUD(jugador, juego);
-		dialogo = new Dialogo();
+		dialogo = new Dialogo(jugador);
 	    pausa = new PausaHUD(juego);
 	    inventario = new InventarioHUD(jugador);
-		libroHUD = new LibroHUD(screenViewport);
+		combinacionJugador = new Combinacion(jugador);
+	    libroHUD = new LibroHUD(screenViewport);
+		
 		
 		
 	    Recursos.muxJuego.addProcessor(pausa.getStage());
+    	Recursos.muxJuego.addProcessor(combinacionJugador.getStage());
+    	Recursos.muxJuego.addProcessor(combinacionJugador.getDragAndDrop().getStage());
 		
 	}
 	
@@ -44,20 +49,24 @@ public class UI {
 		pausa.render();
 		inventario.render(jugador);
 		dialogo.render();
+		combinacionJugador.render();
 		
 		switch (MundoConfig.estadoJuego) {
 		case JUEGO:
 			hud.mostrar();
 			jugador.puedeMoverse = true;
-			ocultar(pausa,inventario);
+			ocultar(pausa,inventario,dialogo);
 			break;
 
 		case DIALOGO:
-			System.out.println(HelpDebug.debub(getClass())+MundoConfig.estadoJuego);
+			System.out.println(HelpDebug.debub(getClass())+"mostrando correctamente");
+			if(dialogo.getLocutor() != MundoConfig.locutor) {//se llama solo una vez
 			dialogo.setLocutor(MundoConfig.locutor);				
-			System.out.println(HelpDebug.debub(getClass())+dialogo.getLocutor());
+			}
+			dialogo.update();
 
 			dialogo.mostrar();
+			jugador.puedeMoverse = false;
 			ocultar(pausa,inventario);
 			break;
 			
@@ -71,6 +80,10 @@ public class UI {
 			
 		case INVENTARIO:
 			inventario.mostrar();
+			break;
+		case COMBINACION:
+			combinacionJugador.mostrar();
+			ocultar(inventario);
 			break;
 		case ESCENA:
 			break;
@@ -110,6 +123,7 @@ public class UI {
 		dialogo.reEscalar(width, height);
 	    pausa.reEscalar(width, height);
 		inventario.reEscalar(width, height);
+		combinacionJugador.reEscalar(width, height);
 	}
 	
 	public void mostrarLibro() {

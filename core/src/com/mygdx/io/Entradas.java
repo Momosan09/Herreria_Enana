@@ -22,7 +22,11 @@ public class Entradas implements InputProcessor {
 	private int cont = 0;
 
 	public void estadosDelJuego() {
-
+		
+		if(Gdx.input.isKeyJustPressed(Keys.E)) {
+			MundoConfig.apretoE = true;
+		}
+		
 		if(Gdx.input.isKeyJustPressed(Keys.TAB)) {
 			MundoConfig.estadoJuego = (MundoConfig.estadoJuego == EstadosDelJuego.JUEGO ? EstadosDelJuego.INVENTARIO : EstadosDelJuego.JUEGO);
 			System.out.println(HelpDebug.debub(getClass())+ "Inventario");
@@ -31,8 +35,11 @@ public class Entradas implements InputProcessor {
 			MundoConfig.estadoJuego = (MundoConfig.estadoJuego == EstadosDelJuego.JUEGO ? EstadosDelJuego.INVENTARIO_BATALLAS : EstadosDelJuego.JUEGO);
 		}
 		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			MundoConfig.estadoJuego = (MundoConfig.estadoJuego == EstadosDelJuego.PAUSA ? EstadosDelJuego.JUEGO : EstadosDelJuego.PAUSA);
+			MundoConfig.estadoJuego = (MundoConfig.estadoJuego == EstadosDelJuego.JUEGO? EstadosDelJuego.PAUSA : EstadosDelJuego.JUEGO);
 			System.out.println(HelpDebug.debub(getClass())+ "Pausa");
+		}
+		if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT)) {
+			MundoConfig.estadoJuego = (MundoConfig.estadoJuego == EstadosDelJuego.JUEGO ? EstadosDelJuego.COMBINACION: EstadosDelJuego.JUEGO);
 		}
 	}
 	

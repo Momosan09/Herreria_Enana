@@ -13,5 +13,6 @@ public abstract class MundoConfig {
 	public static boolean habilitadoHUDS = false;
 	public static boolean pausarTiempo = false; // El tiempo del mundo, los minutos y las horas no cambian, la luz tampoco. Eso no significa que se frena el juego
 	public static EstadosDelJuego estadoJuego;
+	public static boolean apretoE = false;
 	public static Npc locutor;
 }

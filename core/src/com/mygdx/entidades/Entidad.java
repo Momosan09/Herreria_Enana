@@ -12,7 +12,9 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
+import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 import com.mygdx.utiles.Render;
@@ -120,15 +122,12 @@ public abstract class Entidad {
 		if(areaDeInteraccion.overlaps(jugador.areaJugador)) {		
 		//		if(((jugador.getPosicion().x - this.posicion.x) < distanciaInteraccion && (jugador.getPosicion().x - this.posicion.x) > -distanciaInteraccion) && ((jugador.getPosicion().y - this.posicion.y) < distanciaInteraccion && (jugador.getPosicion().y - this.posicion.y) > -distanciaInteraccion)){	
 			jugadorEnRango = true;
-			if(jugador.isEPressed()) {
-				apretoE = true;
-			}
 		}else {
 			jugadorEnRango = false;
-			apretoE = false;
+			
 		}
 		
-		indiceZ = (posicion.y > jugador.getPosicion().y-16 ? 0 : 1);
+		indiceZ = (posicion.y > jugador.getPosicion().y-16 ? 0 : 1);//para el auto sorting de sprites
 		
 	}
 	
