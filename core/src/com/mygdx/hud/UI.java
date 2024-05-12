@@ -14,6 +14,7 @@ public class UI {
 	private LibroHUD libroHUD;
 	private HUD hud;
 	private Dialogo dialogo;
+	private VentaHUD venta;
 	private PausaHUD pausa;
 	private InventarioHUD inventario;
 	private Combinacion combinacionJugador;
@@ -31,6 +32,7 @@ public class UI {
 		screenViewport = new ScreenViewport();
 		hud = new HUD(jugador, juego);
 		dialogo = new Dialogo(jugador);
+		venta = new VentaHUD();
 	    pausa = new PausaHUD(juego);
 	    inventario = new InventarioHUD(jugador);
 		combinacionJugador = new Combinacion(jugador);
@@ -41,6 +43,7 @@ public class UI {
 	    Recursos.muxJuego.addProcessor(pausa.getStage());
     	Recursos.muxJuego.addProcessor(combinacionJugador.getStage());
     	Recursos.muxJuego.addProcessor(combinacionJugador.getDragAndDrop().getStage());
+		Recursos.muxJuego.addProcessor(venta.getStage());
 		
 	}
 	
@@ -49,22 +52,25 @@ public class UI {
 		pausa.render();
 		inventario.render(jugador);
 		dialogo.render();
+		venta.render();
 		combinacionJugador.render();
 		
+//		System.out.println(HelpDebug.debub(getClass())+ "Estado actual = " + MundoConfig.estadoJuego);
 		switch (MundoConfig.estadoJuego) {
 		case JUEGO:
 			hud.mostrar();
 			jugador.puedeMoverse = true;
-			ocultar(pausa,inventario,dialogo);
+			ocultar(pausa,inventario,dialogo,venta);
+			dialogo.limpiarDatos();//Esto ayuda a que no queden datos del npc anterior en la caja de dialogo cuando se hable con uno nuevo
 			break;
 
+
+			
 		case DIALOGO:
-			System.out.println(HelpDebug.debub(getClass())+"mostrando correctamente");
 			if(dialogo.getLocutor() != MundoConfig.locutor) {//se llama solo una vez
 			dialogo.setLocutor(MundoConfig.locutor);				
 			}
 			dialogo.update();
-
 			dialogo.mostrar();
 			jugador.puedeMoverse = false;
 			ocultar(pausa,inventario);
@@ -93,7 +99,13 @@ public class UI {
 			break;
 		case INICIO:
 			break;
-		case INTERCAMBIO:
+		case VENTA:
+			if(venta.getVendedor() != MundoConfig.vendedor) {
+				venta.setVendedor(MundoConfig.vendedor);				
+			}
+			jugador.puedeMoverse = false;
+			venta.mostrar();
+			ocultar(inventario, dialogo);
 			break;
 		case INVENTARIO_BATALLAS:
 			break;
@@ -121,6 +133,7 @@ public class UI {
 		screenViewport.update(width, height);
 		hud.reEscalar(width, height);
 		dialogo.reEscalar(width, height);
+		venta.reEscalar(width, height);
 	    pausa.reEscalar(width, height);
 		inventario.reEscalar(width, height);
 		combinacionJugador.reEscalar(width, height);
@@ -138,6 +151,8 @@ public class UI {
 	public void dispose() {
 		hud.dispose();
 		pausa.dispose();
+		venta.dispose();
+		dialogo.dispose();
 	}
 
 }

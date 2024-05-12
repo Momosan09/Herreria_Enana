@@ -99,6 +99,22 @@ public class Dialogo implements HeadUpDisplay, Ocultable{
 		
 	}
 	
+	public void limpiarDatos() {//Esto ayuda a que no queden datos del npc anterior en la caja de dialogo cuando se hable con uno nuevo
+		boolean unaVez = false;
+		if(!unaVez) {
+			
+			nombreCharlaActual = "error";
+			nombre.setText("Hubo un error");
+			mensaje.setText("No deberias estar viendo esto");
+			mensaje.setWrap(true);
+			respuestas[0].setText(".");//texto de las respuestas NO ES EL VALOR DE LAS RESPUESTAS
+			respuestas[1].setText("-");//texto de las respuestas NO ES EL VALOR DE LAS RESPUESTAS
+			jugador.resetearRespuestas();
+			unaVez=true;
+		}
+		
+	}
+	
 	@Override
 	public void crearActores() {
 		nombre = new Label("", labelStyle);

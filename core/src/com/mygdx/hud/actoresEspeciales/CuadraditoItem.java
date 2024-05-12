@@ -42,7 +42,7 @@ public class CuadraditoItem extends Table{
         add(contenedor);
         
         
-        //agregarListener();
+        agregarListener();
         
     }
     

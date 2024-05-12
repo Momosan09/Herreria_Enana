@@ -235,7 +235,7 @@ public class Juego implements Screen{
 	@Override
 	public void render(float delta){
 		entradas.estadosDelJuego();
-		System.out.println(HelpDebug.debub(getClass())+ "Estado actual = " + MundoConfig.estadoJuego);
+
 		//hacer cosas dependiendo de los estados del juego
 		/*
 		switch (MundoConfig.estadoJuego) {

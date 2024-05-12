@@ -1,6 +1,7 @@
 package com.mygdx.utiles;
 
 import com.mygdx.entidades.Npc;
+import com.mygdx.entidades.Vendedor;
 import com.mygdx.enums.EstadosDelJuego;
 
 public abstract class MundoConfig {
@@ -15,4 +16,5 @@ public abstract class MundoConfig {
 	public static EstadosDelJuego estadoJuego;
 	public static boolean apretoE = false;
 	public static Npc locutor;
+	public static Vendedor vendedor;
 }

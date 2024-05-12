@@ -14,9 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.Vendedor;
+import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.hud.actoresEspeciales.CuadraditoItem;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
+import com.mygdx.utiles.HelpDebug;
+import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 
 public class VentaHUD implements HeadUpDisplay, Ocultable {
@@ -40,7 +43,23 @@ public class VentaHUD implements HeadUpDisplay, Ocultable {
 		crearActores();
 		poblarStage();
 	}
+	
+	public VentaHUD() {
+		screenViewport = new ScreenViewport();
+		stage = new Stage(screenViewport);
 
+		crearFuentes();
+		crearActores();
+		poblarStage();
+	}
+
+	public void setVendedor(Vendedor vendedor) {
+		this.vendedor = vendedor;
+		contenedor.clear();
+		actualizarProductos();
+	
+	}
+	
 	@Override
 	public void mostrar() {
 		visible = true;
@@ -80,31 +99,23 @@ public class VentaHUD implements HeadUpDisplay, Ocultable {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				ocultar();
+				MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
 			}
 		});
-		
-		
 		
 		   }
 
 	@Override
 	public void poblarStage() {
 //		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.HORNO_TEXTURA)));
-		int indiceFilas= 0;
-		for (int i = 0; i < vendedor.getInventario().size(); i++) {
-			contenedor.add(new CuadraditoItem(vendedor.getInventario().get(i))).pad(10);
-			indiceFilas++;
-			if(indiceFilas == 4) {
-				contenedor.row();
-				indiceFilas = 0;
-			}
+		if(vendedor != null) {
+			actualizarProductos();
 		}
-		cerrarBoton.setDisabled(true);//temporal 
-
 		tabla.add(contenedor);
 		tabla.add(cerrarBoton).top();
 		stage.addActor(tabla);
-	}
+		}
+
 
 	@Override
 	public void reEscalar(int width, int heigth) {
@@ -123,6 +134,22 @@ public class VentaHUD implements HeadUpDisplay, Ocultable {
 	
 	public void venta() {
 		
+	}
+	
+	private void actualizarProductos() {
+		int indiceFilas= 0;
+		for (int i = 0; i < vendedor.getInventario().size(); i++) {
+			contenedor.add(new CuadraditoItem(vendedor.getInventario().get(i))).pad(10);
+			indiceFilas++;
+			if(indiceFilas == 4) {
+				contenedor.row();
+				indiceFilas = 0;
+			}
+		}
+	}
+	
+	public Vendedor getVendedor() {
+		return vendedor;
 	}
 	
 	public Stage getStage() {

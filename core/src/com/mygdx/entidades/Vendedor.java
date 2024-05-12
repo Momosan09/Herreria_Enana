@@ -13,34 +13,15 @@ import com.mygdx.utiles.Recursos;
 public class Vendedor extends Npc{
 	
 	private ArrayList<Items> inventario;
-	private VentaHUD venta;
 
 	public Vendedor(float x, float y, World world, String ruta, NpcData data, VendedorData itemsData) {
 		super(x, y, world, ruta, data, itemsData);
 		inventario = itemsData.getInventario();
-		venta = new VentaHUD(this);
-		Recursos.muxJuego.addProcessor(venta.getStage());
 	}
 
 	public ArrayList<Items> getInventario() {
 		return inventario;
 	}
 
-	public void resetearVenta() {
-		if(!jugadorEnRango && venta.getVisible()) {
-			venta.ocultar();
-		}
-	}
-	
-	public void renderVenta() {
-		venta.render();
-	}
-	
-	
-	public void mostrarVenta() {
-		venta.mostrar();
-	}
-	public void ocultarVenta() {
-		venta.ocultar();
-	}
+
 }

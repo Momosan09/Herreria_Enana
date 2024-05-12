@@ -323,3 +323,5 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
 
 # 12 MAY
     - Los dialogos ahora funcionan correctamente con respuestas y todo.
+    - Arregla un error en los dialgos
+    - el hud venta ya se abre correctamente por medio del dialogo y se cierra con el boton.

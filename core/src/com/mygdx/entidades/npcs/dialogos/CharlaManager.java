@@ -32,7 +32,7 @@ public class CharlaManager {
 		crearCharlasViejo(viejo);
 		crearCharlasCarpintero(carpintero);
 		viejo.setCharlaActual("saludo");
-		carpintero.setCharlaActual("saludo");
+		carpintero.setCharlaActual("carpintero_venta");
 		vendedorAmbulante.setCharlaActual("saludo");
 		checkearCharlas(vendedorTienda, vendedorAmbulante, viejo, carpintero);
 
@@ -103,7 +103,8 @@ public class CharlaManager {
 			switch (vendedorAmbulante.getNombreCharlaActual()) {
 			case "saludo":
 				if (jugador.respuesta1 == Respuestas.VERDADERO ) {
-					cerrarDialogo(vendedorAmbulante);
+					Vendedor vendedor = (Vendedor) vendedorAmbulante;
+					abrirVenta(vendedor);
 				} else if(jugador.respuesta2 == Respuestas.VERDADERO){
 					cerrarDialogo(vendedorAmbulante);
 
@@ -199,12 +200,9 @@ public class CharlaManager {
 
 			case "carpintero_venta":
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
-					((Vendedor) carpintero).renderVenta();
-					((Vendedor) carpintero).mostrarVenta();
-					;
-
+					Vendedor vendedor = (Vendedor) carpintero;
+					abrirVenta(vendedor);
 				} else if (jugador.respuesta2 == Respuestas.VERDADERO) {
-					((Vendedor) carpintero).ocultarVenta();
 					cerrarDialogo(carpintero);
 				}
 				break;
@@ -225,6 +223,13 @@ public class CharlaManager {
 	private void cerrarDialogo(Npc npc) {
 		MundoConfig.apretoE = false;
 		MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
+		jugador.resetearRespuestas();
+	}
+	
+	private void abrirVenta(Vendedor vendedor) {
+		MundoConfig.apretoE = false;
+		MundoConfig.estadoJuego = EstadosDelJuego.VENTA;
+		MundoConfig.vendedor = vendedor;
 		jugador.resetearRespuestas();
 	}
 }
