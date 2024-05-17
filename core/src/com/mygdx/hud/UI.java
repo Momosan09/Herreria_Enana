@@ -6,6 +6,7 @@ import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
+import com.mygdx.entidades.npcs.dialogos.Mensaje;
 import com.mygdx.pantallas.Juego;
 
 public class UI {
@@ -18,6 +19,7 @@ public class UI {
 	private PausaHUD pausa;
 	private InventarioHUD inventario;
 	private Combinacion combinacionJugador;
+	private Mensaje mensajeAnadido;
 	
 	private Jugador jugador;
 	private Juego juego;
@@ -38,13 +40,15 @@ public class UI {
 		combinacionJugador = new Combinacion(jugador);
 	    libroHUD = new LibroHUD(screenViewport);
 		
+	    mensajeAnadido = new Mensaje();
 		
 		
 	    Recursos.muxJuego.addProcessor(pausa.getStage());
     	Recursos.muxJuego.addProcessor(combinacionJugador.getStage());
     	Recursos.muxJuego.addProcessor(combinacionJugador.getDragAndDrop().getStage());
 		Recursos.muxJuego.addProcessor(venta.getStage());
-		
+
+
 	}
 	
 	public void render() {
@@ -54,6 +58,14 @@ public class UI {
 		dialogo.render();
 		venta.render();
 		combinacionJugador.render();
+		
+		
+		/*
+		mensajeAnadido.mostrarMensajeTemporal(jugador.getItemMensaje(), 2);
+		if(jugador.mostrarMensaje) {
+		}*/
+		
+		
 		
 //		System.out.println(HelpDebug.debub(getClass())+ "Estado actual = " + MundoConfig.estadoJuego);
 		switch (MundoConfig.estadoJuego) {

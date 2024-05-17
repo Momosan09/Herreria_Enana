@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.enums.CaracterMensajes;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
+import com.mygdx.utiles.HelpDebug;
 
 public class Mensaje {
 
@@ -31,12 +32,14 @@ public class Mensaje {
     }
 
     public void mostrarMensajeTemporal(String msg, float duracion) {
-    	mensaje.setPosition(duracion, duracion);
-        mensaje.setText(msg); // Establecer el mensaje
+    	mensaje.setPosition(20, 20);
+        mensaje.setText("hoaaaaa"); // Establecer el mensaje
         mensaje.setVisible(true); // Hacer visible la etiqueta
+        System.out.println(HelpDebug.debub(getClass())+"mostrando");
         Timer.schedule(new Task(){
             @Override
             public void run() {
+            	System.out.println(HelpDebug.debub(getClass())+"serraradoo");
                 mensaje.setVisible(false); // Hacer invisible la etiqueta después de la duración especificada
             }
         }, duracion); // Especificar la duración del mensaje antes de ejecutar la tarea

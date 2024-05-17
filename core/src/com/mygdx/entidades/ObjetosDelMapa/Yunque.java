@@ -35,7 +35,7 @@ public class Yunque extends ObjetoDelMapa{
 	}
 	
 	public void mostarHUD(Jugador jugador) {
-		if (getJugadorEnRango() && apretoE) {
+		if (getJugadorEnRango() && MundoConfig.apretoE) {
 			dragAndDropUnaVez();
 			Gdx.input.setInputProcessor(dragDrop.getStage());
 			hud.mostrar();
@@ -44,6 +44,7 @@ public class Yunque extends ObjetoDelMapa{
 		} else{
 			Gdx.input.setInputProcessor(Recursos.muxJuego);//No estoy seguro de que sea la mejor opcion pero bue
 			MundoConfig.mostrarHUD=true;
+			MundoConfig.apretoE = false;
 			hud.ocultar();
 			entro = false;
 		}

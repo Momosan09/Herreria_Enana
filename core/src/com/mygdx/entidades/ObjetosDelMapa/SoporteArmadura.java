@@ -6,6 +6,7 @@ import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.hud.Fundicion;
 import com.mygdx.hud.SoporteArmaduraHUD;
+import com.mygdx.utiles.MundoConfig;
 
 public class SoporteArmadura extends ObjetoDelMapa{
 	
@@ -16,13 +17,15 @@ public class SoporteArmadura extends ObjetoDelMapa{
 	        this.hud = hud;
 	}
 
-    public void mostrarHUD(Jugador jugador) {
-        if (getJugadorEnRango() && apretoE) {
-            hud.mostrar();
-        } else if (hud != null) {
-            hud.ocultar();
-        }
-    }
+	public void mostrarHUD(Jugador jugador) {
+		if (getJugadorEnRango() && MundoConfig.apretoE) {
+			hud.mostrar();
+		} else if (hud != null) {
+			hud.ocultar();
+		}else if(!getJugadorEnRango()){
+			MundoConfig.apretoE = false;
+		}
+	}
 	
 	   public SoporteArmaduraHUD getHUD() {
 	    	return hud;

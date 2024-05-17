@@ -14,9 +14,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
+import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.MyDragAndDrop;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.entidades.Jugador;
+import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.TipoCombinacion;
 
 public class Combinacion implements HeadUpDisplay, Ocultable{
@@ -79,6 +81,7 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				ocultar();
+				MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
 			}
 		});
     	

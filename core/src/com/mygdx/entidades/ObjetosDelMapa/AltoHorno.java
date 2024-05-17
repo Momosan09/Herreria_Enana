@@ -5,6 +5,7 @@ import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.hud.Fundicion;
+import com.mygdx.utiles.MundoConfig;
 
 public class AltoHorno extends ObjetoDelMapa{
 
@@ -15,14 +16,16 @@ public class AltoHorno extends ObjetoDelMapa{
 	        this.hud = hud;
 	       	}
 	
-    public void mostrarHUD(Jugador jugador) {
-        if (getJugadorEnRango() && apretoE) {
-            hud.mostrar();
-            hud.tieneHierro(jugador);
-        } else if (hud != null) {
-            hud.ocultar();
-        }
-    }
+	public void mostrarHUD(Jugador jugador) {
+		if (getJugadorEnRango() && MundoConfig.apretoE) {
+			hud.mostrar();
+			hud.tieneHierro(jugador);
+		} else if (hud != null) {
+			hud.ocultar();
+		}else if(!getJugadorEnRango()){
+			MundoConfig.apretoE = false;
+		}
+	}
     
     public Fundicion getHUD() {
     	return hud;

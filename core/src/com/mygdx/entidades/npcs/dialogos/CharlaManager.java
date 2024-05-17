@@ -24,7 +24,6 @@ public class CharlaManager {
 	public ArrayList<Charla> vendedorTiendaCharlas;
 	private Jugador jugador;
 
-	private Mensaje mensajeAnadido;
 
 	public CharlaManager(Jugador jugador, Npc vendedorTienda, Npc vendedorAmbulante, Npc viejo, Npc carpintero) {
 		crearCharlasVendedorTienda(vendedorTienda);
@@ -32,12 +31,11 @@ public class CharlaManager {
 		crearCharlasViejo(viejo);
 		crearCharlasCarpintero(carpintero);
 		viejo.setCharlaActual("saludo");
-		carpintero.setCharlaActual("carpintero_venta");
+		carpintero.setCharlaActual("saludo");
 		vendedorAmbulante.setCharlaActual("saludo");
 		checkearCharlas(vendedorTienda, vendedorAmbulante, viejo, carpintero);
 
 		this.jugador = jugador;
-		mensajeAnadido = new Mensaje(CaracterMensajes.ANADIDO);
 	}
 
 	public void checkearCharlas(Npc vendedorTienda, Npc vendedorAmbulante, Npc viejo, Npc carpintero) {
@@ -177,8 +175,7 @@ public class CharlaManager {
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
 					if (!jugador.buscarMisionPorId("CARP_00")) {
 						jugador.agregarMision(MisionesDelJuego.CARP_00);
-						mensajeAnadido.mostrarMensajeTemporal("Añadido " + MisionesDelJuego.CARP_00.getObjeto(), 3);
-						jugador.getItems().add(new Esquema(Items.ESQUEMA_SIERRA_CIRCULAR));
+						jugador.agregarItem(new Esquema(Items.ESQUEMA_SIERRA_CIRCULAR));
 
 					}
 				} else if (jugador.respuesta2 == Respuestas.VERDADERO) {

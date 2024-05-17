@@ -5,6 +5,7 @@ import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.hud.CajaEntregasHUD;
+import com.mygdx.utiles.MundoConfig;
 
 public class CajaEntregas extends ObjetoDelMapa{
 
@@ -15,14 +16,15 @@ public class CajaEntregas extends ObjetoDelMapa{
 	        this.hud = hud;
 	}
 
- public void mostrarHUD(Jugador jugador) {
-     if (getJugadorEnRango() && apretoE) {
-         hud.mostrar();
-
-     } else if (hud != null) {
-         hud.ocultar();
-     }
- }
+	public void mostrarHUD(Jugador jugador) {
+		if (getJugadorEnRango() && MundoConfig.apretoE) {
+			hud.mostrar();
+		} else if (hud != null) {
+			hud.ocultar();
+		}else if(!getJugadorEnRango()){
+			MundoConfig.apretoE = false;
+		}
+	}
 	
 	   public CajaEntregasHUD getHUD() {
 	    	return hud;

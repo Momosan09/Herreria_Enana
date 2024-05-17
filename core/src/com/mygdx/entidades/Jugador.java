@@ -69,6 +69,7 @@ public class Jugador {
 	
 	
 	public Respuestas respuesta1 = Respuestas.NOVALOR, respuesta2 = Respuestas.NOVALOR;
+	public boolean mostrarMensaje = true;
 	
 	public Jugador(OrthographicCamera camara, World world, Vector2 spawnPosicion) {
 		posicion = new Vector2(); // posicion inicial
@@ -247,6 +248,36 @@ public class Jugador {
 	
 	public void agregarItem(Item item) {
 		items.add(item);
+		mostrarMensaje = true;
+	}
+	
+	public String getItemMensaje() {
+		return "Añadido: " + items.get(items.size()-1).getNombre();
+	}
+	
+	public Item getItem(Items item) {
+		if(!items.isEmpty()) {			
+		for(int i = 0; i<items.size();i++) {
+			if(item == items.get(i).getTipo()) {
+				return items.get(i);
+			}
+		}
+		}
+		
+		return null;
+	}
+	
+	
+	public void eliminarItemRoto() {
+		if(MundoConfig.estadoJuego == EstadosDelJuego.INVENTARIO ) {
+			
+		for(int i=0;i<items.size();i++) {
+			if(items.get(i).getUsos() == 0) {
+				System.out.println("Eliminado " + items.get(i).getNombre());
+				items.remove(i);
+			}
+		}
+		}
 	}
 	
 	public ArrayList<Mineral> getMinerales(){
@@ -353,11 +384,11 @@ public class Jugador {
 		if(!tareas.isEmpty()) {
 		for(int i = 0; i<tareas.size();i++) {
 			if(tareas.get(i).getId().equals(id)) {
-				System.out.println("Mision encontrada------------");
+				System.out.println(HelpDebug.debub(getClass())+"Mision encontrada------------");
 				return true;
 			}
 		}
-		System.out.println("Mision NO encontrada------------");
+		System.out.println(HelpDebug.debub(getClass())+"Mision NO encontrada------------");
 		return false;
 		}else {
 			return false;
@@ -375,33 +406,13 @@ public class Jugador {
 		return null;
 	}
 	
-	public Item getItem(Items item) {
-		if(!items.isEmpty()) {			
-		for(int i = 0; i<items.size();i++) {
-			if(item == items.get(i).getTipo()) {
-				return items.get(i);
-			}
-		}
-		}
-		
-		return null;
-	}
-	
-	public void eliminarItemRoto() {
-		if(MundoConfig.estadoJuego == EstadosDelJuego.INVENTARIO ) {
-			
-		for(int i=0;i<items.size();i++) {
-			if(items.get(i).getUsos() == 0) {
-				System.out.println("Eliminado " + items.get(i).getNombre());
-				items.remove(i);
-			}
-		}
-		}
-	}
+
 	
 	public void resetearRespuestas() {
 		respuesta1 = Respuestas.NOVALOR;
 		respuesta2 = Respuestas.NOVALOR;
 	}
+	
+
 	
 }

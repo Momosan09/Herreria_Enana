@@ -5,6 +5,7 @@ import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.hud.MesaHUD;
+import com.mygdx.utiles.MundoConfig;
 
 public class Mesa extends ObjetoDelMapa {
 
@@ -16,10 +17,12 @@ public class Mesa extends ObjetoDelMapa {
 	}
 
 	public void mostrarHUD(Jugador jugador) {
-		if (getJugadorEnRango() && apretoE) {
+		if (getJugadorEnRango() && MundoConfig.apretoE) {
 			hud.mostrar();
 		} else if (hud != null) {
 			hud.ocultar();
+		}else if(!getJugadorEnRango()){
+			MundoConfig.apretoE = false;
 		}
 	}
 
