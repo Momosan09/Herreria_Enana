@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
@@ -37,6 +38,7 @@ public class MyDragAndDrop {
 	private Stage stage;
 	private Label.LabelStyle labelStyle;
 	private Label actorLabelNombre;
+	private Table herramientasTabla, mineralesTabla, tabla, contenedor;
 	private ArrayList<Image> inventario, herramientas;
 	private Jugador jugador;
 	private DragAndDrop dragAndDrop;
@@ -46,6 +48,12 @@ public class MyDragAndDrop {
 		this.jugador = jugador;
 		screenViewport = new ScreenViewport();
 		stage = new Stage(screenViewport);
+		
+		herramientasTabla = new Table();
+		mineralesTabla = new Table();
+		tabla = new Table();
+		tabla.setFillParent(true);
+		contenedor = new Table();
 		
 		labelStyle = EstiloFuente.generarFuente(32, Colores.BLANCO, false);
 		
@@ -88,6 +96,7 @@ public class MyDragAndDrop {
 					payload.setObject(mineral);
 
 					payload.setDragActor(getActor());
+					stage.addActor(getActor());//esta linea arregla el tema del offset
 
 					Label validLabel = new Label("Valido!", labelStyle);//crea la label que se muestra cuando es valido
 					validLabel.setColor(0, 1, 0, 1);
@@ -113,6 +122,7 @@ public class MyDragAndDrop {
                     payload.setObject(herramienta);
 
                     payload.setDragActor(getActor());
+                    stage.addActor(getActor());//esta linea arregla el tema del offset
 
                     Label validLabel = new Label("Valido!", labelStyle);
                     validLabel.setColor(0, 1, 0, 1);
@@ -213,14 +223,8 @@ public class MyDragAndDrop {
 		        }
 				
 			});
-		}
-		
-
-				
-
-		
-		
-		
+		}	
+			
 /*	Aca estan las no permitidas
 		dragAndDrop.addTarget(new Target(inventario.get(1)) {
 			public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
@@ -235,7 +239,7 @@ public class MyDragAndDrop {
 			public void drop (Source source, Payload payload, float x, float y, int pointer) {
 			}
 		});*/
-		
+
 		mostrarLabelOnEnter();
 	}
 
@@ -307,21 +311,42 @@ public class MyDragAndDrop {
 		return inventario;
 	}
 	
+	public void ocultar() {
+		stage.clear();
+		stage.unfocusAll();
+		
+	}
+	
 	public void refrescar() {
 		stage.clear();
 		inventario.clear();
 		herramientas.clear();
+		herramientasTabla.clear();
+		mineralesTabla.clear();
+		contenedor.clear();
+		tabla.clear();
+
+		for (int i = 0; i < jugador.getItems().size(); i++) {
+			herramientas.add(new Image(new Sprite(jugador.getItems().get(i).getTextura())));
+			herramientasTabla.add(herramientas.get(i));				
+			if(i%2 == 0 && i != 0) {
+				herramientasTabla.row();
+			}
+		}
 		for (int i=0; i<jugador.getMinerales().size();i++) {
 			inventario.add(new Image(new Sprite(jugador.getMinerales().get(i).getTextura())));//Agrega los minearales del inventario del personaje, aca puede haber un error cuando quiera combinar mas cosas que solo minerales
-			stage.addActor(inventario.get(i));
+			mineralesTabla.add(inventario.get(i));
+			
 		}
+
 		
-        for (int i = 0; i < jugador.getItems().size(); i++) {
-            herramientas.add(new Image(new Sprite(jugador.getItems().get(i).getTextura())));
-            stage.addActor(herramientas.get(i));
-        }
 		System.out.println(HelpDebug.debub(getClass()) + stage.getActors().size);
+		
 		create();
+		contenedor.add(herramientasTabla);
+		contenedor.add(mineralesTabla);
+	    tabla.add(contenedor);
+	    stage.addActor(tabla);
 	    stage.addActor(actorLabelNombre);
 	}
 

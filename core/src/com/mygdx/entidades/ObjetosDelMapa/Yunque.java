@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetoDelMapa;
+import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.TipoCombinacion;
 import com.mygdx.hud.YunqueHUD;
 import com.mygdx.utiles.MundoConfig;
@@ -20,33 +21,17 @@ public class Yunque extends ObjetoDelMapa{
 	private boolean entro = false;
 	
 	public Yunque(float x, float y, World world, String rutaTextura, YunqueHUD hud, Jugador jugador) {
-		super(x, y, world, rutaTextura);
+		super(x, y, world, rutaTextura, jugador);
 		this.hud = hud;
 		dragDrop = new MyDragAndDrop(jugador);
 	}
 	
-	
-	private void dragAndDropUnaVez() {//necesito que este metodo se llame una sola vez cada vez que se muestre el interfaz
-		if(!entro) {
-			dragDrop.refrescar();
-			dragDrop.create();
-			entro = true;
-		}
-	}
-	
-	public void mostarHUD(Jugador jugador) {
-		if (getJugadorEnRango() && MundoConfig.apretoE) {
-			dragAndDropUnaVez();
-			Gdx.input.setInputProcessor(dragDrop.getStage());
-			hud.mostrar();
-			dragDrop.render();
-			MundoConfig.mostrarHUD=false;
-		} else{
-			Gdx.input.setInputProcessor(Recursos.muxJuego);//No estoy seguro de que sea la mejor opcion pero bue
-			MundoConfig.mostrarHUD=true;
-			MundoConfig.apretoE = false;
-			hud.ocultar();
-			entro = false;
+	public void mostarHUD() {
+		if (getJugadorEnRango()) {
+			MundoConfig.estadoJuego = EstadosDelJuego.COMBINACION;
+		} else if (!getJugadorEnRango()){
+			jugador.borrarInteraccion();
+			//MundoConfig.apretoE = false;
 		}
 	}
 	

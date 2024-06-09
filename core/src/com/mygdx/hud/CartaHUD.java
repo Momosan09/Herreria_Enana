@@ -12,9 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.npcs.dialogos.DialogosNPC;
+import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
+import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 
 public class CartaHUD implements HeadUpDisplay, Cerrable{
@@ -71,6 +73,7 @@ public class CartaHUD implements HeadUpDisplay, Cerrable{
 			public void changed(ChangeEvent event, Actor actor) {
 				cerrar = true;
 				System.out.println(HelpDebug.debub(getClass())+cerrar);
+				MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
 			}
 		});
 	}

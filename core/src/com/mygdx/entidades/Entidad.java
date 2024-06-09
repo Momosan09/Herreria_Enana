@@ -41,6 +41,7 @@ public abstract class Entidad {
 		y=(MundoConfig.altoMundo - y) * MundoConfig.tamanoTile;
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
+		
 
 		
 		areaDeInteraccion = new Rectangle(posicion.x - distanciaInteraccion/2, posicion.y - distanciaInteraccion/2,

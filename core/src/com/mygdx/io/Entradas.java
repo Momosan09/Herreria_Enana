@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.mygdx.entidades.Jugador;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
@@ -15,16 +16,27 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 
 public class Entradas implements InputProcessor {
-
-	private boolean arriba = false, abajo = false, /*izq = false, der = false,*/ enter = false;
+	
+	
+	private Jugador jugador;
+	public boolean arriba = false, abajo = false, /*izq = false, der = false,*/ enter = false, apretoE=false;
 	public Sound efectoSonidoTeclas = Gdx.audio.newSound(Gdx.files.internal(Recursos.EFECTO_TECLA_MENU)); //lo hice public para poder disposearlo cuando en donde sea necesario (en Juego, cuando era llamado por PantallaMenu, se escuchaban los sonidos de las teclas)
 	private boolean isSoundPlaying = false;
 	private int cont = 0;
+	
+	public Entradas() {
+	}
+	
+	public Entradas(Jugador jugador) {
+		this.jugador = jugador;
+	}
 
 	public void estadosDelJuego() {
 		
 		if(Gdx.input.isKeyJustPressed(Keys.E)) {
-			MundoConfig.apretoE = true;
+			System.out.println(HelpDebug.debub(getClass())+"Apreto E");
+			apretoE = true;
+			MundoConfig.apretoE = apretoE;
 		}
 		
 		if(Gdx.input.isKeyJustPressed(Keys.TAB)) {
@@ -40,6 +52,12 @@ public class Entradas implements InputProcessor {
 		}
 		if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT)) {
 			MundoConfig.estadoJuego = (MundoConfig.estadoJuego == EstadosDelJuego.JUEGO ? EstadosDelJuego.COMBINACION: EstadosDelJuego.JUEGO);
+		}
+	}
+	
+	public void botonesJugador() {
+		if(Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
+			jugador.equipar(1);
 		}
 	}
 	

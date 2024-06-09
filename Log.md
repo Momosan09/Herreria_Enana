@@ -328,3 +328,9 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
 
 # 17 MAY
     - Arregla unos errores menores
+
+# 8 JUN
+    - Arregla problemas con el dragAndDrop
+    - Arregla problemas con los hud
+    - Modifica el sistema de la carta incial
+    - Cambios menores que me olvide de ir poniendo aca

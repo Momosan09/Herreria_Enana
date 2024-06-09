@@ -4,9 +4,11 @@ import com.mygdx.utiles.Config;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.npcs.dialogos.Mensaje;
+import com.mygdx.entidades.npcs.dialogos.Npc_Dialogos_Rey;
 import com.mygdx.pantallas.Juego;
 
 public class UI {
@@ -18,8 +20,10 @@ public class UI {
 	private VentaHUD venta;
 	private PausaHUD pausa;
 	private InventarioHUD inventario;
-	private Combinacion combinacionJugador;
+	private Combinacion combinacion;
 	private Mensaje mensajeAnadido;
+	private Fundicion fundicion;
+	private CartaHUD carta;
 	
 	private Jugador jugador;
 	private Juego juego;
@@ -37,16 +41,24 @@ public class UI {
 		venta = new VentaHUD();
 	    pausa = new PausaHUD(juego);
 	    inventario = new InventarioHUD(jugador);
-		combinacionJugador = new Combinacion(jugador);
+	    combinacion = new Combinacion(jugador);
 	    libroHUD = new LibroHUD(screenViewport);
+	    fundicion = new Fundicion(jugador);
+	    carta = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);
+	    
 		
 	    mensajeAnadido = new Mensaje();
 		
-		
-	    Recursos.muxJuego.addProcessor(pausa.getStage());
-    	Recursos.muxJuego.addProcessor(combinacionJugador.getStage());
-    	Recursos.muxJuego.addProcessor(combinacionJugador.getDragAndDrop().getStage());
+		Recursos.muxJuego.addProcessor(hud.getStage());
+		Recursos.muxJuego.addProcessor(hud.getDiarioHUD().getStage());
+		Recursos.muxJuego.addProcessor(hud.getProximaBatallaHUD().getStage());
+		Recursos.muxJuego.addProcessor(hud.getResultadosBatallasHUD().getStage());
+		Recursos.muxJuego.addProcessor(carta.getStage());
+		Recursos.muxJuego.addProcessor(pausa.getStage());
+    	Recursos.muxJuego.addProcessor(combinacion.getStage());
+    	Recursos.muxJuego.addProcessor(combinacion.getDragAndDrop());
 		Recursos.muxJuego.addProcessor(venta.getStage());
+		Recursos.muxJuego.addProcessor(fundicion.getStage());
 
 
 	}
@@ -57,7 +69,8 @@ public class UI {
 		inventario.render(jugador);
 		dialogo.render();
 		venta.render();
-		combinacionJugador.render();
+		combinacion.render();
+		fundicion.render();
 		
 		
 		/*
@@ -65,11 +78,12 @@ public class UI {
 		if(jugador.mostrarMensaje) {
 		}*/
 		
-		
+		Gdx.input.setInputProcessor(Recursos.muxJuego);
 		
 //		System.out.println(HelpDebug.debub(getClass())+ "Estado actual = " + MundoConfig.estadoJuego);
 		switch (MundoConfig.estadoJuego) {
 		case JUEGO:
+			MundoConfig.pausarTiempo = false;
 			hud.mostrar();
 			jugador.puedeMoverse = true;
 			ocultar(pausa,inventario,dialogo,venta);
@@ -79,6 +93,7 @@ public class UI {
 
 			
 		case DIALOGO:
+
 			if(dialogo.getLocutor() != MundoConfig.locutor) {//se llama solo una vez
 			dialogo.setLocutor(MundoConfig.locutor);				
 			}
@@ -89,6 +104,7 @@ public class UI {
 			break;
 			
 		case PAUSA:
+
 			pausa.mostrar();
 			jugador.puedeMoverse = false;
 			MundoConfig.mostrarHUD = false;
@@ -100,8 +116,16 @@ public class UI {
 			inventario.mostrar();
 			break;
 		case COMBINACION:
-			combinacionJugador.mostrar();
-			ocultar(inventario);
+			combinacion.mostrar();
+			ocultar(inventario, hud);
+			break;
+			
+		case FUNDICION:
+			Gdx.input.setInputProcessor(fundicion.getStage());
+			jugador.puedeMoverse = false;
+			fundicion.mostrar();
+			fundicion.tieneHierro(jugador);
+			ocultar(inventario,hud,pausa);
 			break;
 		case ESCENA:
 			break;
@@ -110,6 +134,16 @@ public class UI {
 		case IDLE:
 			break;
 		case INICIO:
+
+			if(!carta.getCerrar()) {				
+			carta.render();
+			ocultar(hud,inventario,combinacion);
+			jugador.puedeMoverse = false;
+			MundoConfig.pausarTiempo = true;
+			}
+			break;
+		case CARTA:
+			
 			break;
 		case VENTA:
 			if(venta.getVendedor() != MundoConfig.vendedor) {
@@ -148,7 +182,8 @@ public class UI {
 		venta.reEscalar(width, height);
 	    pausa.reEscalar(width, height);
 		inventario.reEscalar(width, height);
-		combinacionJugador.reEscalar(width, height);
+		combinacion.reEscalar(width, height);
+		fundicion.reEscalar(width, height);
 	}
 	
 	public void mostrarLibro() {

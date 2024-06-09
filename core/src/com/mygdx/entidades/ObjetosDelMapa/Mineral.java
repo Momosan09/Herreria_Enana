@@ -83,26 +83,31 @@ public class Mineral extends ObjetoDelMapa{
 
 	public void minar(Jugador jugador) {
 	    if ((getJugadorEnRango() && buscarPorItemEnJugador(Items.PICO))) {
+	    	System.out.println("Me mina");
 	        if (Gdx.input.isTouched()) {
 	            click(jugador);
 	        }
 
 	        if (this.vida <= 0) {
-	            System.out.println(HelpDebug.debub(getClass()) + "muerte");
-	            jugador.getMinerales().add(this);
-	            OrganizadorSpritesIndiceZ.eliminarMineral(this);
-	            for(int i = 0; i<jugador.getMisiones().size();i++) {
-	            	if(jugador.getMisiones().get(i).getTipoMision() == TipoMision.RECOLECTAR) {
-	            		if(jugador.getMisiones().get(i).getObjeto().equals(this.tipo.toString())) {
-	            			jugador.getMisiones().get(i).setCantidadConseguida(+1);
-	            		}
-	            	}
-	            	
-	            }
+	        	recolectar();
 	        }
 	    }
 	}
 
+	
+	private void recolectar() {
+        System.out.println(HelpDebug.debub(getClass()) + "muerte");
+        jugador.getMinerales().add(this);
+        OrganizadorSpritesIndiceZ.eliminarMineral(this);
+        for(int i = 0; i<jugador.getMisiones().size();i++) {
+        	if(jugador.getMisiones().get(i).getTipoMision() == TipoMision.RECOLECTAR) {
+        		if(jugador.getMisiones().get(i).getObjeto().equals(this.tipo.toString())) {
+        			jugador.getMisiones().get(i).setCantidadConseguida(+1);
+        		}
+        	}
+        	
+        }
+	}
 	
 	public boolean comprar(Jugador jugador) {
 	    if ((getJugadorEnRango() && isComprable()) && Gdx.input.isTouched()) {

@@ -14,14 +14,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.LingoteHierro;
+import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
+import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 
 public class Fundicion implements Ocultable, HeadUpDisplay{
@@ -35,6 +38,7 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 	private Image hierro, imgElegido, imgResultado;
 	private Label.LabelStyle labelStyle;
 	private Skin skinArriba, skinAbajo, skinTextButton;
+	private Button cerrarBoton;
 	private Jugador jugador;
 	public int cantidad = 0;
 	private int hierroEnElInventario=0;
@@ -65,6 +69,7 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 		skinArriba = new Skin(Gdx.files.internal(Recursos.SKIN_BOTON_ARRIBA));
 		skinAbajo = new Skin(Gdx.files.internal(Recursos.SKIN_BOTON_ABAJO));
 		skinTextButton = new Skin(Gdx.files.internal(Recursos.SKIN));
+
 		
 		
 		tabla = new Table();
@@ -153,6 +158,18 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 				}
 		});
 		
+    	cerrarBoton = new Button(skinTextButton);
+    	cerrarBoton.addListener(new ChangeListener() {
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				ocultar();
+				MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
+				if(MundoConfig.apretoE) {
+					MundoConfig.apretoE = false;;
+				}
+			}
+		});
 		
 	}
 
@@ -174,6 +191,7 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 		contenedor.add(botonAbajo);
 		
 		tabla.add(contenedor);
+		tabla.add(cerrarBoton);
 		tabla.row();
 		tabla.add(fundirBoton);
 		stage.addActor(tabla);
@@ -224,8 +242,7 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 	
 	@Override
 	public void mostrar() {
-		visible = true;
-		
+		visible = true;	
 	}
 
 	@Override

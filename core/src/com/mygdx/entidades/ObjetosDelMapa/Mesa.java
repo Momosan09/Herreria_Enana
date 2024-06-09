@@ -11,12 +11,12 @@ public class Mesa extends ObjetoDelMapa {
 
 	private MesaHUD hud;
 
-	public Mesa(float x, float y, World world, String rutaTextura, MesaHUD hud) {
-		super(x, y, world, rutaTextura);
+	public Mesa(float x, float y, World world, String rutaTextura, MesaHUD hud,Jugador jugador) {
+		super(x, y, world, rutaTextura, jugador);
 		this.hud = hud;
 	}
 
-	public void mostrarHUD(Jugador jugador) {
+	public void mostrarHUD() {
 		if (getJugadorEnRango() && MundoConfig.apretoE) {
 			hud.mostrar();
 		} else if (hud != null) {

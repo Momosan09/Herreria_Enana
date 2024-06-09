@@ -117,9 +117,6 @@ public class Juego implements Screen{
 
 	//Scene2d.ui
 	private UI ui;
-	private CartaHUD cartaHUD;
-
-
 
 	private DialogoDeCompra dialogoDeCompra;
 	private Fundicion fundicionHUD;
@@ -176,12 +173,7 @@ public class Juego implements Screen{
 				
 		//HUD
 
-		cartaHUD = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);//ee parece que cartaHUD tiene que ir primero, sino no anda la combinacion (nose pq)
-
 	    dialogoDeCompra = new DialogoDeCompra();
-
-	    
-	    Recursos.muxJuego.addProcessor(cartaHUD.getStage());
 
 	    //muxJuego.addProcessor(dialogoDeCompra.getStage());
 	   
@@ -215,9 +207,9 @@ public class Juego implements Screen{
 		
 		//InputMultiplexer
 			
-	    Recursos.muxJuego.addProcessor(altoHorno.getHUD().getStage());
-	    Recursos.muxJuego.addProcessor(ui.getHUD().getStage());
-	    Recursos.muxJuego.addProcessor(ui.getHUD().getDiarioHUD().getStage());
+	   // Recursos.muxJuego.addProcessor(altoHorno.getHUD().getStage());
+//	    Recursos.muxJuego.addProcessor(ui.getHUD().getStage());
+//	    Recursos.muxJuego.addProcessor(ui.getHUD().getDiarioHUD().getStage());
 
 	    /*
 		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.HIERRO.toString(), 1, 1,50,300);
@@ -227,14 +219,16 @@ public class Juego implements Screen{
 		jugador.getMinerales().add(hierro);
 		jugador.getMinerales().add(hierro1);
 		
-		entradas = new Entradas();
+		entradas = new Entradas(jugador);
 		
-		MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
+		MundoConfig.estadoJuego = EstadosDelJuego.INICIO;
 	}
 
 	@Override
 	public void render(float delta){
 		entradas.estadosDelJuego();
+		//System.out.println(HelpDebug.debub(getClass()) + MundoConfig.apretoE);
+
 
 		//hacer cosas dependiendo de los estados del juego
 		/*
@@ -265,14 +259,6 @@ public class Juego implements Screen{
 			camaraJugador.zoom = 5;
 		}else {
 			camaraJugador.zoom = .6f;
-		}
-		
-		//UNA SOLA VEZ
-		if(cartaHUD.seCerro()) {
-			cartaHUD.cerrar();
-			jugador.puedeMoverse = true;
-			MundoConfig.mostrarHUD = true;
-			MundoConfig.habilitadoHUDS = true;
 		}
 	    
 	  
@@ -331,7 +317,6 @@ public class Juego implements Screen{
 		Render.batch.begin();// HUD´s
 		ui.render();
 		
-		if (cartaHUD.getCerrar()) {// si ya leyo la carta...
 			charlaManager.checkearCharlas(vendedorTienda, vendedorAmbulate, viejo, carpintero);
 			// Renderiza el HUD
 			camaraHud.update();
@@ -358,16 +343,10 @@ public class Juego implements Screen{
 					dialogoDeCompra.ocultar();
 				}
 			}
-			
+	
 		misionesManager.checkearMisiones();//Se fija si las condiciones se cumplen
-
-		}else {
-			cartaHUD.render();
-		}
 		Render.batch.end();
-		
 	}
-
 
 	@Override
 	public void resize(int width, int height) {
@@ -380,7 +359,6 @@ public class Juego implements Screen{
 		reEscalarHUDSTaller(width, height);
 	    
 		//hud.reEscalar(width, height);
-	    cartaHUD.reEscalar(width, height);
 
 
 	    dialogoDeCompra.reEscalar(width, height);
@@ -414,11 +392,11 @@ public class Juego implements Screen{
 	}
 	
 	public void crearObjetosDelTaller() {
-		mesa = new Mesa(39, 15, world, Recursos.MESA, mesaHUD);
+		mesa = new Mesa(39, 15, world, Recursos.MESA, mesaHUD, jugador);
 		yunque = new Yunque(34, 13, world, Recursos.YUNQUE, yunqueHUD, jugador);
-		altoHorno = new AltoHorno(34, 10, world, Recursos.ALTO_HORNO, fundicionHUD); //Estas coordenadas las saco de Tiled
-		cajaEntregas = new CajaEntregas(39, 15.5f, world, Recursos.CAJA_ENTREGAS, cajaEntregasHUD);
-		soporteArmadura = new SoporteArmadura(32, 18, world, Recursos.SOPORTE_ARMADURAS, soporteArmaduraHUD);
+		altoHorno = new AltoHorno(34, 10, world, Recursos.ALTO_HORNO, fundicionHUD, jugador); //Estas coordenadas las saco de Tiled
+		cajaEntregas = new CajaEntregas(39, 15.5f, world, Recursos.CAJA_ENTREGAS, cajaEntregasHUD, jugador);
+		soporteArmadura = new SoporteArmadura(32, 18, world, Recursos.SOPORTE_ARMADURAS, soporteArmaduraHUD, jugador);
 		
 	}
 	
@@ -434,11 +412,14 @@ public class Juego implements Screen{
 	}
 	
 	private void mostrarHUDSTaller() {
-		mesa.mostrarHUD(jugador);
-		yunque.mostarHUD(jugador);
-		altoHorno.mostrarHUD(jugador);
-		cajaEntregas.mostrarHUD(jugador);
-		soporteArmadura.mostrarHUD(jugador);
+		if(jugador.getInteraccion()) {
+		mesa.mostrarHUD();
+		yunque.mostarHUD();
+		altoHorno.mostrarHUD();
+
+		cajaEntregas.mostrarHUD();
+		soporteArmadura.mostrarHUD();
+		}
 	}
 	
 	private void renderizarHUDSTaller() {
@@ -583,8 +564,6 @@ public class Juego implements Screen{
 		public void dispose() {
 			Render.tiledMapRenderer.dispose();
 			rayHandler.dispose();
-
-			cartaHUD.dispose();
 			ui.dispose();
 			Recursos.muxJuego.clear();
 		}

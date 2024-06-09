@@ -11,18 +11,17 @@ public class CajaEntregas extends ObjetoDelMapa{
 
 	private CajaEntregasHUD hud;
 	
-	public CajaEntregas(float x, float y, World world, String rutaTextura, CajaEntregasHUD hud) {
-		 super(x, y, world, rutaTextura);
+	public CajaEntregas(float x, float y, World world, String rutaTextura, CajaEntregasHUD hud, Jugador jugador) {
+		 super(x, y, world, rutaTextura, jugador);
 	        this.hud = hud;
 	}
 
-	public void mostrarHUD(Jugador jugador) {
-		if (getJugadorEnRango() && MundoConfig.apretoE) {
+	public void mostrarHUD() {
+		if (getJugadorEnRango()) {
 			hud.mostrar();
-		} else if (hud != null) {
+		}else{
 			hud.ocultar();
-		}else if(!getJugadorEnRango()){
-			MundoConfig.apretoE = false;
+			jugador.borrarInteraccion();
 		}
 	}
 	

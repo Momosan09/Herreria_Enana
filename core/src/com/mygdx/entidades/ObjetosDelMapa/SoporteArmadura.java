@@ -12,12 +12,12 @@ public class SoporteArmadura extends ObjetoDelMapa{
 	
 	private SoporteArmaduraHUD hud;
 
-	public SoporteArmadura(float x, float y, World world, String rutaTextura, SoporteArmaduraHUD hud) {
-		 super(x, y, world, rutaTextura);
+	public SoporteArmadura(float x, float y, World world, String rutaTextura, SoporteArmaduraHUD hud, Jugador jugador) {
+		 super(x, y, world, rutaTextura, jugador);
 	        this.hud = hud;
 	}
 
-	public void mostrarHUD(Jugador jugador) {
+	public void mostrarHUD() {
 		if (getJugadorEnRango() && MundoConfig.apretoE) {
 			hud.mostrar();
 		} else if (hud != null) {
