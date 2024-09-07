@@ -34,6 +34,7 @@ public abstract class Recursos {
 	public static final String CINCEL = "Items/cincel.png";
 	public static final String MAZA = "Items/maza.png";
 	public static final String LIMA = "Items/lima.png";
+	public static final String SIERRA = "Items/sierra.png";
 	public static final String ESQUEMA_TEXT = "Items/esquema.png";
 	
 	//Mapas

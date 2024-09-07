@@ -18,7 +18,7 @@ Caused by: java.lang.IndexOutOfBoundsException: Index 1 out of bounds for length
 	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:302)
 	at java.base/java.util.Objects.checkIndex(Objects.java:359)
 	at java.base/java.util.ArrayList.remove(ArrayList.java:504)
-	at com.mygdx.entidades.Jugador.eliminarPorNombreDadoCantidadYEstado(Jugador.java:371)
+	at com.mygdx.entidades.Jugador.eliminarPorNombreDadoCantidadYEstado(Jugador.java:373)
 	at com.mygdx.hud.Fundicion$3.changed(Fundicion.java:133)
 	at com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.handle(ChangeListener.java:28)
 	at com.badlogic.gdx.scenes.scene2d.Actor.notify(Actor.java:188)

@@ -14,6 +14,7 @@ public enum Items {
 	CINCEL(new Texture(Recursos.CINCEL),90,-1),
 	MAZA(new Texture(Recursos.MAZA),120,-1),
 	LIMA_PLANA(new Texture(Recursos.LIMA),30,-1),
+	SIERRA(new Texture(Recursos.SIERRA),65,30),
 	
 	
 	//Esquemas

@@ -334,3 +334,9 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
     - Arregla problemas con los hud
     - Modifica el sistema de la carta incial
     - Cambios menores que me olvide de ir poniendo aca
+
+# 9 JUN
+    - Agrega dos items
+     
+# 7 SEP
+    - Arregla problema con la combinacion y el diario de misiones

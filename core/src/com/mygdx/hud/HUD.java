@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.entidades.Jugador;
+import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
 import com.mygdx.pantallas.Juego;
 import com.mygdx.utiles.Colores;
@@ -288,7 +289,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 			public void clicked(InputEvent event, float x, float y) {
 				if(!proximaBatallaHUD.getVisible() && !resultadosHUD.getVisible()) {
 					diarioHUD.agregarMisiones();
-					diarioHUD.mostrar();
+					MundoConfig.estadoJuego = EstadosDelJuego.DIARIO;
 				}
 			}
 		});

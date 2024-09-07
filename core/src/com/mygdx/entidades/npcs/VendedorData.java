@@ -9,6 +9,7 @@ public enum VendedorData {
 
 	
 	CARPINTERO(Items.PICO, Items.ESQUEMA_SIERRA_CIRCULAR, Items.DISCO_HIERRO, Items.CINCEL,Items.MAZA),
+	TIENDA(Items.CINCEL), 
 	AMBULANTE(Items.SIERRA_CIRCULAR);
 	
 	private ArrayList<Items> inventario = new ArrayList();

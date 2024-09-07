@@ -33,6 +33,7 @@ public class CharlaManager {
 		viejo.setCharlaActual("saludo");
 		carpintero.setCharlaActual("saludo");
 		vendedorAmbulante.setCharlaActual("saludo");
+		vendedorTienda.setCharlaActual("saludo");
 		checkearCharlas(vendedorTienda, vendedorAmbulante, viejo, carpintero);
 
 		this.jugador = jugador;
@@ -77,7 +78,8 @@ public class CharlaManager {
 			switch (vendedorTienda.getNombreCharlaActual()) {
 			case "saludo":
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
-					vendedorTienda.setCharlaActual("montanas_minerales");
+					Vendedor vendedor = (Vendedor) vendedorTienda;
+					abrirVenta(vendedor);
 				} else if(jugador.respuesta2 == Respuestas.VERDADERO){
 					cerrarDialogo(vendedorTienda);
 

@@ -16,8 +16,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
+import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
+import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.historia.Mision;
 
@@ -77,6 +79,7 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 			
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+				MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
 				ocultar();
 			}
 		});
@@ -126,8 +129,11 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 
 	@Override
 	public void mostrar() {
+		if(!visible) {			
+		agregarMisiones();
 		actualizarContenedor();
 		visible = true;
+		}
 		
 	}
 
@@ -135,6 +141,7 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 	public void ocultar() {
 		visible = false;
 		stage.unfocusAll();//Cuando esta oculto desenfoca el stage para que no procese eventos
+	
 		
 	}
 

@@ -157,12 +157,12 @@ public class Juego implements Screen{
 		//camaras
 		camaraJugador = new OrthographicCamera(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		camaraJugador.setToOrtho(false);
-		camaraJugador.zoom = .6f;
+		camaraJugador.zoom = .4f;
 		rayHandler.setCombinedMatrix(camaraJugador);
 		
 		camaraHud = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camaraHud.setToOrtho(false); 
-		camaraHud.zoom = .6f;
+		camaraHud.zoom = .4f;
 		
 
 		jugador = new Jugador(camaraJugador, world, helpMapa.getJugadorSpawn());
@@ -229,7 +229,7 @@ public class Juego implements Screen{
 		entradas.estadosDelJuego();
 		//System.out.println(HelpDebug.debub(getClass()) + MundoConfig.apretoE);
 
-
+		System.out.println(MundoConfig.estadoJuego);
 		//hacer cosas dependiendo de los estados del juego
 		/*
 		switch (MundoConfig.estadoJuego) {
@@ -258,7 +258,7 @@ public class Juego implements Screen{
 		if(Gdx.input.isKeyPressed(Keys.P)) {//para debug
 			camaraJugador.zoom = 5;
 		}else {
-			camaraJugador.zoom = .6f;
+			camaraJugador.zoom = .4f;
 		}
 	    
 	  

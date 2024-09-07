@@ -39,6 +39,7 @@ import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
 import com.mygdx.entidades.ObjetosDelMapa.Items.LimaPlana;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Maza;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Pico;
+import com.mygdx.entidades.ObjetosDelMapa.Items.Sierra;
 import com.mygdx.entidades.ObjetosDelMapa.Items.SierraCircular;
 
 public class Jugador {
@@ -106,6 +107,7 @@ public class Jugador {
 		items.add(new Maza());
 		items.add(new Cincel());
 		items.add(new LimaPlana());
+		items.add(new Sierra());
 	}
 
 	private void dibujarItemActual() {

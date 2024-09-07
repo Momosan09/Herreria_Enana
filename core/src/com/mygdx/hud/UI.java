@@ -23,6 +23,7 @@ public class UI {
 	private Combinacion combinacion;
 	private Mensaje mensajeAnadido;
 	private Fundicion fundicion;
+	private DiarioHUD diario;
 	private CartaHUD carta;
 	
 	private Jugador jugador;
@@ -45,6 +46,7 @@ public class UI {
 	    libroHUD = new LibroHUD(screenViewport);
 	    fundicion = new Fundicion(jugador);
 	    carta = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);
+	    diario = new DiarioHUD(jugador);
 	    
 		
 	    mensajeAnadido = new Mensaje();
@@ -59,6 +61,8 @@ public class UI {
     	Recursos.muxJuego.addProcessor(combinacion.getDragAndDrop());
 		Recursos.muxJuego.addProcessor(venta.getStage());
 		Recursos.muxJuego.addProcessor(fundicion.getStage());
+		Recursos.muxJuego.addProcessor(libroHUD.getStage());
+		Recursos.muxJuego.addProcessor(diario.getStage());
 
 
 	}
@@ -71,6 +75,7 @@ public class UI {
 		venta.render();
 		combinacion.render();
 		fundicion.render();
+		diario.render();
 		
 		
 		/*
@@ -86,7 +91,7 @@ public class UI {
 			MundoConfig.pausarTiempo = false;
 			hud.mostrar();
 			jugador.puedeMoverse = true;
-			ocultar(pausa,inventario,dialogo,venta);
+			ocultar(pausa,inventario,dialogo,venta, combinacion, diario);
 			dialogo.limpiarDatos();//Esto ayuda a que no queden datos del npc anterior en la caja de dialogo cuando se hable con uno nuevo
 			break;
 
@@ -100,7 +105,7 @@ public class UI {
 			dialogo.update();
 			dialogo.mostrar();
 			jugador.puedeMoverse = false;
-			ocultar(pausa,inventario);
+			ocultar(pausa,inventario, diario);
 			break;
 			
 		case PAUSA:
@@ -114,10 +119,11 @@ public class UI {
 			
 		case INVENTARIO:
 			inventario.mostrar();
+			ocultar(diario);
 			break;
 		case COMBINACION:
 			combinacion.mostrar();
-			ocultar(inventario, hud);
+			ocultar(inventario, hud, diario);
 			break;
 			
 		case FUNDICION:
@@ -125,7 +131,14 @@ public class UI {
 			jugador.puedeMoverse = false;
 			fundicion.mostrar();
 			fundicion.tieneHierro(jugador);
-			ocultar(inventario,hud,pausa);
+			ocultar(inventario,hud,pausa, diario);
+			break;
+			
+		case DIARIO:
+			jugador.puedeMoverse = true;
+			diario.mostrar();
+			ocultar(fundicion, inventario);
+			
 			break;
 		case ESCENA:
 			break;
@@ -170,6 +183,7 @@ public class UI {
 		}
 	}
 
+
 	public HUD getHUD () {
 		return hud;
 	}
@@ -184,6 +198,7 @@ public class UI {
 		inventario.reEscalar(width, height);
 		combinacion.reEscalar(width, height);
 		fundicion.reEscalar(width, height);
+		diario.reEscalar(width, height);
 	}
 	
 	public void mostrarLibro() {
@@ -200,6 +215,7 @@ public class UI {
 		pausa.dispose();
 		venta.dispose();
 		dialogo.dispose();
+		diario.dispose();
 	}
 
 }
