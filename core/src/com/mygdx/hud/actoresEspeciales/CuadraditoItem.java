@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class CuadraditoItem extends Table{
     
     private Label nombre, valor;
+    //private Image
     private Table contenedor;
     private Stack pila;
     private Label.LabelStyle labelStyle;
@@ -47,7 +48,7 @@ public class CuadraditoItem extends Table{
     }
     
     public void agregarListener() {
-    	this.addListener(new InputListener(){
+    	contenedor.addListener(new InputListener(){
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
                 System.out.println("El cursor está sobre "+ nombre);

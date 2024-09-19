@@ -155,8 +155,8 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		pedidosTable.add(diarioLbl);
 		//pedidosTable.add(pedidoBtn);
 		
-		pila.add(reloj);
 		pila.add(tiempo_Img);
+		pila.add(reloj);
 		hudDer.add(pila);
 		hudDer.row();
 		hudDer.add(diaLbl);
@@ -323,7 +323,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		proximaBatallaHUD.render();//Nose porque no funciona el click de proximaBatallaHUD cuando lo quiero usar despues de haber abierto resultadosHUD
 		diarioHUD.render();
 		}
-		determinarDia(juego.getDia());
+		determinarDia(MundoConfig.diaDelMundo);
 		diaLbl.setText(dia);
 		
 		
@@ -387,8 +387,10 @@ public class HUD implements HeadUpDisplay, Ocultable{
 	private void agregarAnimaciones() {
 	    tiempo_Img.setOrigin(tiempo_Img.getWidth() / 2f, tiempo_Img.getHeight() / 2f);
 
-	    tiempo_Img.addAction(Actions.forever(Actions.rotateBy(15, 1, Interpolation.linear)));//hacer esto bien
+	    //tiempo_Img.addAction(Actions.forever(Actions.rotateBy(1, 40, Interpolation.linear)));//hacer esto bien
+	    if(MundoConfig.horaDelMundo >= 0) {
 	    	
+	    }
 	    
 	}
 

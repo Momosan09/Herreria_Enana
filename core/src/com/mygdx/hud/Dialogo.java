@@ -21,7 +21,7 @@ import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 
-public class Dialogo implements HeadUpDisplay, Ocultable{
+public class Dialogo extends Actor implements HeadUpDisplay, Ocultable {
 
 	private Npc locutor;
 	private Jugador jugador;

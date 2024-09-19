@@ -62,8 +62,10 @@ import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 import com.mygdx.utiles.Config;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.HelpMapa;
+import com.mygdx.utiles.Iluminacion;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
+import com.mygdx.utiles.Tiempo;
 import com.mygdx.historia.MisionesDelJuego;
 import com.mygdx.historia.MisionesManager;
 
@@ -78,9 +80,7 @@ public class Juego implements Screen{
 	private HelpMapa helpMapa;
 	
 	//Box2dLight
-	private RayHandler rayHandler;
-	private PointLight pl, pl2;
-	private float valorLuz = 0;
+	private Iluminacion iluminacion;
 	 
 	
 	//Mapa
@@ -101,10 +101,7 @@ public class Juego implements Screen{
 	private CajaEntregas cajaEntregas;
 	
 	
-	//Tiempo
-	private int diaDelMundo = 3;
-	private float horaDelMundo = 10;
-	private float minutoDelMundo = 0;
+
 	
 	//Managers
 	private NPCManager npcManager;
@@ -144,10 +141,8 @@ public class Juego implements Screen{
 		//Box2d
 		helpMapa = new HelpMapa(this);
 		this.world = new World(new Vector2(0,0), false);
-		rayHandler = new RayHandler(world);
-		iluminacion();
-		
-		
+
+
 		this.box2Debug = new Box2DDebugRenderer();
 		Render.tiledMapRenderer = helpMapa.Inicializar();
 		MundoConfig.anchoMundo = helpMapa.getCantTilesAncho();
@@ -158,7 +153,7 @@ public class Juego implements Screen{
 		camaraJugador = new OrthographicCamera(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		camaraJugador.setToOrtho(false);
 		camaraJugador.zoom = .4f;
-		rayHandler.setCombinedMatrix(camaraJugador);
+
 		
 		camaraHud = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camaraHud.setToOrtho(false); 
@@ -168,8 +163,7 @@ public class Juego implements Screen{
 		jugador = new Jugador(camaraJugador, world, helpMapa.getJugadorSpawn());
 
 
-		
-
+		iluminacion = new Iluminacion(world, camaraJugador);
 				
 		//HUD
 
@@ -227,9 +221,11 @@ public class Juego implements Screen{
 	@Override
 	public void render(float delta){
 		entradas.estadosDelJuego();
+		Tiempo.contarSegundosEnEstadoJuego();//Cuenta el tiempo que EstadoJuego != PAUSA
+		 
 		//System.out.println(HelpDebug.debub(getClass()) + MundoConfig.apretoE);
 
-		System.out.println(MundoConfig.estadoJuego);
+		//System.out.println(MundoConfig.estadoJuego);
 		//hacer cosas dependiendo de los estados del juego
 		/*
 		switch (MundoConfig.estadoJuego) {
@@ -274,14 +270,12 @@ public class Juego implements Screen{
 		
 		
 		//GAMELOOP
-		horaDelMundo();
 		Render.batch.begin();
-		rayHandler.update();
+		iluminacion.render();
 		world.step(1/60f, 6, 2);
 		Render.tiledMapRenderer.setView(camaraJugador);
 		Render.tiledMapRenderer.render(helpMapa.getCapasDeFondo());
 		box2Debug.render(world, camaraJugador.combined);
-		rayHandler.setCombinedMatrix(camaraJugador.combined,0,0,1,1);	
 		Render.batch.end();
 
 		
@@ -312,7 +306,7 @@ public class Juego implements Screen{
 		
 		
 		Render.tiledMapRenderer.render(helpMapa.getCapasDeFrente());// Estas son las capas que esconden al jugador
-		rayHandler.render();
+		iluminacion.render();
 
 		Render.batch.begin();// HUD´s
 		ui.render();
@@ -486,84 +480,11 @@ public class Juego implements Screen{
 		return world;
 	}
 
-	private void iluminacion() {
-
-		rayHandler.setBlurNum(3);
-		rayHandler.setShadows(true);
-		pl = new PointLight(rayHandler, 128, new Color(Color.valueOf("#ea8e0e")), 300, 43*32, 55*32);
-		pl.setStaticLight(false);
-		pl.setSoft(false);
-		
-		pl2 = new PointLight(rayHandler, 128, new Color(Color.valueOf("#ef9413")),90, 35.5f*32, 57.5f*32);
-		pl2.setStaticLight(false);
-		pl2.setSoft(false);
-		rayHandler.setCulling(false); // Esto es lo que me hace que no se vean las luces que inicien fuera de los
-										// bordes de la pantalla
-	}
 	 
-	 private void horaDelMundo() { 
-		 if(!MundoConfig.pausarTiempo) {//Para cuando apretas escape o lo que sea
-		 
-		 minutoDelMundo+=0.5f;
-		 if(minutoDelMundo>= 60) {
-			 horaDelMundo++; 
-			 minutoDelMundo=0;
-		 }
-		 if(horaDelMundo >24) {
-			 diaDelMundo++;
-			 horaDelMundo=0;
-		 }
-		 if(diaDelMundo>7) {
-			 diaDelMundo=1;
-		 }
-		 
-
-		 if(horaDelMundo>=0 && horaDelMundo < 4.5f) {
-			 if(valorLuz <.2f) {
-				 valorLuz = valorLuz +.001f;
-			 }
-			 rayHandler.setAmbientLight(valorLuz);
-		 }else if(horaDelMundo < 12) {
-			 if(valorLuz <.7f) {
-				 valorLuz = valorLuz +.001f;
-			 }
-			 rayHandler.setAmbientLight(valorLuz);
-		 }else if(horaDelMundo < 15) {
-			 if(valorLuz <1f) {
-				 valorLuz = valorLuz +.001f;
-			 }
-			 rayHandler.setAmbientLight(valorLuz);
-		 }else if(horaDelMundo < 17) {
-			 if(valorLuz >.6f) {
-				 valorLuz = valorLuz - .001f;
-			 }
-			 rayHandler.setAmbientLight(valorLuz);
-		 }else if(horaDelMundo < 20) {
-			 if(valorLuz >.4f) {
-				 valorLuz = valorLuz - .001f;
-			 }
-		 }else if (horaDelMundo < 24) {
-			 if(valorLuz >.2f) {
-				 valorLuz = valorLuz - .001f;
-			 }
-		 }			 
-		 }
-	 }
-	 
-	 public int getDia() {
-		 return diaDelMundo;
-	 }
-	 public float getHora() {
-		 return horaDelMundo;
-	 }
-	 public float getMinuto() {
-		 return minutoDelMundo;
-	 }
 	 
 		@Override
 		public void dispose() {
 			Render.tiledMapRenderer.dispose();
-			rayHandler.dispose();
 			ui.dispose();
 			Recursos.muxJuego.clear();
 		}

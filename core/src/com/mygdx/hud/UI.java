@@ -147,7 +147,6 @@ public class UI {
 		case IDLE:
 			break;
 		case INICIO:
-
 			if(!carta.getCerrar()) {				
 			carta.render();
 			ocultar(hud,inventario,combinacion);

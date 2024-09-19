@@ -2,15 +2,18 @@ package com.mygdx.hud;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.Vendedor;
@@ -27,6 +30,7 @@ public class VentaHUD implements HeadUpDisplay, Ocultable {
 	private Vendedor vendedor;
 	private Jugador jugador;
 	private ScreenViewport screenViewport;
+	private NinePatchDrawable fondo;
 	private Stage stage;
 	private Skin skin;
 	private Button cerrarBoton;
@@ -90,7 +94,9 @@ public class VentaHUD implements HeadUpDisplay, Ocultable {
 		tabla.setFillParent(true);
 		tabla.setDebug(false);
 
+		fondo = new NinePatchDrawable(new NinePatch(new Texture(Recursos.VENTA_HUD)));
 		contenedor = new Table();
+		//contenedor.setBackground(fondo);
 		  // contenedor.defaults().size(100, 100); //Establece el tamaño deseado para cada casillero
 
 		cerrarBoton = new Button(skin);
@@ -146,6 +152,7 @@ public class VentaHUD implements HeadUpDisplay, Ocultable {
 				indiceFilas = 0;
 			}
 		}
+		//contenedor.add(new Image(vendedor.getData().getTextura()));
 	}
 	
 	public Vendedor getVendedor() {
