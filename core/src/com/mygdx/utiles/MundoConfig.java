@@ -23,6 +23,7 @@ public abstract class MundoConfig {
 	//Tiempo
 	public static boolean pausarTiempo = false; // El tiempo del mundo, los minutos y las horas no cambian, la luz tampoco. Eso no significa que se frena el juego
 	public static int diaDelMundo;
+	public static String dia;
 	public static float horaDelMundo;
 	public static float minutoDelMundo;
 }

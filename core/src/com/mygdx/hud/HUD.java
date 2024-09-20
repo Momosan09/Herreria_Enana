@@ -204,6 +204,8 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		reloj_Tex = new Texture(Recursos.MARCO_RELOJ);
 		tiempo_Tex = new Texture(Recursos.DIBUJO_RELOJ);
 		tiempo_Img = new Image(tiempo_Tex);
+	    tiempo_Img.setOrigin(tiempo_Img.getWidth() / 2f, tiempo_Img.getHeight() / 2f);
+	    tiempo_Img.setRotation(135);
 		reloj = new Image(reloj_Tex);
 	}
 
@@ -294,7 +296,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 			}
 		});
 		
-		agregarAnimaciones();
+
 		
 	}
 	
@@ -313,6 +315,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 	public void render() {
 		if(visible) {
 		//screenViewport.apply();//no estoy muy seguro de que hace esto
+		rotarReloj();
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 		
@@ -323,8 +326,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		proximaBatallaHUD.render();//Nose porque no funciona el click de proximaBatallaHUD cuando lo quiero usar despues de haber abierto resultadosHUD
 		diarioHUD.render();
 		}
-		determinarDia(MundoConfig.diaDelMundo);
-		diaLbl.setText(dia);
+		diaLbl.setText(MundoConfig.dia);
 		
 		
 	}
@@ -358,41 +360,39 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		
 	}
 	
-	private void determinarDia(int dia) {
-		switch (dia) {
-		case 1:
-			this.dia = Recursos.bundle.get("dia.1");
-			break;
-		case 2:
-			this.dia = Recursos.bundle.get("dia.2");
-			break;
-		case 3:
-			this.dia = Recursos.bundle.get("dia.3");
-			break;
-		case 4:
-			this.dia = Recursos.bundle.get("dia.4");
-			break;
-		case 5:
-			this.dia = Recursos.bundle.get("dia.5");
-			break;
-		case 6:
-			this.dia = Recursos.bundle.get("dia.6");
-			break;
-		case 7:
-			this.dia = Recursos.bundle.get("dia.7");
-			break;
-		}
-	}
-	
-	private void agregarAnimaciones() {
-	    tiempo_Img.setOrigin(tiempo_Img.getWidth() / 2f, tiempo_Img.getHeight() / 2f);
 
-	    //tiempo_Img.addAction(Actions.forever(Actions.rotateBy(1, 40, Interpolation.linear)));//hacer esto bien
-	    if(MundoConfig.horaDelMundo >= 0) {
-	    	
+	
+	private void rotarReloj() {
+
+	    float minutoDelDia = MundoConfig.horaDelMundo*60 + MundoConfig.minutoDelMundo;
+	    
+	    if(minutoDelDia == 1440) minutoDelDia = 0;
+	    
+	    if(minutoDelDia >= 240 && minutoDelDia < 480) {//De 0400Hs a 0800Hs
+	    	float angulo = minutoDelDia * 22.5f/60;
+	    	tiempo_Img.setRotation(angulo);
 	    }
 	    
+	    if(minutoDelDia >= 480 && minutoDelDia < 960) {//De 0800Hs a 1600Hs
+	    	float angulo = minutoDelDia * 11.25f/60;
+	    	tiempo_Img.setRotation(angulo);
+	    }
+	    
+	    if(minutoDelDia >= 960 && minutoDelDia < 1200) {//De 1600Hs a 2000Hs 
+	    	float angulo = minutoDelDia * 22.5f/60;
+	    	tiempo_Img.setRotation(angulo);
+	    }
+	    
+	    if(minutoDelDia >= 1200 && minutoDelDia < 240) {//De 2000Hs a 0400Hs
+	    	float minutosTranscurridos = (MundoConfig.horaDelMundo - 20)*60 + MundoConfig.minutoDelMundo;  // Horas desde las 4 AM en minutos
+	    	float angulo = minutosTranscurridos * 11.25f/60;
+	    	tiempo_Img.setRotation(angulo);
+	    }
 	}
+
+	    
+	    
+	
 
 	@Override
 	public boolean getVisible() {

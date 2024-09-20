@@ -18,12 +18,13 @@ public class Iluminacion {
     private ColorLuz colorLuz;
     
     private float valorLuzAmbiental, topeLuzAmbiental;
-    private long minutoDelMundo = 0, horaDelMundo = 6; // Inicia a las 6:00 AM en el mundo virtual
+    private long minutoDelMundo = 1, horaDelMundo = 6; // Inicia a las 6:00 AM en el mundo virtual
     private int diaDelMundo = 3;
     private long ultimoTiempoActualizacion = 0; // Control para actualizar el tiempo correctamente
     
     public Iluminacion(World world, OrthographicCamera camaraJugador) {
         this.world = world;
+        determinarDia(diaDelMundo);
         rayHandler = new RayHandler(world);
         rayHandler.setCombinedMatrix(camaraJugador);
         
@@ -31,12 +32,12 @@ public class Iluminacion {
         rayHandler.setShadows(true);
         pl = new PointLight(rayHandler, 128, new Color(Color.valueOf("#ea8e0e")), 300, 43*32, 55*32);
         pl.setStaticLight(false);
-        pl.setSoft(false);
+        pl.setSoft(true);
         
         pl2 = new PointLight(rayHandler, 128, new Color(Color.valueOf("#ef9413")), 90, 35.5f*32, 57.5f*32);
         pl2.setStaticLight(false);
         pl2.setSoft(false);
-        rayHandler.setCulling(false);
+        rayHandler.setCulling(false); //si lo pongo en true no anda la luz, pero deberia estar en true...
     }
 
     public void setCombinedMatrix(OrthographicCamera camaraJugador) {
@@ -49,13 +50,15 @@ public class Iluminacion {
 
     private void update() {
         rayHandler.update();
+
         tiempo();
         diaYNocheLuz();        
     }
 
-    public void render() {
+    public void render(OrthographicCamera camaraJugador) {
         update();
-        rayHandler.render();
+		rayHandler.setCombinedMatrix(camaraJugador.combined,0,0,1,1);
+		rayHandler.render();
     }
     
     private void tiempo() { 
@@ -95,15 +98,16 @@ public class Iluminacion {
 
             // Imprimir el tiempo virtual para debugging
             System.out.println(horaDelMundo + "Hs " + minutoDelMundo + "mins ");
+            determinarDia(diaDelMundo);
         }
     }
     
     private void diaYNocheLuz() {
-        if (horaDelMundo >= 0 && horaDelMundo < 4.5f) {
+        if (horaDelMundo >= 0 && horaDelMundo < 4f) {
             topeLuzAmbiental = .2f;
             estadoLuz = Luz.MANTENER;
             colorLuz = ColorLuz.MADRUGADA;
-        } else if (horaDelMundo >= 4.5f && horaDelMundo < 6f) {
+        } else if (horaDelMundo >= 4f && horaDelMundo < 6f) {
             topeLuzAmbiental = .3f;
             estadoLuz = Luz.INCREMENTAR;
             colorLuz = ColorLuz.CREPUSCULO;
@@ -138,4 +142,30 @@ public class Iluminacion {
 
         rayHandler.setAmbientLight(valorLuzAmbiental);
     }
+    
+	private void determinarDia(int dia) {
+		switch (dia) {
+		case 1:
+			MundoConfig.dia = Recursos.bundle.get("dia.1");
+			break;
+		case 2:
+			MundoConfig.dia = Recursos.bundle.get("dia.2");
+			break;
+		case 3:
+			MundoConfig.dia = Recursos.bundle.get("dia.3");
+			break;
+		case 4:
+			MundoConfig.dia = Recursos.bundle.get("dia.4");
+			break;
+		case 5:
+			MundoConfig.dia = Recursos.bundle.get("dia.5");
+			break;
+		case 6:
+			MundoConfig.dia = Recursos.bundle.get("dia.6");
+			break;
+		case 7:
+			MundoConfig.dia = Recursos.bundle.get("dia.7");
+			break;
+		}
+	}
 }

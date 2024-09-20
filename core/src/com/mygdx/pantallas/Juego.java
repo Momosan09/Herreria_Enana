@@ -271,7 +271,7 @@ public class Juego implements Screen{
 		
 		//GAMELOOP
 		Render.batch.begin();
-		iluminacion.render();
+		//iluminacion.render(camaraJugador);
 		world.step(1/60f, 6, 2);
 		Render.tiledMapRenderer.setView(camaraJugador);
 		Render.tiledMapRenderer.render(helpMapa.getCapasDeFondo());
@@ -306,7 +306,7 @@ public class Juego implements Screen{
 		
 		
 		Render.tiledMapRenderer.render(helpMapa.getCapasDeFrente());// Estas son las capas que esconden al jugador
-		iluminacion.render();
+		iluminacion.render(camaraJugador);
 
 		Render.batch.begin();// HUD´s
 		ui.render();
