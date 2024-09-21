@@ -205,7 +205,6 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		tiempo_Tex = new Texture(Recursos.DIBUJO_RELOJ);
 		tiempo_Img = new Image(tiempo_Tex);
 	    tiempo_Img.setOrigin(tiempo_Img.getWidth() / 2f, tiempo_Img.getHeight() / 2f);
-	    tiempo_Img.setRotation(135);
 		reloj = new Image(reloj_Tex);
 	}
 
@@ -368,26 +367,39 @@ public class HUD implements HeadUpDisplay, Ocultable{
 	    
 	    if(minutoDelDia == 1440) minutoDelDia = 0;
 	    
+	    
+	    if(minutoDelDia >= 0 && minutoDelDia < 240) {//De 0000Hs a 0400Hs (de 12AM a 4AM)
+	        // No restamos nada porque ya es desde el inicio del día.
+	        float angulo = minutoDelDia * 11.25f/60;
+	        tiempo_Img.setRotation(angulo + 315);
+	    }
+	    
 	    if(minutoDelDia >= 240 && minutoDelDia < 480) {//De 0400Hs a 0800Hs
-	    	float angulo = minutoDelDia * 22.5f/60;
+	    	minutoDelDia -= 240;//El juego empieza a las 0600Hs => 360mins
+	    	float angulo = minutoDelDia * (22.5f/60);
+
 	    	tiempo_Img.setRotation(angulo);
 	    }
 	    
 	    if(minutoDelDia >= 480 && minutoDelDia < 960) {//De 0800Hs a 1600Hs
+	    	minutoDelDia -= 480;
 	    	float angulo = minutoDelDia * 11.25f/60;
-	    	tiempo_Img.setRotation(angulo);
+	 
+	    	tiempo_Img.setRotation(angulo+90);
 	    }
 	    
 	    if(minutoDelDia >= 960 && minutoDelDia < 1200) {//De 1600Hs a 2000Hs 
+	    	minutoDelDia -= 960;
 	    	float angulo = minutoDelDia * 22.5f/60;
-	    	tiempo_Img.setRotation(angulo);
+	    	tiempo_Img.setRotation(angulo+180);
 	    }
 	    
-	    if(minutoDelDia >= 1200 && minutoDelDia < 240) {//De 2000Hs a 0400Hs
-	    	float minutosTranscurridos = (MundoConfig.horaDelMundo - 20)*60 + MundoConfig.minutoDelMundo;  // Horas desde las 4 AM en minutos
-	    	float angulo = minutosTranscurridos * 11.25f/60;
-	    	tiempo_Img.setRotation(angulo);
+	    if(minutoDelDia >= 1200 && minutoDelDia < 1440) {//De 2000Hs a 0400Hs
+	    	minutoDelDia -= 1200;
+	    	float angulo = minutoDelDia * 11.25f/60;
+	    	tiempo_Img.setRotation(angulo+270);
 	    }
+
 	}
 
 	    

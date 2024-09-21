@@ -18,7 +18,7 @@ public class Iluminacion {
     private ColorLuz colorLuz;
     
     private float valorLuzAmbiental, topeLuzAmbiental;
-    private long minutoDelMundo = 1, horaDelMundo = 6; // Inicia a las 6:00 AM en el mundo virtual
+    private long minutoDelMundo = 1, horaDelMundo = 4; // Inicia a las 6:00 AM en el mundo virtual
     private int diaDelMundo = 3;
     private long ultimoTiempoActualizacion = 0; // Control para actualizar el tiempo correctamente
     

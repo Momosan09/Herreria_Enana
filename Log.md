@@ -345,3 +345,7 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
     - Agrega clase Tiempo. Se usa para medir el tiempo de sesion y el tiempo dentro del juego (gameplay).
     - Aprovecha clase Tiempo para corregir el sistema de dias, horas y minutos introducido hace un monton. ¡Ahora el tiempo dentro del juego funciona bien!
     - Modificaciones en el reloj del hud (aun no anda)
+
+# 20 SEP
+    - ¡El reloj funciona! (eso es basicamente todo lo de hoy (esta mier me llevo horas))
+    
