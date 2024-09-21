@@ -24,25 +24,20 @@ public abstract class Entidad {
 	protected Vector2 posicion;//La necesito en las hijas
 	protected Texture textura;//La necesito en las hijas
 
-	protected boolean jugadorEnRango = false, apretoE = false;
-	private boolean jugadorTienePico = false;//Deberia ir en mineral pero no se me ocurre como hacerlo
-	private boolean comprable = false;
-	private String nombre;
-	protected int colisionAncho= MundoConfig.tamanoTile, colisionAlto=colisionAncho;//Por si tengo entidades mas grandes?
+	protected boolean jugadorEnRango = false;
 	protected Body body;
 	protected Rectangle areaDeInteraccion;
-	protected int indiceZ;
 	protected Sprite sprite;
-
+	protected int indiceZ;
+	private boolean comprable = false;
 	private int distanciaInteraccion = 20;
+
 	
 	public Entidad(float x, float y, World world, String rutaTextura) {
 		x=x*MundoConfig.tamanoTile;
 		y=(MundoConfig.altoMundo - y) * MundoConfig.tamanoTile;
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
-		
-
 		
 		areaDeInteraccion = new Rectangle(posicion.x - distanciaInteraccion/2, posicion.y - distanciaInteraccion/2,
 				MundoConfig.tamanoTile+distanciaInteraccion, (MundoConfig.tamanoTile+ distanciaInteraccion));
@@ -70,6 +65,14 @@ public abstract class Entidad {
 	}
 	
 	
+	public Entidad(float x, float y, String rutaTextura) {
+		this.posicion = new Vector2(x,y);
+		this.textura = new Texture(rutaTextura);
+		this.sprite = new Sprite(textura);
+		areaDeInteraccion = new Rectangle(posicion.x - distanciaInteraccion/2, posicion.y - distanciaInteraccion/2,
+				MundoConfig.tamanoTile+distanciaInteraccion, (MundoConfig.tamanoTile+ distanciaInteraccion));
+	}
+
 	protected void crearCuerpo(World world) {// cuerpos basicos por defecto
 		// Crear el cuerpo del jugador
         BodyDef bodyDef = new BodyDef();
@@ -118,8 +121,6 @@ public abstract class Entidad {
 	
 	
 	public void detectarJugador(Jugador jugador) {
-		buscarItemEnJugador(jugador);//Cuando el jugador esta dentro del rango de la entidad, esta busca en los items del jugador. Esto me puede servir para objetos de mision y el minado
-
 		if(areaDeInteraccion.overlaps(jugador.areaJugador)) {		
 		//		if(((jugador.getPosicion().x - this.posicion.x) < distanciaInteraccion && (jugador.getPosicion().x - this.posicion.x) > -distanciaInteraccion) && ((jugador.getPosicion().y - this.posicion.y) < distanciaInteraccion && (jugador.getPosicion().y - this.posicion.y) > -distanciaInteraccion)){	
 			jugadorEnRango = true;
@@ -144,23 +145,6 @@ public abstract class Entidad {
 		return distanciaInteraccion;
 	}
 	
-	public void buscarItemEnJugador(Jugador jugador) {//Setea los items que el jugador tiene o no tiene
-		if(jugador.getItems().contains(Items.PICO)) {
-			jugadorTienePico = true;
-		}else {
-			jugadorTienePico = false;
-		}
-	}
-	
-	public boolean buscarPorItemEnJugador(Items item) {//Para las clases hijas, sirve para saber si el jugador tiene un item en especifico
-		switch (item) {
-		case PICO:
-			return jugadorTienePico;
-
-		default:
-			return false;
-		}
-	}
 	
 	public Texture getTextura() {
 		return textura;
@@ -174,9 +158,6 @@ public abstract class Entidad {
 		return body;
 	}
 	
-	public String getNombre() {
-		return nombre;
-	}
 
 	public int getIndiceZ() {
 		return indiceZ;

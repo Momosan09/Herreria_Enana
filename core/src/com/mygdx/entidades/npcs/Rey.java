@@ -11,4 +11,5 @@ public class Rey extends Npc{
 		
 	}
 
+
 }

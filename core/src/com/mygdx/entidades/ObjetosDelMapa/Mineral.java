@@ -81,18 +81,18 @@ public class Mineral extends ObjetoDelMapa{
 	    }
 	}
 
-	public void minar(Jugador jugador) {
-	    if ((getJugadorEnRango() && buscarPorItemEnJugador(Items.PICO))) {
-	    	System.out.println("Me mina");
-	        if (Gdx.input.isTouched()) {
-	            click(jugador);
-	        }
-
-	        if (this.vida <= 0) {
-	        	recolectar();
-	        }
-	    }
-	}
+//	public void minar(Jugador jugador) {
+//	    if ((getJugadorEnRango() && buscarPorItemEnJugador(Items.PICO))) {
+//	    	System.out.println("Me mina");
+//	        if (Gdx.input.isTouched()) {
+//	            click(jugador);
+//	        }
+//
+//	        if (this.vida <= 0) {
+//	        	recolectar();
+//	        }
+//	    }
+//	}
 
 	
 	private void recolectar() {

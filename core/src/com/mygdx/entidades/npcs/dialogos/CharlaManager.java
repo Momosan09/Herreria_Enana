@@ -220,13 +220,11 @@ public class CharlaManager {
 	}
 
 	private void cerrarDialogo(Npc npc) {
-		MundoConfig.apretoE = false;
 		MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
 		jugador.resetearRespuestas();
 	}
 	
 	private void abrirVenta(Vendedor vendedor) {
-		MundoConfig.apretoE = false;
 		MundoConfig.estadoJuego = EstadosDelJuego.VENTA;
 		MundoConfig.vendedor = vendedor;
 		jugador.resetearRespuestas();

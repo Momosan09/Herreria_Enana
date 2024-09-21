@@ -84,7 +84,7 @@ public class Iluminacion implements EventoCambioDeDia{
                 horaDelMundo++;
                 minutoDelMundo = 0;
             }
-            Listeners.cambioDeDia();
+
             // Si las horas del mundo superan 24, incrementa el día del mundo
             if (horaDelMundo >= 24) {
         		horaDelMundo = 0;
@@ -208,7 +208,6 @@ public class Iluminacion implements EventoCambioDeDia{
         //Ver si hay carta para ese dia
         CartaHUD cartaDelDia = CartasManager.determinarCarta();
         if(cartaDelDia != null) {
-        	System.out.println("hay carta para hoy \n");
         	Listeners.recibirCarta(cartaDelDia);        	
         }else {
         	//System.out.println("No hay carta para hoy \n");

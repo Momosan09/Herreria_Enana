@@ -3,6 +3,8 @@ package com.mygdx.entidades;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.eventos.EventoInteraccionObj;
+import com.mygdx.eventos.Listeners;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
@@ -31,20 +33,16 @@ public abstract class ObjetoDelMapa extends Entidad{
 	
 	public ObjetoDelMapa(float x, float y, boolean comprable, String rutaTextura) {
 		super(x, y, comprable,rutaTextura);
+		OrganizadorSpritesIndiceZ.objetosDelMapa.add(this);
 		}
-	
-	public boolean interaccion() {
-		while(jugadorEnRango && MundoConfig.apretoE) {
-			return true;
-		}
-		return false;
-	}
 
-	public void mostrarMensaje() {
-		if(interaccion()) {
-			System.out.println(HelpDebug.debub(getClass())+"yea");
-		}
+
+	public ObjetoDelMapa(float x, float y, String rutaTextura) {
+		super(x,y,rutaTextura);
 	}
+	
+
+
 	
 	
 }

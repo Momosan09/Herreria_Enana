@@ -87,9 +87,6 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
 			public void changed(ChangeEvent event, Actor actor) {
 				ocultar();
 				MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
-				if(MundoConfig.apretoE) {
-					MundoConfig.apretoE = false;;
-				}
 			}
 		});
     	

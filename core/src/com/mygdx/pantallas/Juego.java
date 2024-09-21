@@ -18,7 +18,7 @@ import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.entidades.ObjetosDelMapa.AltoHorno;
 import com.mygdx.entidades.ObjetosDelMapa.CajaEntregas;
-import com.mygdx.entidades.ObjetosDelMapa.Horno;
+import com.mygdx.entidades.ObjetosDelMapa.Carta;
 import com.mygdx.entidades.ObjetosDelMapa.Mesa;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.MineralesManager;
@@ -90,11 +90,10 @@ public class Juego implements Screen{
 	
 	//Entidades
 	private Jugador jugador;
-	private ObjetoDelMapa carta;
+	private Carta carta;
 	private Npc viejo, vendedorAmbulate, vendedorTienda, carpintero, rey;
 	private Texture jugadorTextura;
 	private Mineral piedra, hierro, hierro1, piedra2, carbon;
-	private Horno horno;
 	private AltoHorno altoHorno;
 	private SoporteArmadura soporteArmadura;
 	private Yunque yunque;
@@ -113,13 +112,6 @@ public class Juego implements Screen{
 
 	//Scene2d.ui
 	private UI ui;
-
-	private DialogoDeCompra dialogoDeCompra;
-	private Fundicion fundicionHUD;
-	private MesaHUD mesaHUD;
-	private SoporteArmaduraHUD soporteArmaduraHUD;
-	private CajaEntregasHUD cajaEntregasHUD;
-	private YunqueHUD yunqueHUD;
 	
 	//Entradas 
 	private Entradas entradas;
@@ -165,21 +157,6 @@ public class Juego implements Screen{
 		ui = new UI(jugador,this);//Ui tiene que ir antes que iluminacion por el orden en el que se cargan los listeners TODO arreglar eso
 		iluminacion = new Iluminacion(world, camaraJugador);
 				
-		//HUD
-
-	    dialogoDeCompra = new DialogoDeCompra();
-
-	    //muxJuego.addProcessor(dialogoDeCompra.getStage());
-	   
-	    
-	    
-		
-		
-		mesaHUD = new MesaHUD(jugador);
-		yunqueHUD = new YunqueHUD(jugador);
-		fundicionHUD = new Fundicion(jugador);
-		cajaEntregasHUD = new CajaEntregasHUD(jugador);
-		soporteArmaduraHUD = new SoporteArmaduraHUD(jugador);
     	
 		//Npc
 		crearNPCs();
@@ -214,6 +191,7 @@ public class Juego implements Screen{
 		jugador.getMinerales().add(hierro1);
 		
 		entradas = new Entradas(jugador);
+		carta = new Carta(36, 12, world, Recursos.CARTA, jugador);
 		
 		//MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
 	}
@@ -289,6 +267,8 @@ public class Juego implements Screen{
 		//npcManager.renderizar();
 		//mineralesManager.renderizar();
 		objetosDelTallerManager.renderizar();
+		carta.draw();
+		carta.detectarJugador(jugador);
 		
 		npcManager.detectarJugador(jugador);
 		mineralesManager.detectarJugador(jugador);
@@ -311,33 +291,13 @@ public class Juego implements Screen{
 		Render.batch.begin();// HUD´s
 		ui.render();
 		
-		System.out.println(MundoConfig.estadoJuego);
 			charlaManager.checkearCharlas(vendedorTienda, vendedorAmbulate, viejo, carpintero);
 			// Renderiza el HUD
 			camaraHud.update();
 			Render.batch.setProjectionMatrix(camaraHud.combined);// Una vez que renderiza el juego, se inicia el batch
 																	// para la camara del HUD y lo dibuja
 
-			// Renderiza ocultables
-				
 
-			dialogoDeCompra.render(jugador);
-			
-	
-
-			renderizarHUDSTaller();
-			mostrarHUDSTaller();
-
-			if (mineralesManager.comprar(jugador)) {
-				// Comprueba si el diálogo de compra debe abrirse o cerrarse
-				if (!dialogoDeCompra.isVisible()) {
-					// Abre el diálogo de compra
-					dialogoDeCompra.mostrar();
-				} else {
-					// Cierra el diálogo de compra
-					dialogoDeCompra.ocultar();
-				}
-			}
 	
 		misionesManager.checkearMisiones();//Se fija si las condiciones se cumplen
 		Render.batch.end();
@@ -350,13 +310,8 @@ public class Juego implements Screen{
 		camaraJugador.update();	
 		
 		ui.reEscalar(width, height);
-
-		reEscalarHUDSTaller(width, height);
 	    
 		//hud.reEscalar(width, height);
-
-
-	    dialogoDeCompra.reEscalar(width, height);
 	    System.out.println(HelpDebug.debub(getClass())+"X =" +Gdx.graphics.getWidth() + " Y =" + Gdx.graphics.getHeight());
 
 	}
@@ -387,11 +342,11 @@ public class Juego implements Screen{
 	}
 	
 	public void crearObjetosDelTaller() {
-		mesa = new Mesa(39, 15, world, Recursos.MESA, mesaHUD, jugador);
-		yunque = new Yunque(34, 13, world, Recursos.YUNQUE, yunqueHUD, jugador);
-		altoHorno = new AltoHorno(34, 10, world, Recursos.ALTO_HORNO, fundicionHUD, jugador); //Estas coordenadas las saco de Tiled
-		cajaEntregas = new CajaEntregas(39, 15.5f, world, Recursos.CAJA_ENTREGAS, cajaEntregasHUD, jugador);
-		soporteArmadura = new SoporteArmadura(32, 18, world, Recursos.SOPORTE_ARMADURAS, soporteArmaduraHUD, jugador);
+		mesa = new Mesa(39, 15, world, Recursos.MESA, jugador);
+		yunque = new Yunque(34, 13, world, Recursos.YUNQUE, jugador);
+		altoHorno = new AltoHorno(34, 10, world, Recursos.ALTO_HORNO, jugador); //Estas coordenadas las saco de Tiled
+		cajaEntregas = new CajaEntregas(39, 15.5f, world, Recursos.CAJA_ENTREGAS, jugador);
+		soporteArmadura = new SoporteArmadura(32, 18, world, Recursos.SOPORTE_ARMADURAS, jugador);
 		
 	}
 	
@@ -406,32 +361,7 @@ public class Juego implements Screen{
 		
 	}
 	
-	private void mostrarHUDSTaller() {
-		if(jugador.getInteraccion()) {
-		mesa.mostrarHUD();
-		yunque.mostarHUD();
-		altoHorno.mostrarHUD();
 
-		cajaEntregas.mostrarHUD();
-		soporteArmadura.mostrarHUD();
-		}
-	}
-	
-	private void renderizarHUDSTaller() {
-		mesaHUD.render();
-		yunqueHUD.render();
-		fundicionHUD.render();
-		cajaEntregasHUD.render();
-		soporteArmaduraHUD.render();
-	}
-	
-	private void reEscalarHUDSTaller(int width, int height) {
-		mesaHUD.reEscalar(width, height);
-		yunqueHUD.reEscalar(width, height);
-		fundicionHUD.reEscalar(width, height);
-		cajaEntregasHUD.reEscalar(width, height);
-		soporteArmaduraHUD.reEscalar(width, height);
-	}
 	
 	private void npcManagerConfig() {
 		npcManager = new NPCManager();
@@ -473,9 +403,6 @@ public class Juego implements Screen{
 		game.setScreen(new PantallaMenu(game));
 	}
 
-	public Horno getHorno() {
-		return horno;
-	}
 
 	public World getWorld() {
 		return world;

@@ -165,9 +165,6 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 			public void changed(ChangeEvent event, Actor actor) {
 				ocultar();
 				MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
-				if(MundoConfig.apretoE) {
-					MundoConfig.apretoE = false;;
-				}
 			}
 		});
 		

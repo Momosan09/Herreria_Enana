@@ -56,7 +56,6 @@ public class Jugador {
 	public boolean estaChocando = false;
 	public String spritesheet;
 	public Rectangle areaJugador;
-	private boolean teclaE=false;
 	
 	//Inventarios
 	private ArrayList<Item> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
@@ -130,15 +129,8 @@ public class Jugador {
 	private void update() {
 		movimiento(Gdx.graphics.getDeltaTime());
 		eliminarItemRoto();
-		interaccion();
 	}
 
-	private void interaccion() {
-		if(Gdx.input.isKeyJustPressed(Keys.E)) {
-			teclaE = true;
-			System.out.println(HelpDebug.debub(getClass())+"jugador interaccion");
-		}
-	}
 	
 	private void movimiento(float deltaTime) {
         float movimientoX = 0;
@@ -422,20 +414,11 @@ public class Jugador {
 		respuesta1 = Respuestas.NOVALOR;
 		respuesta2 = Respuestas.NOVALOR;
 	}
-	
-	public boolean getInteraccion() {
-		if(teclaE) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-	
-	public void borrarInteraccion() {
-		teclaE = false;
-	}
 
-	//Equipar objetos
+	/**
+	 * Para equipar en la mano
+	 * @param numero
+	 */
 	public void equipar(int numero) {
 		switch (numero) {
 		case 1:

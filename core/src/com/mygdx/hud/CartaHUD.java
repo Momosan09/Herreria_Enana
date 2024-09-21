@@ -74,6 +74,7 @@ public class CartaHUD implements HeadUpDisplay, Cerrable{
 				cerrar = true;
 				System.out.println(HelpDebug.debub(getClass())+cerrar);
 				MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
+				cerrar = false;
 			}
 		});
 	}

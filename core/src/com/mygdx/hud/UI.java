@@ -162,6 +162,8 @@ public class UI implements EventoRecibirCarta{
 				ocultar(hud,inventario,combinacion);
 				jugador.puedeMoverse = false;
 				MundoConfig.pausarTiempo = true;
+			}else {
+				Recursos.muxJuego.removeProcessor(carta.getStage());
 			}
 			break;
 		case VENTA:

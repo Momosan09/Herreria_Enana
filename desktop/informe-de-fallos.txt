@@ -1,16 +1,18 @@
 com.badlogic.gdx.utils.GdxRuntimeException: java.lang.Error: Unresolved compilation problem: 
-	Cannot instantiate the type CartasManager
+	The method interaccion() is undefined for the type Vendedor
 
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:172)
 	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)
 Caused by: java.lang.Error: Unresolved compilation problem: 
-	Cannot instantiate the type CartasManager
+	The method interaccion() is undefined for the type Vendedor
 
-	at com.mygdx.pantallas.Juego.show(Juego.java:180)
-	at com.badlogic.gdx.Game.setScreen(Game.java:63)
-	at com.mygdx.game.Principal.create(Principal.java:32)
-	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.initializeListener(Lwjgl3Window.java:416)
-	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:366)
+	at com.mygdx.entidades.Vendedor.interaccionNPC(Vendedor.java:28)
+	at com.mygdx.eventos.Listeners.interaccion(Listeners.java:62)
+	at com.mygdx.io.Entradas.estadosDelJuego(Entradas.java:38)
+	at com.mygdx.pantallas.Juego.render(Juego.java:201)
+	at com.badlogic.gdx.Game.render(Game.java:48)
+	at com.mygdx.game.Principal.render(Principal.java:38)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:387)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:192)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:166)
 	... 1 more

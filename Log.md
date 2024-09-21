@@ -349,4 +349,6 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
 # 20 SEP
     - ¡El reloj funciona! (eso es basicamente todo lo de hoy (esta mier me llevo horas))
     - Agrego base para eventos (no se porque no los estuve usando todo este tiempo)
+    - Cambios en las interacciones tanto para NPCS y Objetos del mapa
+    - Ahora hay una carta fisica que aparece en el mapa la cual muestra el hud de la carta a leer
     

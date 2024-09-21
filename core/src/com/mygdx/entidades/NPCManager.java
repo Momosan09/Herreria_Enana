@@ -30,7 +30,7 @@ public class NPCManager {
     public void detectarJugador(Jugador jugador) {
         for (Npc entidad : npcs) {
             entidad.detectarJugador(jugador);
-            entidad.interaccion();
+           // entidad.interaccion();
         }
     }
     

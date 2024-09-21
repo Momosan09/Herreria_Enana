@@ -16,7 +16,6 @@ public abstract class MundoConfig {
 	public static boolean habilitadoHUDS = false;
 	
 	public static EstadosDelJuego estadoJuego = null;
-	public static boolean apretoE = false;
 	
 	public static Npc locutor;
 	public static Vendedor vendedor;

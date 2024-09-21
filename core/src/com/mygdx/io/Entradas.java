@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.enums.EstadosDelJuego;
+import com.mygdx.eventos.Listeners;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
@@ -34,9 +35,7 @@ public class Entradas implements InputProcessor {
 	public void estadosDelJuego() {
 		
 		if(Gdx.input.isKeyJustPressed(Keys.E)) {
-			System.out.println(HelpDebug.debub(getClass())+"Apreto E");
-			apretoE = true;
-			MundoConfig.apretoE = apretoE;
+			Listeners.interaccion();
 		}
 		
 		if(Gdx.input.isKeyJustPressed(Keys.TAB)) {

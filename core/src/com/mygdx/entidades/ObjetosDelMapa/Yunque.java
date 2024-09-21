@@ -8,40 +8,35 @@ import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.TipoCombinacion;
+import com.mygdx.eventos.EventoInteraccionObj;
+import com.mygdx.eventos.Listeners;
 import com.mygdx.hud.YunqueHUD;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.MyDragAndDrop;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 
-public class Yunque extends ObjetoDelMapa{
+public class Yunque extends ObjetoDelMapa implements EventoInteraccionObj{
 
-	private YunqueHUD hud;
-	private MyDragAndDrop dragDrop;
 	private boolean entro = false;
 	
-	public Yunque(float x, float y, World world, String rutaTextura, YunqueHUD hud, Jugador jugador) {
+	public Yunque(float x, float y, World world, String rutaTextura, Jugador jugador) {
 		super(x, y, world, rutaTextura, jugador);
-		this.hud = hud;
-		dragDrop = new MyDragAndDrop(jugador);
+		 Listeners.agregarListener(this);
 	}
 	
 	public void mostarHUD() {
-		if (getJugadorEnRango()) {
-			MundoConfig.estadoJuego = EstadosDelJuego.COMBINACION;
-		} else if (!getJugadorEnRango()){
-			jugador.borrarInteraccion();
-			//MundoConfig.apretoE = false;
-		}
+		MundoConfig.estadoJuego = EstadosDelJuego.COMBINACION;
 	}
 	
 
-	public YunqueHUD getHUD() {
-		return hud;
-	}
-	
-	public Stage getDragAndDrop() {
-		return dragDrop.getStage();
+
+
+	@Override
+	public void interaccionObj() {
+		if (getJugadorEnRango()) {
+		mostarHUD();
+		}
 	}
 
 }

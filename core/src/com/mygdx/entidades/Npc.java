@@ -7,6 +7,8 @@ import com.mygdx.entidades.npcs.dialogos.Charla;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
+import com.mygdx.eventos.EventoInteraccionNPC;
+import com.mygdx.eventos.Listeners;
 import com.mygdx.hud.Dialogo;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.Config;
@@ -15,7 +17,7 @@ import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 
 import java.util.ArrayList;
 
-public abstract class Npc extends Entidad implements NpcInterface{
+public abstract class Npc extends Entidad implements NpcInterface, EventoInteraccionNPC{
 	
 	protected String nombre;
 	private ArrayList<String[]> paqueteDeCharlas;//Tiene los datos de las charlas. Es muy importante el que tenga en el npc_dialogos_***
@@ -45,6 +47,7 @@ public abstract class Npc extends Entidad implements NpcInterface{
 		OrganizadorSpritesIndiceZ.NPCS.add(this);
 		animacion = new Animator(ruta, posicion, 0);
 		animacion.create();
+		Listeners.agregarListener(this);
 	}
 	
 	public Npc(float x, float y, World world, String ruta, NpcData data, VendedorData itemsData){
@@ -62,6 +65,7 @@ public abstract class Npc extends Entidad implements NpcInterface{
 		OrganizadorSpritesIndiceZ.NPCS.add(this);
 		animacion = new Animator(ruta, posicion, 0);
 		animacion.create();
+		Listeners.agregarListener(this);
 	}
 	
 	public Npc(float x, float y, World world, String ruta, NpcData data, int ancho, int alto){//para los npc con colisiones mas grandes o mas chicas
@@ -78,6 +82,7 @@ public abstract class Npc extends Entidad implements NpcInterface{
 		OrganizadorSpritesIndiceZ.NPCS.add(this);
 		animacion = new Animator(ruta, posicion, 0);
 		animacion.create();
+		Listeners.agregarListener(this);
 	}
 	
 	public Npc(float x, float y, World world, String ruta, int ancho, int alto){//para los npc con colisiones mas grandes o mas chicas
@@ -91,17 +96,18 @@ public abstract class Npc extends Entidad implements NpcInterface{
 		OrganizadorSpritesIndiceZ.NPCS.add(this);
 		animacion = new Animator(ruta, posicion, 0);
 		animacion.create();
+		Listeners.agregarListener(this);
 	}
 	
 	
-	
-	public void interaccion() {
-		if(jugadorEnRango && MundoConfig.apretoE) {
+	@Override
+	public void interaccionNPC() {
+		if(getJugadorEnRango()) {
 				MundoConfig.estadoJuego = EstadosDelJuego.DIALOGO;
 				MundoConfig.locutor = this;	
 		}
 		
-		if(!jugadorEnRango) {
+		if(!getJugadorEnRango()) {
 			resetearRespuestas();
 		}
 	}

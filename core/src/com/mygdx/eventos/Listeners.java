@@ -30,7 +30,41 @@ public class Listeners {
 		public static void cambioDeDia() {
 			for (EventListener listener : listeners) {
 				if((listener instanceof EventoCambioDeDia)) {
-					((EventoCambioDeDia)listener).cambioDeDia();;
+					((EventoCambioDeDia)listener).cambioDeDia();
+				}
+			}
+		}
+		
+		public static void interaccionObjetoMapa() {
+			for (EventListener listener : listeners) {
+				if((listener instanceof EventoInteraccionObj)) {
+					((EventoInteraccionObj)listener).interaccionObj();
+				}
+			}
+		}
+		
+		public static void interaccionNPC() {
+			for (EventListener listener : listeners) {
+				if((listener instanceof EventoInteraccionNPC)) {
+					((EventoInteraccionNPC)listener).interaccionNPC();
+				}
+			}
+		}
+		
+		
+		/**
+		 * Metodo general de interaccion, contiene interaccionNPC e interaccionObj
+		 */
+		public static void interaccion() {
+			System.out.println("interaccion");
+			for (EventListener listener : listeners) {
+				if((listener instanceof EventoInteraccionNPC)) {
+					((EventoInteraccionNPC)listener).interaccionNPC();
+
+				}
+				if((listener instanceof EventoInteraccionObj)) {
+					((EventoInteraccionObj)listener).interaccionObj();
+
 				}
 			}
 		}

@@ -6,27 +6,31 @@ import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.enums.EstadosDelJuego;
+import com.mygdx.eventos.EventoInteraccionObj;
+import com.mygdx.eventos.Listeners;
 import com.mygdx.hud.Fundicion;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 
-public class AltoHorno extends ObjetoDelMapa{
+public class AltoHorno extends ObjetoDelMapa implements EventoInteraccionObj{
 
-    private Fundicion hud;
 	
-	public AltoHorno(float x, float y, World world, String rutaTextura, Fundicion hud, Jugador jugador) {
+	public AltoHorno(float x, float y, World world, String rutaTextura, Jugador jugador) {
 		 super(x, y, world, rutaTextura, jugador);
-	        this.hud = hud;
+		 Listeners.agregarListener(this);
 	       	}
 	
 	public void mostrarHUD() {
-		if (getJugadorEnRango()) {
 			MundoConfig.estadoJuego = EstadosDelJuego.FUNDICION;
-		} else if (!getJugadorEnRango()){
-			jugador.borrarInteraccion();
-			//MundoConfig.apretoE = false;
-		}
     
 	}
+
+	@Override
+	public void interaccionObj() {
+		if (getJugadorEnRango()) {
+		mostrarHUD();
+		}
+	}
+
 	
 }

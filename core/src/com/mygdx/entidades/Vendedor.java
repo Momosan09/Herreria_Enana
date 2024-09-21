@@ -24,4 +24,5 @@ public class Vendedor extends Npc{
 	}
 
 
+
 }

@@ -71,7 +71,7 @@ public class MineralesManager {
     public void minar(Jugador jugador) { //necesito al jugador para saber a quien pasarle el mineral cuando es picado
     	for (Mineral mineral : minerales) {
     		if(mineral.vida > 0 && !mineral.isComprable()) {//Si el mineral esta vivo y no es comprable, se puede minar
-			mineral.minar(jugador);
+			//mineral.minar(jugador);
     		}
 		}
     }

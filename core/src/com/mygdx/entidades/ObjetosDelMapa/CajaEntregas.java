@@ -4,30 +4,31 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetoDelMapa;
+import com.mygdx.enums.EstadosDelJuego;
+import com.mygdx.eventos.EventoInteraccionObj;
+import com.mygdx.eventos.Listeners;
 import com.mygdx.hud.CajaEntregasHUD;
 import com.mygdx.utiles.MundoConfig;
 
-public class CajaEntregas extends ObjetoDelMapa{
+public class CajaEntregas extends ObjetoDelMapa implements EventoInteraccionObj{
 
-	private CajaEntregasHUD hud;
 	
-	public CajaEntregas(float x, float y, World world, String rutaTextura, CajaEntregasHUD hud, Jugador jugador) {
+	public CajaEntregas(float x, float y, World world, String rutaTextura, Jugador jugador) {
 		 super(x, y, world, rutaTextura, jugador);
-	        this.hud = hud;
+		 Listeners.agregarListener(this);
 	}
 
 	public void mostrarHUD() {
-		if (getJugadorEnRango()) {
-			hud.mostrar();
-		}else{
-			hud.ocultar();
-			jugador.borrarInteraccion();
-		}
+		MundoConfig.estadoJuego = EstadosDelJuego.CAJA_ENTREGAS;
+		
 	}
 	
-	   public CajaEntregasHUD getHUD() {
-	    	return hud;
-	    }
+	@Override
+	public void interaccionObj() {
+		if (getJugadorEnRango()) {
+		mostrarHUD();
+		}
+	}
 		
  
 	
