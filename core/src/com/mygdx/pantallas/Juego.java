@@ -66,6 +66,7 @@ import com.mygdx.utiles.Iluminacion;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 import com.mygdx.utiles.Tiempo;
+import com.mygdx.historia.CartasManager;
 import com.mygdx.historia.MisionesDelJuego;
 import com.mygdx.historia.MisionesManager;
 
@@ -100,8 +101,6 @@ public class Juego implements Screen{
 	private Mesa mesa;
 	private CajaEntregas cajaEntregas;
 	
-	
-
 	
 	//Managers
 	private NPCManager npcManager;
@@ -163,6 +162,7 @@ public class Juego implements Screen{
 		jugador = new Jugador(camaraJugador, world, helpMapa.getJugadorSpawn());
 
 
+		ui = new UI(jugador,this);//Ui tiene que ir antes que iluminacion por el orden en el que se cargan los listeners TODO arreglar eso
 		iluminacion = new Iluminacion(world, camaraJugador);
 				
 		//HUD
@@ -173,7 +173,7 @@ public class Juego implements Screen{
 	   
 	    
 	    
-		ui = new UI(jugador,this);
+		
 		
 		mesaHUD = new MesaHUD(jugador);
 		yunqueHUD = new YunqueHUD(jugador);
@@ -215,7 +215,7 @@ public class Juego implements Screen{
 		
 		entradas = new Entradas(jugador);
 		
-		MundoConfig.estadoJuego = EstadosDelJuego.INICIO;
+		//MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
 	}
 
 	@Override
@@ -311,6 +311,7 @@ public class Juego implements Screen{
 		Render.batch.begin();// HUD´s
 		ui.render();
 		
+		System.out.println(MundoConfig.estadoJuego);
 			charlaManager.checkearCharlas(vendedorTienda, vendedorAmbulate, viejo, carpintero);
 			// Renderiza el HUD
 			camaraHud.update();

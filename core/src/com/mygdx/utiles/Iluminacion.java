@@ -6,10 +6,15 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.enums.ColorLuz;
 import com.mygdx.enums.Luz;
+import com.mygdx.eventos.EventoCambioDeDia;
+import com.mygdx.eventos.Listeners;
+import com.mygdx.historia.CartasManager;
+import com.mygdx.hud.CartaHUD;
+
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
 
-public class Iluminacion {
+public class Iluminacion implements EventoCambioDeDia{
     
     private World world;
     private RayHandler rayHandler;
@@ -38,6 +43,10 @@ public class Iluminacion {
         pl2.setStaticLight(false);
         pl2.setSoft(false);
         rayHandler.setCulling(false); //si lo pongo en true no anda la luz, pero deberia estar en true...
+    
+        Listeners.agregarListener(this);
+        Listeners.cambioDeDia();//Esto tiene que estar aca para los eventos del primer dia
+
     }
 
     public void setCombinedMatrix(OrthographicCamera camaraJugador) {
@@ -50,7 +59,6 @@ public class Iluminacion {
 
     private void update() {
         rayHandler.update();
-
         tiempo();
         diaYNocheLuz();        
     }
@@ -76,11 +84,14 @@ public class Iluminacion {
                 horaDelMundo++;
                 minutoDelMundo = 0;
             }
-            
+            Listeners.cambioDeDia();
             // Si las horas del mundo superan 24, incrementa el día del mundo
             if (horaDelMundo >= 24) {
+        		horaDelMundo = 0;
                 diaDelMundo++;
-                horaDelMundo = 0;
+                MundoConfig.diasTranscurridos ++;
+                MundoConfig.diaDelMundo = diaDelMundo;
+            	Listeners.cambioDeDia();
             }
             
             // Si los días del mundo superan 7, reinicia el ciclo semanal
@@ -94,11 +105,10 @@ public class Iluminacion {
             // Actualizar la configuración del mundo
             MundoConfig.minutoDelMundo = minutoDelMundo;
             MundoConfig.horaDelMundo = horaDelMundo;
-            MundoConfig.diaDelMundo = diaDelMundo;
 
             // Imprimir el tiempo virtual para debugging
-            System.out.println(horaDelMundo + "Hs " + minutoDelMundo + "mins ");
-            determinarDia(diaDelMundo);
+            //System.out.println(horaDelMundo + "Hs " + minutoDelMundo + "mins ");
+            //determinarDia(diaDelMundo);
         }
     }
     
@@ -167,5 +177,41 @@ public class Iluminacion {
 			MundoConfig.dia = Recursos.bundle.get("dia.7");
 			break;
 		}
+	}
+
+
+	@Override
+	public void cambioDeDia() { //aca va todo lo que pasa cuando cambia de dia
+        determinarDia(diaDelMundo);
+
+        //esto ahora parece no tener sentido, pero cuando tenga mas eventos y, especialmente, unicos del dia cero voy a poder elegir los que se ejecutan y los que no
+        if(diaDelMundo == 0) { // esto es para las particularidades del dia cero
+        	revisarCartas();
+        }if(diaDelMundo == 1){ // esto para el dia 1 y asi ir agregando conforme necesite, quizas un dia no se revisen cartas y eso
+        
+        }else {//aca es el comportamineto general
+        	revisarCartas();        	
+        }
+        
+
+		
+	}
+	
+	/**
+	Revisa si hay cartas para para ese dia
+	@param the parameters used by the method
+	@return the value returned by the method
+	@throws what kind of exception does this method throw
+	*/
+	public void revisarCartas() {
+		
+        //Ver si hay carta para ese dia
+        CartaHUD cartaDelDia = CartasManager.determinarCarta();
+        if(cartaDelDia != null) {
+        	System.out.println("hay carta para hoy \n");
+        	Listeners.recibirCarta(cartaDelDia);        	
+        }else {
+        	//System.out.println("No hay carta para hoy \n");
+        }
 	}
 }

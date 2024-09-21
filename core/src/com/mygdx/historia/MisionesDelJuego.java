@@ -10,6 +10,9 @@ public enum MisionesDelJuego {
 	
 	//Misiones:
 	
+	//REY
+	
+	
 	//viejo
 	
 	//Carpintero

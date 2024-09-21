@@ -1,17 +1,19 @@
 package com.mygdx.hud;
 
-import com.mygdx.utiles.Config;
-import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.npcs.dialogos.Mensaje;
 import com.mygdx.entidades.npcs.dialogos.Npc_Dialogos_Rey;
+import com.mygdx.enums.EstadosDelJuego;
+import com.mygdx.eventos.EventoRecibirCarta;
+import com.mygdx.eventos.Listeners;
 import com.mygdx.pantallas.Juego;
 
-public class UI {
+public class UI implements EventoRecibirCarta{
 	
 	private ScreenViewport screenViewport;
 	private LibroHUD libroHUD;
@@ -24,6 +26,7 @@ public class UI {
 	private Mensaje mensajeAnadido;
 	private Fundicion fundicion;
 	private DiarioHUD diario;
+	
 	private CartaHUD carta;
 	
 	private Jugador jugador;
@@ -45,7 +48,7 @@ public class UI {
 	    combinacion = new Combinacion(jugador);
 	    libroHUD = new LibroHUD(screenViewport);
 	    fundicion = new Fundicion(jugador);
-	    carta = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);
+	    //carta = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);
 	    diario = new DiarioHUD(jugador);
 	    
 		
@@ -55,7 +58,6 @@ public class UI {
 		Recursos.muxJuego.addProcessor(hud.getDiarioHUD().getStage());
 		Recursos.muxJuego.addProcessor(hud.getProximaBatallaHUD().getStage());
 		Recursos.muxJuego.addProcessor(hud.getResultadosBatallasHUD().getStage());
-		Recursos.muxJuego.addProcessor(carta.getStage());
 		Recursos.muxJuego.addProcessor(pausa.getStage());
     	Recursos.muxJuego.addProcessor(combinacion.getStage());
     	Recursos.muxJuego.addProcessor(combinacion.getDragAndDrop());
@@ -64,7 +66,7 @@ public class UI {
 		Recursos.muxJuego.addProcessor(libroHUD.getStage());
 		Recursos.muxJuego.addProcessor(diario.getStage());
 
-
+		Listeners.agregarListener(this);
 	}
 	
 	public void render() {
@@ -146,22 +148,28 @@ public class UI {
 			break;
 		case IDLE:
 			break;
-		case INICIO:
-			if(!carta.getCerrar()) {				
-			carta.render();
-			ocultar(hud,inventario,combinacion);
-			jugador.puedeMoverse = false;
-			MundoConfig.pausarTiempo = true;
-			}
-			break;
+//		case INICIO:
+//			if(!carta.getCerrar()) {				
+//			carta.render();
+//			ocultar(hud,inventario,combinacion);
+//			jugador.puedeMoverse = false;
+//			MundoConfig.pausarTiempo = true;
+//			}
+//			break;
 		case CARTA:
-			
+			if(!carta.getCerrar()) {
+				carta.render();
+				ocultar(hud,inventario,combinacion);
+				jugador.puedeMoverse = false;
+				MundoConfig.pausarTiempo = true;
+			}
 			break;
 		case VENTA:
 			if(venta.getVendedor() != MundoConfig.vendedor) {
 				venta.setVendedor(MundoConfig.vendedor);				
 			}
 			jugador.puedeMoverse = false;
+			
 			venta.mostrar();
 			ocultar(inventario, dialogo);
 			break;
@@ -216,5 +224,18 @@ public class UI {
 		dialogo.dispose();
 		diario.dispose();
 	}
+
+
+	@Override
+	public void recibirCarta(CartaHUD carta) {
+		MundoConfig.estadoJuego = EstadosDelJuego.CARTA;
+		Recursos.muxJuego.addProcessor(carta.getStage());
+		this.carta = carta;
+		
+	}
+
+
+
+
 
 }

@@ -348,4 +348,5 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
 
 # 20 SEP
     - ¡El reloj funciona! (eso es basicamente todo lo de hoy (esta mier me llevo horas))
+    - Agrego base para eventos (no se porque no los estuve usando todo este tiempo)
     

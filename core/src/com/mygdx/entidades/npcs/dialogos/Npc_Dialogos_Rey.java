@@ -7,7 +7,7 @@ public enum Npc_Dialogos_Rey implements DialogosNPC{
 	
 	CARTA_0(Recursos.bundle.get("rey_Carta_0")),
 	CARTA_1(Recursos.bundle.get("rey_Carta_0")),
-	CARTA_2(Recursos.bundle.get("rey_Carta_0"));
+	CARTA_2(Recursos.bundle.get("rey_Carta_2"));
 
 	
 	private final String _mensaje;

@@ -3,6 +3,7 @@ package com.mygdx.utiles;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.Vendedor;
 import com.mygdx.enums.EstadosDelJuego;
+import com.mygdx.hud.CartaHUD;
 
 public abstract class MundoConfig {
 
@@ -22,8 +23,12 @@ public abstract class MundoConfig {
 	
 	//Tiempo
 	public static boolean pausarTiempo = false; // El tiempo del mundo, los minutos y las horas no cambian, la luz tampoco. Eso no significa que se frena el juego
-	public static int diaDelMundo;
+	public static int diasTranscurridos; // Dias transcurridos en el juego, sin formatear ni nada
+	public static int diaDelMundo; //Dia de la semana, da vuelta en 7
 	public static String dia;
 	public static float horaDelMundo;
 	public static float minutoDelMundo;
+	
+	//Carta a mostrar
+	public static CartaHUD cartaAMostrar;
 }
