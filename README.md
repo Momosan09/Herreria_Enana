@@ -13,6 +13,7 @@ Videojuego hecho con Libgdx para proyecto escolar
 
 Reloj
 
-![video-Reloj-HUD0001-0289](https://github.com/user-attachments/assets/b6c9eefe-5f2a-4400-9bd9-c9bbe6a83e05)
+![video-Reloj-HUD0001-0182](https://github.com/user-attachments/assets/74110a32-5c5b-4b66-b1c4-d12b97a59a38)
+
 
 
