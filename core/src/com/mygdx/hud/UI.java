@@ -11,6 +11,7 @@ import com.mygdx.entidades.npcs.dialogos.Npc_Dialogos_Rey;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.eventos.EventoRecibirCarta;
 import com.mygdx.eventos.Listeners;
+import com.mygdx.historia.CartasManager;
 import com.mygdx.pantallas.Juego;
 
 public class UI implements EventoRecibirCarta{
@@ -166,6 +167,17 @@ public class UI implements EventoRecibirCarta{
 			}else {
 				Recursos.muxJuego.removeProcessor(carta.getStage());
 			}
+			}
+			break;
+		case INICIO:
+			carta = CartasManager.getPrimeraCarta();
+			if(!carta.getCerrar()) {
+				Recursos.muxJuego.addProcessor(carta.getStage());
+				carta.render();
+				MundoConfig.pausarTiempo = true;
+				jugador.puedeMoverse = false;
+			}else {
+				Recursos.muxJuego.removeProcessor(carta.getStage());
 			}
 			break;
 		case VENTA:

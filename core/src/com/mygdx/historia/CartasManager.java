@@ -3,6 +3,7 @@ package com.mygdx.historia;
 import java.util.ArrayList;
 
 import com.mygdx.entidades.npcs.dialogos.Npc_Dialogos_Rey;
+import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.eventos.Listeners;
 import com.mygdx.hud.CartaHUD;
 import com.mygdx.utiles.MundoConfig;
@@ -21,13 +22,18 @@ public abstract class CartasManager {
 	@return Devuelve la carta correspondiente basada en distintas condiciones
 	*/
 	public static CartaHUD determinarCarta() {
-		if(MundoConfig.diasTranscurridos == 3) {
-			return cartas[0];
-		}else if(MundoConfig.diasTranscurridos == 0 &&(MundoConfig.horaDelMundo == 4 && MundoConfig.minutoDelMundo > 6) ){
+
+		if(MundoConfig.diasTranscurridos == 0 &&(MundoConfig.horaDelMundo == 4 && MundoConfig.minutoDelMundo > 6) ){
 			return cartas[1];
-		}else {
-			return null;
 		}
+		if(MundoConfig.diasTranscurridos == 0 &&(MundoConfig.horaDelMundo == 5 && MundoConfig.minutoDelMundo > 0)){
+			return cartas[2];
+		}
+		return null;
+	}
+	
+	public static CartaHUD getPrimeraCarta() {
+		return cartas[0];
 	}
 	
 	

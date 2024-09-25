@@ -194,7 +194,7 @@ public class Juego implements Screen{
 		entradas = new Entradas(jugador);
 		carta = new Carta(36, 12, world, Recursos.CARTA, jugador);
 		
-		MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
+		MundoConfig.estadoJuego = EstadosDelJuego.INICIO;
 	}
 
 	@Override
