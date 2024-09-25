@@ -155,6 +155,7 @@ public class Juego implements Screen{
 
 
 		ui = new UI(jugador,this);//Ui tiene que ir antes que iluminacion por el orden en el que se cargan los listeners TODO arreglar eso
+		Render.rayHandler = new RayHandler(world);
 		iluminacion = new Iluminacion(world, camaraJugador);
 				
     	
@@ -193,7 +194,7 @@ public class Juego implements Screen{
 		entradas = new Entradas(jugador);
 		carta = new Carta(36, 12, world, Recursos.CARTA, jugador);
 		
-		//MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
+		MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
 	}
 
 	@Override
@@ -267,8 +268,11 @@ public class Juego implements Screen{
 		//npcManager.renderizar();
 		//mineralesManager.renderizar();
 		objetosDelTallerManager.renderizar();
+		
+	
 		carta.draw();
 		carta.detectarJugador(jugador);
+		
 		
 		npcManager.detectarJugador(jugador);
 		mineralesManager.detectarJugador(jugador);

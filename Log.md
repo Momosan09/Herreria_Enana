@@ -352,3 +352,6 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
     - Cambios en las interacciones tanto para NPCS y Objetos del mapa
     - Ahora hay una carta fisica que aparece en el mapa la cual muestra el hud de la carta a leer
     
+# 25 SEP
+    - Cambios en la carta fisica
+    - La carta ahora muestra un icono y luz si no fue leida.

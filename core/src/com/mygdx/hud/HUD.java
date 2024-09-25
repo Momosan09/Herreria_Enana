@@ -61,6 +61,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 	private Label siguienteBatallaDetalles;
 	private Label centroLbl;
 	private Label diaLbl;
+	private Label horaLbl;
 	private Label diarioLbl;
 //	private Label barraAbajoLbl;
 	private Label.LabelStyle labelStyle;
@@ -149,17 +150,31 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		hudDer = new Table();
 		pedidosTable = new Table();
 		
-		pila = new Stack();
 		
 		//pedidos
 		pedidosTable.add(diarioLbl);
 		//pedidosTable.add(pedidoBtn);
 		
-		pila.add(tiempo_Img);
-		pila.add(reloj);
-		hudDer.add(pila);
+		
+		pila = new Stack();
+		
+	    // Ajustar tamaño de las imágenes para que conserven su tamaño original
+	    tiempo_Img.setSize(tiempo_Img.getWidth(), tiempo_Img.getHeight());
+	    reloj.setSize(reloj.getWidth(), reloj.getHeight());
+
+	    // Añadir las imágenes a la pila sin forzar su tamaño
+	    pila.add(tiempo_Img);
+	    pila.add(reloj);
+	    
+	    hudDer.row();
+	    // Añadir la pila a hudDer, asegurando que no se estiren ni aplasten
+	    hudDer.add(pila).size(reloj.getWidth(), reloj.getHeight()); // Usa el tamaño de la imagen original
+	    
+	    
 		hudDer.row();
 		hudDer.add(diaLbl);
+		hudDer.row();
+		hudDer.add(horaLbl);
 		hudDer.row();
 		hudDer.add(pedidosTable).bottom();
 
@@ -171,7 +186,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		//Gral
 		hud.add(hudIzq).top();
 		hud.add(hudCen).expand();
-		hud.add(hudDer).size(200, 200).top();
+		hud.add(hudDer).size(200, 250).top();
 		hud.row();
 
 		hud.add(barraItems).colspan(3);
@@ -243,6 +258,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		//DERECHA
 		diaLbl = new Label(dia, labelStyle);
 		diarioLbl = new Label(Recursos.bundle.get("hud.verPedidos"), labelStyle);
+		horaLbl = new Label(MundoConfig.horaDelMundo + ":" + MundoConfig.minutoDelMundo, labelStyle);
 		//pedidoBtn = new TextButton("",skin);
 		
 		//BARRA ITEMS
@@ -324,6 +340,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		resultadosHUD.render();
 		proximaBatallaHUD.render();//Nose porque no funciona el click de proximaBatallaHUD cuando lo quiero usar despues de haber abierto resultadosHUD
 		diarioHUD.render();
+		horaLabel();
 		}
 		diaLbl.setText(MundoConfig.dia);
 		
@@ -402,7 +419,9 @@ public class HUD implements HeadUpDisplay, Ocultable{
 
 	}
 
-	    
+	public void horaLabel() {
+		horaLbl.setText((MundoConfig.horaDelMundo <= 9 ? "0" + MundoConfig.horaDelMundo:MundoConfig.horaDelMundo ) + ":" + (MundoConfig.minutoDelMundo <= 9 ? "0" + MundoConfig.minutoDelMundo:MundoConfig.minutoDelMundo ));
+	}
 	    
 	
 

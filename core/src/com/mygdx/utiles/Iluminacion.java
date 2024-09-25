@@ -17,7 +17,6 @@ import box2dLight.RayHandler;
 public class Iluminacion implements EventoCambioDeDia{
     
     private World world;
-    private RayHandler rayHandler;
     private PointLight pl, pl2;
     private Luz estadoLuz;
     private ColorLuz colorLuz;
@@ -30,19 +29,18 @@ public class Iluminacion implements EventoCambioDeDia{
     public Iluminacion(World world, OrthographicCamera camaraJugador) {
         this.world = world;
         determinarDia(diaDelMundo);
-        rayHandler = new RayHandler(world);
-        rayHandler.setCombinedMatrix(camaraJugador);
+        Render.rayHandler.setCombinedMatrix(camaraJugador);
         
-        rayHandler.setBlurNum(3);
-        rayHandler.setShadows(true);
-        pl = new PointLight(rayHandler, 128, new Color(Color.valueOf("#ea8e0e")), 300, 43*32, 55*32);
+        Render.rayHandler.setBlurNum(3);
+        Render.rayHandler.setShadows(true);
+        pl = new PointLight( Render.rayHandler, 128, new Color(Color.valueOf("#ea8e0e")), 300, 43*32, 55*32);
         pl.setStaticLight(false);
         pl.setSoft(true);
         
-        pl2 = new PointLight(rayHandler, 128, new Color(Color.valueOf("#ef9413")), 90, 35.5f*32, 57.5f*32);
+        pl2 = new PointLight( Render.rayHandler, 128, new Color(Color.valueOf("#ef9413")), 90, 35.5f*32, 57.5f*32);
         pl2.setStaticLight(false);
         pl2.setSoft(false);
-        rayHandler.setCulling(false); //si lo pongo en true no anda la luz, pero deberia estar en true...
+        Render.rayHandler.setCulling(false); //si lo pongo en true no anda la luz, pero deberia estar en true...
     
         Listeners.agregarListener(this);
         Listeners.cambioDeDia();//Esto tiene que estar aca para los eventos del primer dia
@@ -50,23 +48,23 @@ public class Iluminacion implements EventoCambioDeDia{
     }
 
     public void setCombinedMatrix(OrthographicCamera camaraJugador) {
-        rayHandler.setCombinedMatrix(camaraJugador);
+    	 Render.rayHandler.setCombinedMatrix(camaraJugador);
     }
 
     public void setCombinedMatrix(Matrix4 combined, int i, int j, int k, int l) {
-        rayHandler.setCombinedMatrix(combined, k, l, i, i);
+    	 Render.rayHandler.setCombinedMatrix(combined, k, l, i, i);
     }
 
     private void update() {
-        rayHandler.update();
+    	 Render.rayHandler.update();
         tiempo();
         diaYNocheLuz();        
     }
 
     public void render(OrthographicCamera camaraJugador) {
         update();
-		rayHandler.setCombinedMatrix(camaraJugador.combined,0,0,1,1);
-		rayHandler.render();
+        Render.rayHandler.setCombinedMatrix(camaraJugador.combined,0,0,1,1);
+        Render.rayHandler.render();
     }
     
     private void tiempo() { 
@@ -78,12 +76,12 @@ public class Iluminacion implements EventoCambioDeDia{
             
             // Incrementa el tiempo del mundo virtual basado en el tiempo real transcurrido
             minutoDelMundo += segundosTranscurridos; // Un segundo real equivale a un minuto virtual
-            
             // Si los minutos del mundo superan 60, incrementa la hora del mundo
             if (minutoDelMundo >= 60) {
                 horaDelMundo++;
                 minutoDelMundo = 0;
             }
+            revisarCartas();//Revisa si hay cartas a cada minuto, quizas esto sea mucho y que se fije en el dia ya esta...
 
             // Si las horas del mundo superan 24, incrementa el día del mundo
             if (horaDelMundo >= 24) {
@@ -107,7 +105,7 @@ public class Iluminacion implements EventoCambioDeDia{
             MundoConfig.horaDelMundo = horaDelMundo;
 
             // Imprimir el tiempo virtual para debugging
-            //System.out.println(horaDelMundo + "Hs " + minutoDelMundo + "mins ");
+           // System.out.println(horaDelMundo + "Hs " + minutoDelMundo + "mins ");
             //determinarDia(diaDelMundo);
         }
     }
@@ -150,7 +148,7 @@ public class Iluminacion implements EventoCambioDeDia{
             valorLuzAmbiental -= .001f;
         }
 
-        rayHandler.setAmbientLight(valorLuzAmbiental);
+        Render.rayHandler.setAmbientLight(valorLuzAmbiental);
     }
     
 	private void determinarDia(int dia) {

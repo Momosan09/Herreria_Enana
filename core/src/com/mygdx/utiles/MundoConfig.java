@@ -25,8 +25,8 @@ public abstract class MundoConfig {
 	public static int diasTranscurridos; // Dias transcurridos en el juego, sin formatear ni nada
 	public static int diaDelMundo; //Dia de la semana, da vuelta en 7
 	public static String dia;
-	public static float horaDelMundo;
-	public static float minutoDelMundo;
+	public static long horaDelMundo;
+	public static long minutoDelMundo;
 	
 	//Carta a mostrar
 	public static CartaHUD cartaAMostrar;

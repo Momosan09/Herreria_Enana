@@ -72,7 +72,7 @@ public abstract class Recursos {
 	public static final String SOPORTE_ARMADURAS = "objetosDelMundo/inanimados/interactuables/soporteArmadura.png";
 	public static final String YUNQUE = "objetosDelMundo/inanimados/interactuables/yunque2.png";
 	public static final String CARTA = "objetosDelMundo/inanimados/interactuables/carta.png";
-	
+	public static final String EXCLAMACION = "objetosDelMundo/exclamacion.png";
 		//ITEMS Y DE MISION
 	public static final String DISCO_HIERRO = "objetosDelMundo/inanimados/hierroDisco.png";
 	public static final String SIERRA_CIRCULAR= "objetosDelMundo/inanimados/sierraCircular.png";

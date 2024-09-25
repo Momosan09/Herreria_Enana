@@ -58,7 +58,7 @@ public class CartaHUD implements HeadUpDisplay, Cerrable{
 		tabla = new Table();
 		tabla.setFillParent(true);
 		contenedor = new Table();
-		contenedor.debug();
+		//contenedor.debug();
 		contenedor.setFillParent(false);
 		//contenedor.setSize(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		//contenedor.setPosition(Gdx.graphics.getWidth()/2-contenedor.getWidth()/2, Gdx.graphics.getHeight()/2-contenedor.getHeight()/2);

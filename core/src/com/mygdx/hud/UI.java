@@ -157,6 +157,7 @@ public class UI implements EventoRecibirCarta{
 //			}
 //			break;
 		case CARTA:
+			if(carta != null) {	
 			if(!carta.getCerrar()) {
 				carta.render();
 				ocultar(hud,inventario,combinacion);
@@ -164,6 +165,7 @@ public class UI implements EventoRecibirCarta{
 				MundoConfig.pausarTiempo = true;
 			}else {
 				Recursos.muxJuego.removeProcessor(carta.getStage());
+			}
 			}
 			break;
 		case VENTA:
@@ -230,7 +232,6 @@ public class UI implements EventoRecibirCarta{
 
 	@Override
 	public void recibirCarta(CartaHUD carta) {
-		MundoConfig.estadoJuego = EstadosDelJuego.CARTA;
 		Recursos.muxJuego.addProcessor(carta.getStage());
 		this.carta = carta;
 		

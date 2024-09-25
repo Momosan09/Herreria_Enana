@@ -56,7 +56,7 @@ public class Listeners {
 		 * Metodo general de interaccion, contiene interaccionNPC e interaccionObj
 		 */
 		public static void interaccion() {
-			System.out.println("interaccion");
+			//System.out.println("interaccion");
 			for (EventListener listener : listeners) {
 				if((listener instanceof EventoInteraccionNPC)) {
 					((EventoInteraccionNPC)listener).interaccionNPC();

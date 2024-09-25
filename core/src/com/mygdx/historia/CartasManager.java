@@ -21,8 +21,10 @@ public abstract class CartasManager {
 	@return Devuelve la carta correspondiente basada en distintas condiciones
 	*/
 	public static CartaHUD determinarCarta() {
-		if(MundoConfig.diasTranscurridos == 0) {
+		if(MundoConfig.diasTranscurridos == 3) {
 			return cartas[0];
+		}else if(MundoConfig.diasTranscurridos == 0 &&(MundoConfig.horaDelMundo == 4 && MundoConfig.minutoDelMundo > 6) ){
+			return cartas[1];
 		}else {
 			return null;
 		}
