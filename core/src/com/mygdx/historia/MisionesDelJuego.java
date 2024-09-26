@@ -11,6 +11,8 @@ public enum MisionesDelJuego {
 	//Misiones:
 	
 	//REY
+		//Rey Carta 1 Fabricar ESPadas
+		RC1_FESP(Recursos.bundle.get("npc.nombre.rey"), TipoMision.FABRICAR, Recursos.bundle.get("item.fabricable.espada"), 15, 0, 50,100, "RC1_FESP"),
 	
 	
 	//viejo

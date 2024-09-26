@@ -12,7 +12,7 @@ public abstract class CartasManager {
 
 	private static CartaHUD[] cartas = {
 			new CartaHUD(Npc_Dialogos_Rey.CARTA_0),
-			new CartaHUD(Npc_Dialogos_Rey.CARTA_1),
+			new CartaHUD(Npc_Dialogos_Rey.CARTA_1, new Mision(MisionesDelJuego.RC1_FESP)),
 			new CartaHUD(Npc_Dialogos_Rey.CARTA_2),
 	};
 
@@ -22,7 +22,6 @@ public abstract class CartasManager {
 	@return Devuelve la carta correspondiente basada en distintas condiciones
 	*/
 	public static CartaHUD determinarCarta() {
-
 		if(MundoConfig.diasTranscurridos == 0 &&(MundoConfig.horaDelMundo == 4 && MundoConfig.minutoDelMundo > 6) ){
 			return cartas[1];
 		}

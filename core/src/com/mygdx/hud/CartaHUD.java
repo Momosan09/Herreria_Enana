@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.npcs.dialogos.DialogosNPC;
 import com.mygdx.enums.EstadosDelJuego;
+import com.mygdx.historia.Mision;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
@@ -33,12 +34,25 @@ public class CartaHUD implements HeadUpDisplay, Cerrable{
 
 	private boolean cerrar = false;
 	private boolean auxiliar = false; //es para mandar el mensaje una unica vez
+	private Mision mision;
 	
 	public CartaHUD(DialogosNPC datosCartaNpc) {
 		this.datosCartaNpc = datosCartaNpc;
 		screenViewport = new ScreenViewport();
 		stage = new Stage(screenViewport);
 
+		crearFuentes();
+		crearActores();
+		poblarStage();
+	}
+	
+	public CartaHUD(DialogosNPC datosCartaNpc, Mision mision) {
+		this.datosCartaNpc = datosCartaNpc;
+		screenViewport = new ScreenViewport();
+		stage = new Stage(screenViewport);
+
+		this.mision = mision;
+		
 		crearFuentes();
 		crearActores();
 		poblarStage();
@@ -111,6 +125,10 @@ public class CartaHUD implements HeadUpDisplay, Cerrable{
 		Recursos.muxJuego.removeProcessor(stage);//tengo que sacar el stage del inputprocesor porque el mux es estatico, entonces cuando entro y salgo del juego, el mux agrega el nuevo stage pero sigue guardando el anterior
 		stage.dispose();
 		skin.dispose();
+	}
+	
+	public Mision getMision() {
+		return mision;
 	}
 
 	public Stage getStage() {

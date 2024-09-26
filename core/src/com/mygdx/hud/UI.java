@@ -158,26 +158,34 @@ public class UI implements EventoRecibirCarta{
 //			}
 //			break;
 		case CARTA:
-			if(carta != null) {	
-			if(!carta.getCerrar()) {
-				carta.render();
+			if(MundoConfig.cartaAMostrar != null) {	
+			if(!MundoConfig.cartaAMostrar.getCerrar()) {
+				MundoConfig.cartaAMostrar.render();
 				ocultar(hud,inventario,combinacion);
 				jugador.puedeMoverse = false;
 				MundoConfig.pausarTiempo = true;
+				
+				if(MundoConfig.cartaAMostrar.getMision() != null) { // si la carta da mision
+					if(!jugador.getMisiones().contains(MundoConfig.cartaAMostrar.getMision())) {//si el jugador no tiene asiganda esa mision
+						jugador.agregarMision(MundoConfig.cartaAMostrar.getMision());
+					}
+					
+				}
 			}else {
-				Recursos.muxJuego.removeProcessor(carta.getStage());
+				Recursos.muxJuego.removeProcessor(MundoConfig.cartaAMostrar.getStage());
 			}
 			}
 			break;
 		case INICIO:
-			carta = CartasManager.getPrimeraCarta();
-			if(!carta.getCerrar()) {
-				Recursos.muxJuego.addProcessor(carta.getStage());
-				carta.render();
+
+			if(!MundoConfig.cartaAMostrar.getCerrar()) {
+				Recursos.muxJuego.addProcessor(MundoConfig.cartaAMostrar.getStage());
+				MundoConfig.cartaAMostrar.render();
 				MundoConfig.pausarTiempo = true;
 				jugador.puedeMoverse = false;
 			}else {
-				Recursos.muxJuego.removeProcessor(carta.getStage());
+				Recursos.muxJuego.removeProcessor(MundoConfig.cartaAMostrar.getStage());
+				MundoConfig.cartaAMostrar = null;				
 			}
 			break;
 		case VENTA:
@@ -248,9 +256,5 @@ public class UI implements EventoRecibirCarta{
 		this.carta = carta;
 		
 	}
-
-
-
-
 
 }

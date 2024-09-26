@@ -34,12 +34,13 @@ public class Carta extends ObjetoDelMapa implements EventoInteraccionObj{
 		luzExclamacion = new PointLight(Render.rayHandler, 128, new Color(Color.valueOf("#ea8e0e")), 30, this.posicion.x+10, this.posicion.y+30);
 		 Listeners.agregarListener(this);
 	}
+	
+	
 
 	@Override
 	public void draw() {
         //Ver si hay carta para ese dia
-        CartaHUD cartaDelDia = CartasManager.determinarCarta();
-        if(cartaDelDia != null) {
+        if(MundoConfig.cartaAMostrar != null) {
         	if(primeraVez) {
         		luzExclamacion.setActive(true);
         		sinLeer.draw(Render.batch);        		

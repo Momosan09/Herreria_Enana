@@ -193,7 +193,7 @@ public class Juego implements Screen{
 		
 		entradas = new Entradas(jugador);
 		carta = new Carta(36, 12, world, Recursos.CARTA, jugador);
-		
+		MundoConfig.cartaAMostrar = CartasManager.getPrimeraCarta();
 		MundoConfig.estadoJuego = EstadosDelJuego.INICIO;
 	}
 
@@ -201,9 +201,8 @@ public class Juego implements Screen{
 	public void render(float delta){
 		entradas.estadosDelJuego();
 		Tiempo.contarSegundosEnEstadoJuego();//Cuenta el tiempo que EstadoJuego != PAUSA
-		 
 		//System.out.println(HelpDebug.debub(getClass()) + MundoConfig.apretoE);
-
+		//System.out.println(MundoConfig.cartaAMostrar);
 		//System.out.println(MundoConfig.estadoJuego);
 		//hacer cosas dependiendo de los estados del juego
 		/*

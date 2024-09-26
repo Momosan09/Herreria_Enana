@@ -1,13 +1,6 @@
-java.lang.IllegalArgumentException: buffer not allocated with newUnsafeByteBuffer or already disposed
-	at com.badlogic.gdx.utils.BufferUtils.disposeUnsafeByteBuffer(BufferUtils.java:504)
-	at com.badlogic.gdx.graphics.glutils.VertexArray.dispose(VertexArray.java:67)
-	at com.badlogic.gdx.graphics.Mesh.dispose(Mesh.java:659)
-	at box2dLight.Light.dispose(Light.java:233)
-	at box2dLight.Light.remove(Light.java:226)
-	at box2dLight.Light.remove(Light.java:213)
-	at com.mygdx.entidades.ObjetosDelMapa.Carta.draw(Carta.java:45)
-	at com.mygdx.utiles.OrganizadorSpritesIndiceZ.dibujarYComparar(OrganizadorSpritesIndiceZ.java:24)
-	at com.mygdx.pantallas.Juego.render(Juego.java:287)
+java.lang.NullPointerException: Cannot invoke "com.mygdx.hud.CartaHUD.getCerrar()" because "com.mygdx.utiles.MundoConfig.cartaAMostrar" is null
+	at com.mygdx.hud.UI.render(UI.java:181)
+	at com.mygdx.pantallas.Juego.render(Juego.java:295)
 	at com.badlogic.gdx.Game.render(Game.java:48)
 	at com.mygdx.game.Principal.render(Principal.java:38)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:387)

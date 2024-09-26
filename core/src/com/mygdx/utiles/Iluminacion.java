@@ -81,7 +81,7 @@ public class Iluminacion implements EventoCambioDeDia{
                 horaDelMundo++;
                 minutoDelMundo = 0;
             }
-            revisarCartas();//Revisa si hay cartas a cada minuto, quizas esto sea mucho y que se fije en el dia ya esta...
+            revisarCartas();//Revisa si hay cartas a cada minuto, quizas esto sea mucho y con que se fije en el dia ya esta...
 
             // Si las horas del mundo superan 24, incrementa el día del mundo
             if (horaDelMundo >= 24) {
@@ -191,8 +191,6 @@ public class Iluminacion implements EventoCambioDeDia{
         	revisarCartas();        	
         }
         
-
-		
 	}
 	
 	/**
@@ -202,12 +200,13 @@ public class Iluminacion implements EventoCambioDeDia{
 	@throws what kind of exception does this method throw
 	*/
 	public void revisarCartas() {
-		
         //Ver si hay carta para ese dia
         CartaHUD cartaDelDia = CartasManager.determinarCarta();
         if(cartaDelDia != null) {
-        	Listeners.recibirCarta(cartaDelDia);        	
+        	MundoConfig.cartaAMostrar = cartaDelDia;
+        	Listeners.recibirCarta(MundoConfig.cartaAMostrar);    
         }else {
+        	MundoConfig.cartaAMostrar = null;
         	//System.out.println("No hay carta para hoy \n");
         }
 	}

@@ -356,3 +356,6 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
     - Cambios en la carta fisica
     - La carta ahora muestra un icono y luz si no fue leida.
     - La carta de inicio NO es parte de las cartas y el estado del juego es INICIO
+
+# 26 SEP
+    - Ahora las cartas pueden dar misiones

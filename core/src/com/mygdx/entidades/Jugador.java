@@ -377,6 +377,11 @@ public class Jugador {
 
 	}
 	
+	public void agregarMision(Mision mision) {
+		tareas.add(mision);
+
+	}
+	
 	public ArrayList<Mision> getMisiones() {
 		return tareas;
 		
