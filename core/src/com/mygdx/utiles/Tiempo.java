@@ -64,7 +64,9 @@ public abstract class Tiempo {
     	actor.addAction(Actions.sequence(
 	        Actions.delay(tiempo),        // Espera 
 	        Actions.fadeOut(.5f)
+
 	   ));
+	    actor.getColor().a = 1;
     }
 
 }

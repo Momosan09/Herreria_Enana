@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.mygdx.audio.AudioManager;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
@@ -449,6 +450,7 @@ public class HUD implements HeadUpDisplay, Ocultable, EventoMisionAgregada{
 	public void misionAgregada(Mision mision) {
 	    // Muestra el label 'mensaje'
 	    mensaje.setVisible(true);
+
 	    mensaje.setText("Mision agregada: " + mision.getTipoMision() + " x" + mision.getCantidadObjetivo()+ " " + mision.getObjeto());
 	    Tiempo.actorEsperar(mensaje, 4);
 
