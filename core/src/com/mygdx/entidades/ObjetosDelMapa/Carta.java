@@ -40,7 +40,13 @@ public class Carta extends ObjetoDelMapa implements EventoInteraccionObj{
 	@Override
 	public void draw() {
         //Ver si hay carta para ese dia
-        if(MundoConfig.cartaAMostrar != null) {
+		if(MundoConfig.cartaAMostrar != null) {
+			dibujar = true;			
+		}else {
+			dibujar = false;
+		}
+			
+        if(dibujar) {
         	if(primeraVez) {
         		luzExclamacion.setActive(true);
         		sinLeer.draw(Render.batch);        		
@@ -60,7 +66,7 @@ public class Carta extends ObjetoDelMapa implements EventoInteraccionObj{
 	
 	@Override
 	public void interaccionObj() {
-		if(getJugadorEnRango()) {
+		if(getJugadorEnRango() && dibujar) {
 				primeraVez = false;
 				MundoConfig.estadoJuego = EstadosDelJuego.CARTA;
 			}
