@@ -3,10 +3,11 @@ package com.mygdx.eventos;
 import java.util.ArrayList;
 import java.util.EventListener;
 
+import com.mygdx.historia.Mision;
 import com.mygdx.hud.CartaHUD;
 import com.mygdx.utiles.HelpDebug;
 
-public class Listeners {
+public abstract class Listeners {
 
 		public static ArrayList<EventListener> listeners = new ArrayList<>();
 		
@@ -17,6 +18,14 @@ public class Listeners {
 				
 			}
 			
+		}
+		
+		public static void misionAgregada(Mision mision) {
+			for (EventListener listener : listeners) {
+				if((listener instanceof EventoMisionAgregada)) {
+					((EventoMisionAgregada)listener).misionAgregada(mision);
+				}
+			}
 		}
 		
 		public static void recibirCarta(CartaHUD carta) {

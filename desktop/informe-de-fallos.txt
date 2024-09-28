@@ -1,9 +1,29 @@
-java.lang.NullPointerException: Cannot invoke "com.mygdx.hud.CartaHUD.getCerrar()" because "com.mygdx.utiles.MundoConfig.cartaAMostrar" is null
-	at com.mygdx.hud.UI.render(UI.java:181)
-	at com.mygdx.pantallas.Juego.render(Juego.java:295)
+com.badlogic.gdx.utils.GdxRuntimeException: java.lang.ExceptionInInitializerError
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:172)
+	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)
+Caused by: java.lang.ExceptionInInitializerError
+	at com.mygdx.entidades.Jugador.agregarMision(Jugador.java:387)
+	at com.mygdx.hud.UI.render(UI.java:170)
+	at com.mygdx.pantallas.Juego.render(Juego.java:269)
 	at com.badlogic.gdx.Game.render(Game.java:48)
 	at com.mygdx.game.Principal.render(Principal.java:38)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:387)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:192)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:166)
-	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)
+	... 1 more
+Caused by: com.badlogic.gdx.utils.GdxRuntimeException: Error creating sound com.badlogic.gdx.backends.lwjgl3.audio.Mp3$Sound for file: Audio/misionRecibida.mp3
+	at com.badlogic.gdx.backends.lwjgl3.audio.OpenALLwjgl3Audio.newSound(OpenALLwjgl3Audio.java:157)
+	at com.badlogic.gdx.backends.lwjgl3.audio.OpenALLwjgl3Audio.newSound(OpenALLwjgl3Audio.java:63)
+	at com.mygdx.audio.AudioManager.<clinit>(AudioManager.java:10)
+	... 9 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:79)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483)
+	at com.badlogic.gdx.backends.lwjgl3.audio.OpenALLwjgl3Audio.newSound(OpenALLwjgl3Audio.java:155)
+	... 11 more
+Caused by: com.badlogic.gdx.utils.GdxRuntimeException: File not found: Audio\misionRecibida.mp3 (Internal)
+	at com.badlogic.gdx.files.FileHandle.read(FileHandle.java:142)
+	at com.badlogic.gdx.backends.lwjgl3.audio.Mp3$Sound.<init>(Mp3.java:112)
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:67)
+	... 14 more

@@ -20,11 +20,13 @@ import com.mygdx.enums.Direcciones;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
 import com.mygdx.enums.Respuestas;
+import com.mygdx.eventos.Listeners;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
+import com.mygdx.audio.AudioManager;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
@@ -372,14 +374,17 @@ public class Jugador {
 		return camara;
 	}
 
-	public void agregarMision(MisionesDelJuego mision) {
-		tareas.add(new Mision(mision));
-
+	public void agregarMision(MisionesDelJuego misionD) {
+		Mision mision = new Mision(misionD);
+		tareas.add(mision);
+		Listeners.misionAgregada(mision);
+		AudioManager.reproducirSonidoMisionRecibida();
 	}
 	
 	public void agregarMision(Mision mision) {
 		tareas.add(mision);
-
+		Listeners.misionAgregada(mision);
+		AudioManager.reproducirSonidoMisionRecibida();
 	}
 	
 	public ArrayList<Mision> getMisiones() {

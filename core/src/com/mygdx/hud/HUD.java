@@ -20,18 +20,22 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
+import com.mygdx.eventos.EventoMisionAgregada;
+import com.mygdx.eventos.Listeners;
+import com.mygdx.historia.Mision;
 import com.mygdx.pantallas.Juego;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.Tiempo;
 
 
 /*
  	https://libgdxinfo.wordpress.com/basic_image/
  	https://github.com/raeleus/viewports-sample-project
  */
-public class HUD implements HeadUpDisplay, Ocultable{
+public class HUD implements HeadUpDisplay, Ocultable, EventoMisionAgregada{
 
 	private Texture dinero_Tex;
 	private Texture reloj_Tex;
@@ -63,8 +67,10 @@ public class HUD implements HeadUpDisplay, Ocultable{
 	private Label diaLbl;
 	private Label horaLbl;
 	private Label diarioLbl;
+	private Label mensaje;
 //	private Label barraAbajoLbl;
 	private Label.LabelStyle labelStyle;
+	private Label.LabelStyle labelVerde;
 	private Label.LabelStyle labelMonedasStyle[];
 	
 	private ResultadosBatallasHUD resultadosHUD;
@@ -85,11 +91,11 @@ public class HUD implements HeadUpDisplay, Ocultable{
     	resultadosHUD = new ResultadosBatallasHUD();
     	proximaBatallaHUD = new ProximaBatallaHUD();
     	diarioHUD = new DiarioHUD(jugador);
-    	
     	cargarTexturas();
     	crearFuentes();
     	crearActores();
     	poblarStage();
+    	Listeners.agregarListener(this);
     }
 	
 	@Override
@@ -142,9 +148,11 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		//Centro
 		
 		hudCen = new Table();
+
 //		hudCen.add(centroLbl).expand();
 //		hudCen.setDebug(true);
 //		hud.setDebug(true);
+//	    hudDer.setDebug(true);
 		
 		//Derecha
 		hudDer = new Table();
@@ -165,18 +173,19 @@ public class HUD implements HeadUpDisplay, Ocultable{
 	    // Añadir las imágenes a la pila sin forzar su tamaño
 	    pila.add(tiempo_Img);
 	    pila.add(reloj);
-	    
-	    hudDer.row();
+
 	    // Añadir la pila a hudDer, asegurando que no se estiren ni aplasten
 	    hudDer.add(pila).size(reloj.getWidth(), reloj.getHeight()); // Usa el tamaño de la imagen original
-	    
-	    
+
+
 		hudDer.row();
 		hudDer.add(diaLbl);
 		hudDer.row();
 		hudDer.add(horaLbl);
 		hudDer.row();
-		hudDer.add(pedidosTable).bottom();
+		hudDer.add(pedidosTable);
+		hudDer.row();
+		hudDer.add(mensaje).fillX().expandY().top();
 
 		//barra items
 		Image imagen = new Image(Items.PICO.getTextura());
@@ -186,10 +195,11 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		//Gral
 		hud.add(hudIzq).top();
 		hud.add(hudCen).expand();
-		hud.add(hudDer).size(200, 250).top();
+		hud.add(hudDer).fillY();
 		hud.row();
 
 		hud.add(barraItems).colspan(3);
+
 		hud.pad(15);
 
         stage.addActor(hud);
@@ -254,12 +264,16 @@ public class HUD implements HeadUpDisplay, Ocultable{
 		
 		//CENTRO
 		centroLbl = new Label("Centro", labelStyle);
-		
+
+
 		//DERECHA
 		diaLbl = new Label(dia, labelStyle);
 		diarioLbl = new Label(Recursos.bundle.get("hud.verPedidos"), labelStyle);
 		horaLbl = new Label(MundoConfig.horaDelMundo + ":" + MundoConfig.minutoDelMundo, labelStyle);
 		//pedidoBtn = new TextButton("",skin);
+		mensaje = new Label("Mensaje Mostrando: ...", labelVerde);
+		mensaje.setWrap(true);
+		mensaje.setVisible(false);
 		
 		//BARRA ITEMS
 		barraItems = new Table();
@@ -320,6 +334,7 @@ public class HUD implements HeadUpDisplay, Ocultable{
 	@Override
 	public void crearFuentes() {
     	labelStyle = EstiloFuente.generarFuente(26, Colores.BLANCO, false);
+    	labelVerde = EstiloFuente.generarFuente(26, Colores.VERDE, false);
     	labelMonedasStyle = new Label.LabelStyle[3];
     	labelMonedasStyle[0] = EstiloFuente.generarFuente(16, Colores.AU, false); 
     	labelMonedasStyle[1] = EstiloFuente.generarFuente(16, Colores.AG, false); 
@@ -429,5 +444,15 @@ public class HUD implements HeadUpDisplay, Ocultable{
 	public boolean getVisible() {
 		return visible;
 	}
+
+	@Override
+	public void misionAgregada(Mision mision) {
+	    // Muestra el label 'mensaje'
+	    mensaje.setVisible(true);
+	    mensaje.setText("Mision agregada: " + mision.getTipoMision() + " x" + mision.getCantidadObjetivo()+ " " + mision.getObjeto());
+	    Tiempo.actorEsperar(mensaje, 4);
+
+	}
+
 
 }

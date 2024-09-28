@@ -201,32 +201,6 @@ public class Juego implements Screen{
 	public void render(float delta){
 		entradas.estadosDelJuego();
 		Tiempo.contarSegundosEnEstadoJuego();//Cuenta el tiempo que EstadoJuego != PAUSA
-		//System.out.println(HelpDebug.debub(getClass()) + MundoConfig.apretoE);
-		//System.out.println(MundoConfig.cartaAMostrar);
-		//System.out.println(MundoConfig.estadoJuego);
-		//hacer cosas dependiendo de los estados del juego
-		/*
-		switch (MundoConfig.estadoJuego) {
-		case INVENTARIO:
-			inventarioHUD.mostrar();
-			break;
-
-		case PAUSA:
-
-			break;
-		case JUEGO:
-
-			inventarioHUD.ocultar();
-			ui.ocultarLibro();
-			jugador.puedeMoverse = true;
-			MundoConfig.mostrarHUD = true;
-			MundoConfig.pausarTiempo = false;
-			break;
-			
-		case INVENTARIO_BATALLAS:	
-			ui.mostrarLibro();
-			break;
-		}*/
 		
 		//DEBUG Y COSAS TEMPORALES (despues no van a estar mas)
 		if(Gdx.input.isKeyPressed(Keys.P)) {//para debug

@@ -1,5 +1,7 @@
 package com.mygdx.utiles;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.enums.EstadosDelJuego;
 
@@ -54,4 +56,15 @@ public abstract class Tiempo {
     public static long getSegundosEnEstadoJuego() {
     	return tiempoDelJuego;
     }
+    
+    public static void actorEsperar(final Actor actor, int tiempo) {
+	    // Añade una secuencia de acciones:
+	    // - Espera 2 segundos (Actions.delay(2))
+	    // - Luego oculta el label (Actions.visible(false))
+    	actor.addAction(Actions.sequence(
+	        Actions.delay(tiempo),        // Espera 
+	        Actions.fadeOut(.5f)
+	   ));
+    }
+
 }

@@ -359,3 +359,7 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
 
 # 26 SEP
     - Ahora las cartas pueden dar misiones
+
+# 28 SEP
+    - Muestra mensaje al recibir misiones
+    - Reproduce sonido al recibir misiones

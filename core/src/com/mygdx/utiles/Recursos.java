@@ -99,4 +99,8 @@ public abstract class Recursos {
 	public static final String CAJA_ENTREGAS_TEXTURA = "HUD/cajaEntregasHUD.png";
 	public static final String LIBRO_HUD = "HUD/libroHUD.png";
 	public static final String CASILLERO_VENTA_HUD = "HUD/casilleroVenta.png";
+	
+	//SONIDOS
+	public static final String SONIDO_MISION_RECIBIDA = "Audio/misionRecibida.mp3";
+	
 }
