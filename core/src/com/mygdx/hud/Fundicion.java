@@ -83,6 +83,7 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 		
 		botonArriba = new Button(skinArriba);
 		botonAbajo = new Button(skinAbajo);
+		botonAbajo.setDisabled(true);
 		fundirBoton = new TextButton("Fundir x" + cantidad, skinTextButton);
 		
 		hierro = new Image(new Texture(Recursos.HIERRO_PURO));
@@ -95,14 +96,16 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 		botonArriba.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				
+				botonAbajo.setDisabled(false);
 				if(cantidad < hierroEnElInventario) {//ahora es solo con hierro pero tengo que hacer que se pueda con todos los minerales
+					botonArriba.setDisabled(false);
 					System.out.println(HelpDebug.debub(getClass())+"sumar");	
 					cantidad++;
 					fundirBoton.setText("Fundir x" + cantidad);
 					System.out.println(cantidad);
 				}else if(cantidad > hierroEnElInventario){
 					botonArriba.setDisabled(true);
+					cantidad = hierroEnElInventario;
 				}
 			}
 		});
@@ -116,8 +119,9 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 					cantidad--;
 					fundirBoton.setText("Fundir x" + cantidad);
 					System.out.println(cantidad);
-				}else if(cantidad <= 0){
+				}else if(cantidad == 0){
 					botonAbajo.setDisabled(true);
+					cantidad = 0;
 				}
 			}
 		});
@@ -149,7 +153,7 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				for(int i = 0; i < cantidad;i++) {
-					jugador.getMinerales().add(new LingoteHierro(0,0,false,Recursos.LINGOTE_HIERRO));
+					jugador.agregarMineral(new LingoteHierro(0,0,false,Recursos.LINGOTE_HIERRO));
 				}
 //				System.out.println("a9------gregado");
 				cantidad = 0;
@@ -219,7 +223,9 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 				imgResultado.setVisible(false);
 			}
 			
-			
+			if(cantidad == 0) {
+				botonAbajo.setDisabled(true);
+			}
 	    	stage.act(Gdx.graphics.getDeltaTime());
 	    	stage.draw();
 		}
@@ -228,7 +234,7 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 
 	//Este metodo lo tengo que re cambiar...
 	public void tieneHierro(Jugador jugador) {
-		hierroEnElInventario=jugador.buscarCantidadDeMineralesPorTipoYEstado(TipoMinerales.HIERRO, EstadosMinerales.PURO);
+		hierroEnElInventario=jugador.obtenerMineral(TipoMinerales.HIERRO, EstadosMinerales.PURO).size();
 //		System.out.println("hierro en el inventario " + hierroEnElInventario);
 		if(hierroEnElInventario >0) {
 			fundirBoton.setDisabled(false);

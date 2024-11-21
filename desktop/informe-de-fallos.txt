@@ -1,7 +1,7 @@
 java.lang.NullPointerException: Cannot invoke "com.badlogic.gdx.graphics.g2d.Sprite.draw(com.badlogic.gdx.graphics.g2d.Batch)" because "this.sprite" is null
 	at com.mygdx.entidades.Entidad.draw(Entidad.java:109)
-	at com.mygdx.utiles.OrganizadorSpritesIndiceZ.dibujarYComparar(OrganizadorSpritesIndiceZ.java:24)
-	at com.mygdx.pantallas.Juego.render(Juego.java:260)
+	at com.mygdx.utiles.OrganizadorSpritesIndiceZ.dibujarYComparar(OrganizadorSpritesIndiceZ.java:23)
+	at com.mygdx.pantallas.Juego.render(Juego.java:263)
 	at com.badlogic.gdx.Game.render(Game.java:48)
 	at com.mygdx.game.Principal.render(Principal.java:38)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:387)

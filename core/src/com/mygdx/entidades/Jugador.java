@@ -1,6 +1,7 @@
 package com.mygdx.entidades;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -29,9 +30,11 @@ import com.mygdx.utiles.Render;
 import com.mygdx.audio.AudioManager;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.HierroMena;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroDisco;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroPlancha;
+import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroPuro;
 import com.mygdx.historia.Mision;
 import com.mygdx.historia.MisionesDelJuego;
 import com.mygdx.historia.TipoMision;
@@ -61,7 +64,9 @@ public class Jugador {
 	
 	//Inventarios
 	private ArrayList<Item> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
-	private ArrayList<Mineral> mineralesInv = new ArrayList<>();  
+	private EnumMap<TipoMinerales, EnumMap<EstadosMinerales, ArrayList<Mineral>>> mineralesInventario =
+		    new EnumMap<>(TipoMinerales.class);
+
 	private ArrayList<Integer> indicesDeEliminacion = new ArrayList<>();//Se guardan temporalmente los indices de los minerales a eliminar, despues este array se limpia
 	private ArrayList<Mision> tareas = new ArrayList<>();
 	
@@ -109,7 +114,23 @@ public class Jugador {
 		items.add(new Cincel());
 		items.add(new LimaPlana());
 		items.add(new Sierra());
+		
+
+		
+		//Inicializa el inventario de minerales
+		for (TipoMinerales tipo : TipoMinerales.values()) {
+		    EnumMap<EstadosMinerales, ArrayList<Mineral>> estadoMap = new EnumMap<>(EstadosMinerales.class); // crea un enumMap por cada TipoMineral
+		    for (EstadosMinerales estado : EstadosMinerales.values()) {
+		        estadoMap.put(estado, new ArrayList<Mineral>());
+		    }
+		    mineralesInventario.put(tipo, estadoMap);
+		}
+		
+		
+		agregarMineral(new HierroMena(tamañoPersonaje, tamañoPersonaje, world, estaChocando));
+		System.out.println("Eel amigo" + obtenerMineral(TipoMinerales.HIERRO, EstadosMinerales.MENA));
 	}
+
 
 	private void dibujarItemActual() {
 		if(items.contains(Items.PICO)) {
@@ -284,10 +305,71 @@ public class Jugador {
 		}
 	}
 	
-	public ArrayList<Mineral> getMinerales(){
-		return mineralesInv;
+	public ArrayList<Mineral> obtenerTodosLosMinerales() {
+	    ArrayList<Mineral> todosLosMinerales = new ArrayList<>();
+	    
+	    // Iterar sobre cada tipo de mineral (TipoMinerales)
+	    for (EnumMap<EstadosMinerales, ArrayList<Mineral>> estadoMap : mineralesInventario.values()) {
+	        // Iterar sobre cada estado de mineral (EstadosMinerales)
+	        for (ArrayList<Mineral> minerales : estadoMap.values()) {
+	            // Añadir todos los minerales a la lista
+	            todosLosMinerales.addAll(minerales);
+	        }
+	    }
+	    
+	    return todosLosMinerales;
+	}
+
+	
+	
+	public ArrayList<Mineral> obtenerMineral(TipoMinerales tipo, EstadosMinerales estado) {
+	    return mineralesInventario.get(tipo).get(estado);
 	}
 	
+	public ArrayList<Mineral> obtenerMineral(Mineral mineral) {
+	    return mineralesInventario.get(mineral.tipo).get(mineral.estado);
+	}
+
+	public int contarMinerales(TipoMinerales tipo, EstadosMinerales estado) {
+	    return obtenerMineral(tipo, estado).size();
+	}
+	
+	public int contarMinerales(Mineral mineral) {
+	    return obtenerMineral(mineral.tipo, mineral.estado).size();
+	}
+
+	public int contarTotalDeMinerales() {
+	    int total = 0;
+	    for (EnumMap<EstadosMinerales, ArrayList<Mineral>> estadoMap : mineralesInventario.values()) {
+	        for (ArrayList<Mineral> listaMinerales : estadoMap.values()) {
+	            total += listaMinerales.size();
+	        }
+	    }
+	    return total;
+	}
+
+	
+	public void eliminarMinerales(Mineral mineral, int cantidad) {
+	    ArrayList<Mineral> minerales = obtenerMineral(mineral.tipo, mineral.estado);
+	    for (int i = 0; i < cantidad && !minerales.isEmpty(); i++) {
+	        minerales.remove(0); // Elimina el primero de la lista
+	    }
+	}
+
+	
+	
+	
+	public void agregarMineral(Mineral mineral) {
+	    TipoMinerales tipo = mineral.getTipoMineral();
+	    EstadosMinerales estado = mineral.getEstadoMineral();
+	    if (mineralesInventario.containsKey(tipo)) {
+	        EnumMap<EstadosMinerales, ArrayList<Mineral>> estadoMap = mineralesInventario.get(tipo);
+	        if (estadoMap.containsKey(estado)) {
+	            estadoMap.get(estado).add(mineral);
+	        }
+	    }
+	}
+
 	
 	public void devolverMineralesEnElInventario(TipoMinerales mineral, EstadosMinerales estado){
 		String[][] minerales = new String[TipoMinerales.values().length][EstadosMinerales.values().length];

@@ -20,7 +20,7 @@ public class OrganizadorSpritesIndiceZ {
 		//Revisa los objetos del mapa
 		for(int i = 0; i < objetosDelMapa.size(); i++){
 		if(objetosDelMapa.get(i).getIndiceZ() == 0) {
-			//objetosDelMapa.get(i).draw();
+			objetosDelMapa.get(i).draw();
 		}
 		}
 		

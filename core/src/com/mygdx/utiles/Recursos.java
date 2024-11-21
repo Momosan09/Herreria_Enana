@@ -56,13 +56,16 @@ public abstract class Recursos {
 	
 	//Objetos del mapa
 //	public static final String YUNQUE = "objetosDelMundo/inanimados/interactuables/yunque.png";
-	public static final String PIEDRA_PIEDRA = "objetosDelMundo/inanimados/interactuables/piedra.png";
-	public static final String MENA_HIERRO = "objetosDelMundo/inanimados/interactuables/hierroMena.png";
-	public static final String MENA_CARBON = "objetosDelMundo/inanimados/interactuables/carbonMena.png";
-	public static final String LINGOTE_HIERRO = "objetosDelMundo/inanimados/hierroLingote.png";
-	public static final String PLANCHA_HIERRO = "objetosDelMundo/inanimados/hierroPlancha.png";
-	public static final String HIERRO_PURO = "objetosDelMundo/inanimados/hierroPuro.png";
-	public static final String CARBON_PURO = "objetosDelMundo/inanimados/carbonPuro.png";
+		//piedra
+	public static final String PIEDRA_PIEDRA = "objetosDelMundo/inanimados/minerales/piedra/piedraMena.png";
+		//hierro
+	public static final String MENA_HIERRO = "objetosDelMundo/inanimados/minerales/hierro/hierroMena.png";
+	public static final String LINGOTE_HIERRO = "objetosDelMundo/inanimados/minerales/hierro/hierroLingote.png";
+	public static final String PLANCHA_HIERRO = "objetosDelMundo/inanimados/minerales/hierro/hierroPlancha.png";
+	public static final String HIERRO_PURO = "objetosDelMundo/inanimados/minerales/hierro/hierroPuro.png";
+		//carbon
+	public static final String MENA_CARBON = "objetosDelMundo/inanimados/minerales/carbon/carbonMena.png";
+	public static final String CARBON_PURO = "objetosDelMundo/inanimados/minerales/carbon/carbonPuro.png";
 			
 	public static final String VACIO = "objetosDelMundo/inanimados/vacio.png";
 	public static final String HORNO = "objetosDelMundo/inanimados/interactuables/horno.png";

@@ -366,3 +366,38 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
 
 # 21 NOV
     - Arregla un error con el autosorting que no se porque surgio 
+    - cambia el inventario de minerales, ahora uso EnumMap. Esto me obliga a cambiar muchas cosas del codigo.
+#### ¡Importante!
+    Cambio en las rutas de los minerales, la estructura es la siguiente
+
+├── assets
+│   ├── objetosDelMundo
+│   │   ├── inanimados
+│   │   │   ├── minerales
+│   │   │   │   ├── carbon
+│   │   │   │   │  ├── carbonMena.png
+│   │   │   │   │  ├── carbonPuro.png
+│   │   │   │   │  ├── ...
+│   │   │   │   ├── hierro
+│   │   │   │   │  ├── hierroMena.png
+│   │   │   │   │  ├── hierroPuro.png
+│   │   │   │   │  ├── hierroLingote.png
+│   │   │   │   │  ├── ...
+│   │   │   │   ├── piedra
+│   │   │   │   │  ├── piedraMena.png 
+│   │   │   │   │  ├── ... 
+│   │   │   │   ├── ... 
+
+Esta estructura es muy importante primero por que organiza mejor las cosas y segundo para los enum.
+El enum ```TipoMineral``` ahora tiene un pedazo de la ruta y ```EstadosMinerales``` tiene otro, esto me componer las texturas entonces simplemente con el enum puedo hacer:
+```java
+TipoMinerales.HIERRO.ruta + EstadosMinerales.PURO.ruta; //Me construye la ruta completa
+```
+
+#### Importante
+Los nombres de las imagenes tienen que tener SI o SI como ultima palabra el estado en el que estan, si es la imagen del lingote de hierro la ultima palabra del nombre del archivo tiene que ser Lingote.png (con mayuscula la primera letra)
+ademas de que el nombre tienen que ser el ```tipo``` + ```estado```
+por ejemplo:
+>    hierroMena.png
+    carbonPuro.png
+    ...

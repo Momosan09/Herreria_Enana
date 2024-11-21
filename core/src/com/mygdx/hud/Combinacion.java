@@ -95,9 +95,9 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
     	//traerinventario();
     }
 	
-	public void traerinventario() {
-		for (int i = 0; i<jugador.getMinerales().size();i++) {
-			 combinables.add(new Image(jugador.getMinerales().get(i).getTextura()));
+	public void traerInventario() {
+		for (int i = 0; i<jugador.obtenerTodosLosMinerales().size();i++) {
+			 combinables.add(new Image(jugador.obtenerTodosLosMinerales().get(i).getTextura()));
 			 combinables.get(i).setPosition(32, 32);
 		}
 	}

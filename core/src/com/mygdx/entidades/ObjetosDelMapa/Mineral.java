@@ -37,6 +37,7 @@ public class Mineral extends ObjetoDelMapa{
 		this.estado = estado;
 		crearCuerpo(world, ancho, alto);
 	}
+
 	
 	public Mineral(float x, float y, boolean comprable, String rutaTextura, TipoMinerales tipo, EstadosMinerales estado) {
 		super(x, y,comprable, rutaTextura);
@@ -97,7 +98,7 @@ public class Mineral extends ObjetoDelMapa{
 	
 	private void recolectar() {
         System.out.println(HelpDebug.debub(getClass()) + "muerte");
-        jugador.getMinerales().add(this);
+        jugador.agregarMineral(this);
         OrganizadorSpritesIndiceZ.eliminarMineral(this);
         for(int i = 0; i<jugador.getMisiones().size();i++) {
         	if(jugador.getMisiones().get(i).getTipoMision() == TipoMision.RECOLECTAR) {
@@ -139,6 +140,9 @@ public class Mineral extends ObjetoDelMapa{
 
 		public TipoMinerales getTipoMineral() {
 			return tipo;
+		}
+		public EstadosMinerales getEstadoMineral() {
+			return estado;
 		}
 		
 		public String getNombre() {

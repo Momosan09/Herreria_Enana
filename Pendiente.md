@@ -17,3 +17,7 @@
     - ¿¿¿Volver a hacer multijugador???
     - Hacer que los precios cambien dependiendo de donde este el vendedor (mas cerca del reino mas caro, y asi)
     - Hacer que si el jugador esta contra el mostrador su sprite cambie por uno en el que este apoyado sobre este
+
+
+# Ideas
+    - Que el inventario del jugador sea un saco y solo puede llevar x cantidad de peso

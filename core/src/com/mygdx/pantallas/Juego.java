@@ -1,5 +1,8 @@
 package com.mygdx.pantallas;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -188,9 +191,9 @@ public class Juego implements Screen{
 		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.PIEDRA.toString(), 2,0,10,50);
 		*/
 	    
-		jugador.getMinerales().add(hierro);
-		jugador.getMinerales().add(hierro1);
-		
+		jugador.agregarMineral(hierro);
+		jugador.agregarMineral(hierro1);
+
 		entradas = new Entradas(jugador);
 		carta = new Carta(36, 12, world, Recursos.CARTA, jugador);
 		MundoConfig.cartaAMostrar = CartasManager.getPrimeraCarta();

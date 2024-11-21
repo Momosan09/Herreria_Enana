@@ -161,8 +161,8 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 		tablaMinerales.add(encabezadoMinerales).row();
 		tablaMinerales.setDebug(true);
 		//Este if me permite saber si el la tabla no esta actualizada y si no lo esta, actualizarla
-		if(tablaMinerales.getChildren().size-1 != jugador.getMinerales().size()) {//Le resto 1 porque la Label es un children tambien
-	    for (Mineral mineral : jugador.getMinerales()) {
+		if(tablaMinerales.getChildren().size-1 != jugador.obtenerTodosLosMinerales().size()) {//Le resto 1 porque la Label es un children tambien
+	    for (Mineral mineral : jugador.obtenerTodosLosMinerales()) {
 	    	//System.out.println(HelpDebug.debub(getClass())+"Hay mineral");
 	        // Crea una imagen para el mineral y la agrega a la tabla
 	        Image mineralImage = new Image(mineral.getTextura());
@@ -229,7 +229,7 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 	        mineralesApilados.clear();
 	        
 	        // Recorrer la lista de minerales del inventario
-	        for (Mineral mineral : jugador.getMinerales()) {
+	        for (Mineral mineral : jugador.obtenerTodosLosMinerales()) {
 	            // Obtener la combinación de tipo y estado del mineral
 	            String clave = mineral.tipo.toString() + "_" + mineral.getEstado().toString();
 	            
