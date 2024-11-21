@@ -363,3 +363,6 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
 # 28 SEP
     - Muestra mensaje al recibir misiones
     - Reproduce sonido al recibir misiones
+
+# 21 NOV
+    - Arregla un error con el autosorting que no se porque surgio 

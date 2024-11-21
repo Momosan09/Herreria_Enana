@@ -9,19 +9,18 @@ import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 
 
 
-public abstract class OrganizadorSpritesIndiceZ {
+public class OrganizadorSpritesIndiceZ {
 	
 	public static ArrayList<ObjetoDelMapa> objetosDelMapa = new ArrayList<ObjetoDelMapa>();
 	public static ArrayList<Npc> NPCS = new ArrayList<Npc>();//Esto es por las animaciones que tienen los npc
 	
 
 	
-	public static void dibujarYComparar(Jugador jugador) {
-		//Revisa los
+	public void dibujarYComparar(Jugador jugador) {
+		//Revisa los objetos del mapa
 		for(int i = 0; i < objetosDelMapa.size(); i++){
-			
 		if(objetosDelMapa.get(i).getIndiceZ() == 0) {
-			objetosDelMapa.get(i).draw();
+			//objetosDelMapa.get(i).draw();
 		}
 		}
 		

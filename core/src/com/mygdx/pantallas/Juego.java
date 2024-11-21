@@ -152,7 +152,7 @@ public class Juego implements Screen{
 		
 
 		jugador = new Jugador(camaraJugador, world, helpMapa.getJugadorSpawn());
-
+		organizador = new OrganizadorSpritesIndiceZ();
 
 		ui = new UI(jugador,this);//Ui tiene que ir antes que iluminacion por el orden en el que se cargan los listeners TODO arreglar eso
 		Render.rayHandler = new RayHandler(world);
