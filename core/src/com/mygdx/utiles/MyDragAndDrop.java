@@ -66,7 +66,6 @@ public class MyDragAndDrop {
 		herramientas = new ArrayList<Image>();
 
         if (jugador.contarTotalDeMinerales() > 0) {
-        	System.out.println("TOTAL DE MINERALES = " + jugador.contarTotalDeMinerales());
     		for (int i = 0; i<jugador.contarTotalDeMinerales();i++) {  				
     			for(int j = 0; j < TipoMinerales.values().length;j++) {
     				for(int k = 0; k < EstadosMinerales.values().length;k++) {
@@ -83,9 +82,6 @@ public class MyDragAndDrop {
     			
     		}
         }
-System.out.println(inventario.size() + " ESPARTANOOOOOOOOOOOOOOOOOOS");
-        
-
 		
         if (jugador.getItems().size() > 0) {
             for (Item herramienta : jugador.getItems()) {
@@ -104,9 +100,6 @@ System.out.println(inventario.size() + " ESPARTANOOOOOOOOOOOOOOOOOOS");
 		System.out.println(HelpDebug.debub(getClass())+ "creado");
 		
 		for (int i = 0; i < inventario.size(); i++) {
-			
-			System.out.println("pipo "+inventario.size() );
-			System.out.println("popi" + jugador.obtenerTodosLosMinerales().size());
 			 final Mineral mineral = jugador.obtenerTodosLosMinerales().get(i);
 			    dragAndDrop.addSource(new Source(inventario.get(i)) {//addSource permite que la imagen sea arrastrable, por eso necesito que cada imagen del inventario sea source
 				
@@ -348,9 +341,7 @@ System.out.println(inventario.size() + " ESPARTANOOOOOOOOOOOOOOOOOOS");
 		mineralesTabla.clear();
 		contenedor.clear();
 		tabla.clear();
-		System.out.println("ATENCION1 -----------" + inventario.size());
 
-		System.out.println(jugador.getItems().size()+"DADUUUUUUUUUUU");
 		for (int i = 0; i < jugador.getItems().size(); i++) {
 			herramientas.add(new Image(new Sprite(jugador.getItems().get(i).getTextura())));
 			herramientasTabla.add(herramientas.get(i));				
@@ -358,17 +349,13 @@ System.out.println(inventario.size() + " ESPARTANOOOOOOOOOOOOOOOOOOS");
 				herramientasTabla.row();
 			}
 		}
-		System.out.println("ATENCION2 -----------" + inventario.size());
 
-			System.out.println("Cantidad de minerales "+jugador.obtenerTodosLosMinerales().size());
 			for(int j = 0; j < TipoMinerales.values().length;j++) {
 				//System.out.println("tipo minerales "+ TipoMinerales.values().length);
 				for(int k = 0; k < EstadosMinerales.values().length;k++) {
 					//System.out.println("estado minerales "+ EstadosMinerales.values().length);
-					System.out.println("el pepepepepepe " + jugador.contarMinerales(TipoMinerales.values()[j], EstadosMinerales.values()[k]));
 					int cantidad = jugador.contarMinerales(TipoMinerales.values()[j], EstadosMinerales.values()[k]);
 					if(cantidad > 0) { // antes de crear la imagen se tiene que fijar que el jugador tenga por lo menos 1 de este mineral    						
-					System.out.println("tendrian que ser 3");
 					for(int l = 0;l< cantidad;l++) {
 						inventario.add(new Image(new Sprite(new Texture(TipoMinerales.values()[j].ruta + EstadosMinerales.values()[k].ruta))));//crea las imagenes en funcion de la cantidad de cada tipo y estado de mineral que el jugador tenga en el inventario 										
 					}
@@ -378,13 +365,11 @@ System.out.println(inventario.size() + " ESPARTANOOOOOOOOOOOOOOOOOOS");
 
 		}
 
-			
+			//los agrega a la tabla
 			for(int i = 0; i<inventario.size();i++) {
 				mineralesTabla.add(inventario.get(i));
 			}
 	
-		System.out.println("ATENCION3 -----------" + inventario.size());
-		
 		System.out.println(HelpDebug.debub(getClass()) + stage.getActors().size);
 		
 		create();
