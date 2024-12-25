@@ -25,7 +25,7 @@ public abstract class Recursos {
 	
 	//Jugador
 	public static final String JUGADOR_TEXTURA = "Jugador/quieto_0.png";
-	public static final String JUGADOR1_SPRITESHEET = "Jugador/jugador_1_SpriteSheet.png";
+	public static final String JUGADOR1_SPRITESHEET = "Jugador/spriteSheet64.png";
 	public static final String JUGADOR2_SPRITESHEET = "Jugador/jugador_2_SpriteSheet.png";
 	
 	//Items
@@ -81,6 +81,7 @@ public abstract class Recursos {
 	public static final String SIERRA_CIRCULAR= "objetosDelMundo/inanimados/sierraCircular.png";
 	
 	//HUD
+	public static final String CASILLERO_SELECCIONADO= "HUD/casilleroSeleccionado.png";
 	public static final String DINERO_HUD = "HUD/Dinero.png";
 	public static final String MARCO_RELOJ = "HUD/reloj.png";
 	public static final String DIBUJO_RELOJ = "HUD/tiempo.png";

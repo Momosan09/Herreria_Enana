@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.enums.EstadosDelJuego;
+import com.mygdx.enums.Items;
 import com.mygdx.eventos.Listeners;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
@@ -24,6 +25,7 @@ public class Entradas implements InputProcessor {
 	public Sound efectoSonidoTeclas = Gdx.audio.newSound(Gdx.files.internal(Recursos.EFECTO_TECLA_MENU)); //lo hice public para poder disposearlo cuando en donde sea necesario (en Juego, cuando era llamado por PantallaMenu, se escuchaban los sonidos de las teclas)
 	private boolean isSoundPlaying = false;
 	private int cont = 0;
+	private int ultimoNumeroApretado;
 	
 	public Entradas() {
 	}
@@ -55,10 +57,25 @@ public class Entradas implements InputProcessor {
 	}
 	
 	public void botonesJugador() {
+
+		
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
-			jugador.equipar(1);
+			if(ultimoNumeroApretado == 1 && jugador.getItemEnMano() == Items.PICO) {
+				jugador.desequipar();
+			}else {
+				jugador.equipar(1);				
+			}
+			ultimoNumeroApretado = 1;
+		} else if(Gdx.input.isKeyJustPressed(Keys.NUM_2)) {
+			if(ultimoNumeroApretado == 2 && jugador.getItemEnMano() == Items.MAZA) {
+				jugador.desequipar();
+			}else {
+				jugador.equipar(2);				
+			}
+			ultimoNumeroApretado = 2;
 		}
 	}
+
 	
 	private void reproducirEfectoSonido() {// ademas de reproducir el sonido, lo que hace es que no se toman las teclas que no tienen sonido, es decir que si deja el la tecla apretada no se va a escuchar miles de veces, solo cuando se levante y se vuelva a presionar va a volver a sonar
 		if (!isSoundPlaying) {

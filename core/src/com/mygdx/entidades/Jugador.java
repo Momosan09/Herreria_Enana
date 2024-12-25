@@ -15,37 +15,29 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.enums.Direcciones;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
+import com.mygdx.enums.PartesDelCuerpo;
 import com.mygdx.enums.Respuestas;
 import com.mygdx.eventos.Listeners;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.HelpDebug;
+import com.mygdx.utiles.ItemEquipadoJugador;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
-import com.mygdx.utiles.Render;
 import com.mygdx.audio.AudioManager;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
-import com.mygdx.entidades.ObjetosDelMapa.Minable.HierroMena;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
-import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroDisco;
-import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroPlancha;
-import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroPuro;
 import com.mygdx.historia.Mision;
 import com.mygdx.historia.MisionesDelJuego;
-import com.mygdx.historia.TipoMision;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Cincel;
-import com.mygdx.entidades.ObjetosDelMapa.Items.Esquema;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
 import com.mygdx.entidades.ObjetosDelMapa.Items.LimaPlana;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Maza;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Pico;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Sierra;
-import com.mygdx.entidades.ObjetosDelMapa.Items.SierraCircular;
 
 public class Jugador {
 
@@ -58,9 +50,9 @@ public class Jugador {
 	private Body body;
 	public OrthographicCamera camara;
 	private Texture texturaItem;
-	private Sprite spriteItem;
 	public String spritesheet;
 	public Rectangle areaJugador;
+	private ItemEquipadoJugador itemEnMano;
 	
 	//Inventarios
 	private ArrayList<Item> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
@@ -72,7 +64,7 @@ public class Jugador {
 	
 	public Direcciones direccionActual = Direcciones.QUIETO;
 	public Direcciones direccionDelChoque = null;
-	private Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda;
+	private Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda, animacionMinar;
 	private Animator animacionActual;
 	
 	
@@ -98,8 +90,6 @@ public class Jugador {
         shape.dispose();
 		
 		
-		texturaItem = new Texture(Recursos.PICO_DER);
-		spriteItem = new Sprite(texturaItem);
 		this.spritesheet = Recursos.JUGADOR1_SPRITESHEET;
 		crearAnimaciones();
 		
@@ -127,25 +117,18 @@ public class Jugador {
 		}
 
 	
-
+		itemEnMano = new ItemEquipadoJugador();
+		
 //		System.out.println("Eel amigo" + obtenerMineral(TipoMinerales.HIERRO, EstadosMinerales.MENA));
 	}
 
 
-	private void dibujarItemActual() {
-		if(items.contains(Items.PICO)) {
-			if(direccionActual == Direcciones.IZQUIERDA) {
-				//spriteItem.flip(true, false);
-			}
-//			spriteItem.draw(Render.batch);
-			spriteItem.setPosition(posicion.x-16, posicion.y-16);
-		}
-	}
 	
 	public void draw(SpriteBatch batch) {
 		// sprite.draw(batch);
 		update();
-		dibujarItemActual();
+		itemEnMano.dibujarYPosicion(this.posicion);
+		//dibujarItemActual();
 		areaJugador.set(posicion.x, posicion.y, 32, 32);
 	}
 
@@ -239,17 +222,19 @@ public class Jugador {
 	}
 
 	private void crearAnimaciones() {
-		animacionAbajo = new Animator(spritesheet, posicion, 0);
-		animacionArriba = new Animator(spritesheet, posicion, 1);
-		animacionIzquierda = new Animator(spritesheet, posicion, 2);
-		animacionDerecha = new Animator(spritesheet, posicion, 3);
-		animacionQuieto = new Animator(spritesheet, posicion, 4);
+		animacionAbajo = new Animator(spritesheet, posicion, 0, 6);
+		animacionArriba = new Animator(spritesheet, posicion, 1, 6);
+		animacionIzquierda = new Animator(spritesheet, posicion, 2, 6);
+		animacionDerecha = new Animator(spritesheet, posicion, 3, 6);
+		animacionQuieto = new Animator(spritesheet, posicion, 4, 6);
+		animacionMinar = new Animator(spritesheet, posicion, 5, 6);
 
 		animacionAbajo.create();
 		animacionArriba.create();
 		animacionIzquierda.create();
 		animacionDerecha.create();
 		animacionQuieto.create();
+		animacionMinar.create();
 	}
 
 	private void resetearAnimaciones(Animator ... animaciones) {	//varargs, ya que nose cuantas animaciones voy a usar
@@ -292,6 +277,18 @@ public class Jugador {
 		return null;
 	}
 	
+	
+	public Item getItem(int i) {
+		if(!items.isEmpty()) {			
+			return items.get(i);
+		}
+		
+		return null;
+	}
+	
+	public Items getItemEnMano() {
+		return itemEnMano.getTipo();
+	}
 	
 	public void eliminarItemRoto() {
 		if(MundoConfig.estadoJuego == EstadosDelJuego.INVENTARIO ) {
@@ -517,14 +514,26 @@ public class Jugador {
 	 * @param numero
 	 */
 	public void equipar(int numero) {
+		itemEnMano.mostrar();
 		switch (numero) {
 		case 1:
-			
+			itemEnMano.setParteDelCuerpo(PartesDelCuerpo.MANO_DERECHA);
+			itemEnMano.cambiarSprite(Items.PICO);
 			break;
 
+		case 2:
+			itemEnMano.cambiarSprite(Items.MAZA);
+			break;
 		default:
+			itemEnMano.borrarSprite();
 			break;
 		}
+	}
+	
+	public void desequipar() {
+		itemEnMano.setTipo(Items.VACIO);
+		itemEnMano.borrarSprite();
+		itemEnMano.ocultar();
 	}
 	
 }

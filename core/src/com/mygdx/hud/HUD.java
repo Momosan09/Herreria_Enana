@@ -21,6 +21,7 @@ import com.mygdx.audio.AudioManager;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
+import com.mygdx.eventos.BarraItemsSeleccion;
 import com.mygdx.eventos.EventoMisionAgregada;
 import com.mygdx.eventos.Listeners;
 import com.mygdx.historia.Mision;
@@ -36,7 +37,7 @@ import com.mygdx.utiles.Tiempo;
  	https://libgdxinfo.wordpress.com/basic_image/
  	https://github.com/raeleus/viewports-sample-project
  */
-public class HUD implements HeadUpDisplay, Ocultable, EventoMisionAgregada{
+public class HUD implements HeadUpDisplay, Ocultable, EventoMisionAgregada, BarraItemsSeleccion{
 
 	private Texture dinero_Tex;
 	private Texture reloj_Tex;
@@ -189,8 +190,9 @@ public class HUD implements HeadUpDisplay, Ocultable, EventoMisionAgregada{
 		hudDer.add(mensaje).fillX().expandY().top();
 
 		//barra items
-		Image imagen = new Image(Items.PICO.getTextura());
-		barraItems.add(imagen);
+		for(int i = 0; i< jugador.getItems().size();i++) { 
+			barraItems.add(new Image(jugador.getItem(i).getTextura()));
+		}
 		
 	
 		//Gral
@@ -455,6 +457,13 @@ public class HUD implements HeadUpDisplay, Ocultable, EventoMisionAgregada{
 	    Tiempo.actorEsperar(mensaje, 4);
 
 	}
+
+	@Override
+	public void dibujarCasilleroActivo() {
+		
+		
+	}
+	
 
 
 }

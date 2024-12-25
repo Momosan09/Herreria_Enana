@@ -177,6 +177,7 @@ public class Juego implements Screen{
 	@Override
 	public void render(float delta){
 		entradas.estadosDelJuego();
+		entradas.botonesJugador();
 		Tiempo.contarSegundosEnEstadoJuego();//Cuenta el tiempo que EstadoJuego != PAUSA
 		
 		//DEBUG Y COSAS TEMPORALES (despues no van a estar mas)

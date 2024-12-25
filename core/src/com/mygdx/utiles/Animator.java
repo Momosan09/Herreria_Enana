@@ -13,7 +13,7 @@ public class Animator implements ApplicationListener {
 
 	//https://libgdx.com/wiki/graphics/2d/2d-animation
 	// Constant rows and columns of the sprite sheet
-	private static final int FRAME_COLS = 5, FRAME_ROWS = 5;
+	private int columnasTotal = 5, filasTotal = 5;
 	private int filaDelSpriteSheet;
 
 	// Objects used
@@ -31,14 +31,21 @@ public class Animator implements ApplicationListener {
 		this.filaDelSpriteSheet = filaDelSpriteSheet;
 		this.posicion = posicion;
 	}
+	
+	public Animator(String rutaSpriteSheet, Vector2 posicion, int filaDelSpriteSheet, int filasTotal) {
+		this.rutaSpriteSheet = rutaSpriteSheet;
+		this.filaDelSpriteSheet = filaDelSpriteSheet;
+		this.posicion = posicion;
+		this.filasTotal = filasTotal;
+	}
 
 	@Override
 	public void create() {
 		
 		// Load the sprite sheet as a Texture
 		spriteSheet = new Texture(rutaSpriteSheet);
-		int frameWidth = spriteSheet.getWidth() / FRAME_COLS;
-		int frameHeight = spriteSheet.getHeight() / FRAME_ROWS;
+		int frameWidth = spriteSheet.getWidth() / columnasTotal;
+		int frameHeight = spriteSheet.getHeight() / filasTotal;
 
 		// Use the split utility method to create a 2D array of TextureRegions. This is
 		// possible because this sprite sheet contains frames of equal size and they are
@@ -47,9 +54,9 @@ public class Animator implements ApplicationListener {
 
 		// Place the regions into a 1D array in the correct order, starting from the top
 		// left, going across first. The Animation constructor requires a 1D array.
-		TextureRegion[] frames = new TextureRegion[FRAME_COLS];
+		TextureRegion[] frames = new TextureRegion[columnasTotal];
 
-			for(int j = 0; j < FRAME_COLS; j++) {
+			for(int j = 0; j < columnasTotal; j++) {
 				frames[j] = tmp[filaDelSpriteSheet][j];//Con filaDelSpriteSheet puedo elegir por constructor que fila es la que se va a utilizar
 			}
 		

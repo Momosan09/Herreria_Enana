@@ -405,3 +405,5 @@ por ejemplo:
 
 # 25 DIC
     - Arregla bug en combinaciones que surgio del enumMap
+    - Prepara para cambio de tamaño en el spritesheet del jugador
+    - el jugador ahora puede llevar un item en la mano
