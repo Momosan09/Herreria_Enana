@@ -53,10 +53,7 @@ public abstract class Entidad {
 //		sprite.setPosition(this.posicion.x, this.posicion.y);
 	}
 	
-	public Entidad(float x, float y, boolean comprable, String rutaTextura) {
-		x=x*MundoConfig.tamanoTile;
-		y=(MundoConfig.altoMundo - y) * MundoConfig.tamanoTile;
-		this.posicion = new Vector2(x,y);
+	public Entidad(boolean comprable, String rutaTextura) {
 		this.textura = new Texture(rutaTextura);
 		this.comprable = comprable;
 //		sprite = new SpriteOrdenableIndiceZ(this.textura);
@@ -71,6 +68,10 @@ public abstract class Entidad {
 		this.sprite = new Sprite(textura);
 		areaDeInteraccion = new Rectangle(posicion.x - distanciaInteraccion/2, posicion.y - distanciaInteraccion/2,
 				MundoConfig.tamanoTile+distanciaInteraccion, (MundoConfig.tamanoTile+ distanciaInteraccion));
+	}
+	public Entidad(String rutaTextura) {
+		this.textura = new Texture(rutaTextura);
+		this.sprite = new Sprite(textura);
 	}
 
 	protected void crearCuerpo(World world) {// cuerpos basicos por defecto

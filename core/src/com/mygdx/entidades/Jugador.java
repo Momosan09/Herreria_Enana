@@ -49,16 +49,16 @@ import com.mygdx.entidades.ObjetosDelMapa.Items.SierraCircular;
 
 public class Jugador {
 
-	public Vector2 posicion; //la hice publica para poder setearle valor en el hiloCliente
-	private Body body;
 	private float velocidad = 100f;
-	public OrthographicCamera camara;
-	public boolean puedeMoverse = false;
 	private int tamañoPersonaje = MundoConfig.tamanoTile;
-	private Texture texturaItem;
-	private Sprite spriteItem;
+	public boolean puedeMoverse = false;
 	public int[] dinero;
 	public boolean estaChocando = false;
+	public Vector2 posicion; //la hice publica para poder setearle valor en el hiloCliente
+	private Body body;
+	public OrthographicCamera camara;
+	private Texture texturaItem;
+	private Sprite spriteItem;
 	public String spritesheet;
 	public Rectangle areaJugador;
 	
@@ -125,10 +125,10 @@ public class Jugador {
 		    }
 		    mineralesInventario.put(tipo, estadoMap);
 		}
-		
-		
-		agregarMineral(new HierroMena(tamañoPersonaje, tamañoPersonaje, world, estaChocando));
-		System.out.println("Eel amigo" + obtenerMineral(TipoMinerales.HIERRO, EstadosMinerales.MENA));
+
+	
+
+//		System.out.println("Eel amigo" + obtenerMineral(TipoMinerales.HIERRO, EstadosMinerales.MENA));
 	}
 
 
@@ -307,7 +307,7 @@ public class Jugador {
 	
 	public ArrayList<Mineral> obtenerTodosLosMinerales() {
 	    ArrayList<Mineral> todosLosMinerales = new ArrayList<>();
-	    
+
 	    // Iterar sobre cada tipo de mineral (TipoMinerales)
 	    for (EnumMap<EstadosMinerales, ArrayList<Mineral>> estadoMap : mineralesInventario.values()) {
 	        // Iterar sobre cada estado de mineral (EstadosMinerales)
@@ -349,14 +349,19 @@ public class Jugador {
 	}
 
 	
-	public void eliminarMinerales(Mineral mineral, int cantidad) {
+	public void eliminarMineral(Mineral mineral, int cantidad) {
 	    ArrayList<Mineral> minerales = obtenerMineral(mineral.tipo, mineral.estado);
 	    for (int i = 0; i < cantidad && !minerales.isEmpty(); i++) {
 	        minerales.remove(0); // Elimina el primero de la lista
 	    }
 	}
-
 	
+	public void eliminarMineral(TipoMinerales tipo, EstadosMinerales estado, int cantidad) {
+	    ArrayList<Mineral> minerales = obtenerMineral(tipo, estado);
+	    for (int i = 0; i < cantidad && !minerales.isEmpty(); i++) {
+	        minerales.remove(0); // Elimina el primero de la lista
+	    }
+	}
 	
 	
 	public void agregarMineral(Mineral mineral) {
@@ -370,7 +375,7 @@ public class Jugador {
 	    }
 	}
 
-	
+	/*
 	public void devolverMineralesEnElInventario(TipoMinerales mineral, EstadosMinerales estado){
 		String[][] minerales = new String[TipoMinerales.values().length][EstadosMinerales.values().length];
 		for(int i = 0; i<mineralesInv.size();i++) {
@@ -451,7 +456,7 @@ public class Jugador {
 	    //indicesDeEliminacion.clear();
 		}
 	}
-
+*/
 	public OrthographicCamera getCamara() {
 		return camara;
 	}

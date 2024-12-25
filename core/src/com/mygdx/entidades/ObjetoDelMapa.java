@@ -32,14 +32,17 @@ public abstract class ObjetoDelMapa extends Entidad{
 	
 	
 	public ObjetoDelMapa(float x, float y, boolean comprable, String rutaTextura) {
-		super(x, y, comprable,rutaTextura);
-		OrganizadorSpritesIndiceZ.objetosDelMapa.add(this);
+		super(comprable,rutaTextura);
+		//OrganizadorSpritesIndiceZ.objetosDelMapa.add(this);
 		}
 
 
-	public ObjetoDelMapa(float x, float y, String rutaTextura) {
-		super(x,y,rutaTextura);
+	public ObjetoDelMapa( String rutaTextura) {
+		super(rutaTextura);
 	}
+	
+
+	
 	
 
 

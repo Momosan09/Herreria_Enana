@@ -134,7 +134,7 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 
 				fabricar = true;
 				System.out.println(cantidad);
-				jugador.eliminarPorNombreDadoCantidadYEstado(TipoMinerales.HIERRO, cantidad, EstadosMinerales.PURO);
+				jugador.eliminarMineral(TipoMinerales.HIERRO, EstadosMinerales.PURO, cantidad);
 			}
 		});
 		

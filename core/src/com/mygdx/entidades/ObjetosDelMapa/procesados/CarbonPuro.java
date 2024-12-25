@@ -7,8 +7,8 @@ import com.mygdx.utiles.Recursos;
 
 public class CarbonPuro extends Mineral{
 
-	public CarbonPuro(boolean comprable) {
-		super(comprable, Recursos.CARBON_PURO, TipoMinerales.CARBON, EstadosMinerales.PURO);
+	public CarbonPuro() {
+		super(Recursos.CARBON_PURO, TipoMinerales.CARBON, EstadosMinerales.PURO);
 		
 	}
 }

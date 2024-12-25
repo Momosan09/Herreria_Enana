@@ -7,8 +7,8 @@ import com.mygdx.utiles.Recursos;
 
 public class HierroPlancha extends Mineral{
 
-	public HierroPlancha(boolean comprable) {
-		super(comprable, Recursos.PLANCHA_HIERRO, TipoMinerales.HIERRO, EstadosMinerales.PLANCHA);
+	public HierroPlancha() {
+		super(Recursos.PLANCHA_HIERRO, TipoMinerales.HIERRO, EstadosMinerales.PLANCHA);
 		
 	}
 

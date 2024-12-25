@@ -368,8 +368,8 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
     - Arregla un error con el autosorting que no se porque surgio 
     - cambia el inventario de minerales, ahora uso EnumMap. Esto me obliga a cambiar muchas cosas del codigo.
 #### ¡Importante!
-    Cambio en las rutas de los minerales, la estructura es la siguiente
-
+Cambio en las rutas de los minerales, la estructura es la siguiente:
+ ```
 ├── assets
 │   ├── objetosDelMundo
 │   │   ├── inanimados
@@ -387,6 +387,7 @@ Segunda vez que escribo esto, habia avanzado un monton pero me equivoque con alg
 │   │   │   │   │  ├── piedraMena.png 
 │   │   │   │   │  ├── ... 
 │   │   │   │   ├── ... 
+```
 
 Esta estructura es muy importante primero por que organiza mejor las cosas y segundo para los enum.
 El enum ```TipoMineral``` ahora tiene un pedazo de la ruta y ```EstadosMinerales``` tiene otro, esto me componer las texturas entonces simplemente con el enum puedo hacer:
@@ -401,3 +402,6 @@ por ejemplo:
 >    hierroMena.png
     carbonPuro.png
     ...
+
+# 25 DIC
+    - Arregla bug en combinaciones que surgio del enumMap

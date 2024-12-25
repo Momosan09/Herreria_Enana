@@ -25,7 +25,7 @@ public class Mineral extends ObjetoDelMapa{
 	public TipoMinerales tipo;
 	public EstadosMinerales estado;
 	public int vida = 100;
-	public int valor=5;
+	public int valor = 5;
 	private boolean comprar = false, cerrar = false, comprable = false;
 	private boolean dialogoAbierto = false;
 
@@ -47,11 +47,22 @@ public class Mineral extends ObjetoDelMapa{
 	}
 
 	public Mineral( boolean comprable, String rutaTextura, TipoMinerales tipo, EstadosMinerales estado) {
-		super(0, 0,comprable, rutaTextura);
+		super(rutaTextura);
 		this.comprable = comprable;
 		this.tipo = tipo;
 		this.estado = estado;
 	}
+	/**
+	 * Este Es para los que nunca van a salir al mundo, es decir, se compra o aparece al inicio del juego
+	 * @param rutaTextura
+	 */
+	public Mineral(String rutaTextura, TipoMinerales tipo, EstadosMinerales estado) {
+		super(rutaTextura);
+		this.tipo = tipo;
+		this.estado = estado;
+	}
+	
+	
 
 	protected void crearCuerpo(World world, int ancho, int alto) {//esto lo puedo sacar mas adelante, si le hago animacion a los minerales...
 		// Crear el cuerpo del jugador

@@ -1,24 +1,17 @@
 package com.mygdx.pantallas;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.NPCManager;
 import com.mygdx.entidades.Npc;
-import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.entidades.ObjetosDelMapa.AltoHorno;
 import com.mygdx.entidades.ObjetosDelMapa.CajaEntregas;
 import com.mygdx.entidades.ObjetosDelMapa.Carta;
@@ -29,40 +22,21 @@ import com.mygdx.entidades.ObjetosDelMapa.ObjetosTallerManager;
 import com.mygdx.entidades.ObjetosDelMapa.SoporteArmadura;
 import com.mygdx.entidades.ObjetosDelMapa.Yunque;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.CarbonMena;
-import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.HierroMena;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.PiedraMena;
-import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroPuro;
-import com.mygdx.entidades.animales.Rana;
 import com.mygdx.entidades.npcs.Carpintero;
 import com.mygdx.entidades.npcs.VendedorAmbulante;
 import com.mygdx.entidades.npcs.VendedorDeTienda;
 import com.mygdx.entidades.npcs.Viejo;
 import com.mygdx.entidades.npcs.dialogos.CharlaManager;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
-import com.mygdx.entidades.npcs.dialogos.Npc_Dialogos_Rey;
 import com.mygdx.enums.EstadosDelJuego;
-import com.mygdx.enums.Items;
 import com.mygdx.game.Principal;
-import com.mygdx.historia.TipoMision;
-import com.mygdx.hud.CajaEntregasHUD;
-import com.mygdx.hud.CartaHUD;
-import com.mygdx.hud.Combinacion;
-import com.mygdx.hud.Dialogo;
-import com.mygdx.hud.DialogoDeCompra;
-import com.mygdx.hud.Fundicion;
-import com.mygdx.hud.HUD;
-import com.mygdx.hud.InventarioHUD;
-import com.mygdx.hud.MesaHUD;
-import com.mygdx.hud.PausaHUD;
-import com.mygdx.hud.SoporteArmaduraHUD;
 import com.mygdx.hud.UI;
-import com.mygdx.hud.YunqueHUD;
 import com.mygdx.io.Entradas;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
-import com.mygdx.utiles.Config;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.HelpMapa;
 import com.mygdx.utiles.Iluminacion;
@@ -70,11 +44,9 @@ import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 import com.mygdx.utiles.Tiempo;
 import com.mygdx.historia.CartasManager;
-import com.mygdx.historia.MisionesDelJuego;
 import com.mygdx.historia.MisionesManager;
 
 import box2dLight.RayHandler;
-import box2dLight.PointLight;
 
 public class Juego implements Screen{
 	
@@ -191,8 +163,10 @@ public class Juego implements Screen{
 		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.PIEDRA.toString(), 2,0,10,50);
 		*/
 	    
-		jugador.agregarMineral(hierro);
-		jugador.agregarMineral(hierro1);
+		jugador.agregarMineral(new HierroMena(0, 0, world, false));
+		jugador.agregarMineral(new HierroMena(0, 0, world, false));
+		jugador.agregarMineral(new HierroPuro());
+		jugador.agregarMineral(new HierroPuro());
 
 		entradas = new Entradas(jugador);
 		carta = new Carta(36, 12, world, Recursos.CARTA, jugador);
