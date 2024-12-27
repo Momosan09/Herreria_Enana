@@ -24,8 +24,10 @@ public class HelpMapa {
 	private TiledMap tiledMap;
 	private Juego juego;
 	private Vector2 jugadorSpawn;
+	private Rectangle spawnMinerales;
 	private ArrayList<Vector2> posicionObjetosInteratuablesTaller;
-	private int[] capasDeFondo = {0,1,3,4,5,6,7,8,9,10}, capasDeFrente= {2};//Relativo a donde el personaje deberia estar ubicado //si agrego mas capas acordarse de modificar esto
+	//El numero de las capas es el orden en el que estan en tiled, de abajo a arriba
+	private int[] capasDeFondo = {0,1,2,4,5,6,7,8,9,10}, capasDeFrente= {3};//Relativo a donde el personaje deberia estar ubicado //si agrego mas capas acordarse de modificar esto
 	float unitScale = 1 / 1f;
 
 
@@ -33,11 +35,13 @@ public class HelpMapa {
 	public HelpMapa(Juego juego) {
 		this.juego = juego;
 		jugadorSpawn = new Vector2();
+		spawnMinerales = new Rectangle();
 		posicionObjetosInteratuablesTaller = new ArrayList<Vector2>();
 	}
 	
 	public OrthogonalTiledMapRenderer Inicializar() {
 		tiledMap = new TmxMapLoader().load(Recursos.MAPA);
+		conseguirObjetosDelMapa(tiledMap.getLayers().get("spawnMinerales").getObjects());
 		conseguirObjetosDelMapa(tiledMap.getLayers().get("colisiones").getObjects());
 //		conseguirObjetosInteractuablesDeLaCapa((TiledMapTileLayer) tiledMap.getLayers().get("objetosTaller"));
 		conseguirObjetosDeLaCapa((TiledMapTileLayer) tiledMap.getLayers().get("taller"));
@@ -47,6 +51,7 @@ public class HelpMapa {
 		conseguirObjetosDeLaCapa((TiledMapTileLayer) tiledMap.getLayers().get("estructurasFondo"));
 		conseguirObjetosDeLaCapa((TiledMapTileLayer) tiledMap.getLayers().get("habitacion"));
 		conseguirObjetosDeLaCapa((TiledMapTileLayer) tiledMap.getLayers().get("habitacionDetalles"));
+		conseguirObjetosDeLaCapa((TiledMapTileLayer) tiledMap.getLayers().get("sitioPiedra"));
 		return new OrthogonalTiledMapRenderer(tiledMap, unitScale);
 		}
 	
@@ -55,16 +60,27 @@ public class HelpMapa {
 	    for (MapObject mapObject : mapObjects) {
 //	    	System.out.println(HelpDebug.debub(getClass())+"entro");
 	        if (mapObject instanceof PolygonMapObject) {
-	            crearCuerposDeColision((PolygonMapObject) mapObject);
+	        		crearCuerposDeColision((PolygonMapObject) mapObject);	        		
+	        	
+	            
 	        }else {
 	        	
 	        if(mapObject instanceof RectangleMapObject) {
-	        	Rectangle rectangle = ((RectangleMapObject) mapObject).getRectangle();
-	        	String rectangleName = mapObject.getName();
 	        	
-	        	if(rectangleName.equals("puntoAparicion")) {//aca todas las excepciones
+	        
+	        	
+	        	if(mapObject.getName().equals("puntoAparicion")) {//aca todas las excepciones
+	        		Rectangle rectangle = ((RectangleMapObject) mapObject).getRectangle();
 	        		jugadorSpawn.x = rectangle.getX();
 	        		jugadorSpawn.y = rectangle.getY();
+	        	}
+	        	
+	        	if(mapObject.getName().equals("spawnArea")) {
+	        		Rectangle rectangle = ((RectangleMapObject) mapObject).getRectangle();
+	        		spawnMinerales.x = rectangle.getX();
+	        		spawnMinerales.y = rectangle.getY();
+	        		spawnMinerales.width = rectangle.height;//por alguna razon que no me gusta, te da la altura y el ancho al revez, por eso los puse asi
+	        		spawnMinerales.height = rectangle.width;
 	        	}
 	        }
 	        }
@@ -150,6 +166,10 @@ public class HelpMapa {
 
 	public Vector2 getJugadorSpawn() {
 		return jugadorSpawn;
+	}
+	
+	public Rectangle getSitioDeMinado() {
+		return spawnMinerales;
 	}
 	
 	public int[] getCapasDeFondo() {

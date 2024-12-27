@@ -69,7 +69,6 @@ public class Juego implements Screen{
 	private Carta carta;
 	private Npc viejo, vendedorAmbulate, vendedorTienda, carpintero, rey;
 	private Texture jugadorTextura;
-	private Mineral piedra, hierro, hierro1, piedra2, carbon;
 	private AltoHorno altoHorno;
 	private SoporteArmadura soporteArmadura;
 	private Yunque yunque;
@@ -137,14 +136,6 @@ public class Juego implements Screen{
 		crearNPCs();
 		npcManagerConfig();
 		charlaManagerConfig();
-		
-		//objetos del mapa
-		piedra = new PiedraMena(20,16, world,false);//Eem los minerales voy a tener que hacer algun tipo de manager que los spawnee de manera aleatoria en alguna zona permitida
-		hierro = new HierroMena(20,20, world,false);
-		hierro1 = new HierroMena(7,5, world,true);
-		piedra2 = new PiedraMena(18,18, world,false);
-		carbon = new CarbonMena(23, 32, world, false);
-		
 		crearObjetosDelTaller();	
 				
 		mineralesManagerConfig();
@@ -229,7 +220,7 @@ public class Juego implements Screen{
 		objetosDelTallerManager.detectarJugador(jugador);
 		
 //		mineralesManager.minar(jugador);
-		mineralesManager.limpiarMinerales(world);
+		mineralesManager.limpiarMinerales();
 //		mineralesManager.comprar(jugador);
 
 
@@ -318,8 +309,6 @@ public class Juego implements Screen{
 		
 	}
 	
-
-	
 	private void npcManagerConfig() {
 		npcManager = new NPCManager();
 		npcManager.agregarEntidad(viejo);
@@ -332,12 +321,8 @@ public class Juego implements Screen{
 	}
 	
 	private void mineralesManagerConfig() {
-		mineralesManager = new MineralesManager();
-		mineralesManager.agregarMineral(piedra);
-		mineralesManager.agregarMineral(hierro);
-		mineralesManager.agregarMineral(hierro1);
-		mineralesManager.agregarMineral(piedra2);
-		mineralesManager.agregarMineral(carbon);
+		mineralesManager = new MineralesManager(world);
+		mineralesManager.generarVetas(helpMapa.getSitioDeMinado());
 	}
 	
 	private void misionesMangerConfig() {
@@ -364,15 +349,13 @@ public class Juego implements Screen{
 	public World getWorld() {
 		return world;
 	}
-
 	 
-	 
-		@Override
-		public void dispose() {
-			Render.tiledMapRenderer.dispose();
-			ui.dispose();
-			organizador.dispose();
-			Recursos.muxJuego.clear();
-		}
+	@Override
+	public void dispose() {
+		Render.tiledMapRenderer.dispose();
+		ui.dispose();
+		organizador.dispose();
+		Recursos.muxJuego.clear();
+	}
 
 }

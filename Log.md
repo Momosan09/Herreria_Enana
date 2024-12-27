@@ -411,3 +411,4 @@ por ejemplo:
 # 27 DIC
     - Ahora se como funciona el Inputprocessor y lo estoy usando bien despues de mas de un año
     - Mejora en minado de minerales
+    - Ahora los minerales se agregan de manera aleatoria en un sitio de minado predefinido
