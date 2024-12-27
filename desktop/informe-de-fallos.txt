@@ -1,10 +1,11 @@
-java.lang.NullPointerException: processor cannot be null
-	at com.badlogic.gdx.InputMultiplexer.addProcessor(InputMultiplexer.java:45)
-	at com.mygdx.pantallas.Juego.show(Juego.java:173)
-	at com.badlogic.gdx.Game.setScreen(Game.java:63)
-	at com.mygdx.game.Principal.create(Principal.java:32)
-	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.initializeListener(Lwjgl3Window.java:416)
-	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:366)
+java.lang.NullPointerException: Cannot invoke "com.mygdx.entidades.Jugador.getCamara()" because "this.jugador" is null
+	at com.mygdx.entidades.ObjetosDelMapa.Mineral.minar(Mineral.java:173)
+	at com.mygdx.eventos.Listeners.minar(Listeners.java:91)
+	at com.mygdx.io.EntradasJugador.touchDown(EntradasJugador.java:55)
+	at com.badlogic.gdx.InputMultiplexer.touchDown(InputMultiplexer.java:113)
+	at com.badlogic.gdx.InputEventQueue.drain(InputEventQueue.java:67)
+	at com.badlogic.gdx.backends.lwjgl3.DefaultLwjgl3Input.update(DefaultLwjgl3Input.java:189)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:378)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:192)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:166)
 	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)

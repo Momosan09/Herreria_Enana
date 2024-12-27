@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
+import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
@@ -26,7 +28,7 @@ public abstract class Entidad {
 
 	protected boolean jugadorEnRango = false;
 	protected Body body;
-	protected Rectangle areaDeInteraccion;
+	protected Circle areaDeInteraccion;
 	protected Sprite sprite;
 	protected int indiceZ;
 	private boolean comprable = false;
@@ -39,8 +41,8 @@ public abstract class Entidad {
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
 		
-		areaDeInteraccion = new Rectangle(posicion.x - distanciaInteraccion/2, posicion.y - distanciaInteraccion/2,
-				MundoConfig.tamanoTile+distanciaInteraccion, (MundoConfig.tamanoTile+ distanciaInteraccion));
+		areaDeInteraccion = new Circle(posicion.x+MundoConfig.tamanoTile/2 , posicion.y+MundoConfig.tamanoTile/2,
+				MundoConfig.tamanoTile/1.3f);
 	}
 	
 	public Entidad(float x, float y, boolean comprable, World world ,String rutaTextura) {
@@ -66,8 +68,8 @@ public abstract class Entidad {
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
 		this.sprite = new Sprite(textura);
-		areaDeInteraccion = new Rectangle(posicion.x - distanciaInteraccion/2, posicion.y - distanciaInteraccion/2,
-				MundoConfig.tamanoTile+distanciaInteraccion, (MundoConfig.tamanoTile+ distanciaInteraccion));
+		areaDeInteraccion = new Circle(posicion.x+MundoConfig.tamanoTile/2 , posicion.y+MundoConfig.tamanoTile/2,
+				MundoConfig.tamanoTile/1.3f);
 	}
 	public Entidad(String rutaTextura) {
 		this.textura = new Texture(rutaTextura);
@@ -111,12 +113,31 @@ public abstract class Entidad {
 //		dibujarAreaInteraccion();
 	}
 	
-	public void dibujarAreaInteraccion() {
+	
+	public void dibujarAreasInteraccion() {
 		ShapeRenderer shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setProjectionMatrix(Render.batch.getProjectionMatrix());
 		shapeRenderer.begin(ShapeType.Line);
 		shapeRenderer.setColor(Color.RED);
-		shapeRenderer.rect(areaDeInteraccion.x, areaDeInteraccion.y, areaDeInteraccion.width, areaDeInteraccion.height);
+		shapeRenderer.circle(areaDeInteraccion.x, areaDeInteraccion.y, areaDeInteraccion.radius);
+		shapeRenderer.end();
+	}
+	
+	public void dibujarAreasInteraccion(Circle c, String color) {
+		ShapeRenderer shapeRenderer = new ShapeRenderer();
+		shapeRenderer.setProjectionMatrix(Render.batch.getProjectionMatrix());
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.setColor(Color.valueOf(color));
+		shapeRenderer.circle(c.x+c.radius/4, c.y+c.radius/4, c.radius);
+		shapeRenderer.end();
+	}
+	
+	public void dibujarAreasInteraccion(Rectangle r, String color) {
+		ShapeRenderer shapeRenderer = new ShapeRenderer();
+		shapeRenderer.setProjectionMatrix(Render.batch.getProjectionMatrix());
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.setColor(Color.valueOf(color));
+		shapeRenderer.rect(r.x, r.y, r.width, r.height);
 		shapeRenderer.end();
 	}
 	
@@ -162,6 +183,10 @@ public abstract class Entidad {
 
 	public int getIndiceZ() {
 		return indiceZ;
+	}
+	
+	public void dispose() {
+		textura.dispose();
 	}
 	
 //	public SpriteOrdenableIndiceZ getSprite() {

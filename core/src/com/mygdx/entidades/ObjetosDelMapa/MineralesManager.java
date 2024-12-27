@@ -101,9 +101,23 @@ public class MineralesManager {
     public void generarVetas() {
     	
     }
+    
+    public void dibujarAreaInteraccion() {
+    	for (Mineral mineral : minerales) {
+    			mineral.dibujarAreasInteraccion();
+    	}
+	}
+    
+    public void dibujarAreaMinado() {
+    	for (Mineral mineral : minerales) {
+    			mineral.dibujarAreaDeMinado();
+    	}
+	}
+    
 
     public ArrayList<Mineral> getMinerales() {
         return minerales;
     }
+    
     
 }

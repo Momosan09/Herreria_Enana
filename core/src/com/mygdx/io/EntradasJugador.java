@@ -3,7 +3,10 @@ package com.mygdx.io;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Keys;
+import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
+import com.mygdx.eventos.Listeners;
+import com.mygdx.utiles.MundoConfig;
 import com.mygdx.entidades.Jugador;
 
 public class EntradasJugador implements InputProcessor{
@@ -49,7 +52,11 @@ public class EntradasJugador implements InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+		if(MundoConfig.estadoJuego == EstadosDelJuego.JUEGO) {	
+			if(jugador.getItemEnMano() == Items.PICO) {
+				Listeners.minar(jugador, screenX, screenY);
+			}
+		}
 		return false;
 	}
 

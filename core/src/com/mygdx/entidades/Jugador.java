@@ -2,12 +2,16 @@ package com.mygdx.entidades;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -15,57 +19,54 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.enums.Direcciones;
-import com.mygdx.enums.EstadosDelJuego;
-import com.mygdx.enums.Items;
-import com.mygdx.enums.PartesDelCuerpo;
-import com.mygdx.enums.Respuestas;
-import com.mygdx.eventos.Listeners;
-import com.mygdx.utiles.Animator;
-import com.mygdx.utiles.HelpDebug;
-import com.mygdx.utiles.ItemEquipadoJugador;
-import com.mygdx.utiles.MundoConfig;
-import com.mygdx.utiles.Recursos;
 import com.mygdx.audio.AudioManager;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
-import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
-import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
-import com.mygdx.historia.Mision;
-import com.mygdx.historia.MisionesDelJuego;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Cincel;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
 import com.mygdx.entidades.ObjetosDelMapa.Items.LimaPlana;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Maza;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Pico;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Sierra;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
+import com.mygdx.enums.Direcciones;
+import com.mygdx.enums.EstadosDelJuego;
+import com.mygdx.enums.Items;
+import com.mygdx.enums.PartesDelCuerpo;
+import com.mygdx.enums.Respuestas;
+import com.mygdx.eventos.Listeners;
+import com.mygdx.historia.Mision;
+import com.mygdx.historia.MisionesDelJuego;
+import com.mygdx.utiles.Animator;
+import com.mygdx.utiles.HelpDebug;
+import com.mygdx.utiles.ItemEquipadoJugador;
+import com.mygdx.utiles.MundoConfig;
+import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.Render;
 
 public class Jugador {
 
 	private float velocidad = 100f;
-	private int tamañoPersonaje = MundoConfig.tamanoTile;
 	public boolean puedeMoverse = false;
 	public int[] dinero;
 	public boolean estaChocando = false;
 	public Vector2 posicion; //la hice publica para poder setearle valor en el hiloCliente
 	private Body body;
 	public OrthographicCamera camara;
-	private Texture texturaItem;
 	public String spritesheet;
-	public Rectangle areaJugador;
+	public Circle areaJugador;
 	private ItemEquipadoJugador itemEnMano;
 	
 	//Inventarios
 	private ArrayList<Item> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
 	private EnumMap<TipoMinerales, EnumMap<EstadosMinerales, ArrayList<Mineral>>> mineralesInventario =
 		    new EnumMap<>(TipoMinerales.class);
-
-	private ArrayList<Integer> indicesDeEliminacion = new ArrayList<>();//Se guardan temporalmente los indices de los minerales a eliminar, despues este array se limpia
+	
 	private ArrayList<Mision> tareas = new ArrayList<>();
 	
 	public Direcciones direccionActual = Direcciones.QUIETO;
 	public Direcciones direccionDelChoque = null;
 	private Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda, animacionMinar;
-	private Animator animacionActual;
 	
 	
 	public Respuestas respuesta1 = Respuestas.NOVALOR, respuesta2 = Respuestas.NOVALOR;
@@ -95,7 +96,7 @@ public class Jugador {
 		
 		dinero = new int[3];
 		
-		areaJugador = new Rectangle(posicion.x, posicion.y, 32, 32);
+		areaJugador = new Circle(posicion.x, posicion.y, 32);
 		
 		
 		//ESTO ES TEMPORAL, DESPUES EL JUGADOR NO VA A EMPEZAR CON LAS HERRAMIENTAS
@@ -129,7 +130,7 @@ public class Jugador {
 		update();
 		itemEnMano.dibujarYPosicion(this.posicion);
 		//dibujarItemActual();
-		areaJugador.set(posicion.x, posicion.y, 32, 32);
+		areaJugador.set(posicion.x, posicion.y, 16);
 	}
 
 	private void update() {
@@ -204,6 +205,15 @@ public class Jugador {
 	public Vector2 getPosicion() {
 		return posicion;
 	}
+	
+	public void dibujarAreaInteraccion() {
+		ShapeRenderer shapeRenderer = new ShapeRenderer();
+		shapeRenderer.setProjectionMatrix(Render.batch.getProjectionMatrix());
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.setColor(Color.RED);
+		shapeRenderer.circle(areaJugador.x, areaJugador.y, areaJugador.radius);
+		shapeRenderer.end();
+	}
 
 	public Animator alternarSprites(Direcciones direccion) {
 		switch (direccion) {
@@ -242,14 +252,6 @@ public class Jugador {
 	        animacion.reset();
 	    }
 
-	}
-	
-	public boolean isTabPressed() {
-		if(Gdx.input.isKeyPressed(Keys.TAB)) {
-//			System.out.println("TAB");
-			return true;
-		}
-		return false;
 	}
 	
 	public ArrayList<Item> getItems(){

@@ -50,7 +50,18 @@ public class OrganizadorSpritesIndiceZ {
 	}
 	
 	public static void eliminarMineral(Mineral mineral) {
+		//mineral.dispose();
 		objetosDelMapa.remove(mineral);
+	}
+
+	public void dispose() {
+		for(int i = 0; i<objetosDelMapa.size();i++) {
+			objetosDelMapa.get(i).dispose();
+		}
+		for(int i = 0; i<NPCS.size();i++) {
+			NPCS.get(i).dispose();
+		}
+		
 	}
 
 }

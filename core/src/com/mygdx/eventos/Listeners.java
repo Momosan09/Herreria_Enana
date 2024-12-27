@@ -3,6 +3,7 @@ package com.mygdx.eventos;
 import java.util.ArrayList;
 import java.util.EventListener;
 
+import com.mygdx.entidades.Jugador;
 import com.mygdx.historia.Mision;
 import com.mygdx.hud.CartaHUD;
 import com.mygdx.utiles.HelpDebug;
@@ -27,6 +28,7 @@ public abstract class Listeners {
 				}
 			}
 		}
+		
 		
 		public static void recibirCarta(CartaHUD carta) {
 			for (EventListener listener : listeners) {
@@ -74,6 +76,19 @@ public abstract class Listeners {
 				if((listener instanceof EventoInteraccionObj)) {
 					((EventoInteraccionObj)listener).interaccionObj();
 
+				}
+			}
+		}
+		/**
+		 * 
+		 * @param j el jugador
+		 * @param x la posicion x del click
+		 * @param y la posicion y del click
+		 */
+		public static void minar(Jugador j, int x, int y) {
+			for (EventListener listener : listeners) {
+				if((listener instanceof EventoMinar)) {
+					((EventoMinar)listener).minar(j, x, y);
 				}
 			}
 		}

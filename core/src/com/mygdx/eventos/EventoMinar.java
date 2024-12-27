@@ -2,7 +2,9 @@ package com.mygdx.eventos;
 
 import java.util.EventListener;
 
+import com.mygdx.entidades.Jugador;
+
 public interface EventoMinar extends EventListener{
 
-	void minar();
+	void minar(Jugador j, int x, int y);
 }

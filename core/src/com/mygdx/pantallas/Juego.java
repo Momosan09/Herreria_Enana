@@ -228,14 +228,17 @@ public class Juego implements Screen{
 		mineralesManager.detectarJugador(jugador);
 		objetosDelTallerManager.detectarJugador(jugador);
 		
-		mineralesManager.minar(jugador);
+//		mineralesManager.minar(jugador);
 		mineralesManager.limpiarMinerales(world);
-		mineralesManager.comprar(jugador);
+//		mineralesManager.comprar(jugador);
+
 
 		//jugador.draw(Render.batch);
 		
 		organizador.dibujarYComparar(jugador);
-		
+		mineralesManager.dibujarAreaInteraccion();
+		mineralesManager.dibujarAreaMinado();
+		jugador.dibujarAreaInteraccion();
 		Render.batch.end();
 		
 		
@@ -368,6 +371,7 @@ public class Juego implements Screen{
 		public void dispose() {
 			Render.tiledMapRenderer.dispose();
 			ui.dispose();
+			organizador.dispose();
 			Recursos.muxJuego.clear();
 		}
 
