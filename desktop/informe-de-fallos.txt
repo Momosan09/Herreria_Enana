@@ -1,11 +1,10 @@
-java.lang.NullPointerException: Cannot invoke "com.mygdx.enums.Items.getTextura()" because "this.tipo" is null
-	at com.mygdx.utiles.ItemEquipadoJugador.cambiarSprite(ItemEquipadoJugador.java:77)
-	at com.mygdx.entidades.Jugador.equipar(Jugador.java:520)
-	at com.mygdx.io.Entradas.botonesJugador(Entradas.java:66)
-	at com.mygdx.pantallas.Juego.render(Juego.java:180)
-	at com.badlogic.gdx.Game.render(Game.java:48)
-	at com.mygdx.game.Principal.render(Principal.java:38)
-	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:387)
+java.lang.NullPointerException: processor cannot be null
+	at com.badlogic.gdx.InputMultiplexer.addProcessor(InputMultiplexer.java:45)
+	at com.mygdx.pantallas.Juego.show(Juego.java:173)
+	at com.badlogic.gdx.Game.setScreen(Game.java:63)
+	at com.mygdx.game.Principal.create(Principal.java:32)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.initializeListener(Lwjgl3Window.java:416)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:366)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:192)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:166)
 	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)

@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Principal;
 import com.mygdx.hud.HeadUpDisplay;
-import com.mygdx.io.Entradas;
+import com.mygdx.io.EntradaMenu;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.Config;
 import com.mygdx.utiles.EstiloFuente;
@@ -27,7 +27,7 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 	private Table interfaz;
 	private Label interfazTextos[];
 	private Label.LabelStyle estiloLabel, tituloEstilo;
-	Entradas entradas = new Entradas();
+	EntradaMenu entradas = new EntradaMenu();
 	OrthographicCamera camara;
 	
 	public PantallaConfiguracion(final Principal game) {

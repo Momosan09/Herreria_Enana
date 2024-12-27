@@ -14,20 +14,21 @@ import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.enums.Items;
+import com.mygdx.eventos.EventoMinar;
+import com.mygdx.eventos.Listeners;
 import com.mygdx.historia.TipoMision;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 
-public class Mineral extends ObjetoDelMapa{
+public class Mineral extends ObjetoDelMapa implements EventoMinar{
 	
 	public TipoMinerales tipo;
 	public EstadosMinerales estado;
 	public int vida = 100;
 	public int valor = 5;
 	private boolean comprar = false, cerrar = false, comprable = false;
-	private boolean dialogoAbierto = false;
 
 	
 	public Mineral(float x, float y, World world, boolean comprable, String rutaTextura, TipoMinerales tipo, EstadosMinerales estado, int ancho, int alto) {
@@ -36,6 +37,7 @@ public class Mineral extends ObjetoDelMapa{
 		this.tipo = tipo;
 		this.estado = estado;
 		crearCuerpo(world, ancho, alto);
+		Listeners.agregarListener(this);
 	}
 
 	
@@ -44,6 +46,7 @@ public class Mineral extends ObjetoDelMapa{
 		this.comprable = comprable;
 		this.tipo = tipo;
 		this.estado = estado;
+		Listeners.agregarListener(this);
 	}
 
 	public Mineral( boolean comprable, String rutaTextura, TipoMinerales tipo, EstadosMinerales estado) {
@@ -51,6 +54,7 @@ public class Mineral extends ObjetoDelMapa{
 		this.comprable = comprable;
 		this.tipo = tipo;
 		this.estado = estado;
+		Listeners.agregarListener(this);
 	}
 	/**
 	 * Este Es para los que nunca van a salir al mundo, es decir, se compra o aparece al inicio del juego
@@ -106,6 +110,9 @@ public class Mineral extends ObjetoDelMapa{
 //	    }
 //	}
 
+	public void minar() {
+		
+	}
 	
 	private void recolectar() {
         System.out.println(HelpDebug.debub(getClass()) + "muerte");
@@ -137,14 +144,7 @@ public class Mineral extends ObjetoDelMapa{
 	 public boolean isComprable() {
 	        return comprable;
 	    }
-	 public void abrirDialogo() {
-		    dialogoAbierto = true;
-		}
 
-		public void cerrarDialogo() {
-		    dialogoAbierto = false;
-		}
-		
 	    public Rectangle getBoundingRectangle() {
 	        return new Rectangle(posicion.x, posicion.y, textura.getWidth(), textura.getHeight());
 	    }

@@ -34,7 +34,8 @@ import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.game.Principal;
 import com.mygdx.hud.UI;
-import com.mygdx.io.Entradas;
+import com.mygdx.io.EntradaJuego;
+import com.mygdx.io.EntradasJugador;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 import com.mygdx.utiles.HelpDebug;
@@ -88,9 +89,6 @@ public class Juego implements Screen{
 	//Scene2d.ui
 	private UI ui;
 	
-	//Entradas 
-	private Entradas entradas;
-	
 	//Charlas
 	public CharlaManager charlaManager;
 	
@@ -99,6 +97,7 @@ public class Juego implements Screen{
 
 	public Juego(final Principal game) {
 		this.game = game;
+
 		Gdx.input.setInputProcessor(Recursos.muxJuego);
 	}
 
@@ -168,7 +167,9 @@ public class Juego implements Screen{
 		jugador.agregarMineral(new HierroPuro());
 		jugador.agregarMineral(new HierroPuro());
 
-		entradas = new Entradas(jugador);
+		Recursos.muxJuego.addProcessor(new EntradaJuego());
+		Recursos.muxJuego.addProcessor(new EntradasJugador(jugador));
+		
 		carta = new Carta(36, 12, world, Recursos.CARTA, jugador);
 		MundoConfig.cartaAMostrar = CartasManager.getPrimeraCarta();
 		MundoConfig.estadoJuego = EstadosDelJuego.INICIO;
@@ -176,8 +177,6 @@ public class Juego implements Screen{
 
 	@Override
 	public void render(float delta){
-		entradas.estadosDelJuego();
-		entradas.botonesJugador();
 		Tiempo.contarSegundosEnEstadoJuego();//Cuenta el tiempo que EstadoJuego != PAUSA
 		
 		//DEBUG Y COSAS TEMPORALES (despues no van a estar mas)

@@ -4,7 +4,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.mygdx.entidades.Jugador;
+
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
 import com.mygdx.eventos.Listeners;
@@ -17,64 +17,13 @@ import java.awt.RenderingHints.Key;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 
-public class Entradas implements InputProcessor {
+public class EntradaMenu implements InputProcessor {
 	
 	
-	private Jugador jugador;
 	public boolean arriba = false, abajo = false, /*izq = false, der = false,*/ enter = false, apretoE=false;
 	public Sound efectoSonidoTeclas = Gdx.audio.newSound(Gdx.files.internal(Recursos.EFECTO_TECLA_MENU)); //lo hice public para poder disposearlo cuando en donde sea necesario (en Juego, cuando era llamado por PantallaMenu, se escuchaban los sonidos de las teclas)
 	private boolean isSoundPlaying = false;
 	private int cont = 0;
-	private int ultimoNumeroApretado;
-	
-	public Entradas() {
-	}
-	
-	public Entradas(Jugador jugador) {
-		this.jugador = jugador;
-	}
-
-	public void estadosDelJuego() {
-		
-		if(Gdx.input.isKeyJustPressed(Keys.E)) {
-			Listeners.interaccion();
-		}
-		
-		if(Gdx.input.isKeyJustPressed(Keys.TAB)) {
-			MundoConfig.estadoJuego = (MundoConfig.estadoJuego == EstadosDelJuego.JUEGO ? EstadosDelJuego.INVENTARIO : EstadosDelJuego.JUEGO);
-			System.out.println(HelpDebug.debub(getClass())+ "Inventario");
-		}
-		if(Gdx.input.isKeyJustPressed(Keys.CONTROL_LEFT)) {
-			MundoConfig.estadoJuego = (MundoConfig.estadoJuego == EstadosDelJuego.JUEGO ? EstadosDelJuego.INVENTARIO_BATALLAS : EstadosDelJuego.JUEGO);
-		}
-		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			MundoConfig.estadoJuego = (MundoConfig.estadoJuego == EstadosDelJuego.JUEGO? EstadosDelJuego.PAUSA : EstadosDelJuego.JUEGO);
-			System.out.println(HelpDebug.debub(getClass())+ "Pausa");
-		}
-		if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT)) {
-			MundoConfig.estadoJuego = (MundoConfig.estadoJuego == EstadosDelJuego.JUEGO ? EstadosDelJuego.COMBINACION: EstadosDelJuego.JUEGO);
-		}
-	}
-	
-	public void botonesJugador() {
-
-		
-		if(Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
-			if(ultimoNumeroApretado == 1 && jugador.getItemEnMano() == Items.PICO) {
-				jugador.desequipar();
-			}else {
-				jugador.equipar(1);				
-			}
-			ultimoNumeroApretado = 1;
-		} else if(Gdx.input.isKeyJustPressed(Keys.NUM_2)) {
-			if(ultimoNumeroApretado == 2 && jugador.getItemEnMano() == Items.MAZA) {
-				jugador.desequipar();
-			}else {
-				jugador.equipar(2);				
-			}
-			ultimoNumeroApretado = 2;
-		}
-	}
 
 	
 	private void reproducirEfectoSonido() {// ademas de reproducir el sonido, lo que hace es que no se toman las teclas que no tienen sonido, es decir que si deja el la tecla apretada no se va a escuchar miles de veces, solo cuando se levante y se vuelva a presionar va a volver a sonar
@@ -142,6 +91,7 @@ public class Entradas implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
 		return true;
 	}
 

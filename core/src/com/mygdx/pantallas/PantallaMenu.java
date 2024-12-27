@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Principal;
 import com.mygdx.hud.HeadUpDisplay;
-import com.mygdx.io.Entradas;
+import com.mygdx.io.EntradaMenu;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
@@ -38,7 +38,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	private Label[] interfazTexto;
 	private Label mensajePerdidaConexion;
 	private Label.LabelStyle tituloEstilo, subTituloEstilo, opcionEstilo, selccionadoEstilo, bottomEstilo, perdidaConexion;
-	private Entradas entradas = new Entradas();
+	private EntradaMenu entradas = new EntradaMenu();
 	private ImageButton musicaImg;
 	private Skin skinImageButton;
 	

@@ -407,3 +407,6 @@ por ejemplo:
     - Arregla bug en combinaciones que surgio del enumMap
     - Prepara para cambio de tamaño en el spritesheet del jugador
     - el jugador ahora puede llevar un item en la mano
+
+# 27 DIC
+    - Ahora se como funciona el Inputprocessor y lo estoy usando bien despues de mas de un año

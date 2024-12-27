@@ -40,6 +40,7 @@ public abstract class ObjetoDelMapa extends Entidad{
 	public ObjetoDelMapa( String rutaTextura) {
 		super(rutaTextura);
 	}
+
 	
 
 	
