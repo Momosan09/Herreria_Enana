@@ -227,9 +227,11 @@ public class Juego implements Screen{
 		//jugador.draw(Render.batch);
 		
 		organizador.dibujarYComparar(jugador);
-		mineralesManager.dibujarAreaInteraccion();
-		mineralesManager.dibujarAreaMinado();
-		jugador.dibujarAreaInteraccion();
+		
+		//AREAS DE INTERACCION
+		//mineralesManager.dibujarAreaInteraccion();
+		//mineralesManager.dibujarAreaMinado();
+		//jugador.dibujarAreaInteraccion();
 		Render.batch.end();
 		
 		
