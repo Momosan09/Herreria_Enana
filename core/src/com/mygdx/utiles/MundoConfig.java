@@ -1,12 +1,14 @@
 package com.mygdx.utiles;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.Vendedor;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.hud.CartaHUD;
 
 public abstract class MundoConfig {
-
+	
 	public static int anchoMundo;
 	public static int altoMundo;
 	public static int tamanoTile = 32;

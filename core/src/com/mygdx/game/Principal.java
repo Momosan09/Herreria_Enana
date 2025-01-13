@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.pantallas.Juego;
+import com.mygdx.pantallas.PantallaConfiguracion;
 import com.mygdx.pantallas.PantallaMenu;
+import com.mygdx.utiles.Config;
 import com.mygdx.utiles.Render;
 import com.mygdx.utiles.Tiempo;
 
@@ -29,7 +31,7 @@ public class Principal extends Game {
 		batch = new SpriteBatch();
 		Render.batch = batch;
 		font = new BitmapFont();
-	    this.setScreen(new Juego(this));
+	    this.setScreen(new PantallaConfiguracion(this));
 	}
 
 	@Override
@@ -43,5 +45,6 @@ public class Principal extends Game {
 		super.dispose();
 		Render.batch.dispose();
 		font.dispose();
+		Config.prefs.flush();//guarda los cambios de las preferences
 	}
 }

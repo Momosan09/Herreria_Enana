@@ -1,9 +1,8 @@
-java.lang.ArrayIndexOutOfBoundsException: Index 5 out of bounds for length 5
-	at com.mygdx.entidades.ObjetosDelMapa.MineralesManager.generarVetas(MineralesManager.java:133)
-	at com.mygdx.pantallas.Juego.mineralesManagerConfig(Juego.java:334)
-	at com.mygdx.pantallas.Juego.show(Juego.java:150)
+java.lang.NullPointerException: Cannot invoke "com.badlogic.gdx.scenes.scene2d.Group.getWidth()" because the return value of "com.badlogic.gdx.scenes.scene2d.ui.SelectBox.getParent()" is null
+	at com.mygdx.pantallas.PantallaConfiguracion.crearActores(PantallaConfiguracion.java:144)
+	at com.mygdx.pantallas.PantallaConfiguracion.show(PantallaConfiguracion.java:56)
 	at com.badlogic.gdx.Game.setScreen(Game.java:63)
-	at com.mygdx.game.Principal.create(Principal.java:32)
+	at com.mygdx.game.Principal.create(Principal.java:34)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.initializeListener(Lwjgl3Window.java:416)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:366)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:192)

@@ -23,6 +23,9 @@ public abstract class Recursos {
 	public static final String MUSICA_NO = "Imagen/menu/notaMusicalNo.png";
 	public static final String SKIN_NOTA_MUSICAL = "Imagen/menu/skinImageButtonNotaMusical.json";
 	
+	//Configuraciones
+	public static final String SELECT_BOX_SKIN = "HUD/skin/selectBox.json";
+	
 	//Jugador
 	public static final String JUGADOR_TEXTURA = "Jugador/quieto_0.png";
 	public static final String JUGADOR1_SPRITESHEET = "Jugador/spriteSheet64.png";
@@ -82,7 +85,7 @@ public abstract class Recursos {
 	
 	//HUD
 	public static final String CASILLERO_SELECCIONADO= "HUD/casilleroSeleccionado.png";
-	public static final String DINERO_HUD = "HUD/Dinero.png";
+	public static final String DINERO_HUD = "HUD/dinero.png";
 	public static final String MARCO_RELOJ = "HUD/reloj.png";
 	public static final String DIBUJO_RELOJ = "HUD/tiempo.png";
 	public static final String CUADRO_HUD = "HUD/cuadro.png";

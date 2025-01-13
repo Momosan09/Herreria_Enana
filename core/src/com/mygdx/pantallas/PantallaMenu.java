@@ -21,6 +21,7 @@ import com.mygdx.game.Principal;
 import com.mygdx.hud.HeadUpDisplay;
 import com.mygdx.io.EntradaMenu;
 import com.mygdx.utiles.Colores;
+import com.mygdx.utiles.Config;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
@@ -103,8 +104,13 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 
 	@Override
 	public void show() {
-		musicaMenu.setLooping(true);
-		musicaMenu.play();
+		if(Config.prefs.getBoolean("musicaMenuActiva")) {		
+			musicaImg.setChecked(false);
+			musicaMenu.setLooping(true);
+			musicaMenu.play();
+		}else {
+			musicaImg.setChecked(true);
+		}
 	}
 
 	@Override
@@ -153,18 +159,6 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		// TODO Auto-generated method stub
 
 	}
-
-	@Override
-	public void dispose() {
-//		fondoImg.dispose();
-//		Recursos.muxMenu.clear();
-		stage.dispose();
-		game.font.dispose();
-		entradas.efectoSonidoTeclas.dispose();
-		musicaMenu.stop();
-		musicaMenu.dispose();
-
-	}
 	
 	@Override
 	public void crearFuentes() {
@@ -207,11 +201,13 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Manejar el evento de clic aquí
-            	if(musicaMenu.isPlaying()) {
-            		musicaMenu.pause();            		
+            	if(Config.prefs.getBoolean("musicaMenuActiva")) {
+            		musicaMenu.pause();       
+            		Config.prefs.putBoolean("musicaMenuActiva", false);
             		System.out.println(HelpDebug.debub(getClass())+"musica pausada");
             	}else {
             		musicaMenu.play();
+            		Config.prefs.putBoolean("musicaMenuActiva", true);
             		System.out.println(HelpDebug.debub(getClass())+"musica reanudada");
             	}
                 
@@ -295,6 +291,18 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	public void render() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public void dispose() {
+//		fondoImg.dispose();
+		Recursos.muxMenu.clear();
+		stage.dispose();
+		game.font.dispose();
+		//entradas.efectoSonidoTeclas.dispose();
+		musicaMenu.stop();
+		musicaMenu.dispose();
+
 	}
 
 }

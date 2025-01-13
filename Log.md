@@ -412,3 +412,9 @@ por ejemplo:
     - Ahora se como funciona el Inputprocessor y lo estoy usando bien despues de mas de un año
     - Mejora en minado de minerales
     - Ahora los minerales se agregan de manera aleatoria en un sitio de minado predefinido
+
+# 2025
+
+# 13 ENE
+    - Se pueden guardar cambios de configuracion con "Preferences"
+    - Empiezo cambios en pantalla configuracion
