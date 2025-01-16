@@ -418,3 +418,6 @@ por ejemplo:
 # 13 ENE
     - Se pueden guardar cambios de configuracion con "Preferences"
     - Empiezo cambios en pantalla configuracion
+
+# 16 ENE
+    - Agrega configuraciones que persisten al cerrar y abrir el juego

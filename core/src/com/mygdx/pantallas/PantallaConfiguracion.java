@@ -3,14 +3,20 @@ package com.mygdx.pantallas;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -31,9 +37,15 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 	private ScreenViewport screenViewport;
 	private Stage stage;
 	private Skin skin;
-	private Table interfaz, pantalla;
+	private Table interfaz, pantalla, sonido;
+	//pantalla
 	private Label pantallaTextos[];
 	private SelectBox pantallaResolucionesSelectBox;
+	private CheckBox pantallaCompletaCheck;
+	//sonido
+	private Slider sonidoMusica;
+	private Label sonidoTextos[];
+	
 	private ImageButton botonVolver;
 	private Label interfazTextos[];
 	private Label.LabelStyle estiloLabel, tituloEstilo;
@@ -95,32 +107,30 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 		interfaz.add(interfazTextos[1]).expand();
 		interfaz.row();
 		
+		interfaz.add();
 		//tabla de la pantalla
 		pantalla.add(pantallaTextos[0]);
 		pantalla.add(pantallaResolucionesSelectBox).size(300,20);
+		pantalla.row();
+		pantalla.add(pantallaTextos[1]);
+		pantalla.add(pantallaCompletaCheck);
 		interfaz.add(pantalla);
 		//interfaz.add(interfazTextos[2]);
 		
+		sonido.add(sonidoTextos[0]);
+		sonido.add(sonidoMusica);
 		
+		
+		interfaz.add(sonido);
 		stage.addActor(interfaz);
 	}
 	
-	
-	private void seleccionarOpcion() {
-		int seleccion = entradas.seleccionarOpcion(interfazTextos, 0, 2);
-		
-		if(seleccion == 2) {
-			if(!Gdx.graphics.isFullscreen()) {
-				Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-			}
-		}
-	}
 
 	@Override
 	public void crearFuentes() {
 		estiloLabel = EstiloFuente.generarFuente(24, Colores.BLANCO, false);
 		tituloEstilo = EstiloFuente.generarFuente(40, Colores.BLANCO, false);
-		skin = new Skin(Gdx.files.internal(Recursos.SELECT_BOX_SKIN));
+		skin = new Skin(Gdx.files.internal(Recursos.PANTALLA_CONFIG_SKIN));
 		
 	}
 
@@ -143,6 +153,59 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 		pantallaResolucionesSelectBox = new SelectBox(skin);
 
 		pantallaResolucionesSelectBox.setItems(Config.resolucionesString);
+		pantallaResolucionesSelectBox.addListener(new ChangeListener() {
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if(!pantallaCompletaCheck.isChecked()) {					
+				sacarValorResolucion(pantallaResolucionesSelectBox.getSelected().toString());
+				}
+				
+			}
+		});
+		
+		
+		pantallaCompletaCheck = new CheckBox("", skin);
+		if(Config.prefs.getBoolean("pantallaCompleta")) {
+			pantallaCompletaCheck.setChecked(true);
+		}
+		pantallaTextos[1] = new Label(Recursos.bundle.get("pantallaConfiguracion.pantallaCompleta"), estiloLabel);
+		
+		pantallaCompletaCheck.addListener(new ChangeListener() {
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if(!pantallaCompletaCheck.isChecked()) {
+					sacarValorResolucion(pantallaResolucionesSelectBox.getSelected().toString());
+					Config.prefs.putBoolean("pantallaCompleta", false);
+
+				}else {
+					Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+					Config.prefs.putBoolean("pantallaCompleta", Gdx.graphics.isFullscreen());
+				}
+				
+			}
+		});
+		
+		
+		//Sonido
+		sonido = new Table();
+		
+		sonidoTextos = new Label[1];
+		sonidoTextos[0] = new Label(Recursos.bundle.get("pantallaConfiguracion.volumenMusica"), estiloLabel);
+		
+		sonidoMusica = new Slider(0,1,.01f, false,skin);
+		sonidoMusica.setValue(Config.prefs.getFloat("nivelVolumenMusica"));
+		sonidoMusica.addListener(new ChangeListener() {
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				Config.volumenMusica = sonidoMusica.getValue();
+				Config.prefs.putFloat("nivelVolumenMusica", Config.volumenMusica);
+				System.out.println(Config.volumenMusica);
+			}
+		});
+		
 		
 		interfazTextos = new Label[3];
 		
@@ -158,6 +221,14 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 
 	}
 
+	private void sacarValorResolucion(String s) {
+		String[] resolucion = s.split("x");
+		int ancho = Integer.parseInt(resolucion[0].trim());
+		int alto = Integer.parseInt(resolucion[1].trim());
+		Gdx.graphics.setWindowedMode(ancho, alto);
+		Config.prefs.putInteger("pantallaAncho", ancho);
+		Config.prefs.putInteger("pantallaAlto", alto);
+	}
 
 	@Override
 	public void reEscalar(int width, int heigth) {
@@ -175,7 +246,8 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 	@Override
 	public void dispose() {
 		Recursos.muxMenu.removeProcessor(stage);
-		
+		Config.prefs.putBoolean("pantallaCompleta", Gdx.graphics.isFullscreen());
+		Config.prefs.flush();
 	}
 	
 

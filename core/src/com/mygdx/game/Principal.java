@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -27,11 +28,15 @@ public class Principal extends Game {
 		* #2 usando t0j podemos calcular los segundos que el juego estuvo abierto con una simple cuenta (ver definicion ed #2)
 		*
 		*/
-		
+		if(Config.prefs.getBoolean("pantallaCompleta")) {
+			Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+		}else {
+			Gdx.graphics.setWindowedMode(Config.prefs.getInteger("pantallaAncho"), Config.prefs.getInteger("pantallaAlto"));
+		}
 		batch = new SpriteBatch();
 		Render.batch = batch;
 		font = new BitmapFont();
-	    this.setScreen(new PantallaConfiguracion(this));
+	    this.setScreen(new PantallaMenu(this));
 	}
 
 	@Override

@@ -24,7 +24,7 @@ public abstract class Recursos {
 	public static final String SKIN_NOTA_MUSICAL = "Imagen/menu/skinImageButtonNotaMusical.json";
 	
 	//Configuraciones
-	public static final String SELECT_BOX_SKIN = "HUD/skin/selectBox.json";
+	public static final String PANTALLA_CONFIG_SKIN = "pantallaConfig/skinPantallaConfig.json";
 	
 	//Jugador
 	public static final String JUGADOR_TEXTURA = "Jugador/quieto_0.png";

@@ -104,10 +104,12 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 
 	@Override
 	public void show() {
-		if(Config.prefs.getBoolean("musicaMenuActiva")) {		
+		if(Config.prefs.getBoolean("musicaMenuActiva") && !musicaMenu.isPlaying()) {		
 			musicaImg.setChecked(false);
 			musicaMenu.setLooping(true);
 			musicaMenu.play();
+			musicaMenu.setVolume(Config.prefs.getFloat("nivelVolumenMusica"));
+
 		}else {
 			musicaImg.setChecked(true);
 		}
@@ -245,11 +247,9 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		int seleccion = entradas.seleccionarOpcion(interfazTexto, 2, 3);
 
 		if (seleccion == 2) {
-			Recursos.muxMenu.clear();
 			game.setScreen(new Juego(game));
 			dispose();
 		}else if (seleccion == 3){
-			Recursos.muxMenu.clear();
 			game.setScreen(new PantallaConfiguracion(game));
 			dispose();
 		}
@@ -293,6 +293,16 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		
 	}
 	
+	/**
+	 * Se llama cuando se pasa a la pantalla de configuracion
+	 * no disposea la musica
+	 */
+	public void disposeChico() {
+		Recursos.muxMenu.clear();
+		stage.dispose();
+		game.font.dispose();
+	}
+	
 	@Override
 	public void dispose() {
 //		fondoImg.dispose();
@@ -302,7 +312,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		//entradas.efectoSonidoTeclas.dispose();
 		musicaMenu.stop();
 		musicaMenu.dispose();
-
+		Config.prefs.flush();
 	}
 
 }

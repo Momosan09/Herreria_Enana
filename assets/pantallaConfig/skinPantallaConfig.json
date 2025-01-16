@@ -1,0 +1,121 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	Cardinal: {
+		file: Cardinal.fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	RGBA_0_224_7_255: {
+		r: 0
+		g: 0.8784314
+		b: 0.02745098
+		a: 1
+	}
+	RGBA_0_242_255_255: {
+		r: 0
+		g: 0.9490196
+		b: 1
+		a: 1
+	}
+	Deshabilitado: {
+		r: 0.6039216
+		g: 0.6039216
+		b: 0.6039216
+		a: 0.6292135
+	}
+	RGBA_191_191_191_255: {
+		r: 0.7490196
+		g: 0.7490196
+		b: 0.7490196
+		a: 1
+	}
+	RGBA_255_228_0_255: {
+		r: 1
+		g: 0.89411765
+		b: 0
+		a: 1
+	}
+	RGBA_255_255_255_255: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	aaaaaaaaas: {
+		name: white-pixel
+		color: RGBA_0_242_255_255
+	}
+	adsasdas: {
+		name: white-pixel
+		color: RGBA_0_224_7_255
+	}
+	deshabilitado: {
+		name: white-pixel
+		color: Deshabilitado
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+	default: {
+		checkboxOn: checkBoxOn
+		checkboxOff: checkBoxOff
+		checkboxOver: checkBoxOver
+		checkboxOnDisabled: checkBoxOnDis
+		checkboxOffDisabled: checkBoxOffDis
+		font: Cardinal
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	default: {
+		imageUp: botonRegresoUp
+		imageDown: botonRegresoDown
+		imageOver: botonRegresoOver
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+	default: {
+		font: Cardinal
+		fontColorSelected: RGBA_255_228_0_255
+		fontColorUnselected: RGBA_255_255_255_255
+		selection: carta
+		down: aaaaaaaaas
+		over: adsasdas
+		background: carta
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+	default: {
+		background: carta
+		corner: adsasdas
+		hScroll: aaaaaaaaas
+		hScrollKnob: adsasdas
+		vScroll: aaaaaaaaas
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
+	default: {
+		font: Cardinal
+		fontColor: RGBA_255_255_255_255
+		overFontColor: RGBA_255_228_0_255
+		disabledFontColor: RGBA_191_191_191_255
+		background: carta
+		scrollStyle: default
+		listStyle: default
+		backgroundDisabled: deshabilitado
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+	default-horizontal: {
+		background: sliderBackground
+		knob: scrollKnob
+	}
+	default-vertical: {
+		background: sliderBackground
+		knob: scrollKnob
+	}
+}
+}

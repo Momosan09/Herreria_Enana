@@ -9,6 +9,7 @@ public abstract class Config {
 
 	//persistente
 	public static Preferences prefs = Gdx.app.getPreferences("HerreriaEnanaPreferencias");
+	public static float volumenMusica = 100;
 	
 	public static float ancho =  1280;
 	public static float alto = 768;
