@@ -24,6 +24,7 @@ import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.Config;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
+import com.mygdx.utiles.LeerLocale;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 
@@ -113,6 +114,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		}else {
 			musicaImg.setChecked(true);
 		}
+		LeerLocale.conseguirListaIdiomas();
 	}
 
 	@Override

@@ -421,3 +421,6 @@ por ejemplo:
 
 # 16 ENE
     - Agrega configuraciones que persisten al cerrar y abrir el juego
+
+# 24 ENE
+    - agrega configuraciones

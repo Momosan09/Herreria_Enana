@@ -27,6 +27,7 @@ import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.Config;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
+import com.mygdx.utiles.LeerLocale;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 
@@ -37,15 +38,18 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 	private ScreenViewport screenViewport;
 	private Stage stage;
 	private Skin skin;
-	private Table interfaz, pantalla, sonido;
+	private Table interfaz, pantalla, sonido, idioma;
 	//pantalla
 	private Label pantallaTextos[];
 	private SelectBox pantallaResolucionesSelectBox;
 	private CheckBox pantallaCompletaCheck;
 	//sonido
-	private Slider sonidoMusica;
+	private Slider sonidoSliders[];
 	private Label sonidoTextos[];
 	
+	//Idioma
+	private Label idiomaLbl;
+	private SelectBox idiomasSelectBx;
 	private ImageButton botonVolver;
 	private Label interfazTextos[];
 	private Label.LabelStyle estiloLabel, tituloEstilo;
@@ -118,7 +122,9 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 		//interfaz.add(interfazTextos[2]);
 		
 		sonido.add(sonidoTextos[0]);
-		sonido.add(sonidoMusica);
+		sonido.add(sonidoSliders[0]);
+		sonido.add(sonidoTextos[1]);
+		sonido.add(sonidoSliders[1]);
 		
 		
 		interfaz.add(sonido);
@@ -191,21 +197,41 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 		//Sonido
 		sonido = new Table();
 		
-		sonidoTextos = new Label[1];
+		sonidoTextos = new Label[2];
 		sonidoTextos[0] = new Label(Recursos.bundle.get("pantallaConfiguracion.volumenMusica"), estiloLabel);
 		
-		sonidoMusica = new Slider(0,1,.01f, false,skin);
-		sonidoMusica.setValue(Config.prefs.getFloat("nivelVolumenMusica"));
-		sonidoMusica.addListener(new ChangeListener() {
+		sonidoSliders = new Slider[3];
+		sonidoSliders[0] = new Slider(0,1,.01f, false,skin);
+		sonidoSliders[0].setValue(Config.prefs.getFloat("nivelVolumenMusica"));
+		sonidoSliders[0].addListener(new ChangeListener() {
 			
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				Config.volumenMusica = sonidoMusica.getValue();
+				Config.volumenMusica = sonidoSliders[0].getValue();
 				Config.prefs.putFloat("nivelVolumenMusica", Config.volumenMusica);
 				System.out.println(Config.volumenMusica);
 			}
 		});
 		
+		sonidoTextos[1] = new Label(Recursos.bundle.get("pantallaConfiguracion.volumenMenus"), estiloLabel);
+		
+		sonidoSliders[1] = new Slider(0,1,.01f, false,skin);
+		sonidoSliders[1].setValue(Config.prefs.getFloat("nivelVolumenMenues"));
+		sonidoSliders[1].addListener(new ChangeListener() {
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				Config.volumenMenues = sonidoSliders[1].getValue();
+				Config.prefs.putFloat("nivelVolumenMenues", Config.volumenMenues);
+				System.out.println(Config.volumenMenues);
+			}
+		});
+		
+		//idioma
+		idiomaLbl = new Label(Recursos.bundle.get("pantallaConfiguracion.idiomaLbl"), estiloLabel);
+		idiomasSelectBx = new SelectBox(skin);
+		//idiomasSelectBx.setItems(Recursos.bundle.);
+
 		
 		interfazTextos = new Label[3];
 		

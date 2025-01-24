@@ -1,7 +1,13 @@
-java.util.MissingResourceException: Can't find bundle key pantallaConfiguracion.volumenMusica 
-	at com.badlogic.gdx.utils.I18NBundle.get(I18NBundle.java:435)
-	at com.mygdx.pantallas.PantallaConfiguracion.crearActores(PantallaConfiguracion.java:195)
-	at com.mygdx.pantallas.PantallaConfiguracion.show(PantallaConfiguracion.java:68)
+com.badlogic.gdx.utils.GdxRuntimeException: java.lang.Error: Unresolved compilation problem: 
+	The method conseguirListaIdiomas() is undefined for the type LeerLocale
+
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:172)
+	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)
+Caused by: java.lang.Error: Unresolved compilation problem: 
+	The method conseguirListaIdiomas() is undefined for the type LeerLocale
+
+	at com.mygdx.pantallas.PantallaConfiguracion.crearActores(PantallaConfiguracion.java:234)
+	at com.mygdx.pantallas.PantallaConfiguracion.show(PantallaConfiguracion.java:72)
 	at com.badlogic.gdx.Game.setScreen(Game.java:63)
 	at com.mygdx.pantallas.PantallaMenu.seleccionarOpcion(PantallaMenu.java:253)
 	at com.mygdx.pantallas.PantallaMenu.render(PantallaMenu.java:137)
@@ -10,4 +16,4 @@ java.util.MissingResourceException: Can't find bundle key pantallaConfiguracion.
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:387)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:192)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:166)
-	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)
+	... 1 more

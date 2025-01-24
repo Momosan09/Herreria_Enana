@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
 import com.mygdx.eventos.Listeners;
+import com.mygdx.utiles.Config;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
@@ -28,7 +29,7 @@ public class EntradaMenu implements InputProcessor {
 	
 	private void reproducirEfectoSonido() {// ademas de reproducir el sonido, lo que hace es que no se toman las teclas que no tienen sonido, es decir que si deja el la tecla apretada no se va a escuchar miles de veces, solo cuando se levante y se vuelva a presionar va a volver a sonar
 		if (!isSoundPlaying) {
-			efectoSonidoTeclas.play();
+			efectoSonidoTeclas.play(Config.volumenMenues);
 			isSoundPlaying = true;
 			//System.out.println(HelpDebug.debub(getClass())+"Sonido= " + isSoundPlaying);
 		} else {
