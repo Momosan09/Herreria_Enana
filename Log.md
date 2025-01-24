@@ -424,3 +424,4 @@ por ejemplo:
 
 # 24 ENE
     - agrega configuraciones
+    - Agrega Configuracion para cambiar el idioma

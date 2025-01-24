@@ -18,4 +18,6 @@ public abstract class Config {
 	public static boolean pantallaCompleta = Gdx.graphics.isFullscreen();
 	
 	public static String[] resolucionesString= {"1280 x 720", "1920 x 1080"};
+	public static String[] idiomasString = {"Argentino", "Español", "English"};
+	public static String idiomaElegido = "";
 }

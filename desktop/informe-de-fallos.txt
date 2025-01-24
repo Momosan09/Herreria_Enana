@@ -1,19 +1,25 @@
-com.badlogic.gdx.utils.GdxRuntimeException: java.lang.Error: Unresolved compilation problem: 
-	The method conseguirListaIdiomas() is undefined for the type LeerLocale
-
-	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:172)
-	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)
-Caused by: java.lang.Error: Unresolved compilation problem: 
-	The method conseguirListaIdiomas() is undefined for the type LeerLocale
-
-	at com.mygdx.pantallas.PantallaConfiguracion.crearActores(PantallaConfiguracion.java:234)
-	at com.mygdx.pantallas.PantallaConfiguracion.show(PantallaConfiguracion.java:72)
-	at com.badlogic.gdx.Game.setScreen(Game.java:63)
-	at com.mygdx.pantallas.PantallaMenu.seleccionarOpcion(PantallaMenu.java:253)
-	at com.mygdx.pantallas.PantallaMenu.render(PantallaMenu.java:137)
-	at com.badlogic.gdx.Game.render(Game.java:48)
-	at com.mygdx.game.Principal.render(Principal.java:45)
-	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:387)
+java.lang.RuntimeException: Actor: SelectBox
+	at com.badlogic.gdx.scenes.scene2d.Actor.notify(Actor.java:192)
+	at com.badlogic.gdx.scenes.scene2d.Actor.fire(Actor.java:152)
+	at com.badlogic.gdx.scenes.scene2d.utils.Selection.fireChangeEvent(Selection.java:228)
+	at com.badlogic.gdx.scenes.scene2d.ui.SelectBox$1.fireChangeEvent(SelectBox.java:71)
+	at com.badlogic.gdx.scenes.scene2d.utils.Selection.choose(Selection.java:53)
+	at com.badlogic.gdx.scenes.scene2d.utils.ArraySelection.choose(ArraySelection.java:24)
+	at com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxScrollPane$1.clicked(SelectBox.java:448)
+	at com.badlogic.gdx.scenes.scene2d.utils.ClickListener.touchUp(ClickListener.java:88)
+	at com.badlogic.gdx.scenes.scene2d.InputListener.handle(InputListener.java:71)
+	at com.badlogic.gdx.scenes.scene2d.Stage.touchUp(Stage.java:355)
+	at com.badlogic.gdx.InputEventQueue.drain(InputEventQueue.java:70)
+	at com.badlogic.gdx.backends.lwjgl3.DefaultLwjgl3Input.update(DefaultLwjgl3Input.java:189)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:378)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:192)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:166)
-	... 1 more
+	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)
+Caused by: java.util.MissingResourceException: Can't find bundle key pantallaConfiguracion.resolucion
+	at com.badlogic.gdx.utils.I18NBundle.get(I18NBundle.java:435)
+	at com.mygdx.pantallas.PantallaConfiguracion.actualizarTextos(PantallaConfiguracion.java:307)
+	at com.mygdx.pantallas.PantallaConfiguracion.access$6(PantallaConfiguracion.java:306)
+	at com.mygdx.pantallas.PantallaConfiguracion$6.changed(PantallaConfiguracion.java:252)
+	at com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.handle(ChangeListener.java:28)
+	at com.badlogic.gdx.scenes.scene2d.Actor.notify(Actor.java:188)
+	... 15 more

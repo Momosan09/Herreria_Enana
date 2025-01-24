@@ -27,9 +27,9 @@ import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.Config;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
-import com.mygdx.utiles.LeerLocale;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
+import com.mygdx.utiles.idiomas.IdiomaCompleto;
 
 public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 	
@@ -38,7 +38,7 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 	private ScreenViewport screenViewport;
 	private Stage stage;
 	private Skin skin;
-	private Table interfaz, pantalla, sonido, idioma;
+	private Table interfaz, barraDeArriba, pantalla, sonido, idioma;
 	//pantalla
 	private Label pantallaTextos[];
 	private SelectBox pantallaResolucionesSelectBox;
@@ -60,7 +60,7 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 		this.game = game;
 		screenViewport = new ScreenViewport();
 		stage = new Stage(screenViewport);
-		stage.setDebugAll(true);
+		//stage.setDebugAll(true);
 		Gdx.input.setInputProcessor(stage);
 		//Recursos.muxMenu.addProcessor(stage);
 		
@@ -71,8 +71,12 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 		crearFuentes();
 		crearActores();
 		poblarStage();
+		cambiarSeleccionadoSelectBox();
+
 	}
 
+
+	
 	@Override
 	public void render(float delta) {
     	stage.act(Gdx.graphics.getDeltaTime());
@@ -106,30 +110,38 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 
 	@Override
 	public void poblarStage() {
-		crearFuentes();
-		interfaz.add(botonVolver);
-		interfaz.add(interfazTextos[1]).expand();
-		interfaz.row();
-		
-		interfaz.add();
-		//tabla de la pantalla
-		pantalla.add(pantallaTextos[0]);
-		pantalla.add(pantallaResolucionesSelectBox).size(300,20);
-		pantalla.row();
-		pantalla.add(pantallaTextos[1]);
-		pantalla.add(pantallaCompletaCheck);
-		interfaz.add(pantalla);
-		//interfaz.add(interfazTextos[2]);
-		
-		sonido.add(sonidoTextos[0]);
-		sonido.add(sonidoSliders[0]);
-		sonido.add(sonidoTextos[1]);
-		sonido.add(sonidoSliders[1]);
-		
-		
-		interfaz.add(sonido);
-		stage.addActor(interfaz);
+	    crearFuentes();
+	    crearBarraDeArriba();
+	    interfaz.add(barraDeArriba).expandX();
+	    interfaz.row();
+
+	    // Tabla de la pantalla
+	    pantalla.add(pantallaTextos[0]);
+	    pantalla.add(pantallaResolucionesSelectBox).size(300, 20);
+	    pantalla.row();
+	    pantalla.add(pantallaTextos[1]);
+	    pantalla.add(pantallaCompletaCheck);
+	    interfaz.add(pantalla).pad(10,10,5,10).expandY(); // Agrega margen a la tabla pantalla
+
+	    // Idioma
+	    idioma.add(idiomaLbl);
+	    idioma.add(idiomasSelectBx).size(300, 20);
+	    interfaz.add(idioma).pad(10,10,5,10).expandY(); // Agrega margen a la tabla idioma
+	    interfaz.row();
+
+	    // Sonido
+	    sonido.add(sonidoTextos[0]);
+	    sonido.add(sonidoSliders[0]);
+	    sonido.row();
+	    sonido.add(sonidoTextos[1]);
+	    sonido.add(sonidoSliders[1]);
+	    interfaz.add(sonido).pad(5,10,10,10).expandY(); // Agrega margen a la tabla sonido
+
+	    interfaz.setFillParent(true);
+	   
+	    stage.addActor(interfaz);
 	}
+
 	
 
 	@Override
@@ -142,7 +154,6 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 
 	@Override
 	public void crearActores() {
-		
 		botonVolver = new ImageButton(skin);
 		botonVolver.addListener(new ClickListener() {
             @Override
@@ -228,15 +239,26 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 		});
 		
 		//idioma
+		idioma = new Table();
 		idiomaLbl = new Label(Recursos.bundle.get("pantallaConfiguracion.idiomaLbl"), estiloLabel);
 		idiomasSelectBx = new SelectBox(skin);
-		//idiomasSelectBx.setItems(Recursos.bundle.);
-
+		idiomasSelectBx.setItems(Config.idiomasString);
+		idiomasSelectBx.addListener(new ChangeListener() {
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				  String idiomaSeleccionado = idiomasSelectBx.getSelected().toString();
+				traducirNombreIdioma(idiomasSelectBx.getSelected().toString());
+				actualizarTextos();
+		        Config.prefs.putString("idioma", idiomaSeleccionado);
+		        Config.prefs.flush();
+			}
+		});
 		
 		interfazTextos = new Label[3];
 		
 		interfaz = new Table();
-		interfaz.setFillParent(true);
+		//interfaz.setFillParent(true);
 //		interfaz.debug();
 		
 		interfazTextos[0] = new Label(Recursos.bundle.get("pantallaConfiguracion.volverMenuPrincipal"), estiloLabel);
@@ -245,6 +267,13 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 		
 		
 
+	}
+	
+	private void crearBarraDeArriba() {
+		barraDeArriba = new Table();
+		barraDeArriba.add(botonVolver);
+		barraDeArriba.add(interfazTextos[1]).expandX();
+		
 	}
 
 	private void sacarValorResolucion(String s) {
@@ -255,7 +284,45 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 		Config.prefs.putInteger("pantallaAncho", ancho);
 		Config.prefs.putInteger("pantallaAlto", alto);
 	}
+	
+	/**
+	 * Cambia el nombre del idioma elegido por el codigo del idioma elegido
+	 * si apreto "Ingles" => "en"
+	 */
+	private void traducirNombreIdioma(String s) {
+		if(s.equals(IdiomaCompleto.ARGENTINO.getNombre())) {
+			Recursos.bundle =  I18NBundle.createBundle(Gdx.files.internal("locale/locale_es_ar"));	
+			System.out.println("idioma Argentino");
+		}else if(s.equals(IdiomaCompleto.ESPANIOL.getNombre())) {
+			Recursos.bundle =  I18NBundle.createBundle(Gdx.files.internal("locale/locale_es"));	
+			System.out.println("idioma español");
+		}else if(s.equals(IdiomaCompleto.INGLES.getNombre())) {
+			Recursos.bundle =  I18NBundle.createBundle(Gdx.files.internal("locale/locale_en"));	
+			System.out.println("idioma ingles");
+		}
 
+	}
+
+	private void actualizarTextos() {
+	    pantallaTextos[0].setText(Recursos.bundle.get("pantallaConfiguracion.resolucion"));
+	    pantallaTextos[1].setText(Recursos.bundle.get("pantallaConfiguracion.pantallaCompleta"));
+	    idiomaLbl.setText(Recursos.bundle.get("pantallaConfiguracion.idiomaLbl"));
+	    sonidoTextos[0].setText(Recursos.bundle.get("pantallaConfiguracion.volumenMusica"));
+	    sonidoTextos[1].setText(Recursos.bundle.get("pantallaConfiguracion.volumenMenus"));
+	    interfazTextos[0].setText(Recursos.bundle.get("pantallaConfiguracion.volverMenuPrincipal"));
+	    interfazTextos[1].setText(Recursos.bundle.get("pantallaConfiguracion.titulo"));
+	}
+	
+	/**
+	 * Cambia el idioma seleccionado en del selectbox a el actual
+	 */
+	private void cambiarSeleccionadoSelectBox() {
+		String idiomaGuardado = Config.prefs.getString("idioma"); // Valor predeterminado
+		traducirNombreIdioma(idiomaGuardado);
+		idiomasSelectBx.setSelected(idiomaGuardado);
+	}
+
+	
 	@Override
 	public void reEscalar(int width, int heigth) {
 		// TODO Auto-generated method stub
