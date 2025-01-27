@@ -1,5 +1,7 @@
 package com.mygdx.pantallas;
 
+import com.badlogic.gdx.graphics.Color;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -7,13 +9,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -133,6 +138,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		
 		interfaz.act(delta);//ejecuta las Actions de esta tabla
 		stage.draw();
+		stage.act();
 		
 		seleccionarOpcion();
 
@@ -192,9 +198,30 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 		opciones = new Table();
 //		opciones.debug();
 		interfazTexto[2] = new Label(Recursos.bundle.get("menuPrincipal.jugar"), opcionEstilo);
+		interfazTexto[2].addListener(new ClickListener() {
+			
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				interfazTexto[2].setColor(Color.valueOf(Colores.AU));
+				interfazTexto[3].setColor(Color.valueOf(Colores.BLANCO));
+				game.setScreen(new Juego(game));
+				dispose();
+
+				}
+		});
 		//interfazTexto[3] = new Label(Recursos.bundle.get("menuPrincipal.red"), opcionEstilo);
 		interfazTexto[3] = new Label(Recursos.bundle.get("menuPrincipal.configuraciones"), opcionEstilo);
+		interfazTexto[3].addListener(new ClickListener() {
+			
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				interfazTexto[3].setColor(Color.valueOf(Colores.AU));
+				interfazTexto[2].setColor(Color.valueOf(Colores.BLANCO));
+				game.setScreen(new PantallaConfiguracion(game));
+				dispose();
 
+				}
+		});
 		mensajePerdidaConexion = new Label(Recursos.bundle.get("menuPrincipal.perdidaConexion"), perdidaConexion);
 		
 		 // Configuración del ImageButton
@@ -259,6 +286,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 
 	
 	}
+	
     private void fondoEnMovimiento(float delta) {
     	float velocidadDesplazamiento = 30;
     	if(fondo!=null) {

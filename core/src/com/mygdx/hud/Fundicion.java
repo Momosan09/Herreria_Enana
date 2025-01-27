@@ -153,7 +153,7 @@ public class Fundicion implements Ocultable, HeadUpDisplay{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				for(int i = 0; i < cantidad;i++) {
-					jugador.agregarMineral(new LingoteHierro(0,0,false,Recursos.LINGOTE_HIERRO));
+					jugador.agregarMineral(new LingoteHierro());
 				}
 //				System.out.println("a9------gregado");
 				cantidad = 0;

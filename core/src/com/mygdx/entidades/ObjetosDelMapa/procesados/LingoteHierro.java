@@ -7,8 +7,9 @@ import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 
 public class LingoteHierro extends Mineral{
 
-	public LingoteHierro(float x, float y, boolean comprable, String rutaTextura) {
-		super(x, y, comprable, rutaTextura, TipoMinerales.HIERRO, EstadosMinerales.LINGOTE);
+	public LingoteHierro() {
+		//Los dos enum componen la ruta de la textura TipoMinerales.HIERRO.ruta + EstadoMinerales.PURO.ruta
+		super(TipoMinerales.HIERRO, EstadosMinerales.LINGOTE);
 		
 	}
 

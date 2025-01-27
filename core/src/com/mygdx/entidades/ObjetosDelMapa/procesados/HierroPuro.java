@@ -8,7 +8,7 @@ import com.mygdx.utiles.Recursos;
 public class HierroPuro extends Mineral{
 
 	public HierroPuro() {
-		super(Recursos.HIERRO_PURO, TipoMinerales.HIERRO, EstadosMinerales.PURO);
+		super(TipoMinerales.HIERRO, EstadosMinerales.PURO);
 		
 	}
 

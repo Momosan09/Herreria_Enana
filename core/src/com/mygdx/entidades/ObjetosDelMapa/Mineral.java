@@ -33,8 +33,8 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar{
 	private Circle areaMinado;//Es el area en el que el jugador puede minar el mineral, mas grande que el area de interaccion la cual es en donde el jugador debe poner el cursor para minar
 
 	
-	public Mineral(float x, float y, World world, boolean comprable, String rutaTextura, TipoMinerales tipo, EstadosMinerales estado, int ancho, int alto) {
-		super(x, y, world, rutaTextura);
+	public Mineral(float x, float y, World world, boolean comprable, TipoMinerales tipo, EstadosMinerales estado, int ancho, int alto) {
+		super(x, y, world, tipo.ruta + estado.ruta);
 		this.comprable = comprable;
 		this.tipo = tipo;
 		this.estado = estado;
@@ -44,8 +44,8 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar{
 	}
 
 	
-	public Mineral(float x, float y, boolean comprable, String rutaTextura, TipoMinerales tipo, EstadosMinerales estado) {
-		super(x, y,comprable, rutaTextura);
+	public Mineral(float x, float y, boolean comprable, TipoMinerales tipo, EstadosMinerales estado) {
+		super(x, y,comprable, tipo.ruta + estado.ruta);
 		this.comprable = comprable;
 		this.tipo = tipo;
 		this.estado = estado;
@@ -53,8 +53,8 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar{
 		Listeners.agregarListener(this);
 	}
 
-	public Mineral( boolean comprable, String rutaTextura, TipoMinerales tipo, EstadosMinerales estado) {
-		super(rutaTextura);
+	public Mineral(boolean comprable, TipoMinerales tipo, EstadosMinerales estado) {
+		super(tipo.ruta + estado.ruta);
 		this.comprable = comprable;
 		this.tipo = tipo;
 		this.estado = estado;
@@ -65,8 +65,9 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar{
 	 * Este Es para los que nunca van a salir al mundo, es decir, se compra o aparece al inicio del juego
 	 * @param rutaTextura
 	 */
-	public Mineral(String rutaTextura, TipoMinerales tipo, EstadosMinerales estado) {
-		super(rutaTextura);
+	
+	public Mineral(TipoMinerales tipo, EstadosMinerales estado) {
+		super(tipo.ruta+estado.ruta);
 		this.tipo = tipo;
 		this.estado = estado;
 	}

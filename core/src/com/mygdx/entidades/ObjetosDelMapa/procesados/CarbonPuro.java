@@ -8,7 +8,8 @@ import com.mygdx.utiles.Recursos;
 public class CarbonPuro extends Mineral{
 
 	public CarbonPuro() {
-		super(Recursos.CARBON_PURO, TipoMinerales.CARBON, EstadosMinerales.PURO);
+		//Los dos enum componen la ruta de la textura TipoMinerales.HIERRO.ruta + EstadoMinerales.PURO.ruta
+		super(TipoMinerales.CARBON, EstadosMinerales.PURO);
 		
 	}
 }

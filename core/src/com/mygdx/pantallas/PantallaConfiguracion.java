@@ -292,13 +292,13 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 	private void traducirNombreIdioma(String s) {
 		if(s.equals(IdiomaCompleto.ARGENTINO.getNombre())) {
 			Recursos.bundle =  I18NBundle.createBundle(Gdx.files.internal("locale/locale_es_ar"));	
-			System.out.println("idioma Argentino");
+			//System.out.println("idioma Argentino");
 		}else if(s.equals(IdiomaCompleto.ESPANIOL.getNombre())) {
 			Recursos.bundle =  I18NBundle.createBundle(Gdx.files.internal("locale/locale_es"));	
-			System.out.println("idioma español");
+			//System.out.println("idioma español");
 		}else if(s.equals(IdiomaCompleto.INGLES.getNombre())) {
 			Recursos.bundle =  I18NBundle.createBundle(Gdx.files.internal("locale/locale_en"));	
-			System.out.println("idioma ingles");
+			//System.out.println("idioma ingles");
 		}
 
 	}

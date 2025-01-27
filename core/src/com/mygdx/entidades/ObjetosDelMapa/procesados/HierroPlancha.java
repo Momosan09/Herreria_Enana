@@ -8,7 +8,8 @@ import com.mygdx.utiles.Recursos;
 public class HierroPlancha extends Mineral{
 
 	public HierroPlancha() {
-		super(Recursos.PLANCHA_HIERRO, TipoMinerales.HIERRO, EstadosMinerales.PLANCHA);
+		//Los dos enum componen la ruta de la textura TipoMinerales.HIERRO.ruta + EstadoMinerales.PURO.ruta
+		super(TipoMinerales.HIERRO, EstadosMinerales.PLANCHA);
 		
 	}
 

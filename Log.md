@@ -425,3 +425,6 @@ por ejemplo:
 # 24 ENE
     - agrega configuraciones
     - Agrega Configuracion para cambiar el idioma
+
+# 27 ENE
+    - Optimiza constructor de minerales

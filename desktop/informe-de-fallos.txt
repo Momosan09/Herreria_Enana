@@ -1,11 +1,7 @@
-java.lang.RuntimeException: Actor: SelectBox
-	at com.badlogic.gdx.scenes.scene2d.Actor.notify(Actor.java:192)
-	at com.badlogic.gdx.scenes.scene2d.Actor.fire(Actor.java:152)
-	at com.badlogic.gdx.scenes.scene2d.utils.Selection.fireChangeEvent(Selection.java:228)
-	at com.badlogic.gdx.scenes.scene2d.ui.SelectBox$1.fireChangeEvent(SelectBox.java:71)
-	at com.badlogic.gdx.scenes.scene2d.utils.Selection.choose(Selection.java:53)
-	at com.badlogic.gdx.scenes.scene2d.utils.ArraySelection.choose(ArraySelection.java:24)
-	at com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxScrollPane$1.clicked(SelectBox.java:448)
+java.lang.NullPointerException: Cannot read field "x" because "this.posicion" is null
+	at com.mygdx.entidades.ObjetosDelMapa.Mineral.<init>(Mineral.java:52)
+	at com.mygdx.entidades.ObjetosDelMapa.procesados.LingoteHierro.<init>(LingoteHierro.java:11)
+	at com.mygdx.hud.Fundicion$5.clicked(Fundicion.java:156)
 	at com.badlogic.gdx.scenes.scene2d.utils.ClickListener.touchUp(ClickListener.java:88)
 	at com.badlogic.gdx.scenes.scene2d.InputListener.handle(InputListener.java:71)
 	at com.badlogic.gdx.scenes.scene2d.Stage.touchUp(Stage.java:355)
@@ -15,11 +11,3 @@ java.lang.RuntimeException: Actor: SelectBox
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:192)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:166)
 	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)
-Caused by: java.util.MissingResourceException: Can't find bundle key pantallaConfiguracion.resolucion
-	at com.badlogic.gdx.utils.I18NBundle.get(I18NBundle.java:435)
-	at com.mygdx.pantallas.PantallaConfiguracion.actualizarTextos(PantallaConfiguracion.java:307)
-	at com.mygdx.pantallas.PantallaConfiguracion.access$6(PantallaConfiguracion.java:306)
-	at com.mygdx.pantallas.PantallaConfiguracion$6.changed(PantallaConfiguracion.java:252)
-	at com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.handle(ChangeListener.java:28)
-	at com.badlogic.gdx.scenes.scene2d.Actor.notify(Actor.java:188)
-	... 15 more

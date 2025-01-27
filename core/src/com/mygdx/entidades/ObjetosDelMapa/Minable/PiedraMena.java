@@ -8,7 +8,8 @@ import com.mygdx.utiles.Recursos;
 public class PiedraMena extends Mineral{
 
 	public PiedraMena(float x, float y, World world, boolean comprable) {
-		super(x, y, world,comprable, Recursos.PIEDRA_PIEDRA, TipoMinerales.PIEDRA, EstadosMinerales.MENA, 16,10);
+		//Los dos enum componen la ruta de la textura TipoMinerales.HIERRO.ruta + EstadoMinerales.PURO.ruta
+		super(x, y, world,comprable, TipoMinerales.PIEDRA, EstadosMinerales.MENA, 16,10);
 	}
 
 }
