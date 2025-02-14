@@ -36,9 +36,10 @@ public class Mision {
 			break;
 
 		case FABRICAR:
-			if(objetoFabricado) {
-				completada = true;
-			}
+			if(cantidadConseguida == cantidadObjetivo) {
+				objetoFabricado = true;
+					completada = true;
+				}
 			break;
 		}
 		
@@ -79,7 +80,11 @@ public class Mision {
 	}
 	
 	public void setCantidadConseguida(int cant) {
+		if(cantidadConseguida < cantidadObjetivo) {			
 		cantidadConseguida += cant;
+		}else if(cantidadConseguida == cantidadObjetivo) {
+			completada = true;
+		}
 	}
 	
 	public void setObjetoFabricado() {

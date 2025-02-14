@@ -23,12 +23,12 @@ public enum Items {
 	ESPADA_HIERRO_0(new Texture(Recursos.ESPADA_HIERRO_0)),
 	
 	//de compra
-	MANGO_MADERA_0(new Texture(Recursos.MANGO_MADERA_0)),
+	MANGO_MADERA_0(new Texture(Recursos.MANGO_MADERA_0),-1,0,0,5),
 	
 	
 	//Esquemas
 	ESQUEMA_SIERRA_CIRCULAR(new Texture(Recursos.ESQUEMA_TEXT)),
-	ESQUEMA_HOJA_ESPADA(new Texture(Recursos.ESQUEMA_TEXT)),
+	ESQUEMA_HOJA_ESPADA(new Texture(Recursos.ESQUEMA_TEXT),-1,0,0,2),
 	
 	//MISION
 	DISCO_HIERRO(new Texture(Recursos.DISCO_HIERRO)),

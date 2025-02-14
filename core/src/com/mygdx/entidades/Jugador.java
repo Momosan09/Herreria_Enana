@@ -264,6 +264,14 @@ public class Jugador {
 		mostrarMensaje = true;
 	}
 	
+	public void eliminarItem(Item item) {
+		items.remove(item);
+	}
+	
+	public void eliminarItem(Items item) {
+		items.remove(new Item(item));
+	}
+	
 	public String getItemMensaje() {
 		return "Añadido: " + items.get(items.size()-1).getNombre();
 	}

@@ -433,3 +433,4 @@ por ejemplo:
     - Agrega algunos items
     - Cambios en el sistema de dinero
     - Funciona la compra de items
+    - Ahora se puede completar la primera mision, fabricar espadas

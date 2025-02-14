@@ -19,7 +19,8 @@ public enum MisionesDelJuego {
 	
 	//Carpintero
 		CARP_00(Recursos.bundle.get("npc.nombre.carpintero"), TipoMision.FABRICAR,Recursos.bundle.get("mision.fabricable.sierra_circular"), 1,0,0,0,"CARP_00");
-		
+	
+	private boolean completada;
 	private String requisor;
 	private TipoMision tipo;
 	private String objeto;
