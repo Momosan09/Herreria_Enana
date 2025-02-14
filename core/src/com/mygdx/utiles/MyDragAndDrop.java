@@ -28,6 +28,7 @@ import com.mygdx.entidades.ObjetosDelMapa.procesados.CarbonPuro;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroDisco;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroPlancha;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroPuro;
+import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroTira;
 import com.mygdx.enums.Items;
 import com.mygdx.enums.TipoCombinacion;
 import com.mygdx.historia.MisionesDelJuego;
@@ -270,38 +271,55 @@ public class MyDragAndDrop {
 		}
 	}
 	
-	private boolean esCombinacionValida(Item herramientaFuente, Item herramientaObjetivo) {
-		if(herramientaFuente.getTipo() == Items.LIMA_PLANA && herramientaObjetivo.getTipo() == Items.DISCO_HIERRO) {
-			jugador.getItems().remove(herramientaObjetivo);
+	private boolean esCombinacionValida(Item itemFuente, Item itemObjetivo) { //Items con items
+		Items fuente = itemFuente.getTipo();
+		Items objeti = itemObjetivo.getTipo();
+		if(fuente == Items.LIMA_PLANA && objeti == Items.DISCO_HIERRO) {
+			jugador.getItems().remove(objeti);
 			jugador.getItems().add(new SierraCircular());
 			jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).setObjetoFabricado();;
 			jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).setCantidadConseguida(1);
 			return true;
-		}else {
+		}else if(fuente == Items.MANGO_MADERA_0 && objeti == Items.HOJA_ESPADA_HIERRO_0){
+			jugador.getItems().remove(fuente);
+			jugador.getItems().remove(objeti);
+			jugador.getItems().add(new Item(Items.ESPADA_HIERRO_0));
 			return false;
+		}else {
+			
 		}
+		return false;
 	}
 	
-	private boolean esCombinacionValida(Item herramienta, Mineral mineral) {
-		if(herramienta.getTipo() == Items.CINCEL && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.MENA) {
+	private boolean esCombinacionValida(Item herramienta, Mineral mineral) { //herramienta con mineral
+		Items herrTip = herramienta.getTipo();
+		if(herrTip == Items.CINCEL && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.MENA) {
 			jugador.agregarMineral(new HierroPuro());
 			herramienta.restarUsos();
 			return true;
-		}else if(herramienta.getTipo() == Items.CINCEL && mineral.tipo == TipoMinerales.CARBON && mineral.estado == EstadosMinerales.MENA){
+		}else if(herrTip == Items.CINCEL && mineral.tipo == TipoMinerales.CARBON && mineral.estado == EstadosMinerales.MENA){
 			jugador.agregarMineral((new CarbonPuro()));
 			return true;
-		}else if(herramienta.getTipo() == Items.MAZA && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.LINGOTE){
+		}else if(herrTip == Items.MAZA && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.LINGOTE){
 			jugador.agregarMineral((new HierroPlancha()));
 			return true;
-		}else if(herramienta.getTipo() == Items.ESQUEMA_SIERRA_CIRCULAR && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.PLANCHA){
+		}else if(herrTip == Items.ESQUEMA_SIERRA_CIRCULAR && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.PLANCHA){
 			jugador.getItems().add(new HierroDisco());
 			jugador.eliminarMineral(mineral,1);
-			System.out.println("Eliminado correctamente ");
+			//System.out.println("Eliminado correctamente ");
 			jugador.getItems().remove(herramienta);
 			return false;
+		}else if(herrTip == Items.SIERRA && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.PLANCHA){
+			jugador.agregarMineral(new HierroTira(),2);
+			jugador.eliminarMineral(mineral, 1);
+			return false;
+		}else if(herrTip == Items.ESQUEMA_HOJA_ESPADA && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.TIRA) {
+			jugador.getItems().add(new Item(Items.HOJA_ESPADA_HIERRO_0));
+			jugador.eliminarMineral(mineral,1);
 		}else {
 			return false;
 		}
+		return false;
 			
 	}
 	

@@ -40,6 +40,14 @@ public abstract class Recursos {
 	public static final String SIERRA = "Items/sierra.png";
 	public static final String ESQUEMA_TEXT = "Items/esquema.png";
 	
+		//de forja
+	public static final String HOJA_HIERRO_0 = "objetosDelMundo/inanimados/Items/Espadas/Hojas/Hierro/HojaHierro0.png";
+	public static final String ESPADA_HIERRO_0 = "objetosDelMundo/inanimados/Items/Espadas/espadaHierro0.png";
+	
+	
+		//de venta
+			// por el carpintero
+	public static final String MANGO_MADERA_0 = "objetosDelMundo/inanimados/Items/Espadas/Mangos/MaderaMango0.png";
 	//Mapas
 	public static final String MAPA = "mapas/mapa.tmx";
 	

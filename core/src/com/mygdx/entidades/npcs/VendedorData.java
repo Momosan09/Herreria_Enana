@@ -8,7 +8,7 @@ import com.mygdx.enums.Items;
 public enum VendedorData {
 
 	
-	CARPINTERO(Items.PICO, Items.ESQUEMA_SIERRA_CIRCULAR, Items.DISCO_HIERRO, Items.CINCEL,Items.MAZA),
+	CARPINTERO(Items.MANGO_MADERA_0, Items.ESQUEMA_HOJA_ESPADA),
 	TIENDA(Items.CINCEL), 
 	AMBULANTE(Items.SIERRA_CIRCULAR);
 	

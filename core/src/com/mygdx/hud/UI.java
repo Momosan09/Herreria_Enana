@@ -189,6 +189,7 @@ public class UI implements EventoRecibirCarta{
 			}
 			break;
 		case VENTA:
+			Gdx.input.setInputProcessor(venta.getStage());
 			if(venta.getVendedor() != MundoConfig.vendedor) {
 				venta.setVendedor(MundoConfig.vendedor);				
 			}

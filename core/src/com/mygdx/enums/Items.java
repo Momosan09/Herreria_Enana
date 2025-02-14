@@ -1,6 +1,8 @@
 package com.mygdx.enums;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector3;
+import com.mygdx.utiles.Dinero;
 import com.mygdx.utiles.Recursos;
 
 public enum Items {
@@ -9,34 +11,43 @@ public enum Items {
 	//Ejemplo: AMULETO1, es necesario para x motivo
 	
 	
-	VACIO(new Texture(Recursos.VACIO),0,-1),
-	PICO(new Texture(Recursos.PICO_DER),100,-1),
-	CINCEL(new Texture(Recursos.CINCEL),90,-1),
-	MAZA(new Texture(Recursos.MAZA),120,-1),
-	LIMA_PLANA(new Texture(Recursos.LIMA),30,-1),
-	SIERRA(new Texture(Recursos.SIERRA),65,30),
+	VACIO(new Texture(Recursos.VACIO),-1,-1,-1,-1),
+	PICO(new Texture(Recursos.PICO_DER),-1,0,0,13),
+	CINCEL(new Texture(Recursos.CINCEL),-1,0,0,9),
+	MAZA(new Texture(Recursos.MAZA),-1,0,0,24),
+	LIMA_PLANA(new Texture(Recursos.LIMA),-1,0,0,11),
+	SIERRA(new Texture(Recursos.SIERRA),60,0,0,14),
+	
+	//de forja
+	HOJA_ESPADA_HIERRO_0(new Texture(Recursos.HOJA_HIERRO_0)),
+	ESPADA_HIERRO_0(new Texture(Recursos.ESPADA_HIERRO_0)),
+	
+	//de compra
+	MANGO_MADERA_0(new Texture(Recursos.MANGO_MADERA_0)),
 	
 	
 	//Esquemas
 	ESQUEMA_SIERRA_CIRCULAR(new Texture(Recursos.ESQUEMA_TEXT)),
+	ESQUEMA_HOJA_ESPADA(new Texture(Recursos.ESQUEMA_TEXT)),
 	
 	//MISION
 	DISCO_HIERRO(new Texture(Recursos.DISCO_HIERRO)),
 	SIERRA_CIRCULAR(new Texture(Recursos.SIERRA_CIRCULAR));
 
 	private Texture textura;
-	private int valor;
+	private int oro, plata, cobre;
+	private Dinero valor;
 	private int usos;
 
-	Items(Texture textura, int valor, int usos){
+	Items(Texture textura, int usos, int oro, int plata, int cobre){
 		this.textura = textura;
-		this.valor = valor;
+		valor = new Dinero(oro,plata,cobre);
 		this.usos = usos;
 	}
 	
 	Items(Texture textura){
 		this.textura = textura;
-		this.valor = -1;
+		valor = new Dinero(oro,plata,cobre);
 		this.usos = -1;
 	}
 
@@ -49,7 +60,7 @@ public enum Items {
 		return nombre.substring(0, 1).toUpperCase() + nombre.substring(1).toLowerCase();
 	}
 	
-	public int getValor() {
+	public Dinero getValor() {
 		return valor;
 	}
 	

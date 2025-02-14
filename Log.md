@@ -428,3 +428,8 @@ por ejemplo:
 
 # 27 ENE
     - Optimiza constructor de minerales
+
+# 14 FEB
+    - Agrega algunos items
+    - Cambios en el sistema de dinero
+    - Tratando de agregar la compra de items

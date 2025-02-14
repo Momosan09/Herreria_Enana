@@ -40,6 +40,7 @@ import com.mygdx.historia.MisionesDelJuego;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.ItemEquipadoJugador;
+import com.mygdx.utiles.Monedero;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
@@ -48,7 +49,7 @@ public class Jugador {
 
 	private float velocidad = 100f;
 	public boolean puedeMoverse = false;
-	public int[] dinero;
+	public Monedero monedero;
 	public boolean estaChocando = false;
 	public Vector2 posicion; //la hice publica para poder setearle valor en el hiloCliente
 	private Body body;
@@ -94,7 +95,7 @@ public class Jugador {
 		this.spritesheet = Recursos.JUGADOR1_SPRITESHEET;
 		crearAnimaciones();
 		
-		dinero = new int[3];
+		monedero = new Monedero();
 		
 		areaJugador = new Circle(posicion.x, posicion.y, 32);
 		
@@ -373,6 +374,19 @@ public class Jugador {
 	        }
 	    }
 	}
+	
+	public void agregarMineral(Mineral mineral, int cantidad) {
+	    TipoMinerales tipo = mineral.getTipoMineral();
+	    EstadosMinerales estado = mineral.getEstadoMineral();
+	    if (mineralesInventario.containsKey(tipo)) {
+	        EnumMap<EstadosMinerales, ArrayList<Mineral>> estadoMap = mineralesInventario.get(tipo);
+	        if (estadoMap.containsKey(estado)) {
+	        	for(int i = 0;i<cantidad;i++) {
+	        		estadoMap.get(estado).add(mineral);	        		
+	        	}
+	        }
+	    }
+	}
 
 	/*
 	public void devolverMineralesEnElInventario(TipoMinerales mineral, EstadosMinerales estado){
@@ -482,7 +496,7 @@ public class Jugador {
 		if(!tareas.isEmpty()) {
 		for(int i = 0; i<tareas.size();i++) {
 			if(tareas.get(i).getId().equals(id)) {
-				System.out.println(HelpDebug.debub(getClass())+"Mision encontrada------------");
+				//System.out.println(HelpDebug.debub(getClass())+"Mision encontrada------------");
 				return true;
 			}
 		}
@@ -532,10 +546,14 @@ public class Jugador {
 		}
 	}
 	
+	//DINERO
+	
 	public void desequipar() {
 		itemEnMano.setTipo(Items.VACIO);
 		itemEnMano.borrarSprite();
 		itemEnMano.ocultar();
 	}
+	
+
 	
 }

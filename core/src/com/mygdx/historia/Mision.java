@@ -47,9 +47,9 @@ public class Mision {
 	
 	public void darRecompensa(Jugador jugador) {
 		if(completada && !recompensaAdquirida) {			
-		jugador.dinero[0] += oro;
-		jugador.dinero[1] += plata;
-		jugador.dinero[2] += cobre;
+			jugador.monedero.agregarMonedasOro(oro);
+			jugador.monedero.agregarMonedasPlata(plata);
+			jugador.monedero.agregarMonedasCobre(cobre);
 		recompensaAdquirida = true;
 		}
 	}

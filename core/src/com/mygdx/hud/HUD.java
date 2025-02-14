@@ -352,9 +352,9 @@ public class HUD implements HeadUpDisplay, Ocultable, EventoMisionAgregada, Barr
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 		
-		monedas[0][1].setText(jugador.dinero[0]);
-		monedas[1][1].setText(jugador.dinero[1]);
-		monedas[2][1].setText(jugador.dinero[2]);
+		monedas[0][1].setText(jugador.monedero.getMonedasOro());
+		monedas[1][1].setText(jugador.monedero.getMonedasPlata());
+		monedas[2][1].setText(jugador.monedero.getMonedasCobre());
 		resultadosHUD.render();
 		proximaBatallaHUD.render();//Nose porque no funciona el click de proximaBatallaHUD cuando lo quiero usar despues de haber abierto resultadosHUD
 		diarioHUD.render();

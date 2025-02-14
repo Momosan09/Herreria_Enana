@@ -31,7 +31,7 @@ public class CuadraditoItem extends Table{
         contenedor = new Table();
         labelStyle = EstiloFuente.generarFuente(30, Colores.BLANCO, false);
         nombre = new Label(item.getNombre(), labelStyle);
-        valor  = new Label(""+item.getValor(), labelStyle);
+        valor  = new Label(""+item.getValor().getMonedasCobre(), labelStyle);
         
         contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.CASILLERO_VENTA_HUD)));
         contenedor.add(nombre);
@@ -43,27 +43,31 @@ public class CuadraditoItem extends Table{
         add(contenedor);
         
         
-        agregarListener();
+//        agregarListener();
         
     }
     
-    public void agregarListener() {
-    	contenedor.addListener(new InputListener(){
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
-                System.out.println("El cursor está sobre "+ nombre);
-            }
-
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor){
-                System.out.println("El cursor ha salido de " + nombre);
-            }
-            
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            	System.out.println("auch");
-            	return true;
-            }
-        });
+    public void hola()
+    {
+    	
     }
+//    public void agregarListener() {
+//    	contenedor.addListener(new InputListener(){
+//            @Override
+//            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
+//                System.out.println("El cursor está sobre "+ nombre);
+//            }
+//
+//            @Override
+//            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor){
+//                System.out.println("El cursor ha salido de " + nombre);
+//            }
+//            
+//            @Override
+//            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+//            	System.out.println("auch");
+//            	return true;
+//            }
+//        });
+//    }
 }

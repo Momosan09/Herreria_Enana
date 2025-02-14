@@ -3,6 +3,7 @@ package com.mygdx.entidades.ObjetosDelMapa.Items;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.enums.Items;
+import com.mygdx.utiles.Dinero;
 
 public class Item {
 
@@ -10,7 +11,7 @@ public class Item {
 	private String nombre;
 	private Items tipo;
 	private int usos;
-	private int valor = 0;
+	private Dinero valor;
 	
 	public Item(Items tipo) {
 		this.tipo = tipo;
@@ -48,7 +49,7 @@ public class Item {
 		usos--;
 	}
 	
-	public int getValor() {
+	public Dinero getValor() {
 		return valor;
 	}
 }

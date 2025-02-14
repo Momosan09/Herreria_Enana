@@ -8,6 +8,7 @@ import com.mygdx.utiles.Recursos;
 public class HierroPuro extends Mineral{
 
 	public HierroPuro() {
+		//Los dos enum componen la ruta de la textura TipoMinerales.HIERRO.ruta + EstadoMinerales.PURO.ruta
 		super(TipoMinerales.HIERRO, EstadosMinerales.PURO);
 		
 	}

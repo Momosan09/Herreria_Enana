@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -17,7 +18,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.Vendedor;
+import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
 import com.mygdx.enums.EstadosDelJuego;
+import com.mygdx.enums.Items;
 import com.mygdx.hud.actoresEspeciales.CuadraditoItem;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
@@ -57,12 +60,7 @@ public class VentaHUD implements HeadUpDisplay, Ocultable {
 		poblarStage();
 	}
 
-	public void setVendedor(Vendedor vendedor) {
-		this.vendedor = vendedor;
-		contenedor.clear();
-		actualizarProductos();
-	
-	}
+
 	
 	@Override
 	public void mostrar() {
@@ -138,25 +136,54 @@ public class VentaHUD implements HeadUpDisplay, Ocultable {
 
 	}
 	
-	public void venta() {
-		
-	}
-	
-	private void actualizarProductos() {
-		int indiceFilas= 0;
-		for (int i = 0; i < vendedor.getInventario().size(); i++) {
-			contenedor.add(new CuadraditoItem(vendedor.getInventario().get(i))).pad(10);
-			indiceFilas++;
-			if(indiceFilas == 4) {
-				contenedor.row();
-				indiceFilas = 0;
-			}
-		}
-		//contenedor.add(new Image(vendedor.getData().getTextura()));
-	}
+    private void comprarItem(Items item) {
+        int precioOro = item.getValor().getMonedasOro();
+        int precioPlata = item.getValor().getMonedasPlata();
+        int precioCobre = item.getValor().getMonedasCobre();
+
+        if (jugador.monedero.tieneElDinero(precioOro, precioPlata, precioCobre)) {
+            jugador.monedero.restarDinero(precioOro, precioPlata, precioCobre);
+            jugador.getItems().add(new Item(item));
+            vendedor.getInventario().remove(item);
+            actualizarProductos();
+        } else {
+            System.out.println("No tienes suficiente dinero.");
+        }
+    }
+
+    private void actualizarProductos() {
+        contenedor.clear();
+        int indiceFilas = 0;
+
+        for (final Items item : vendedor.getInventario()) {
+            CuadraditoItem cuadraditoItem = new CuadraditoItem(item);
+            cuadraditoItem.setTouchable(Touchable.enabled);
+            contenedor.add(cuadraditoItem).pad(10);
+
+            cuadraditoItem.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    comprarItem(item);
+                }
+            });
+
+            indiceFilas++;
+            if (indiceFilas == 4) {
+                contenedor.row();
+                indiceFilas = 0;
+            }
+        }
+    }
 	
 	public Vendedor getVendedor() {
 		return vendedor;
+	}
+	
+	public void setVendedor(Vendedor vendedor) {
+		this.vendedor = vendedor;
+		contenedor.clear();
+		actualizarProductos();
+	
 	}
 	
 	public Stage getStage() {
