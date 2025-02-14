@@ -7,6 +7,14 @@ package com.mygdx.utiles;
  */
 public class Monedero extends Dinero{
 	
+	public Monedero() {
+		super(-1,-1,-1);
+	}
+	
+	public Monedero(int oro, int plata, int cobre) {
+		super(oro,plata,cobre);
+	}
+	
 	/**
 	 * Cambia el valor de las monedas al pasado por parametro. Si tiene 100 monedas y se pasa 1, entonces el jugador pasa a tener solo una moneda de este tipo
 	 */

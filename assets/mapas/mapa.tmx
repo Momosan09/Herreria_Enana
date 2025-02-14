@@ -1517,7 +1517,7 @@
   <object id="13" x="302.875" y="1096.26">
    <polygon points="0,0 -0.125,-1.49828 130,-1.50573 130.25,0.119266 -0.125,0.104358"/>
   </object>
-  <object id="14" name="puntoAparicion" x="1152" y="448" width="32" height="32"/>
+  <object id="14" name="puntoAparicion" x="1184" y="448" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="21" name="spawnMinerales">
   <object id="20" name="spawnArea" x="608" y="1792" width="224" height="160"/>

@@ -43,7 +43,7 @@ public class UI implements EventoRecibirCarta{
 		screenViewport = new ScreenViewport();
 		hud = new HUD(jugador, juego);
 		dialogo = new Dialogo(jugador);
-		venta = new VentaHUD();
+		venta = new VentaHUD(jugador);
 	    pausa = new PausaHUD(juego);
 	    inventario = new InventarioHUD(jugador);
 	    combinacion = new Combinacion(jugador);

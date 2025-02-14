@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -41,7 +43,8 @@ public class VentaHUD implements HeadUpDisplay, Ocultable {
 	private Label.LabelStyle labelStyle;
 	private boolean visible = true;
 
-	public VentaHUD(Vendedor vendedor) {
+	public VentaHUD(Jugador jugador, Vendedor vendedor) {
+		this.jugador = jugador;
 		this.vendedor = vendedor;
 		screenViewport = new ScreenViewport();
 		stage = new Stage(screenViewport);
@@ -51,7 +54,8 @@ public class VentaHUD implements HeadUpDisplay, Ocultable {
 		poblarStage();
 	}
 	
-	public VentaHUD() {
+	public VentaHUD(Jugador jugador) {
+		this.jugador = jugador;
 		screenViewport = new ScreenViewport();
 		stage = new Stage(screenViewport);
 
@@ -160,10 +164,11 @@ public class VentaHUD implements HeadUpDisplay, Ocultable {
             cuadraditoItem.setTouchable(Touchable.enabled);
             contenedor.add(cuadraditoItem).pad(10);
 
-            cuadraditoItem.addListener(new ChangeListener() {
+            // Listener para detectar clics
+            cuadraditoItem.addListener(new ClickListener() {
                 @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    comprarItem(item);
+                public void clicked(InputEvent event, float x, float y) {
+                	comprarItem(item);
                 }
             });
 

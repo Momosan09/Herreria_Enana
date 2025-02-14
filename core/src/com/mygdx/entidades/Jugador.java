@@ -95,7 +95,7 @@ public class Jugador {
 		this.spritesheet = Recursos.JUGADOR1_SPRITESHEET;
 		crearAnimaciones();
 		
-		monedero = new Monedero();
+		monedero = new Monedero(1,100,1000);
 		
 		areaJugador = new Circle(posicion.x, posicion.y, 32);
 		

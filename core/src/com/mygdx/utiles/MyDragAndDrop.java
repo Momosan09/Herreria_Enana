@@ -277,14 +277,15 @@ public class MyDragAndDrop {
 		if(fuente == Items.LIMA_PLANA && objeti == Items.DISCO_HIERRO) {
 			jugador.getItems().remove(objeti);
 			jugador.getItems().add(new SierraCircular());
-			jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).setObjetoFabricado();;
+			jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).setObjetoFabricado();
 			jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).setCantidadConseguida(1);
 			return true;
 		}else if(fuente == Items.MANGO_MADERA_0 && objeti == Items.HOJA_ESPADA_HIERRO_0){
 			jugador.getItems().remove(fuente);
 			jugador.getItems().remove(objeti);
+			jugador.conseguirMisionPorId(MisionesDelJuego.RC1_FESP).setCantidadConseguida(1);
 			jugador.getItems().add(new Item(Items.ESPADA_HIERRO_0));
-			return false;
+			return true;
 		}else {
 			
 		}
