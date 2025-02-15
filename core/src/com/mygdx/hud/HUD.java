@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -66,8 +67,10 @@ public class HUD implements HeadUpDisplay, Ocultable, EventoMisionAgregada, Barr
 	private Label nombreSiguienteBatalla;
 	private Label siguienteBatallaDetalles;
 	private Label centroLbl;
+	private String dia = Recursos.bundle.get("dia.3");
 	private Label diaLbl;
 	private Label horaLbl;
+	private Label numeroDiaLbl;
 	private Label diarioLbl;
 	private Label mensaje;
 //	private Label barraAbajoLbl;
@@ -79,7 +82,7 @@ public class HUD implements HeadUpDisplay, Ocultable, EventoMisionAgregada, Barr
 	private ProximaBatallaHUD proximaBatallaHUD;
 	private DiarioHUD diarioHUD;
 	
-	private String dia = Recursos.bundle.get("dia.3");
+
 	
 
 	private boolean visible = MundoConfig.mostrarHUD;
@@ -182,8 +185,9 @@ public class HUD implements HeadUpDisplay, Ocultable, EventoMisionAgregada, Barr
 
 		hudDer.row();
 		hudDer.add(diaLbl);
-		hudDer.row();
-		hudDer.add(horaLbl);
+		hudDer.add(numeroDiaLbl).align(Align.left);
+	    hudDer.row();
+	    hudDer.add(horaLbl);
 		hudDer.row();
 		hudDer.add(pedidosTable);
 		hudDer.row();
@@ -270,6 +274,7 @@ public class HUD implements HeadUpDisplay, Ocultable, EventoMisionAgregada, Barr
 
 
 		//DERECHA
+		numeroDiaLbl = new Label(MundoConfig.diaDelMundo+"", labelStyle);
 		diaLbl = new Label(dia, labelStyle);
 		diarioLbl = new Label(Recursos.bundle.get("hud.verPedidos"), labelStyle);
 		horaLbl = new Label(MundoConfig.horaDelMundo + ":" + MundoConfig.minutoDelMundo, labelStyle);
