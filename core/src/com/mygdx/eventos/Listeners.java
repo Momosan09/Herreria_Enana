@@ -38,13 +38,19 @@ public abstract class Listeners {
 			}
 		}
 		
+
+		
 		public static void cambioDeDia() {
-			for (EventListener listener : listeners) {
-				if((listener instanceof EventoCambioDeDia)) {
-					((EventoCambioDeDia)listener).cambioDeDia();
-				}
-			}
+		    for (EventListener listener : listeners) {
+		        if (listener instanceof EventoCambioDeDia) {
+		            ((EventoCambioDeDia) listener).cambioDeDia();
+		        }
+		        if (listener instanceof EventoRestarDiasDeMision) {
+		            ((EventoRestarDiasDeMision) listener).restarDias();
+		        }
+		    }
 		}
+
 		
 		public static void interaccionObjetoMapa() {
 			for (EventListener listener : listeners) {

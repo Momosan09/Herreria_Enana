@@ -217,7 +217,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 			public void clicked(InputEvent event, float x, float y) {
 				interfazTexto[3].setColor(Color.valueOf(Colores.AU));
 				interfazTexto[2].setColor(Color.valueOf(Colores.BLANCO));
-				game.setScreen(new PantallaConfiguracion(game));
+				game.setScreen(new ConfiguracionHUD());
 				dispose();
 
 				}

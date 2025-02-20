@@ -7,6 +7,8 @@ import com.mygdx.enums.EstadosDelJuego;
 
 public abstract class Tiempo {
 
+	//LA CLASE Iluminacion.java ES BASTANTE IMPORTANTE CON RESPECTO AL TIEMPO Y ESO, QUIZAS LO QUE BUSQUES ESTA AHI
+	
     private static long momentoDeInicioJuego;
     private static long tiempoDelJuego; // Este es el tiempo total en juego
     private static long empiezaGameplay = 0;

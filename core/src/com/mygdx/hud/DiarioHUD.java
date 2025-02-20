@@ -39,7 +39,7 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 	private boolean visible = false;
 	
 	
-	private Label.LabelStyle labelStyle, labelStyleCompletada, labelStylePendiente, labelStyleOro, labelStylePlata, labelStyleCobre;
+	private Label.LabelStyle labelStyle, labelStyleCompletada, labelStylePendiente, labelStyleFallada,labelStyleOro, labelStylePlata, labelStyleCobre;
 	
 	public DiarioHUD(Jugador jugador) {
 		this.jugador = jugador;
@@ -55,7 +55,8 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 	public void crearFuentes() {
 		labelStyle = EstiloFuente.generarFuente(30, Colores.BLANCO, false);
 		labelStyleCompletada = EstiloFuente.generarFuente(30, Colores.VERDE, false);
-		labelStylePendiente = EstiloFuente.generarFuente(30, Colores.ROJO , false);
+		labelStylePendiente = EstiloFuente.generarFuente(30, Colores.AU , false);
+		labelStyleFallada = EstiloFuente.generarFuente(30, Colores.ROJO , false);
 		labelStyleOro = EstiloFuente.generarFuente(30, Colores.AU, false);
 		labelStylePlata = EstiloFuente.generarFuente(30, Colores.AG, false);
 		labelStyleCobre = EstiloFuente.generarFuente(30, Colores.CU, false);
@@ -161,15 +162,25 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 		Label tipoMision = new Label(misiones.get(i).getTipoMision().toString() + ":", labelStyle);
 		Label objetoMision = new Label(misiones.get(i).getObjeto() + " " + misiones.get(i).getCantidadConseguida() +"/"+ misiones.get(i).getCantidadObjetivo(), labelStyle);
 		Label dadorMision = new Label(misiones.get(i).getEntidad(), labelStyle);
+		Label descripcion = new Label(misiones.get(i).getDescripcion(), labelStyle);
+		Label diasRestantes = new Label("Dias restantes: "+misiones.get(i).getDiasRestantes(), labelStyle);
 		Label recompensaOro = new Label(" "+Recursos.bundle.get("moneda.oro")+ ": "+String.valueOf(misiones.get(i).getOro()),labelStyleOro);
 		Label recompensaPlata = new Label(" "+Recursos.bundle.get("moneda.plata") +": "+ String.valueOf(misiones.get(i).getPlata()),labelStylePlata);
 		Label recompensaCobre = new Label(" "+Recursos.bundle.get("moneda.cobre") +": " +String.valueOf(misiones.get(i).getCobre()),labelStyleCobre);
-
+		
+		
 		tabla.add(tipoMision);
 		tabla.add(objetoMision);
 		tabla.add().expand();
 		tabla.row();
 		tabla.add(dadorMision);
+		tabla.row();
+		tabla.add(descripcion);
+		if(misiones.get(i).getDiasRestantes() >= 0) {
+			tabla.row();
+			tabla.add(diasRestantes);			
+		}
+		tabla.row();
 		tabla.add(recompensaOro, recompensaPlata, recompensaCobre);
 		tabla.row();
 		
@@ -190,8 +201,24 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 	        tablaTareas.add(tarea).expand().row();
 
 	        // Agregar el estado de la misión
-	        Label estadoMision = new Label((misiones.get(i).getCompletada() ? "Completada" : "Pendiente"), (misiones.get(i).getCompletada() ? labelStyleCompletada : labelStylePendiente));
+	        Label estadoMision;
+	        switch (misiones.get(i).getEstado()) {
+			case PENDIENTE:
+				estadoMision = new Label(Recursos.bundle.get("misiones.estado.pendiente"), labelStylePendiente);
+				break;
+			case COMPLETADA:
+				estadoMision = new Label(Recursos.bundle.get("misiones.estado.completada"), labelStyleCompletada);
+				break;
+			case FALLADA:
+				estadoMision = new Label(Recursos.bundle.get("misiones.estado.fallada"), labelStyleFallada);
+				break;
+				
+				default:
+					estadoMision = new Label("Algo salio mal en la creacion de esta label ver DiarioHUD.java", labelStyle);
+					break;
+			}
 	        tablaTareas.add(estadoMision).expand().row();
+	        
 	    }
 
 	    // Invalidar y volver a dibujar la tabla

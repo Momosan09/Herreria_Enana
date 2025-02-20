@@ -434,3 +434,7 @@ por ejemplo:
     - Cambios en el sistema de dinero
     - Funciona la compra de items
     - Ahora se puede completar la primera mision, fabricar espadas
+
+# 20 FEB
+    - Agrega tiempo limite para completar misiones
+    - Agrega descripcion para las misiones

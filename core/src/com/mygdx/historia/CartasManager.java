@@ -25,7 +25,7 @@ public abstract class CartasManager {
 		if(MundoConfig.diasTranscurridos == 0 &&(MundoConfig.horaDelMundo == 4 && MundoConfig.minutoDelMundo > 6) ){
 			return cartas[1];
 		}
-		if(MundoConfig.diasTranscurridos == 0 &&(MundoConfig.horaDelMundo == 5 && MundoConfig.minutoDelMundo > 0)){
+		if(MundoConfig.diasTranscurridos == 1 &&(MundoConfig.horaDelMundo == 16 && MundoConfig.minutoDelMundo > 0)){
 			return cartas[2];
 		}
 		return null;

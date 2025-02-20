@@ -210,4 +210,5 @@ public class Iluminacion implements EventoCambioDeDia{
         	//System.out.println("No hay carta para hoy \n");
         }
 	}
+
 }

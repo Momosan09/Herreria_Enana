@@ -81,6 +81,7 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 	public void render(float delta) {
     	stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
+		System.out.println("jack pot");
 		//seleccionarOpcion();
 		
 	}

@@ -2,12 +2,24 @@
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	Cardinal: {
 		file: Cardinal.fnt
-		scaledSize: -1
+		scaledSize: 30
 		markupEnabled: false
 		flip: false
 	}
 }
 com.badlogic.gdx.graphics.Color: {
+	Deshabilitado: {
+		r: 0.6039216
+		g: 0.6039216
+		b: 0.6039216
+		a: 0.6292135
+	}
+	over: {
+		r: 0
+		g: 1
+		b: 0.8509804
+		a: 1
+	}
 	RGBA_0_224_7_255: {
 		r: 0
 		g: 0.8784314
@@ -19,12 +31,6 @@ com.badlogic.gdx.graphics.Color: {
 		g: 0.9490196
 		b: 1
 		a: 1
-	}
-	Deshabilitado: {
-		r: 0.6039216
-		g: 0.6039216
-		b: 0.6039216
-		a: 0.6292135
 	}
 	RGBA_191_191_191_255: {
 		r: 0.7490196
@@ -42,6 +48,12 @@ com.badlogic.gdx.graphics.Color: {
 		r: 1
 		g: 1
 		b: 1
+		a: 1
+	}
+	Seleccionado: {
+		r: 0.9882353
+		g: 0.9137255
+		b: 0.078431375
 		a: 1
 	}
 }
@@ -74,6 +86,15 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 		imageUp: botonRegresoUp
 		imageDown: botonRegresoDown
 		imageOver: botonRegresoOver
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: Cardinal
+		fontColor: RGBA_255_255_255_255
+	}
+	titulo: {
+		font: Cardinal
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
@@ -116,6 +137,22 @@ com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 	default-vertical: {
 		background: sliderBackground
 		knob: scrollKnob
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: Cardinal
+		fontColor: RGBA_255_255_255_255
+		downFontColor: Seleccionado
+		overFontColor: over
+		disabledFontColor: Deshabilitado
+		down: textButtonDown
+		over: textButtonOver
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
 	}
 }
 }

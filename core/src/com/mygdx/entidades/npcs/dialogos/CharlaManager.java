@@ -10,6 +10,7 @@ import com.mygdx.entidades.ObjetosDelMapa.Items.Esquema;
 import com.mygdx.entidades.npcs.Carpintero;
 import com.mygdx.enums.CaracterMensajes;
 import com.mygdx.enums.EstadosDelJuego;
+import com.mygdx.enums.EstadosMision;
 import com.mygdx.enums.Items;
 import com.mygdx.enums.Respuestas;
 import com.mygdx.historia.FabricablesMision;
@@ -191,7 +192,7 @@ public class CharlaManager {
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
 					cerrarDialogo(carpintero);
 				} else if (jugador.respuesta2 == Respuestas.VERDADERO
-						&& jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).getCompletada()) {
+						&& jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).getEstado() == EstadosMision.COMPLETADA) {
 					jugador.getItems().remove(jugador.getItem(Items.SIERRA_CIRCULAR));
 					carpintero.setCharlaActual("carpintero_venta");
 				}
@@ -210,7 +211,7 @@ public class CharlaManager {
 			
 
 			if (jugador.buscarMisionPorId(MisionesDelJuego.CARP_00.getId())) {//Esto esta aca aproposito, es para las condiciones de misiones
-				if (!jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).getCompletada()) {
+				if (jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).getEstado() == EstadosMision.PENDIENTE) {
 					carpintero.setCharlaActual("carpintero_entrega_primera_mision");
 				}
 			}
