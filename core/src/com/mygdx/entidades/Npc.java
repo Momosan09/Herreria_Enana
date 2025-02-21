@@ -13,9 +13,11 @@ import com.mygdx.hud.Dialogo;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.Config;
 import com.mygdx.utiles.MundoConfig;
+import com.mygdx.utiles.Npcs;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class Npc extends Entidad implements NpcInterface, EventoInteraccionNPC{
 	
@@ -44,7 +46,7 @@ public abstract class Npc extends Entidad implements NpcInterface, EventoInterac
 		this.paqueteDeCharlas = data.getBloquesDeCharla();
 		this.retrato = data.getTextura();
 
-		OrganizadorSpritesIndiceZ.NPCS.add(this);
+		Npcs.NPCS.put(data,this);
 		animacion = new Animator(ruta, posicion, 0);
 		animacion.create();
 		Listeners.agregarListener(this);

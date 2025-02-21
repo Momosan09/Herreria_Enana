@@ -7,16 +7,16 @@ import com.mygdx.utiles.HelpDebug;
 
 public class Mision {
 
-	private String requisor;//quien nos da la mision
-	private int diasParaCompletar;
-	private String descripcion;
-	private TipoMision tipo;
-	private String objeto;
-	private int cantidadConseguida = 0, cantidadObjetivo;//La cantidad de lo que pide
-	private boolean recompensaAdquirida = false, objetoFabricado = false;
-	private int cobre, plata, oro;
-	private String id;
-	private EstadosMision estado = EstadosMision.PENDIENTE;
+	protected String requisor;//quien nos da la mision
+	protected int diasParaCompletar;
+	protected String descripcion;
+	protected TipoMision tipo;
+	protected String objeto;
+	protected int cantidadConseguida = 0, cantidadObjetivo;//La cantidad de lo que pide
+	protected boolean recompensaAdquirida = false, objetoFabricado = false;
+	protected int cobre, plata, oro;
+	protected String id;
+	protected EstadosMision estado = EstadosMision.PENDIENTE;
 	
 	public Mision(MisionesDelJuego datosMision) {
 		this.requisor = datosMision.getRequisor();

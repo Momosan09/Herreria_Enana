@@ -12,7 +12,7 @@ import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 public class OrganizadorSpritesIndiceZ {
 	
 	public static ArrayList<ObjetoDelMapa> objetosDelMapa = new ArrayList<ObjetoDelMapa>();
-	public static ArrayList<Npc> NPCS = new ArrayList<Npc>();//Esto es por las animaciones que tienen los npc
+	public static ArrayList<Npc> NPCS =  new ArrayList<>(Npcs.NPCS.values());
 	
 
 	

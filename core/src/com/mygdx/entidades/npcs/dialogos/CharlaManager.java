@@ -18,6 +18,7 @@ import com.mygdx.historia.MisionesDelJuego;
 import com.mygdx.historia.TipoMision;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
+import com.mygdx.utiles.Recursos;
 
 public class CharlaManager {
 
@@ -31,10 +32,10 @@ public class CharlaManager {
 		crearCharlasVendedorAmbulante(vendedorAmbulante);
 		crearCharlasViejo(viejo);
 		crearCharlasCarpintero(carpintero);
-		viejo.setCharlaActual("saludo");
-		carpintero.setCharlaActual("saludo");
-		vendedorAmbulante.setCharlaActual("saludo");
-		vendedorTienda.setCharlaActual("saludo");
+		vendedorTienda.setCharlaActual(Recursos.bundle.get("vendedor_tienda.charla.saludo"));
+		vendedorAmbulante.setCharlaActual(Recursos.bundle.get("vendedor_ambulante.charla.saludo"));
+		viejo.setCharlaActual(Recursos.bundle.get("viejo.charla.nombre.saludo"));
+		carpintero.setCharlaActual(Recursos.bundle.get("carpintero.charla.nombre.saludo"));
 		checkearCharlas(vendedorTienda, vendedorAmbulante, viejo, carpintero);
 
 		this.jugador = jugador;
@@ -49,24 +50,25 @@ public class CharlaManager {
 	}
 
 	public void crearCharlasVendedorTienda(Npc vendedorTienda) {
-		vendedorTienda.charlas.add(new Charla("saludo", vendedorTienda.getPaqueteDeDialogosNro(0)));
+		vendedorTienda.charlas.add(new Charla(Recursos.bundle.get("vendedor_tienda.charla.saludo"), vendedorTienda.getPaqueteDeDialogosNro(0)));
 	}
 
 	public void crearCharlasVendedorAmbulante(Npc vendedorAmbulante) {
-		vendedorAmbulante.charlas.add(new Charla("saludo", vendedorAmbulante.getPaqueteDeDialogosNro(0)));
+		vendedorAmbulante.charlas.add(new Charla(Recursos.bundle.get("vendedor_ambulante.charla.saludo"), vendedorAmbulante.getPaqueteDeDialogosNro(0)));
 	}
 
 	public void crearCharlasViejo(Npc viejo) {
-		viejo.charlas.add(new Charla("saludo", viejo.getPaqueteDeDialogosNro(0)));
-		viejo.charlas.add(new Charla("montanas_minerales", viejo.getPaqueteDeDialogosNro(1)));
+		viejo.charlas.add(new Charla(Recursos.bundle.get("viejo.charla.nombre.saludo"), viejo.getPaqueteDeDialogosNro(0)));
+		viejo.charlas.add(new Charla(Recursos.bundle.get("viejo.charla.nombre.montanas_minerales"), viejo.getPaqueteDeDialogosNro(1)));
+//		viejo.charlas.get(Recursos.bundle.get("viejo.charla.nombre.montanas_minerales"), new Charla(Recursos.bundle.get("viejo.charla.nombre.montanas_minerales"), viejo.getPaqueteDeDialogosNro(1)));
 	}
 
 	public void crearCharlasCarpintero(Npc carpintero) {
-		carpintero.charlas.add(new Charla("saludo", carpintero.getPaqueteDeDialogosNro(0)));
-		carpintero.charlas.add(new Charla("sobre_la_guerra", carpintero.getPaqueteDeDialogosNro(1)));
-		carpintero.charlas.add(new Charla("mision_sierra_circular", carpintero.getPaqueteDeDialogosNro(2)));
-		carpintero.charlas.add(new Charla("carpintero_entrega_primera_mision", carpintero.getPaqueteDeDialogosNro(3)));
-		carpintero.charlas.add(new Charla("carpintero_venta", carpintero.getPaqueteDeDialogosNro(4)));
+		carpintero.charlas.add(new Charla(Recursos.bundle.get("carpintero.charla.nombre.saludo"), carpintero.getPaqueteDeDialogosNro(0)));
+		carpintero.charlas.add(new Charla(Recursos.bundle.get("carpintero.charla.nombre.sobre_la_guerra"), carpintero.getPaqueteDeDialogosNro(1)));
+		carpintero.charlas.add(new Charla(Recursos.bundle.get("carpintero.charla.nombre.mision.sierra_circular"), carpintero.getPaqueteDeDialogosNro(2)));
+		carpintero.charlas.add(new Charla(Recursos.bundle.get("carpintero.charla.nombre.mision.sierra_circular.completada"), carpintero.getPaqueteDeDialogosNro(3)));
+		carpintero.charlas.add(new Charla(Recursos.bundle.get("carpintero.charla.nombre.venta"), carpintero.getPaqueteDeDialogosNro(4)));
 
 	}
 
@@ -76,8 +78,8 @@ public class CharlaManager {
 														// distinto
 		if (vendedorTienda.getJugadorEnRango()) {
 
-			switch (vendedorTienda.getNombreCharlaActual()) {
-			case "saludo":
+			if (vendedorTienda.getNombreCharlaActual().equals(Recursos.bundle.get("vendedor_tienda.charla.saludo"))) {
+
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
 					Vendedor vendedor = (Vendedor) vendedorTienda;
 					abrirVenta(vendedor);
@@ -85,14 +87,9 @@ public class CharlaManager {
 					cerrarDialogo(vendedorTienda);
 
 				}
-				break;
 
-			default:
-				break;
-			}
-
-		}
-
+	}
+	}
 	}
 
 	public void npcVendedorAmbulante(Npc vendedorAmbulante) {// Aca va toda la logica en donde, dependiendo del npc, se
@@ -101,8 +98,8 @@ public class CharlaManager {
 																// lunes que tenga uno distinto
 		if (vendedorAmbulante.getJugadorEnRango()) {
 			
-			switch (vendedorAmbulante.getNombreCharlaActual()) {
-			case "saludo":
+			if (vendedorAmbulante.getNombreCharlaActual().equals(Recursos.bundle.get("vendedor_ambulante.charla.saludo"))) {
+	
 				if (jugador.respuesta1 == Respuestas.VERDADERO ) {
 					Vendedor vendedor = (Vendedor) vendedorAmbulante;
 					abrirVenta(vendedor);
@@ -110,13 +107,10 @@ public class CharlaManager {
 					cerrarDialogo(vendedorAmbulante);
 
 				}
-				break;
 
-			default:
-				break;
 			}
 			
-			vendedorAmbulante.setCharlaActual("saludo");
+			vendedorAmbulante.setCharlaActual(Recursos.bundle.get("vendedor_ambulante.charla.saludo"));
 
 
 		}
@@ -128,24 +122,23 @@ public class CharlaManager {
 										// si es lunes que tenga uno distinto
 		if (viejo.getJugadorEnRango()) {
 
-			switch (viejo.getNombreCharlaActual()) {
-			case "saludo":
+			if (viejo.getNombreCharlaActual().equals(Recursos.bundle.get("viejo.charla.nombre.saludo"))) {
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
-					viejo.setCharlaActual("montanas_minerales");
+					viejo.setCharlaActual(Recursos.bundle.get("viejo.charla.nombre.montanas_minerales"));
 
 				} else if (jugador.respuesta2 == Respuestas.VERDADERO) {
 					cerrarDialogo(viejo);
 				}
-				break;
 
-			case "montanas_minerales":
+			}
+			if (viejo.getNombreCharlaActual().equals(Recursos.bundle.get("viejo.charla.nombre.montanas_minerales"))) {
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
-					cerrarDialogo(viejo);
+//					jugador.agregarMision(MisionesDelJuego.RC2_VIE);
 
 				} else if (jugador.respuesta2 == Respuestas.VERDADERO) {
 					cerrarDialogo(viejo);
 				}
-				break;
+
 			}
 		}
 
@@ -155,26 +148,26 @@ public class CharlaManager {
 
 		if (carpintero.getJugadorEnRango()) {
 
-			switch (carpintero.getNombreCharlaActual()) {
+			if  (carpintero.getNombreCharlaActual().equals(Recursos.bundle.get("carpintero.charla.nombre.saludo"))) {
 
-			case "saludo":
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
-					carpintero.setCharlaActual("sobre_la_guerra");
+					carpintero.setCharlaActual(Recursos.bundle.get("carpintero.charla.nombre.sobre_la_guerra"));
 					
 				} else if (jugador.respuesta2 == Respuestas.VERDADERO) {
 					cerrarDialogo(carpintero);
 				}
 				
-				break;
-			case "sobre_la_guerra":
+			}
+			if(carpintero.getNombreCharlaActual().equals(Recursos.bundle.get("carpintero.charla.nombre.sobre_la_guerra"))) {
+				
 				if (jugador.respuesta1 == Respuestas.VERDADERO || jugador.respuesta2 == Respuestas.VERDADERO) {
-					carpintero.setCharlaActual("mision_sierra_circular");
-					
+					carpintero.setCharlaActual(Recursos.bundle.get("carpintero.charla.nombre.mision.sierra_circular"));
 					
 				}
-				break;
+					
+				}
 
-			case "mision_sierra_circular":
+			if(carpintero.getNombreCharlaActual().equals(Recursos.bundle.get("carpintero.charla.nombre.mision.sierra_circular"))) {
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
 					if (!jugador.buscarMisionPorId("CARP_00")) {
 						jugador.agregarMision(MisionesDelJuego.CARP_00);
@@ -186,39 +179,38 @@ public class CharlaManager {
 					
 
 				}
-				break;
+			}
 
-			case "carpintero_entrega_primera_mision":
+				if(carpintero.getNombreCharlaActual().equals(Recursos.bundle.get("carpintero.charla.nombre.mision.sierra_circular.completada"))) {
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
 					cerrarDialogo(carpintero);
 				} else if (jugador.respuesta2 == Respuestas.VERDADERO
 						&& jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).getEstado() == EstadosMision.COMPLETADA) {
 					jugador.getItems().remove(jugador.getItem(Items.SIERRA_CIRCULAR));
-					carpintero.setCharlaActual("carpintero_venta");
+					carpintero.setCharlaActual(Recursos.bundle.get("carpintero.charla.nombre.venta"));
 				}
-				break;
+				}
 
-			case "carpintero_venta":
+				if(carpintero.getNombreCharlaActual().equals(Recursos.bundle.get("carpintero.charla.nombre.venta"))) {
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
 					Vendedor vendedor = (Vendedor) carpintero;
 					abrirVenta(vendedor);
 				} else if (jugador.respuesta2 == Respuestas.VERDADERO) {
 					cerrarDialogo(carpintero);
 				}
-				break;
 			}
 			
 			
 
 			if (jugador.buscarMisionPorId(MisionesDelJuego.CARP_00.getId())) {//Esto esta aca aproposito, es para las condiciones de misiones
 				if (jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).getEstado() == EstadosMision.PENDIENTE) {
-					carpintero.setCharlaActual("carpintero_entrega_primera_mision");
+					carpintero.setCharlaActual(Recursos.bundle.get("carpintero.charla.nombre.mision.sierra_circular.completada"));
 				}
 			}
 			
 		}
+		}
 
-	}
 
 	private void cerrarDialogo(Npc npc) {
 		MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;

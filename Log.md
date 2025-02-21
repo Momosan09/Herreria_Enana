@@ -438,3 +438,6 @@ por ejemplo:
 # 20 FEB
     - Agrega tiempo limite para completar misiones
     - Agrega descripcion para las misiones
+
+# 21 FEB
+    - Cambios en el sistema de misiones

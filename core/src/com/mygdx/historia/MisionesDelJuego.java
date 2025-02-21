@@ -1,6 +1,8 @@
 package com.mygdx.historia;import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.npcs.Carpintero;
+import com.mygdx.entidades.npcs.dialogos.NpcData;
+import com.mygdx.utiles.Npcs;
 import com.mygdx.utiles.Recursos;
 
 public enum MisionesDelJuego {
@@ -20,6 +22,15 @@ public enum MisionesDelJuego {
 				15, 0, 50,100,
 				"RC1_FESP"),
 	
+		RC2_VIE(Recursos.bundle.get("npc.nombre.rey"),
+				Recursos.bundle.get("misiones.descripciones.rey.RC2_VIE"),
+				-1,
+				TipoMision.HABLAR,
+				Npcs.NPCS.get(NpcData.VIEJO),
+				"viejo_REC2_VIE_0",
+				0,0,0,
+				"REC2_VIE"
+				),
 	
 	//viejo
 	
@@ -38,6 +49,8 @@ public enum MisionesDelJuego {
 	private TipoMision tipo;
 	private String objeto;
 	private int cantidadObjetivo;
+	private Npc npcObjetivo;
+	private String charlaObjetivo;
 	private int oro, plata, cobre;
 	private String id;
 	
@@ -54,13 +67,39 @@ public enum MisionesDelJuego {
 	 * @param cobre
 	 * @param id
 	 */
-	MisionesDelJuego(String requisor, String descripcion,int diasParaCompletar, TipoMision tipo, String objeto, int cantidadObjetivo, int oro, int plata, int cobre, String id){
+	MisionesDelJuego(String requisor, String descripcion, int diasParaCompletar, TipoMision tipo, String objeto, int cantidadObjetivo, int oro, int plata, int cobre, String id){
 		this.requisor = requisor;
 		this.descripcion = descripcion;
 		this.diasParaCompletar = diasParaCompletar;
 		this.tipo = tipo;
 		this.objeto = objeto;
 		this.cantidadObjetivo = cantidadObjetivo;
+		this.oro = oro;
+		this.plata = plata;
+		this.cobre = cobre;
+		this.id = id;
+	}
+	
+	/**
+	 * 
+	 * @param requisor
+	 * @param descripcion
+	 * @param diasParaCompletar
+	 * @param tipo
+	 * @param npcObjetivo El npc al que se le debe hablar
+	 * @param charlaObjetivo Es la charla que se debe tener con el npc para que se complete la mision
+	 * @param oro
+	 * @param plata
+	 * @param cobre
+	 * @param id
+	 */
+	MisionesDelJuego(String requisor, String descripcion, int diasParaCompletar, TipoMision tipo, Npc npcObjetivo, String charlaObjetivo,int oro, int plata, int cobre, String id){
+		this.requisor = requisor;
+		this.descripcion = descripcion;
+		this.diasParaCompletar = diasParaCompletar;
+		this.tipo = tipo;
+		this.npcObjetivo = npcObjetivo;
+		this.charlaObjetivo = charlaObjetivo;//Es la charla que se tiene que tener para que se complete la mision
 		this.oro = oro;
 		this.plata = plata;
 		this.cobre = cobre;
@@ -91,6 +130,13 @@ public enum MisionesDelJuego {
 		return cantidadObjetivo;
 	}
 
+	public Npc getNpcObjetivo() {
+		return npcObjetivo;
+	}
+	
+	public String getNombreCharlaObjetivo() {
+		return charlaObjetivo;
+	}
 	public int getOro() {
 		return oro;
 	}

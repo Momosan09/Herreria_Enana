@@ -194,7 +194,6 @@ public class Dialogo extends Actor implements HeadUpDisplay, Ocultable {
 
 		    @Override
 		    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-		    		
 		    		jugador.respuesta1 = Respuestas.VERDADERO;
 		    		jugador.respuesta2 = Respuestas.FALSO;
 		    		respuestas[0].setColor(Color.CYAN);
