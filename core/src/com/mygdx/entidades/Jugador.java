@@ -2,7 +2,7 @@ package com.mygdx.entidades;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
-
+import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
@@ -63,7 +63,7 @@ public class Jugador {
 	private EnumMap<TipoMinerales, EnumMap<EstadosMinerales, ArrayList<Mineral>>> mineralesInventario =
 		    new EnumMap<>(TipoMinerales.class);
 	
-	private ArrayList<Mision> tareas = new ArrayList<>();
+	private HashMap<String,Mision> tareas = new HashMap<String,Mision>();
 	
 	public Direcciones direccionActual = Direcciones.QUIETO;
 	public Direcciones direccionDelChoque = null;
@@ -484,45 +484,34 @@ public class Jugador {
 
 	public void agregarMision(MisionesDelJuego misionD) {
 		Mision mision = new Mision(misionD);
-		tareas.add(mision);
+		tareas.put(mision.getId(), mision);
 		Listeners.misionAgregada(mision);
 		AudioManager.reproducirSonidoMisionRecibida();
 	}
 	
 	public void agregarMision(Mision mision) {
-		tareas.add(mision);
+		tareas.put(mision.getId(), mision);
 		Listeners.misionAgregada(mision);
 		AudioManager.reproducirSonidoMisionRecibida();
 	}
 	
-	public ArrayList<Mision> getMisiones() {
+	public HashMap<String, Mision> getMisiones() {
 		return tareas;
 		
 	}
 	
 	public boolean buscarMisionPorId(String id) {
-		if(!tareas.isEmpty()) {
-		for(int i = 0; i<tareas.size();i++) {
-			if(tareas.get(i).getId().equals(id)) {
-				//System.out.println(HelpDebug.debub(getClass())+"Mision encontrada------------");
-				return true;
-			}
-		}
-		System.out.println(HelpDebug.debub(getClass())+"Mision NO encontrada------------");
-		return false;
+		if (tareas.containsKey(id)) {
+			return true;
 		}else {
 			return false;
 		}
 	}
 	
 	public Mision conseguirMisionPorId(MisionesDelJuego mision) {
-		if(!tareas.isEmpty()) {
-			for(int i = 0; i<tareas.size();i++) {
-				if(tareas.get(i).getId().equals(mision.getId())) {
-					return tareas.get(i);
-				}
-			}	
-		}
+			if(!tareas.isEmpty()) {
+				return tareas.get(mision.getId());
+			}
 		return null;
 	}
 	

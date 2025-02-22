@@ -71,6 +71,25 @@ public class Mision {
 
 	}
 	
+	
+	public void setEstado(EstadosMision e) {
+		estado = e;
+		comprobarCondicion();
+	}
+	
+	/**
+	 * Cambia el estado de la mision a Fallada
+	 * @param e
+	 */
+	public void setFallada() {
+		estado = EstadosMision.FALLADA;
+		comprobarCondicion();
+	}
+	
+	public boolean isFallada() {
+		return (estado == EstadosMision.FALLADA ? true : false);
+	}
+	
 	public void darRecompensa(Jugador jugador) {
 		if(	estado == EstadosMision.COMPLETADA && !recompensaAdquirida) {			
 			jugador.monedero.agregarMonedasOro(oro);
@@ -83,6 +102,7 @@ public class Mision {
 	public String getEntidad() {
 		return requisor;
 	}
+	
 	
 	public String getDescripcion() {
 		return descripcion;

@@ -441,3 +441,9 @@ por ejemplo:
 
 # 21 FEB
     - Cambios en el sistema de misiones
+
+# 22 FEB
+    - Mas cambios a las misiones
+    - Agrega dialogos
+
+--- PENDIENTE: MODIFICAR LA ESTRUCTURA DE LAS MISIONES

@@ -1,8 +1,6 @@
-java.util.MissingResourceException: Can't find bundle key carpintero_sobre_la_guerr
-	at com.badlogic.gdx.utils.I18NBundle.get(I18NBundle.java:435)
-	at com.badlogic.gdx.utils.I18NBundle.get(I18NBundle.java:432)
-	at com.mygdx.entidades.npcs.dialogos.CharlaManager.npcCarpintero(CharlaManager.java:161)
-	at com.mygdx.entidades.npcs.dialogos.CharlaManager.checkearCharlas(CharlaManager.java:48)
+java.lang.NullPointerException: Cannot invoke "com.mygdx.historia.Mision.isFallada()" because the return value of "java.util.HashMap.get(Object)" is null
+	at com.mygdx.entidades.npcs.dialogos.CharlaManager.npcViejo(CharlaManager.java:140)
+	at com.mygdx.entidades.npcs.dialogos.CharlaManager.checkearCharlas(CharlaManager.java:47)
 	at com.mygdx.pantallas.Juego.render(Juego.java:244)
 	at com.badlogic.gdx.Game.render(Game.java:48)
 	at com.mygdx.game.Principal.render(Principal.java:45)

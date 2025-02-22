@@ -43,7 +43,7 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 	
 	public DiarioHUD(Jugador jugador) {
 		this.jugador = jugador;
-		misiones = jugador.getMisiones();
+		misiones = new ArrayList<>(jugador.getMisiones().values());
     	screenViewport = new ScreenViewport();
         stage = new Stage(screenViewport);
 		crearFuentes();
@@ -153,12 +153,13 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 	
 	public void agregarMisiones() {
 		tareas.clear();
-	
+		misiones = new ArrayList<>(jugador.getMisiones().values());
 		for(int i=0; i<jugador.getMisiones().size();i++) {
 			
 		Table tabla = new Table();
 //		tabla.setDebug(true);
 		
+		if(!misiones.isEmpty()) {
 		Label tipoMision = new Label(misiones.get(i).getTipoMision().toString() + ":", labelStyle);
 		Label objetoMision = new Label(misiones.get(i).getObjeto() + " " + misiones.get(i).getCantidadConseguida() +"/"+ misiones.get(i).getCantidadObjetivo(), labelStyle);
 		Label dadorMision = new Label(misiones.get(i).getEntidad(), labelStyle);
@@ -186,7 +187,7 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 		
 		
 		tareas.add(tabla);
-
+		}
 		}
 
 	}

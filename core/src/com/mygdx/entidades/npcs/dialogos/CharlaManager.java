@@ -60,6 +60,10 @@ public class CharlaManager {
 	public void crearCharlasViejo(Npc viejo) {
 		viejo.charlas.add(new Charla(Recursos.bundle.get("viejo.charla.nombre.saludo"), viejo.getPaqueteDeDialogosNro(0)));
 		viejo.charlas.add(new Charla(Recursos.bundle.get("viejo.charla.nombre.montanas_minerales"), viejo.getPaqueteDeDialogosNro(1)));
+		viejo.charlas.add(new Charla(Recursos.bundle.get("viejo_RC2_VIE_0"), viejo.getPaqueteDeDialogosNro(2)));
+		viejo.charlas.add(new Charla(Recursos.bundle.get("viejo_RC2_VIE_1"), viejo.getPaqueteDeDialogosNro(3)));
+		viejo.charlas.add(new Charla(Recursos.bundle.get("viejo_RC2_VIE_2"), viejo.getPaqueteDeDialogosNro(4)));
+		viejo.charlas.add(new Charla(Recursos.bundle.get("viejo_RC2_VIE_FALLADA"), viejo.getPaqueteDeDialogosNro(5)));
 //		viejo.charlas.get(Recursos.bundle.get("viejo.charla.nombre.montanas_minerales"), new Charla(Recursos.bundle.get("viejo.charla.nombre.montanas_minerales"), viejo.getPaqueteDeDialogosNro(1)));
 	}
 
@@ -133,13 +137,64 @@ public class CharlaManager {
 			}
 			if (viejo.getNombreCharlaActual().equals(Recursos.bundle.get("viejo.charla.nombre.montanas_minerales"))) {
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
-//					jugador.agregarMision(MisionesDelJuego.RC2_VIE);
+					if(!jugador.getMisiones().get(MisionesDelJuego.RC2_VIE.getId()).isFallada()) {						
+					viejo.setCharlaActual(Recursos.bundle.get("viejo_RC2_VIE_0"));
+					}else {
+						cerrarDialogo(viejo);
+						viejo.setCharlaActual(Recursos.bundle.get("viejo.charla.nombre.montanas_minerales"));
+					}
 
 				} else if (jugador.respuesta2 == Respuestas.VERDADERO) {
 					cerrarDialogo(viejo);
 				}
 
 			}
+			
+			if (viejo.getNombreCharlaActual().equals(Recursos.bundle.get("viejo_RC2_VIE_0"))) {
+				if (jugador.respuesta1 == Respuestas.VERDADERO) {
+					viejo.setCharlaActual(Recursos.bundle.get("viejo_RC2_VIE_1"));
+
+				} else if (jugador.respuesta2 == Respuestas.VERDADERO) {
+					viejo.setCharlaActual(Recursos.bundle.get("viejo_RC2_VIE_2"));
+				}
+
+			}
+			
+			if (viejo.getNombreCharlaActual().equals(Recursos.bundle.get("viejo_RC2_VIE_1"))) {
+				if (jugador.respuesta1 == Respuestas.VERDADERO) {
+					jugador.getMisiones().get(MisionesDelJuego.RC2_VIE.getId()).setFallada();
+					viejo.setCharlaActual(Recursos.bundle.get("viejo.charla.nombre.saludo"));
+
+				} else if (jugador.respuesta2 == Respuestas.VERDADERO) {//Si el jugador fallo la mision de hablar con el viejo
+					viejo.setCharlaActual(Recursos.bundle.get("viejo_RC2_VIE_FALLADA"));
+				}
+
+			}
+			
+			if (viejo.getNombreCharlaActual().equals(Recursos.bundle.get("viejo_RC2_VIE_2"))) {
+				if (jugador.respuesta1 == Respuestas.VERDADERO) {
+//					jugador.agregarMision(MisionesDelJuego.);
+						//Aca va la mision del sastre
+					cerrarDialogo(viejo);
+				} else if (jugador.respuesta2 == Respuestas.VERDADERO) {
+					cerrarDialogo(viejo);
+				}
+
+			}
+			
+			if (viejo.getNombreCharlaActual().equals(Recursos.bundle.get("viejo_RC2_VIE_FALLADA"))) {
+				if (jugador.respuesta1 == Respuestas.VERDADERO) {	
+					cerrarDialogo(viejo);
+					viejo.setCharlaActual(Recursos.bundle.get("viejo.charla.nombre.saludo"));
+
+				} else if (jugador.respuesta2 == Respuestas.VERDADERO) {
+					cerrarDialogo(viejo);
+					viejo.setCharlaActual(Recursos.bundle.get("viejo.charla.nombre.saludo"));
+				}
+
+			}
+			
+			
 		}
 
 	}

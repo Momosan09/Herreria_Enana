@@ -166,7 +166,7 @@ public class UI implements EventoRecibirCarta{
 				MundoConfig.pausarTiempo = true;
 				
 				if(MundoConfig.cartaAMostrar.getMision() != null) { // si la carta da mision
-					if(!jugador.getMisiones().contains(MundoConfig.cartaAMostrar.getMision())) {//si el jugador no tiene asiganda esa mision
+					if(!jugador.getMisiones().containsValue(MundoConfig.cartaAMostrar.getMision())) {//si el jugador no tiene asiganda esa mision
 						jugador.agregarMision(MundoConfig.cartaAMostrar.getMision());
 					}
 					

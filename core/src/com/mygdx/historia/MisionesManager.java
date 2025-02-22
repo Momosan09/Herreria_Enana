@@ -14,12 +14,14 @@ public class MisionesManager implements EventoRestarDiasDeMision{
 	
 	public MisionesManager(Jugador jugador) {
 		this.jugador = jugador;
+		misiones = new ArrayList<>(jugador.getMisiones().values());
         Listeners.agregarListener(this);
 	}
 	
 	public void agregarMision() {
 		misiones.clear();
-		misiones = jugador.getMisiones();
+		misiones = new ArrayList<>(jugador.getMisiones().values());
+
 	}
 	
 	public void checkearMisiones() {

@@ -13,7 +13,7 @@ public abstract class CartasManager {
 	private static CartaHUD[] cartas = {
 			new CartaHUD(Npc_Dialogos_Rey.CARTA_0),
 			new CartaHUD(Npc_Dialogos_Rey.CARTA_1, new Mision(MisionesDelJuego.RC1_FESP)),
-			new CartaHUD(Npc_Dialogos_Rey.CARTA_2),
+			new CartaHUD(Npc_Dialogos_Rey.CARTA_2, new Mision(MisionesDelJuego.RC2_VIE)),
 	};
 
 	
@@ -23,7 +23,7 @@ public abstract class CartasManager {
 	*/
 	public static CartaHUD determinarCarta() {
 		if(MundoConfig.diasTranscurridos == 0 &&(MundoConfig.horaDelMundo == 4 && MundoConfig.minutoDelMundo > 6) ){
-			return cartas[1];
+			return cartas[2];
 		}
 		if(MundoConfig.diasTranscurridos == 1 &&(MundoConfig.horaDelMundo == 16 && MundoConfig.minutoDelMundo > 0)){
 			return cartas[2];
