@@ -6,6 +6,8 @@ import com.mygdx.entidades.Jugador;
 import com.mygdx.eventos.EventoCambioDeDia;
 import com.mygdx.eventos.EventoRestarDiasDeMision;
 import com.mygdx.eventos.Listeners;
+import com.mygdx.historia.misiones.MisionRecFab;
+import com.mygdx.utiles.HelpDebug;
 
 public class MisionesManager implements EventoRestarDiasDeMision{
 	
@@ -18,18 +20,14 @@ public class MisionesManager implements EventoRestarDiasDeMision{
         Listeners.agregarListener(this);
 	}
 	
-	public void agregarMision() {
+	private void agregarMision() {
 		misiones.clear();
 		misiones = new ArrayList<>(jugador.getMisiones().values());
 
 	}
 	
-	public void checkearMisiones() {
-		for (Mision mision : misiones) {
-			mision.comprobarCondicion();
-			mision.darRecompensa(jugador);
-		}
-	}
+
+
 	
 
 	/**

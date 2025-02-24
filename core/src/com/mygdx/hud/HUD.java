@@ -26,6 +26,7 @@ import com.mygdx.eventos.BarraItemsSeleccion;
 import com.mygdx.eventos.EventoMisionAgregada;
 import com.mygdx.eventos.Listeners;
 import com.mygdx.historia.Mision;
+import com.mygdx.historia.misiones.MisionRecFab;
 import com.mygdx.pantallas.Juego;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
@@ -458,7 +459,10 @@ public class HUD implements HeadUpDisplay, Ocultable, EventoMisionAgregada, Barr
 	    // Muestra el label 'mensaje'
 	    mensaje.setVisible(true);
 
-	    mensaje.setText("Mision agregada: " + mision.getTipoMision() + " x" + mision.getCantidadObjetivo()+ " " + mision.getObjeto());
+	    if(mision instanceof  MisionRecFab) {
+	    	MisionRecFab m = (MisionRecFab) mision;
+	    	mensaje.setText("Mision agregada: " + mision.getTipo() + " x" + m.getCantidadObjetivo()+ " " + m.getObjeto());	   
+	    }
 	    Tiempo.actorEsperar(mensaje, 4);
 
 	}

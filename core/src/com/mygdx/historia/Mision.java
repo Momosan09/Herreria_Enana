@@ -5,15 +5,13 @@ import com.mygdx.entidades.Jugador;
 import com.mygdx.enums.EstadosMision;
 import com.mygdx.utiles.HelpDebug;
 
-public class Mision {
+public abstract class Mision {
 
 	protected String requisor;//quien nos da la mision
 	protected int diasParaCompletar;
 	protected String descripcion;
 	protected TipoMision tipo;
-	protected String objeto;
-	protected int cantidadConseguida = 0, cantidadObjetivo;//La cantidad de lo que pide
-	protected boolean recompensaAdquirida = false, objetoFabricado = false;
+	protected boolean recompensaAdquirida = false;
 	protected int cobre, plata, oro;
 	protected String id;
 	protected EstadosMision estado = EstadosMision.PENDIENTE;
@@ -23,8 +21,6 @@ public class Mision {
 		this.diasParaCompletar = datosMision.getDiasParaCompletar();
 		this.descripcion = datosMision.getDescripcion();
 		this.tipo = datosMision.getTipo();
-		this.objeto = datosMision.getObjeto();
-		this.cantidadObjetivo = datosMision.getCantidadObjetivo();
 		this.oro = datosMision.getOro();
 		this.plata = datosMision.getPlata();
 		this.cobre = datosMision.getCobre();
@@ -33,37 +29,11 @@ public class Mision {
 		System.out.println(descripcion);
 	}
 	
-	public void comprobarCondicion() {
+	protected void comprobarCondicion() {
 		if(diasParaCompletar > 0) {	
-		switch (tipo) {
-		case RECOLECTAR:
-			if(cantidadConseguida == cantidadObjetivo) {
-				estado = EstadosMision.COMPLETADA;
-			}			
-			break;
-
-		case FABRICAR:
-			if(cantidadConseguida == cantidadObjetivo) {
-				objetoFabricado = true;
-				estado = EstadosMision.COMPLETADA;
-				}
-			break;
-		}		
+	
 		}else if(diasParaCompletar == -1){
-			switch (tipo) {
-			case RECOLECTAR:
-				if(cantidadConseguida == cantidadObjetivo) {
-					estado = EstadosMision.COMPLETADA;
-				}			
-				break;
 
-			case FABRICAR:
-				if(cantidadConseguida == cantidadObjetivo) {
-					objetoFabricado = true;
-					estado = EstadosMision.COMPLETADA;
-					}
-				break;
-			}	
 		}else {
 			estado = EstadosMision.FALLADA;
 		}
@@ -74,7 +44,7 @@ public class Mision {
 	
 	public void setEstado(EstadosMision e) {
 		estado = e;
-		comprobarCondicion();
+		//comprobarCondicion();
 	}
 	
 	/**
@@ -116,39 +86,18 @@ public class Mision {
 	 * resta uno cada vez que pasa un dia. Se llama en Tiempo.java
 	 */
 	public void restarDias() {
-		diasParaCompletar--;
-	}
-	
-	public TipoMision getTipoMision() {
-		return tipo;
-	}
-	
-	public String getObjeto() {
-		return objeto;
-	}
-	
-	public int getCantidadObjetivo() {
-		return cantidadObjetivo;
-	}
-	
-	public EstadosMision getEstado() {
-		return estado;
-	}
-
-	public int getCantidadConseguida() {
-		return cantidadConseguida;
-	}
-	
-	public void setCantidadConseguida(int cant) {
-		if(cantidadConseguida < cantidadObjetivo) {			
-		cantidadConseguida += cant;
-		}else if(cantidadConseguida == cantidadObjetivo) {
-			estado = EstadosMision.COMPLETADA;
+		if(diasParaCompletar != -1) {
+			diasParaCompletar--;
 		}
 	}
 	
-	public void setObjetoFabricado() {
-		objetoFabricado = true;
+	public TipoMision getTipo() {
+		return tipo;
+	}
+	
+	
+	public EstadosMision getEstado() {
+		return estado;
 	}
 	
 	public int getOro() {

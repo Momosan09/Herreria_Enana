@@ -22,6 +22,7 @@ import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.historia.Mision;
+import com.mygdx.historia.misiones.MisionRecFab;
 
 public class DiarioHUD implements HeadUpDisplay, Ocultable{
 
@@ -160,8 +161,12 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 //		tabla.setDebug(true);
 		
 		if(!misiones.isEmpty()) {
-		Label tipoMision = new Label(misiones.get(i).getTipoMision().toString() + ":", labelStyle);
-		Label objetoMision = new Label(misiones.get(i).getObjeto() + " " + misiones.get(i).getCantidadConseguida() +"/"+ misiones.get(i).getCantidadObjetivo(), labelStyle);
+			
+			
+			
+
+		Label tipoMision = new Label(misiones.get(i).getTipo().toString() + ":", labelStyle);
+		Label objetoMision = null;
 		Label dadorMision = new Label(misiones.get(i).getEntidad(), labelStyle);
 		Label descripcion = new Label(misiones.get(i).getDescripcion(), labelStyle);
 		Label diasRestantes = new Label("Dias restantes: "+misiones.get(i).getDiasRestantes(), labelStyle);
@@ -169,9 +174,17 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 		Label recompensaPlata = new Label(" "+Recursos.bundle.get("moneda.plata") +": "+ String.valueOf(misiones.get(i).getPlata()),labelStylePlata);
 		Label recompensaCobre = new Label(" "+Recursos.bundle.get("moneda.cobre") +": " +String.valueOf(misiones.get(i).getCobre()),labelStyleCobre);
 		
+		if(misiones.get(i) instanceof MisionRecFab) {
+			MisionRecFab m = (MisionRecFab) misiones.get(i);
+			objetoMision = new Label(m.getObjeto() + " " + m.getCantidadConseguida() +"/"+ m.getCantidadObjetivo(), labelStyle);				
+		}
+		
 		
 		tabla.add(tipoMision);
-		tabla.add(objetoMision);
+		//el estilo depende del tipo de la mision
+		if(objetoMision != null) {
+			tabla.add(objetoMision);			
+		}
 		tabla.add().expand();
 		tabla.row();
 		tabla.add(dadorMision);

@@ -18,6 +18,7 @@ import com.mygdx.enums.Items;
 import com.mygdx.eventos.EventoMinar;
 import com.mygdx.eventos.Listeners;
 import com.mygdx.historia.TipoMision;
+import com.mygdx.historia.misiones.MisionRecFab;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.HelpDebug;
@@ -149,9 +150,10 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar{
 	        j.agregarMineral(this);
 
 	        for(int i = 0; i<j.getMisiones().size();i++) {
-	        	if(j.getMisiones().get(i).getTipoMision() == TipoMision.RECOLECTAR) {
-	        		if(j.getMisiones().get(i).getObjeto().equals(this.tipo.toString())) {
-	        			j.getMisiones().get(i).setCantidadConseguida(+1);
+	        	if(j.getMisiones().get(i).getTipo() == TipoMision.RECOLECTAR) {
+	        		MisionRecFab m = (MisionRecFab) j.getMisiones().get(i);
+	        		if(m.getObjeto().equals(this.tipo.toString())) {
+	        			j.avanzarMision(m);
 	        		}
 	        	}        	
 	        }

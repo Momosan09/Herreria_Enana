@@ -36,7 +36,9 @@ import com.mygdx.enums.PartesDelCuerpo;
 import com.mygdx.enums.Respuestas;
 import com.mygdx.eventos.Listeners;
 import com.mygdx.historia.Mision;
+import com.mygdx.historia.MisionHablar;
 import com.mygdx.historia.MisionesDelJuego;
+import com.mygdx.historia.misiones.MisionRecFab;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.ItemEquipadoJugador;
@@ -483,7 +485,27 @@ public class Jugador {
 	}
 
 	public void agregarMision(MisionesDelJuego misionD) {
-		Mision mision = new Mision(misionD);
+		Mision mision = null;
+		switch (misionD.getTipo()) {
+		case FABRICAR:
+			mision = new MisionRecFab(misionD);
+			break;
+		case RECOLECTAR:
+			mision = new MisionRecFab(misionD);
+			break;
+			
+		case ENTREGAR:
+			break;
+			
+		case HABLAR:
+			mision = new MisionHablar(misionD);
+			break;
+		}
+		
+		if(mision == null) {
+			System.out.println(HelpDebug.debub(getClass())+ "error en agregarMision()");
+		}
+		
 		tareas.put(mision.getId(), mision);
 		Listeners.misionAgregada(mision);
 		AudioManager.reproducirSonidoMisionRecibida();
@@ -510,12 +532,94 @@ public class Jugador {
 	
 	public Mision conseguirMisionPorId(MisionesDelJuego mision) {
 			if(!tareas.isEmpty()) {
-				return tareas.get(mision.getId());
+				return buscarMisionDevolverHijo(mision);
 			}
 		return null;
 	}
 	
+	/**
+	 * Se le pasa una MisionDelJuego y devuelve el tipo exacto de la mision
+	 * Por ejemplo: return MisionRecFab
+	 * @param mision
+	 * @return
+	 */
+	private Mision buscarMisionDevolverHijo(MisionesDelJuego mision) {
+		Mision m = tareas.get(mision.getId());
+		switch (mision.getTipo()) {
+		case FABRICAR:
+			return (MisionRecFab)m;
+			
+		case RECOLECTAR:
+			return (MisionRecFab)m;
+			
+		case HABLAR:
+			return (MisionHablar)m;
 
+		}
+		return m;
+	}
+	
+	public void avanzarMision(MisionesDelJuego n) {
+		Mision mision = tareas.get(n.getId());
+		switch (n.getTipo()) {
+		case FABRICAR:
+	    	MisionRecFab m = (MisionRecFab) mision;
+	    	m.setCantidadConseguida(1);
+	    	m.comprobarCondicion();
+	    	
+	    	break;
+		case RECOLECTAR:
+	    	MisionRecFab m1 = (MisionRecFab) mision;
+	    	m1.setCantidadConseguida(1);
+	    	m1.comprobarCondicion();
+			break;
+		case HABLAR:
+			break;
+		case ENTREGAR:
+			break;
+		default:
+			break;
+
+
+		}
+		
+	}
+	
+	public void avanzarMision(Mision n) {
+		Mision mision = tareas.get(n.getId());
+		switch (mision.getTipo()) {
+		case FABRICAR:
+	    	MisionRecFab m = (MisionRecFab) mision;
+	    	m.setCantidadConseguida(1);
+		case RECOLECTAR:
+	    	MisionRecFab m1 = (MisionRecFab) mision;
+	    	m1.setCantidadConseguida(1);
+			
+		case HABLAR:
+
+
+		}
+			
+	}
+	
+	public void avanzarMision(MisionesDelJuego n, int cantidad) {
+		Mision mision = tareas.get(n.getId());
+		switch (n.getTipo()) {
+		case FABRICAR:
+	    	MisionRecFab m = (MisionRecFab) mision;
+	    	m.setCantidadConseguida(cantidad);
+		case RECOLECTAR:
+	    	MisionRecFab m1 = (MisionRecFab) mision;
+	    	m1.setCantidadConseguida(cantidad);
+			
+		case HABLAR:
+
+
+		}
+		
+		
+		
+	}
 	
 	public void resetearRespuestas() {
 		respuesta1 = Respuestas.NOVALOR;
@@ -550,6 +654,10 @@ public class Jugador {
 		itemEnMano.borrarSprite();
 		itemEnMano.ocultar();
 	}
+
+
+
+
 	
 
 	

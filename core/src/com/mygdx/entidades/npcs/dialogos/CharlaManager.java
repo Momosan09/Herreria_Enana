@@ -140,7 +140,7 @@ public class CharlaManager {
 					if(!jugador.getMisiones().get(MisionesDelJuego.RC2_VIE.getId()).isFallada()) {						
 					viejo.setCharlaActual(Recursos.bundle.get("viejo_RC2_VIE_0"));
 					}else {
-						cerrarDialogo(viejo);
+						cerrarDialogo(viejo); 
 						viejo.setCharlaActual(Recursos.bundle.get("viejo.charla.nombre.montanas_minerales"));
 					}
 

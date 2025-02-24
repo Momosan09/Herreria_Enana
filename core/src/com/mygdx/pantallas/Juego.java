@@ -246,10 +246,6 @@ public class Juego implements Screen{
 			camaraHud.update();
 			Render.batch.setProjectionMatrix(camaraHud.combined);// Una vez que renderiza el juego, se inicia el batch
 																	// para la camara del HUD y lo dibuja
-
-
-	
-		misionesManager.checkearMisiones();//Se fija si las condiciones se cumplen
 		Render.batch.end();
 	}
 
@@ -329,7 +325,6 @@ public class Juego implements Screen{
 	
 	private void misionesMangerConfig() {
 		misionesManager = new MisionesManager(jugador);
-		misionesManager.agregarMision();
 	}
 
 	public Jugador getJugador1() {

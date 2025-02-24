@@ -446,4 +446,5 @@ por ejemplo:
     - Mas cambios a las misiones
     - Agrega dialogos
 
---- PENDIENTE: MODIFICAR LA ESTRUCTURA DE LAS MISIONES
+# 24 FEB
+    - Modifica estructura de misiones    
