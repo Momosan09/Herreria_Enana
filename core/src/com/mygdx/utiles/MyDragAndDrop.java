@@ -119,7 +119,8 @@ public class MyDragAndDrop {
 					Label invalidLabel = new Label("Invalido", labelStyle);//crea la label que se muestra cuando no es valido
 					invalidLabel.setColor(1, 0, 0, 1);
 					payload.setInvalidDragActor(invalidLabel);
-
+					
+					
 					return payload;
 				}
 			});
@@ -145,7 +146,8 @@ public class MyDragAndDrop {
                     Label invalidLabel = new Label("Invalido", labelStyle);
                     invalidLabel.setColor(1, 0, 0, 1);
                     payload.setInvalidDragActor(invalidLabel);
-
+					x+=16;
+					y+=16;
                     return payload;
                 }
             });
@@ -159,24 +161,15 @@ public class MyDragAndDrop {
 				dragAndDrop.addTarget(new Target(inventario.get(i)) {
 
 					public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
-						getActor().setColor(Color.GREEN);
-
-						return true;
-					}
-
-					public void reset(Source source, Payload payload) {
-						getActor().setColor(Color.WHITE);
-					}
-
-					public void drop(Source source, Payload payload, float x, float y, int pointer) {
+						//getActor().setColor(Color.GREEN);
 
 						if (payload.getObject() instanceof Mineral) {// Aca para cosas que involucren dos minerales
 							Mineral mineralTarget = (Mineral) payload.getObject();
 
 							if (esCombinacionValida(mineralSource, mineralTarget)) {
-
+								getActor().setColor(Color.GREEN);
 							} else {
-
+								getActor().setColor(Color.RED);
 							}
 
 						}
@@ -191,7 +184,47 @@ public class MyDragAndDrop {
 								inventario.remove(mineralSource);
 								jugador.eliminarMineral(mineralSource, 1);
 								System.out.println("eliminado");
+								getActor().setColor(Color.GREEN);
+							}else {
+								getActor().setColor(Color.RED);
+							}
+							
+						}
+						
+						return true;
+					}
 
+					public void reset(Source source, Payload payload) {
+						getActor().setColor(Color.WHITE);
+					}
+
+					public void drop(Source source, Payload payload, float x, float y, int pointer) {
+
+						if (payload.getObject() instanceof Mineral) {// Aca para cosas que involucren dos minerales
+							Mineral mineralTarget = (Mineral) payload.getObject();
+
+							if (esCombinacionValida(mineralSource, mineralTarget)) {
+								getActor().setColor(Color.GREEN);
+							} else {
+								getActor().setColor(Color.RED);
+							}
+
+						}
+
+						if (payload.getObject() instanceof Item) {// Aca para cosas que involucren una herramienta y un
+																	// mineral
+																	//ITEM MINERAL
+							Item herramienta = (Item) payload.getObject();
+
+							if (esCombinacionValida(herramienta, mineralSource)) {
+								// Esto es medio generico, pero bueno cuando necesite mas especifico lo cambio
+								inventario.remove(mineralSource);
+								jugador.eliminarMineral(mineralSource, 1);
+								System.out.println("eliminado");
+								getActor().setColor(Color.GREEN);
+
+							}else {
+								getActor().setColor(Color.RED);
 							}
 
 
@@ -214,7 +247,18 @@ public class MyDragAndDrop {
 
 				@Override
 				public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
-					getActor().setColor(Color.GREEN);
+
+					if(payload.getObject() instanceof Item) {
+						Item itemTarget = (Item) payload.getObject();
+					if (esCombinacionValida(itemTarget, itemSource)) {//ITEM CON ITEM
+						herramientas.remove(itemSource);
+						jugador.getItems().remove(itemSource);
+						getActor().setColor(Color.GREEN);
+					}else {
+						getActor().setColor(Color.RED);
+					}
+					
+					}
 
 					return true;
 				}
@@ -231,6 +275,8 @@ public class MyDragAndDrop {
 						herramientas.remove(itemSource);
 						jugador.getItems().remove(itemSource);
 
+					}else {
+						getActor().setColor(Color.RED);
 					}
 					
 					}
@@ -241,20 +287,20 @@ public class MyDragAndDrop {
 			});
 		}	
 			
-/*	Aca estan las no permitidas
-		dragAndDrop.addTarget(new Target(inventario.get(1)) {
-			public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
-				getActor().setColor(Color.RED);
-				return false;
-			}
 
-			public void reset (Source source, Payload payload) {
-				getActor().setColor(Color.WHITE);
-			}
-
-			public void drop (Source source, Payload payload, float x, float y, int pointer) {
-			}
-		});*/
+//		dragAndDrop.addTarget(new Target() {
+//			public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
+//				getActor().setColor(Color.RED);
+//				return false;
+//			}
+//
+//			public void reset (Source source, Payload payload) {
+//				getActor().setColor(Color.WHITE);
+//			}
+//
+//			public void drop (Source source, Payload payload, float x, float y, int pointer) {
+//			}
+//		});
 
 		mostrarLabelOnEnter();
 	}
@@ -286,7 +332,6 @@ public class MyDragAndDrop {
 			jugador.getItems().add(new Item(Items.ESPADA_HIERRO_0));
 			return true;
 		}else {
-			
 		}
 		return false;
 	}
@@ -444,6 +489,7 @@ public class MyDragAndDrop {
 		        });
 		    }
 	}
+
 
 
 

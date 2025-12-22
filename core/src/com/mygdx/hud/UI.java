@@ -25,7 +25,7 @@ public class UI implements EventoRecibirCarta{
 	private InventarioHUD inventario;
 	private Combinacion combinacion;
 	private Mensaje mensajeAnadido;
-	private Fundicion fundicion;
+	private FundicionOmega fundicion;
 	private DiarioHUD diario;
 	
 	private CartaHUD carta;
@@ -48,7 +48,7 @@ public class UI implements EventoRecibirCarta{
 	    inventario = new InventarioHUD(jugador);
 	    combinacion = new Combinacion(jugador);
 	    libroHUD = new LibroHUD(screenViewport);
-	    fundicion = new Fundicion(jugador);
+	    fundicion = new FundicionOmega(jugador);
 	    //carta = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);
 	    diario = new DiarioHUD(jugador);
 	    
@@ -133,7 +133,7 @@ public class UI implements EventoRecibirCarta{
 			Gdx.input.setInputProcessor(fundicion.getStage());
 			jugador.puedeMoverse = false;
 			fundicion.mostrar();
-			fundicion.tieneHierro(jugador);
+			
 			ocultar(inventario,hud,pausa, diario);
 			break;
 			

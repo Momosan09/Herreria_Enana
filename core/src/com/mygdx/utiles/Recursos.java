@@ -77,6 +77,7 @@ public abstract class Recursos {
 		//carbon
 	public static final String MENA_CARBON = "objetosDelMundo/inanimados/minerales/carbon/carbonMena.png";
 	public static final String CARBON_PURO = "objetosDelMundo/inanimados/minerales/carbon/carbonPuro.png";
+	public static final String CARBON_POLVO = "objetosDelMundo/inanimados/minerales/carbon/carbonPolvo.png";
 			
 	public static final String VACIO = "objetosDelMundo/inanimados/vacio.png";
 	public static final String HORNO = "objetosDelMundo/inanimados/interactuables/horno.png";
