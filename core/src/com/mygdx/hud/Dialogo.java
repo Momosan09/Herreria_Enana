@@ -58,7 +58,7 @@ public class Dialogo extends Actor implements HeadUpDisplay, Ocultable {
 	}
 	
 	@Override
-	public void render() {
+	public void dibujar() {
 		if(mostrar) {
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();

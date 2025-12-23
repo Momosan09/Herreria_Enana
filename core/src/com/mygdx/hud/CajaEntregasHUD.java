@@ -13,31 +13,16 @@ import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 
-public class CajaEntregasHUD implements HeadUpDisplay, Ocultable{
+public class CajaEntregasHUD extends HUD{
 
-	private ScreenViewport screenViewport;
-	private Stage stage;
-	private Table contenedor, tabla;
 	private Label titulo;
-	private Label.LabelStyle labelStyle;
-	private Jugador jugador;
-	private boolean visible = false;
+
 	
 	 public CajaEntregasHUD(Jugador jugador) {
-		 	this.jugador= jugador;
-	    	screenViewport = new ScreenViewport();
-	        stage = new Stage(screenViewport);
-	        
-	        crearFuentes();
-	        crearActores();
-	        poblarStage();
+		 this.jugador= jugador;
+		 construir();
 	 }
 	
-	@Override
-	public void crearFuentes() {
-		labelStyle = EstiloFuente.generarFuente(30, Colores.BLANCO, false);
-			
-	}
 
 	@Override
 	public void crearActores() {
@@ -62,39 +47,12 @@ public class CajaEntregasHUD implements HeadUpDisplay, Ocultable{
 	}
 
 	@Override
-	public void reEscalar(int width, int heigth) {
-    	screenViewport.update(width, heigth, true);
-		
-	}
-	
-	@Override
-	public void render() {
+	public void dibujar() {
 		if(visible) {
 	    	stage.act(Gdx.graphics.getDeltaTime());
 	    	stage.draw();
 	    	System.out.println(HelpDebug.debub(getClass())+"La caja de entregas");
 		}
-	}
-
-	@Override
-	public void mostrar() {
-		visible = true;
-		
-	}
-
-	@Override
-	public void ocultar() {
-		visible = false;
-		stage.unfocusAll();//Cuando esta oculto desenfoca el stage para que no procese eventos
-	}
-	
-	public Stage getStage() {
-		return stage;
-	}
-
-	@Override
-	public boolean getVisible() {
-		return visible;
 	}
 
 }

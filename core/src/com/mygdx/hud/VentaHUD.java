@@ -30,64 +30,24 @@ import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 
-public class VentaHUD implements HeadUpDisplay, Ocultable {
+public class VentaHUD extends HUD {
 
 	private Vendedor vendedor;
-	private Jugador jugador;
-	private ScreenViewport screenViewport;
 	private NinePatchDrawable fondo;
-	private Stage stage;
 	private Skin skin;
 	private Button cerrarBoton;
-	private Table contenedor, tabla;
-	private Label.LabelStyle labelStyle;
-	private boolean visible = true;
-
+	
 	public VentaHUD(Jugador jugador, Vendedor vendedor) {
-		this.jugador = jugador;
+		super(jugador);
 		this.vendedor = vendedor;
-		screenViewport = new ScreenViewport();
-		stage = new Stage(screenViewport);
-
-		crearFuentes();
-		crearActores();
-		poblarStage();
+		construir();
 	}
 	
 	public VentaHUD(Jugador jugador) {
-		this.jugador = jugador;
-		screenViewport = new ScreenViewport();
-		stage = new Stage(screenViewport);
-
-		crearFuentes();
-		crearActores();
-		poblarStage();
+		super(jugador);
+		construir();
 	}
 
-
-	
-	@Override
-	public void mostrar() {
-		visible = true;
-
-	}
-
-	@Override
-	public void ocultar() {
-		visible = false;
-
-	}
-
-	@Override
-	public boolean getVisible() {
-		return visible;
-	}
-
-	@Override
-	public void crearFuentes() {
-		labelStyle = EstiloFuente.generarFuente(30, Colores.BLANCO, false);
-
-	}
 
 	@Override
 	public void crearActores() {
@@ -125,20 +85,7 @@ public class VentaHUD implements HeadUpDisplay, Ocultable {
 		}
 
 
-	@Override
-	public void reEscalar(int width, int heigth) {
-		screenViewport.update(width, heigth, true);
 
-	}
-
-	@Override
-	public void render() {
-		if (visible) {
-			stage.draw();
-			stage.act();
-		}
-
-	}
 	
     private void comprarItem(Items item) {
         int precioOro = item.getValor().getMonedasOro();
@@ -189,10 +136,6 @@ public class VentaHUD implements HeadUpDisplay, Ocultable {
 		contenedor.clear();
 		actualizarProductos();
 	
-	}
-	
-	public Stage getStage() {
-		return stage;
 	}
 
 	public void dispose() {

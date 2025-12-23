@@ -21,13 +21,12 @@ import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 
-public class PausaHUD implements HeadUpDisplay, Ocultable{
+public class PausaHUD extends HUD{
 
 	
 	private final Juego game;
-	private ScreenViewport screenViewport;
-	private Stage stage;
-	private Table tabla, contenedor, tablaLienzo, tablaVideo, tablaGamePlay, tablaAudio, tablaSalir;
+
+	private Table tablaLienzo, tablaVideo, tablaGamePlay, tablaAudio, tablaSalir;
 	private Label titulo;
 	private Label videoLbl, gameplayLbl, audioLbl, salirLbl;
 	private NinePatchDrawable fondo;
@@ -48,30 +47,15 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 	
 	private Label.LabelStyle labelStyle, labelStyleVentana ,labelStyleVentanaSeleccionada;
 	
-	private boolean visible = false;
 	
 	private PausaVentanas ventanaActiva = PausaVentanas.GAMEPLAY; // empieza en la ventana de gameplay
 	
 	public PausaHUD(final Juego game) {
+		super();
 		this.game = game;
-		screenViewport = new ScreenViewport();
-        stage = new Stage(screenViewport);
-        crearFuentes();
-        crearActores();
-        poblarStage();
+		construir();
 	}
 	
-	@Override
-	public void mostrar() {
-		visible = true;
-		
-	}
-
-	@Override
-	public void ocultar() {
-		visible = false;
-		stage.unfocusAll();//Cuando esta oculto desenfoca el stage para que no procese eventos
-	}
 
 	@Override
 	public void crearFuentes() {
@@ -183,8 +167,7 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 	@Override
 	public void poblarStage() {
 		
-		tabla.add(contenedor);
-		stage.addActor(tabla);
+
 		
 		contenedor.add(titulo).colspan(4).padTop(padding);
 		contenedor.row();
@@ -215,7 +198,8 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 		tablaSalir.add(lblSalirOpcion2);
 		
 		contenedor.setBackground(fondo);
-		
+		tabla.add(contenedor);
+		stage.addActor(tabla);
 	}
 	
 	public void cambiarVentana() {
@@ -244,26 +228,19 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 		}
 	}
 
-    @Override
-    public void reEscalar(int width, int heigth) {
-    	screenViewport.update(width, heigth, true);
-    }
 
 	@Override
-	public void render() {
+	public void dibujar() {
 		if(visible) {
 			lblSalirOpcion1.setVisible(false);
 			lblSalirOpcion2.setVisible(true);
+			stage.draw();
     	stage.act(Gdx.graphics.getDeltaTime());
-    	stage.draw();
+
 	}
-		
+
 	}
-	
-	public Stage getStage() {
-		return stage;
-	}
-	
+
 	public void cambiarColorLabels(Label seleccionada, Label ...labels) {//varargs para pasar una cantidad no definida de labels (igual siempre se la cantidad pero bueh...)
 		seleccionada.setColor(Color.valueOf(Colores.AU));
 		for (Label label : labels) {
@@ -271,11 +248,6 @@ public class PausaHUD implements HeadUpDisplay, Ocultable{
 		}
 	}
 
-	@Override
-	public boolean getVisible() {
-		// TODO Auto-generated method stub
-		return visible;
-	}
 
 	public void dispose() {
 		Recursos.muxJuego.removeProcessor(stage);

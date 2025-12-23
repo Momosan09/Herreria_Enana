@@ -24,11 +24,10 @@ import com.mygdx.utiles.Recursos;
 import com.mygdx.historia.Mision;
 import com.mygdx.historia.misiones.MisionRecFab;
 
-public class DiarioHUD implements HeadUpDisplay, Ocultable{
+public class DiarioHUD extends HUD{
 
-	private ScreenViewport screenViewport;
-	private Stage stage;
-	private Table contenedor, tabla, tablaTareas;
+
+	private Table tablaTareas;
 	private Skin skin;
 	private Button cerrarBoton;
 	private Label titulo;
@@ -36,8 +35,7 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 	private ArrayList<Table> tareas = new ArrayList<>();
 	private ArrayList<Mision> misiones = new ArrayList<>();
 	private Jugador jugador;
-	
-	private boolean visible = false;
+
 	
 	
 	private Label.LabelStyle labelStyle, labelStyleCompletada, labelStylePendiente, labelStyleFallada,labelStyleOro, labelStylePlata, labelStyleCobre;
@@ -45,11 +43,7 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 	public DiarioHUD(Jugador jugador) {
 		this.jugador = jugador;
 		misiones = new ArrayList<>(jugador.getMisiones().values());
-    	screenViewport = new ScreenViewport();
-        stage = new Stage(screenViewport);
-		crearFuentes();
-		crearActores();
-		poblarStage();
+		construir();
 	}
 	
 	@Override
@@ -113,21 +107,7 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 		
 	}
 
-	@Override
-	public void reEscalar(int width, int heigth) {
-		screenViewport.update(width, heigth, true);
-		
-	}
 
-	@Override
-	public void render() {
-		if(visible) {
-			stage.act(Gdx.graphics.getDeltaTime());
-			stage.draw();
-		}
-
-		
-	}
 
 	@Override
 	public void mostrar() {
@@ -141,17 +121,12 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 
 	@Override
 	public void ocultar() {
+		if(visible) {			
 		visible = false;
 		stage.unfocusAll();//Cuando esta oculto desenfoca el stage para que no procese eventos
-	
-		
+		}
 	}
 
-	@Override
-	public boolean getVisible() {
-		return visible;
-	}
-	
 	public void agregarMisiones() {
 		tareas.clear();
 		misiones = new ArrayList<>(jugador.getMisiones().values());
@@ -241,11 +216,7 @@ public class DiarioHUD implements HeadUpDisplay, Ocultable{
 //	    
 	}
 
-	
-	public Stage getStage() {
-		return stage;
-	}
-	
+	@Override
 	public void dispose() {
 		Recursos.muxJuego.removeProcessor(stage);//tengo que sacar el stage del inputprocesor porque el mux es estatico, entonces cuando entro y salgo del juego, el mux agrega el nuevo stage pero sigue guardando el anterior
 		stage.dispose();

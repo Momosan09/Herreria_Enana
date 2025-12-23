@@ -28,47 +28,28 @@ import com.mygdx.utiles.Recursos;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InventarioHUD implements HeadUpDisplay, Ocultable{
+public class InventarioHUD extends HUD{
 
-	private ScreenViewport screenViewport;
-	private Stage stage;
-	private Table contenedor, tabla, tablaMinerales, tablaArtefactos, tablaBarraItems;
+
+	private Table tablaMinerales, tablaArtefactos, tablaBarraItems;
 	private Label encabezadoMinerales, encabezadoArtefactos, cantidadMineral;
 	private Label[] nombreMineral;
-	private Jugador jugador;
-	
 	private ObjetoDelInventarioApilable hierroMena;
 	
 	private Skin skin = new Skin(Gdx.files.internal(Recursos.SKIN_TOOLTIP));
-	private Label.LabelStyle labelStyle, labelStyleCantidades;
+	private Label.LabelStyle labelStyleCantidades;
 	private int[] cantidadDeCadaMineral = new int[2];	
-	private boolean visible=false;
 	  private boolean mineralesCargados = false;
 	 
 	 private HashMap<String, Integer> mineralesApilados = new HashMap<>();
 	
 	public InventarioHUD(Jugador jugador) {
-    	screenViewport = new ScreenViewport();
-        stage = new Stage(screenViewport);
+    	super();
         this.jugador = jugador;
-        crearFuentes();
-        crearActores();
-        poblarStage();
+		construir();
+
 	}
 	
-	
-	@Override
-	public void mostrar() {
-		visible = true;
-		
-	}
-
-	@Override
-	public void ocultar() {
-		visible = false;
-		stage.unfocusAll();//Cuando esta oculto desenfoca el stage para que no procese eventos
-	}
-
 	@Override
 	public void crearFuentes() {
 		labelStyle = EstiloFuente.generarFuente(30, Colores.BLANCO, false);
@@ -124,12 +105,8 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 		
 	}
 
-    @Override
-    public void reEscalar(int width, int heigth) {
-    	screenViewport.update(width, heigth, true);
-    }
-
-	public void render(Jugador jugador) {
+	@Override
+	public void dibujar() {
 
 		if(visible) {
 			if(!mineralesCargados) {
@@ -146,10 +123,6 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 		}
 		
 	
-	
-	public Stage getStage() {
-		return stage;
-	}
 	
 	public void llenarInventario() {
 		llenarMinerales();
@@ -267,15 +240,5 @@ public class InventarioHUD implements HeadUpDisplay, Ocultable{
 		
 	}
 
-
-	@Override
-	public void render() {//No usar
-	}
-
-
-	@Override
-	public boolean getVisible() {
-		return visible;
-	}
 
 }

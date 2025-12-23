@@ -6,5 +6,5 @@ public interface HeadUpDisplay {
 	void crearActores();
 	void poblarStage();
 	void reEscalar(int width, int heigth);
-	void render();
+	void dibujar();
 }

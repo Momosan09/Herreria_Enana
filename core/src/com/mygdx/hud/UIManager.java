@@ -1,5 +1,6 @@
 package com.mygdx.hud;
 
+import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 
@@ -14,11 +15,11 @@ import com.mygdx.eventos.Listeners;
 import com.mygdx.historia.CartasManager;
 import com.mygdx.pantallas.Juego;
 
-public class UI implements EventoRecibirCarta{
+public class UIManager implements EventoRecibirCarta{
 	
 	private ScreenViewport screenViewport;
 	private LibroHUD libroHUD;
-	private HUD hud;
+	private HUDPrincipal hud;
 	private Dialogo dialogo;
 	private VentaHUD venta;
 	private PausaHUD pausa;
@@ -35,19 +36,19 @@ public class UI implements EventoRecibirCarta{
 	
 	private boolean mostrarLibro;
 	
-	public UI(Jugador jugador, Juego juego) {
+	public UIManager(Jugador jugador, Juego juego) {
 		
 		this.jugador = jugador;
 		this.juego = juego;
 		
 		screenViewport = new ScreenViewport();
-		hud = new HUD(jugador, juego);
+		hud = new HUDPrincipal(jugador, juego);
 		dialogo = new Dialogo(jugador);
 		venta = new VentaHUD(jugador);
 	    pausa = new PausaHUD(juego);
 	    inventario = new InventarioHUD(jugador);
 	    combinacion = new Combinacion(jugador);
-	    libroHUD = new LibroHUD(screenViewport);
+	    libroHUD = new LibroHUD();
 	    fundicion = new FundicionOmega(jugador);
 	    //carta = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);
 	    diario = new DiarioHUD(jugador);
@@ -71,14 +72,14 @@ public class UI implements EventoRecibirCarta{
 	}
 	
 	public void render() {
-		hud.render();
-		pausa.render();
-		inventario.render(jugador);
-		dialogo.render();
-		venta.render();
-		combinacion.render();
-		fundicion.render();
-		diario.render();
+		hud.dibujar();
+		pausa.dibujar();
+		inventario.dibujar();
+		dialogo.dibujar();
+		venta.dibujar();
+		combinacion.dibujar();
+		fundicion.dibujar();
+		diario.dibujar();
 		
 		
 		/*
@@ -94,7 +95,12 @@ public class UI implements EventoRecibirCarta{
 			MundoConfig.pausarTiempo = false;
 			hud.mostrar();
 			jugador.puedeMoverse = true;
-			ocultar(pausa,inventario,dialogo,venta, combinacion, diario);
+			pausa.ocultar();
+			inventario.ocultar();
+			dialogo.ocultar();
+			venta.ocultar();
+			combinacion.ocultar();
+			diario.ocultar();
 			dialogo.limpiarDatos();//Esto ayuda a que no queden datos del npc anterior en la caja de dialogo cuando se hable con uno nuevo
 			break;
 
@@ -112,12 +118,12 @@ public class UI implements EventoRecibirCarta{
 			break;
 			
 		case PAUSA:
-
 			pausa.mostrar();
+
 			jugador.puedeMoverse = false;
 			MundoConfig.mostrarHUD = false;
 			MundoConfig.pausarTiempo = true;
-			ocultar(hud);
+			hud.ocultar();
 			break;
 			
 		case INVENTARIO:
@@ -126,7 +132,7 @@ public class UI implements EventoRecibirCarta{
 			break;
 		case COMBINACION:
 			combinacion.mostrar();
-			ocultar(inventario, hud, diario);
+			ocultar(inventario, diario);
 			break;
 			
 		case FUNDICION:
@@ -134,7 +140,7 @@ public class UI implements EventoRecibirCarta{
 			jugador.puedeMoverse = false;
 			fundicion.mostrar();
 			
-			ocultar(inventario,hud,pausa, diario);
+			ocultar(inventario,pausa, diario);
 			break;
 			
 		case DIARIO:
@@ -160,8 +166,9 @@ public class UI implements EventoRecibirCarta{
 		case CARTA:
 			if(MundoConfig.cartaAMostrar != null) {	
 			if(!MundoConfig.cartaAMostrar.getCerrar()) {
-				MundoConfig.cartaAMostrar.render();
-				ocultar(hud,inventario,combinacion);
+				MundoConfig.cartaAMostrar.dibujar();
+				hud.ocultar();
+				ocultar(inventario,combinacion);
 				jugador.puedeMoverse = false;
 				MundoConfig.pausarTiempo = true;
 				
@@ -180,7 +187,7 @@ public class UI implements EventoRecibirCarta{
 
 			if(!MundoConfig.cartaAMostrar.getCerrar()) {
 				Recursos.muxJuego.addProcessor(MundoConfig.cartaAMostrar.getStage());
-				MundoConfig.cartaAMostrar.render();
+				MundoConfig.cartaAMostrar.dibujar();
 				MundoConfig.pausarTiempo = true;
 				jugador.puedeMoverse = false;
 			}else {
@@ -195,7 +202,8 @@ public class UI implements EventoRecibirCarta{
 			jugador.puedeMoverse = false;
 			
 			venta.mostrar();
-			ocultar(inventario, dialogo);
+			inventario.ocultar();
+			dialogo.ocultar();
 			break;
 		case INVENTARIO_BATALLAS:
 			break;
@@ -204,18 +212,18 @@ public class UI implements EventoRecibirCarta{
 		}
 		
 		if(mostrarLibro) {
-			libroHUD.render();			
+			libroHUD.dibujar();			
 		}
 	}
 	
-	private void ocultar(Ocultable ...huds) {
+	private void ocultar(HUD ...huds) {
 		for(int i = 0;i < huds.length;i++) {
 			huds[i].ocultar();
 		}
 	}
 
 
-	public HUD getHUD () {
+	public HUDPrincipal getHUD () {
 		return hud;
 	}
 	

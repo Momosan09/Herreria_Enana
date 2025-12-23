@@ -10,11 +10,9 @@ import com.mygdx.utiles.Recursos;
 
 import com.mygdx.eventos.EventoHudConexion;
 
-public class ConexionHUD implements HeadUpDisplay{
+public class ConexionHUD extends HUD{
 	
-	private ScreenViewport screenViewport;
-	private Stage stage;
-	private Table contenedor, tabla;
+
 	private Label titulo, conexionExitosaLbl, esperandoJugadores;
 	
 	public boolean conexionExitosa;
@@ -23,11 +21,8 @@ public class ConexionHUD implements HeadUpDisplay{
 	
 	
 	public ConexionHUD() {
-    	screenViewport = new ScreenViewport();
-        stage = new Stage(screenViewport);
-        crearFuentes();
-        crearActores();
-        poblarStage();
+
+		 construir();
 	}
 	
 	@Override
@@ -64,14 +59,9 @@ public class ConexionHUD implements HeadUpDisplay{
 		
 	}
 
-	@Override
-	public void reEscalar(int width, int heigth) {
-		screenViewport.update(width, heigth, true);
-		
-	}
 
 	@Override
-	public void render() {
+	public void dibujar() {
 		if(!conexionExitosa) {
 			conexionExitosaLbl.setVisible(false);;
 			esperandoJugadores.setVisible(false);

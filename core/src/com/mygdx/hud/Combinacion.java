@@ -23,15 +23,12 @@ import com.mygdx.entidades.Jugador;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.TipoCombinacion;
 
-public class Combinacion implements HeadUpDisplay, Ocultable{
+public class Combinacion extends HUD{
 
-	private ScreenViewport screenViewport;
-	private Stage stage;
-	private Table tabla, contenedor;
+
 	private Label labelInv, titulo;
 	private Button cerrarBoton;
 	private Skin skin;
-	private Label.LabelStyle labelStyle;
 
     private MyDragAndDrop dragNDrop;
     private Jugador jugador;
@@ -43,20 +40,16 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
     public Combinacion(Jugador jugador) {
     	this.jugador = jugador;
     	combinables = new ArrayList<Image>();
-    	screenViewport = new ScreenViewport();
-        stage = new Stage(screenViewport);
         
         dragNDrop = new MyDragAndDrop(this.jugador);
         dragNDrop.create();
 
-        crearFuentes();
-        crearActores();
-        poblarStage();
+		construir();
 
         
     }
-    
-    public void render() {
+    @Override
+    public void dibujar() {
     	if(visible) {
     	stage.act(Gdx.graphics.getDeltaTime());
     	stage.draw();
@@ -118,12 +111,6 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
     	
     }
 
-	@Override
-	public void crearFuentes() {
-		labelStyle = EstiloFuente.generarFuente(32, Colores.BLANCO, false);
-		
-	}
-
 /*
 	public void cerrar() {
 	    contenedor.clear(); // Limpia todos los actores del contenedor
@@ -150,8 +137,7 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
 */
 	@Override
 	public void mostrar() {
-		if(!visible) {
-			
+		if(!visible) {	
 			dragNDrop.refrescar();
 			visible = true;
 		}
@@ -165,10 +151,6 @@ public class Combinacion implements HeadUpDisplay, Ocultable{
 		dragNDrop.ocultar();
 	}
 
-	@Override
-	public boolean getVisible() {
-		return visible;
-	}
 	
 
 }

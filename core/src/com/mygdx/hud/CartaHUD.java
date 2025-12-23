@@ -20,16 +20,13 @@ import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Recursos;
 
-public class CartaHUD implements HeadUpDisplay, Cerrable{
+public class CartaHUD extends HUD implements Cerrable{
 
-	private Stage stage;
-	private ScreenViewport screenViewport;
-	private Table tabla, contenedor;
+
 	private Label cuerpoCarta;
 	private Button cerrarBoton;
 	private Skin skin;
 
-	private Label.LabelStyle labelStyle;
 	private DialogosNPC datosCartaNpc;
 
 	private boolean cerrar = false;
@@ -38,31 +35,20 @@ public class CartaHUD implements HeadUpDisplay, Cerrable{
 	
 	public CartaHUD(DialogosNPC datosCartaNpc) {
 		this.datosCartaNpc = datosCartaNpc;
-		screenViewport = new ScreenViewport();
-		stage = new Stage(screenViewport);
-
-		crearFuentes();
-		crearActores();
-		poblarStage();
+		
+		construir();
+		visible = true;
 	}
 	
 	public CartaHUD(DialogosNPC datosCartaNpc, Mision mision) {
 		this.datosCartaNpc = datosCartaNpc;
-		screenViewport = new ScreenViewport();
-		stage = new Stage(screenViewport);
 
 		this.mision = mision;
 		
-		crearFuentes();
-		crearActores();
-		poblarStage();
+		construir();
+		visible = true;
 	}
 	
-	@Override
-	public void crearFuentes() {
-		labelStyle = EstiloFuente.generarFuente(20, Colores.NEGRO, false);
-		
-	}
 
 	@Override
 	public void crearActores() {
@@ -103,10 +89,6 @@ public class CartaHUD implements HeadUpDisplay, Cerrable{
 		
 	}
 
-	@Override
-	public void reEscalar(int width, int height) {
-		    screenViewport.update(width, height, true);
-	}
 
 	@Override
 	public void cerrar() {
@@ -116,10 +98,6 @@ public class CartaHUD implements HeadUpDisplay, Cerrable{
 		
 	}
 
-	public void render() {
-		stage.act(Gdx.graphics.getDeltaTime());
-		stage.draw();	
-	}
 	
 	public void dispose() {
 		Recursos.muxJuego.removeProcessor(stage);//tengo que sacar el stage del inputprocesor porque el mux es estatico, entonces cuando entro y salgo del juego, el mux agrega el nuevo stage pero sigue guardando el anterior

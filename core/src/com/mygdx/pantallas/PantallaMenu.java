@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Principal;
+import com.mygdx.hud.HUD;
 import com.mygdx.hud.HeadUpDisplay;
 import com.mygdx.io.EntradaMenu;
 import com.mygdx.utiles.Colores;
@@ -32,13 +33,11 @@ import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 
-public class PantallaMenu implements Screen, HeadUpDisplay{
+public class PantallaMenu extends HUD implements Screen{
 
 	private OrthographicCamera camara;
 	final Principal game;
 	//Stage trae su propio viewport, no es necesario crear uno	//Error, si es necesario crear uno, para los hud va el screenViewPort
-	private ScreenViewport screenViewPort;
-	private Stage stage;
 	private Table interfaz;
 	private Table opciones;
 	private Label[] interfazTexto;
@@ -147,7 +146,7 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	@Override
 	public void resize(int width, int height) {
 		offSetX = fondoImg.getWidth() - camara.viewportWidth; //usa el ancho de la textura porque este va a ser siempre constante, en el caso de que modifique el tamaño del sprite aca no deberia haber cambios
-		screenViewPort.update(width, height, true);		
+		screenViewport.update(width, height, true);		
 	}
 
 	@Override
@@ -181,8 +180,8 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
 	@Override
 	public void crearActores() {
 		skinImageButton = new Skin(Gdx.files.internal(Recursos.SKIN_NOTA_MUSICAL));
-		screenViewPort = new ScreenViewport();
-		stage = new Stage(screenViewPort);
+		screenViewport = new ScreenViewport();
+		stage = new Stage(screenViewport);
 		Recursos.muxJuego.addProcessor(stage);
 			
 		interfaz = new Table();
@@ -309,17 +308,6 @@ public class PantallaMenu implements Screen, HeadUpDisplay{
     	)));
   }
 
-	@Override
-	public void reEscalar(int width, int heigth) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	/**
 	 * Se llama cuando se pasa a la pantalla de configuracion

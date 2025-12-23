@@ -11,32 +11,15 @@ import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.Recursos;
 
-public class LibroHUD implements HeadUpDisplay, Ocultable{
+public class LibroHUD extends HUD{
 
-	private ScreenViewport screenViewport;
-	private Stage stage;
-	private Table tabla, contenedor, columnaBotonesIzq, columnaIzq, columnaDer;
-	private boolean visible = true;
+	private Table columnaBotonesIzq, columnaIzq, columnaDer;
 	
-	private Label.LabelStyle labelStyle;
-	
-	public LibroHUD(ScreenViewport screenViewPort) {
-		this.screenViewport = screenViewPort;
-		crearFuentes();
-		crearActores();
-		poblarStage();
-		
+	public LibroHUD() {
+		super();	
+		construir();
 	}
 	
-	
-	@Override
-	public void render() {
-		if(visible) {
-			stage.draw();
-			stage.act();
-		}
-		
-	}
 
 	@Override
 	public void crearActores() {
@@ -72,40 +55,6 @@ public class LibroHUD implements HeadUpDisplay, Ocultable{
 		tabla.add(contenedor);
 		stage.addActor(tabla);
 		
-	}
-
-	@Override
-	public void reEscalar(int width, int heigth) {
-    	screenViewport.update(width, heigth, true);
-		
-	}
-	
-	@Override
-	public void mostrar() {
-		visible = true;
-		
-	}
-
-	@Override
-	public void ocultar() {
-		visible = false;
-		stage.unfocusAll();//Cuando esta oculto desenfoca el stage para que no procese eventos
-	}
-
-	public Stage getStage() {
-		return stage;
-	}
-
-	@Override
-	public boolean getVisible() {
-		return visible;
-	}
-
-
-	@Override
-	public void crearFuentes() {
-		labelStyle = EstiloFuente.generarFuente(30, Colores.BLANCO, false);
-			
 	}
 
 }

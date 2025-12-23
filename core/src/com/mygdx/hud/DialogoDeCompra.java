@@ -20,7 +20,7 @@ import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 
-public class DialogoDeCompra implements HeadUpDisplay, Ocultable{
+public class DialogoDeCompra extends HUD{
 	
 	private ScreenViewport screenViewport;
 	private Stage stage;
@@ -29,42 +29,14 @@ public class DialogoDeCompra implements HeadUpDisplay, Ocultable{
 	private Button cerrarBoton;
 	private TextButton aceptarBotton;
 	private Skin skin;
-	private boolean visible=false;
 	public boolean cerrar=false;
 	
-	private Label.LabelStyle labelStyle;
-	
-	
+
 	public DialogoDeCompra() {
-    	screenViewport = new ScreenViewport();
-        stage = new Stage(screenViewport);
-        
-        crearFuentes();
-        crearActores();
-        poblarStage();
+		super();
+		 construir();
 	}
 	
-	@Override
-	public void mostrar() {
-		visible = true;
-		
-	}
-
-	public boolean isVisible() {
-		return visible;
-	}
-	@Override
-	public void ocultar() {
-		visible = false;
-		stage.unfocusAll();//Cuando esta oculto desenfoca el stage para que no procese eventos
-	}
-
-	@Override
-	public void crearFuentes() {
-		labelStyle = EstiloFuente.generarFuente(30, Colores.BLANCO, false);
-		
-	}
-
 	@Override
 	public void crearActores() {
 		skin = new Skin(Gdx.files.internal(Recursos.SKIN));
@@ -112,32 +84,4 @@ public class DialogoDeCompra implements HeadUpDisplay, Ocultable{
 		
 	}
 
-    @Override
-    public void reEscalar(int width, int heigth) {
-    	screenViewport.update(width, heigth, true);
-    }
-
-    
-	public void render(Jugador jugador) {
-		if(visible) {
-	    	stage.act(Gdx.graphics.getDeltaTime());
-	    	stage.draw();
-
-		}
-		
-	}
-	
-	@Override
-	public void render() {
-		
-	}
-	
-	public Stage getStage() {
-		return stage;
-	}
-
-	@Override
-	public boolean getVisible() {
-		return visible;
-	}
 }

@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Principal;
+import com.mygdx.hud.HUD;
 import com.mygdx.hud.HeadUpDisplay;
 import com.mygdx.io.EntradaMenu;
 import com.mygdx.utiles.Colores;
@@ -31,12 +32,10 @@ import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 import com.mygdx.utiles.idiomas.IdiomaCompleto;
 
-public class PantallaConfiguracion implements Screen, HeadUpDisplay{
+public class PantallaConfiguracion extends HUD implements Screen{
 	
 
 	final Principal game;
-	private ScreenViewport screenViewport;
-	private Stage stage;
 	private Skin skin;
 	private Table interfaz, barraDeArriba, pantalla, sonido, idioma;
 	//pantalla
@@ -86,10 +85,6 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 		
 	}
 
-	@Override
-	public void resize(int width, int height) {
-		screenViewport.update(width, height, true);
-	}
 
 	@Override
 	public void pause() {
@@ -324,24 +319,19 @@ public class PantallaConfiguracion implements Screen, HeadUpDisplay{
 	}
 
 	
-	@Override
-	public void reEscalar(int width, int heigth) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 
 	@Override
 	public void dispose() {
 		Recursos.muxMenu.removeProcessor(stage);
 		Config.prefs.putBoolean("pantallaCompleta", Gdx.graphics.isFullscreen());
 		Config.prefs.flush();
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

@@ -22,11 +22,9 @@ import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.Recursos;
 
-public class ResultadosBatallasHUD implements HeadUpDisplay, Ocultable{//Una cosa es cerrar y otra ocultar, si es Cerrable, ese hud no se va volver a ver porque se vacio la stage. Si es ocultable solamente renderiza o no
+public class ResultadosBatallasHUD extends HUD{//Una cosa es cerrar y otra ocultar, si es Cerrable, ese hud no se va volver a ver porque se vacio la stage. Si es ocultable solamente renderiza o no
 
-	private ScreenViewport screenViewport;
-	private Stage stage;
-	private Table tabla,contenedor;
+
 	private Label.LabelStyle labelStyle, labelStylePerdio, labelStyleGano;
 	private ArrayList<String> historial;
 	private ArrayList<Table> tablas;
@@ -34,15 +32,12 @@ public class ResultadosBatallasHUD implements HeadUpDisplay, Ocultable{//Una cos
 	private Skin skin;
 	private Button cerrarBoton;
 	public boolean cerrar = false;
-	private boolean visible = false;
 	
 	public ResultadosBatallasHUD() {
 		historial = ResultadosBatallas.getHistorial();
 		tablas = new ArrayList<Table>();
 		labels = new ArrayList<Label>();
-		crearFuentes();
-		crearActores();
-		poblarStage();
+		construir();
 	}
 
 
@@ -106,39 +101,6 @@ public class ResultadosBatallasHUD implements HeadUpDisplay, Ocultable{//Una cos
 		tabla.add(cerrarBoton).top();
 		stage.addActor(tabla);
 		
-	}
-
-	@Override
-	public void reEscalar(int width, int heigth) {
-		screenViewport.update(width, heigth, true);
-		
-	}
-
-	@Override
-	public void render() {
-        if (visible) {
-            stage.act(Gdx.graphics.getDeltaTime());
-            stage.draw();
-        }
-		
-	}
-	
-	@Override
-    public void mostrar() {
-        visible = true;
-    }
-
-	@Override
-    public void ocultar() {
-        visible = false;
-        stage.unfocusAll();
-    }
-	
-	public boolean getVisible() {
-		return visible;
-	}
-	public Stage getStage() {
-		return stage;
 	}
 	
 	public void dispose() {

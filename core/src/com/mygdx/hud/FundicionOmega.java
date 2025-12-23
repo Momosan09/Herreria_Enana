@@ -30,18 +30,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 
 
-public class FundicionOmega implements Ocultable, HeadUpDisplay{
+public class FundicionOmega extends HUD{
 
-	private ScreenViewport screenViewport;
-	private Stage stage;
-	private Table contenedor, tabla;
 	private Table inventario, fragua;
-	
-
-	
-	private Label.LabelStyle labelStyle;
-	
-	private boolean visible = false;
 	
 	private Jugador j;
 	
@@ -57,9 +48,6 @@ public class FundicionOmega implements Ocultable, HeadUpDisplay{
 	private Sound sonidoSoltar;
 
 	
-
-	
-	
 	public FundicionOmega(Jugador jugador) {
 		this.j = jugador;
     	screenViewport = new ScreenViewport();
@@ -69,11 +57,7 @@ public class FundicionOmega implements Ocultable, HeadUpDisplay{
         
         sonidoSoltar = Gdx.audio.newSound(Gdx.files.internal(Recursos.SONIDO_MISION_RECIBIDA));
 
-        crearFuentes();
-        crearActores();
-        crearTargets();
-
-        poblarStage();
+        construir();
 	}
 	
 	@Override
@@ -133,13 +117,7 @@ public class FundicionOmega implements Ocultable, HeadUpDisplay{
 		
 	}
 
-	@Override
-	public void render() {
-		if(visible) {
-			stage.draw();
-		}
-		
-	}
+
 
 	@Override
 	public void mostrar() {
