@@ -1,6 +1,6 @@
 package com.mygdx.historia;
 
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public enum FabricablesMision {
 

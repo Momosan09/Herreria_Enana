@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.hud.HeadUpDisplay;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class ConfiguracionHUD implements Screen{
     private Skin skin;
@@ -32,7 +32,7 @@ public class ConfiguracionHUD implements Screen{
     
     public void create() {
         stage = new Stage(new ScreenViewport());
-        skin = new Skin(Gdx.files.internal(Recursos.PANTALLA_CONFIG_SKIN));
+        skin = new Skin(Gdx.files.internal(Recursos.config.PANTALLA_CONFIG_SKIN));
         Gdx.input.setInputProcessor(stage);
 
         Table table = new Table();

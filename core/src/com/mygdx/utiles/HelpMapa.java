@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.mygdx.pantallas.Juego;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class HelpMapa {
 

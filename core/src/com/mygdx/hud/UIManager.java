@@ -2,8 +2,7 @@ package com.mygdx.hud;
 
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
-import com.mygdx.utiles.Recursos;
-
+import com.mygdx.utiles.recursos.Recursos;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;

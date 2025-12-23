@@ -13,7 +13,7 @@ import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
 import com.mygdx.enums.Items;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class CuadraditoItem extends Table {
     private Label nombre, valor;
@@ -35,7 +35,7 @@ public class CuadraditoItem extends Table {
         imagenItem = new Image(item.getTextura());
         
         // Fondo del contenedor
-        setBackground(new TextureRegionDrawable(new Texture(Recursos.CASILLERO_VENTA_HUD)));
+        setBackground(new TextureRegionDrawable(new Texture(Recursos.hud.CASILLERO_VENTA_HUD)));
         
         // Organizar elementos
 

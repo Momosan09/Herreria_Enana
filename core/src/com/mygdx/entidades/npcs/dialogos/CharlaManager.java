@@ -18,7 +18,7 @@ import com.mygdx.historia.MisionesDelJuego;
 import com.mygdx.historia.TipoMision;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class CharlaManager {
 

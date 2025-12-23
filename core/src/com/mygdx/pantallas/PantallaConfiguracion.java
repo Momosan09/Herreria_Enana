@@ -28,9 +28,9 @@ import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.Config;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
-import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 import com.mygdx.utiles.idiomas.IdiomaCompleto;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class PantallaConfiguracion extends HUD implements Screen{
 	
@@ -144,7 +144,7 @@ public class PantallaConfiguracion extends HUD implements Screen{
 	public void crearFuentes() {
 		estiloLabel = EstiloFuente.generarFuente(24, Colores.BLANCO, false);
 		tituloEstilo = EstiloFuente.generarFuente(40, Colores.BLANCO, false);
-		skin = new Skin(Gdx.files.internal(Recursos.PANTALLA_CONFIG_SKIN));
+		skin = new Skin(Gdx.files.internal(Recursos.config.PANTALLA_CONFIG_SKIN));
 		
 	}
 

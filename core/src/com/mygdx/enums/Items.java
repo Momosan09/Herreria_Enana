@@ -3,7 +3,7 @@ package com.mygdx.enums;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.utiles.Dinero;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public enum Items {
 	//Aca van todos los items que el jugador puede tener y que sean necesarios para realizar alguna accion
@@ -11,28 +11,28 @@ public enum Items {
 	//Ejemplo: AMULETO1, es necesario para x motivo
 	
 	
-	VACIO(new Texture(Recursos.VACIO),-1,-1,-1,-1),
-	PICO(new Texture(Recursos.PICO_DER),-1,0,0,13),
-	CINCEL(new Texture(Recursos.CINCEL),-1,0,0,9),
-	MAZA(new Texture(Recursos.MAZA),-1,0,0,24),
-	LIMA_PLANA(new Texture(Recursos.LIMA),-1,0,0,11),
-	SIERRA(new Texture(Recursos.SIERRA),60,0,0,14),
+	VACIO(new Texture(Recursos.objMapa.VACIO),-1,-1,-1,-1),
+	PICO(new Texture(Recursos.itemsYmision.PICO_DER),-1,0,0,13),
+	CINCEL(new Texture(Recursos.itemsYmision.CINCEL),-1,0,0,9),
+	MAZA(new Texture(Recursos.itemsYmision.MAZA),-1,0,0,24),
+	LIMA_PLANA(new Texture(Recursos.itemsYmision.LIMA),-1,0,0,11),
+	SIERRA(new Texture(Recursos.itemsYmision.SIERRA),60,0,0,14),
 	
 	//de forja
 	HOJA_ESPADA_HIERRO_0(new Texture(Recursos.HOJA_HIERRO_0)),
 	ESPADA_HIERRO_0(new Texture(Recursos.ESPADA_HIERRO_0)),
 	
 	//de compra
-	MANGO_MADERA_0(new Texture(Recursos.MANGO_MADERA_0),-1,0,0,5),
+	MANGO_MADERA_0(new Texture(Recursos.itemsYmision.MANGO_MADERA_0),-1,0,0,5),
 	
 	
 	//Esquemas
-	ESQUEMA_SIERRA_CIRCULAR(new Texture(Recursos.ESQUEMA_TEXT)),
-	ESQUEMA_HOJA_ESPADA(new Texture(Recursos.ESQUEMA_TEXT),-1,0,0,2),
+	ESQUEMA_SIERRA_CIRCULAR(new Texture(Recursos.itemsYmision.ESQUEMA_TEXT)),
+	ESQUEMA_HOJA_ESPADA(new Texture(Recursos.itemsYmision.ESQUEMA_TEXT),-1,0,0,2),
 	
 	//MISION
-	DISCO_HIERRO(new Texture(Recursos.DISCO_HIERRO)),
-	SIERRA_CIRCULAR(new Texture(Recursos.SIERRA_CIRCULAR));
+	DISCO_HIERRO(new Texture(Recursos.itemsYmision.DISCO_HIERRO)),
+	SIERRA_CIRCULAR(new Texture(Recursos.itemsYmision.SIERRA_CIRCULAR));
 
 	private Texture textura;
 	private int oro, plata, cobre;

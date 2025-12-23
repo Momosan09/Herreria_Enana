@@ -22,7 +22,8 @@ import com.mygdx.entidades.ObjetosDelMapa.procesados.LingoteHierro;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
+import com.mygdx.utiles.recursos.Sonidos;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
@@ -55,7 +56,7 @@ public class FundicionOmega extends HUD{
         
         dragAndDrop = new DragAndDrop();
         
-        sonidoSoltar = Gdx.audio.newSound(Gdx.files.internal(Recursos.SONIDO_MISION_RECIBIDA));
+        sonidoSoltar = Gdx.audio.newSound(Gdx.files.internal(Recursos.sonidos.SONIDO_MISION_RECIBIDA));
 
         construir();
 	}
@@ -68,7 +69,7 @@ public class FundicionOmega extends HUD{
 
 	@Override
 	public void crearActores() {
-		texturaEntradaVacia = new Texture(Recursos.CARBON_POLVO);
+		texturaEntradaVacia = new Texture(Recursos.minerales.CARBON_POLVO);
 		entrada = new Image(texturaEntradaVacia);
 		molde = new Image(texturaEntradaVacia);
 		salida = new Image(texturaEntradaVacia);
@@ -245,7 +246,7 @@ public class FundicionOmega extends HUD{
 	    System.out.println("Fundición terminada");
 
 	    // Resultado (ejemplo)
-	    Texture resultado = new Texture(Recursos.LINGOTE_HIERRO);
+	    Texture resultado = new Texture(Recursos.minerales.LINGOTE_HIERRO);
 	    mineralSalida = new Mineral(TipoMinerales.HIERRO, EstadosMinerales.LINGOTE);
 	    salida.setDrawable(new TextureRegionDrawable(resultado));
 	    salida.addListener(new ClickListener() {

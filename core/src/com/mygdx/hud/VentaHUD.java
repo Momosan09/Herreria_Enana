@@ -28,7 +28,7 @@ import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class VentaHUD extends HUD {
 
@@ -51,12 +51,12 @@ public class VentaHUD extends HUD {
 
 	@Override
 	public void crearActores() {
-		skin = new Skin(Gdx.files.internal(Recursos.SKIN));
+		skin = new Skin(Gdx.files.internal(Recursos.hud.SKIN));
 		tabla = new Table();
 		tabla.setFillParent(true);
 		tabla.setDebug(false);
 
-		fondo = new NinePatchDrawable(new NinePatch(new Texture(Recursos.VENTA_HUD)));
+		fondo = new NinePatchDrawable(new NinePatch(new Texture(Recursos.hud.VENTA_HUD)));
 		contenedor = new Table();
 		//contenedor.setBackground(fondo);
 		  // contenedor.defaults().size(100, 100); //Establece el tamaño deseado para cada casillero

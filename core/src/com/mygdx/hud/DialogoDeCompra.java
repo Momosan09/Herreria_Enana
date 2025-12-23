@@ -18,7 +18,7 @@ import com.mygdx.entidades.Jugador;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class DialogoDeCompra extends HUD{
 	
@@ -39,7 +39,7 @@ public class DialogoDeCompra extends HUD{
 	
 	@Override
 	public void crearActores() {
-		skin = new Skin(Gdx.files.internal(Recursos.SKIN));
+		skin = new Skin(Gdx.files.internal(Recursos.hud.SKIN));
 		
 		tabla = new Table();
 		tabla.setFillParent(true);
@@ -70,7 +70,7 @@ public class DialogoDeCompra extends HUD{
 
 	@Override
 	public void poblarStage() {
-		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.CARTA_TEXTURA)));//cambiar por otra tetura
+		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.hud.CARTA_TEXTURA)));//cambiar por otra tetura
 		contenedor.add(cerrarBoton).top().right();
 		contenedor.row();
 		contenedor.add(titulo).top();

@@ -11,13 +11,14 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.mygdx.utiles.recursos.Recursos;
 
 public abstract class EstiloFuente {
 	public static Label.LabelStyle labelStyle;
 	
 	public static Label.LabelStyle generarFuente (int tamano, String hex, boolean sombra) {
 		
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Recursos.FUENTE_TEMPORAL));
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Recursos.menu.FUENTE_TEMPORAL));
 	    FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 	    
 	    parameter.size = tamano;

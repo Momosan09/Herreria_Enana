@@ -41,9 +41,9 @@ import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.HelpMapa;
 import com.mygdx.utiles.Iluminacion;
-import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
 import com.mygdx.utiles.Tiempo;
+import com.mygdx.utiles.recursos.Recursos;
 import com.mygdx.historia.CartasManager;
 import com.mygdx.historia.MisionesManager;
 
@@ -161,7 +161,7 @@ public class Juego implements Screen{
 		Recursos.muxJuego.addProcessor(new EntradaJuego());
 		Recursos.muxJuego.addProcessor(new EntradasJugador(jugador));
 		
-		carta = new Carta(36, 12, world, Recursos.CARTA, jugador);
+		carta = new Carta(36, 12, world, Recursos.objMapa.CARTA, jugador);
 		MundoConfig.cartaAMostrar = CartasManager.getPrimeraCarta();
 		MundoConfig.estadoJuego = EstadosDelJuego.INICIO;
 	}
@@ -280,19 +280,19 @@ public class Juego implements Screen{
 
 	
 	public void crearNPCs() {
-		viejo = new Viejo(19,34, world,Recursos.VIEJO, NpcData.VIEJO);
-		vendedorTienda = new VendedorDeTienda(12,33.5f, world,Recursos.VENDEDOR_TIENDA, NpcData.VENDEDOR_TIENDA);
-		vendedorAmbulate = new VendedorAmbulante(22,40, world,Recursos.VENDEDOR_AMBULANTE, NpcData.VENDEDOR_AMBULANTE);
-		carpintero = new Carpintero(6,5, world, Recursos.CARPINTERO, NpcData.CARPINTERO);
+		viejo = new Viejo(19,34, world,Recursos.npc.enanos.VIEJO, NpcData.VIEJO);
+		vendedorTienda = new VendedorDeTienda(12,33.5f, world,Recursos.npc.enanos.VENDEDOR_TIENDA, NpcData.VENDEDOR_TIENDA);
+		vendedorAmbulate = new VendedorAmbulante(22,40, world,Recursos.npc.enanos.VENDEDOR_AMBULANTE, NpcData.VENDEDOR_AMBULANTE);
+		carpintero = new Carpintero(6,5, world, Recursos.npc.enanos.CARPINTERO, NpcData.CARPINTERO);
 //		rey = new Rey(0,0,Recursos.VENDEDOR, NpcData.REY);
 	}
 	
 	public void crearObjetosDelTaller() {
-		mesa = new Mesa(39, 15, world, Recursos.MESA, jugador);
-		yunque = new Yunque(34, 13, world, Recursos.YUNQUE, jugador);
-		altoHorno = new AltoHorno(34, 10, world, Recursos.ALTO_HORNO, jugador); //Estas coordenadas las saco de Tiled
-		cajaEntregas = new CajaEntregas(39, 15.5f, world, Recursos.CAJA_ENTREGAS, jugador);
-		soporteArmadura = new SoporteArmadura(32, 18, world, Recursos.SOPORTE_ARMADURAS, jugador);
+		mesa = new Mesa(39, 15, world, Recursos.objMapa.MESA, jugador);
+		yunque = new Yunque(34, 13, world, Recursos.objMapa.YUNQUE, jugador);
+		altoHorno = new AltoHorno(34, 10, world, Recursos.objMapa.ALTO_HORNO, jugador); //Estas coordenadas las saco de Tiled
+		cajaEntregas = new CajaEntregas(39, 15.5f, world, Recursos.objMapa.CAJA_ENTREGAS, jugador);
+		soporteArmadura = new SoporteArmadura(32, 18, world, Recursos.objMapa.SOPORTE_ARMADURAS, jugador);
 		
 	}
 	

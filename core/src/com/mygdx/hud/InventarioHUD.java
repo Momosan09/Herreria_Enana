@@ -24,7 +24,8 @@ import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public class InventarioHUD extends HUD{
 	private Label[] nombreMineral;
 	private ObjetoDelInventarioApilable hierroMena;
 	
-	private Skin skin = new Skin(Gdx.files.internal(Recursos.SKIN_TOOLTIP));
+	private Skin skin = new Skin(Gdx.files.internal(Recursos.hud.SKIN_TOOLTIP));
 	private Label.LabelStyle labelStyleCantidades;
 	private int[] cantidadDeCadaMineral = new int[2];	
 	  private boolean mineralesCargados = false;
@@ -96,7 +97,7 @@ public class InventarioHUD extends HUD{
 		contenedor.add(tablaArtefactos).expand().top().left();
 		contenedor.row();
 		contenedor.add(tablaBarraItems);
-		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.CARTA_TEXTURA)));//cambiar por otra tetura
+		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.hud.CARTA_TEXTURA)));//cambiar por otra tetura
 		tabla.add(contenedor);
 		
 		stage.addActor(tabla);

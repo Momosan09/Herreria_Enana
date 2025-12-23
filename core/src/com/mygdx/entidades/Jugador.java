@@ -44,8 +44,8 @@ import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.ItemEquipadoJugador;
 import com.mygdx.utiles.Monedero;
 import com.mygdx.utiles.MundoConfig;
-import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class Jugador {
 
@@ -94,7 +94,7 @@ public class Jugador {
         shape.dispose();
 		
 		
-		this.spritesheet = Recursos.JUGADOR1_SPRITESHEET;
+		this.spritesheet = Recursos.jugador.JUGADOR1_SPRITESHEET;
 		crearAnimaciones();
 		
 		monedero = new Monedero(1,100,1000);

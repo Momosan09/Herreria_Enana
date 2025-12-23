@@ -11,7 +11,7 @@ import com.mygdx.eventos.Listeners;
 import com.mygdx.utiles.Config;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 import java.awt.RenderingHints.Key;
 
@@ -22,7 +22,7 @@ public class EntradaMenu implements InputProcessor {
 	
 	
 	public boolean arriba = false, abajo = false, /*izq = false, der = false,*/ enter = false, apretoE=false;
-	public Sound efectoSonidoTeclas = Gdx.audio.newSound(Gdx.files.internal(Recursos.EFECTO_TECLA_MENU)); //lo hice public para poder disposearlo cuando en donde sea necesario (en Juego, cuando era llamado por PantallaMenu, se escuchaban los sonidos de las teclas)
+	public Sound efectoSonidoTeclas = Gdx.audio.newSound(Gdx.files.internal(Recursos.menu.EFECTO_TECLA_MENU)); //lo hice public para poder disposearlo cuando en donde sea necesario (en Juego, cuando era llamado por PantallaMenu, se escuchaban los sonidos de las teclas)
 	private boolean isSoundPlaying = false;
 	private int cont = 0;
 

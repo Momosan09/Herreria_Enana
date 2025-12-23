@@ -20,7 +20,7 @@ import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class ResultadosBatallasHUD extends HUD{//Una cosa es cerrar y otra ocultar, si es Cerrable, ese hud no se va volver a ver porque se vacio la stage. Si es ocultable solamente renderiza o no
 
@@ -53,7 +53,7 @@ public class ResultadosBatallasHUD extends HUD{//Una cosa es cerrar y otra ocult
 	public void crearActores() {
 		screenViewport = new ScreenViewport();
 		stage = new Stage(screenViewport);
-		skin = new Skin(Gdx.files.internal(Recursos.SKIN));
+		skin = new Skin(Gdx.files.internal(Recursos.hud.SKIN));
 	
 		tabla = new Table();
 		tabla.setFillParent(true);
@@ -95,7 +95,7 @@ public class ResultadosBatallasHUD extends HUD{//Una cosa es cerrar y otra ocult
 			contenedor.add(tablas.get(i));
 			contenedor.row();
 		}
-		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.CARTA_TEXTURA)) );
+		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.hud.CARTA_TEXTURA)) );
 
 		tabla.add(contenedor).center();
 		tabla.add(cerrarBoton).top();

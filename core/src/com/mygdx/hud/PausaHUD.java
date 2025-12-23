@@ -19,7 +19,7 @@ import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class PausaHUD extends HUD{
 
@@ -159,7 +159,7 @@ public class PausaHUD extends HUD{
 				}
 		});
 		
-		fondo = new NinePatchDrawable(new NinePatch(new Texture(Recursos.PAUSA_HUD)));
+		fondo = new NinePatchDrawable(new NinePatch(new Texture(Recursos.hud.PAUSA_HUD)));
 	}
 	
 

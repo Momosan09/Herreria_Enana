@@ -10,6 +10,7 @@ import com.mygdx.eventos.EventoCambioDeDia;
 import com.mygdx.eventos.Listeners;
 import com.mygdx.historia.CartasManager;
 import com.mygdx.hud.CartaHUD;
+import com.mygdx.utiles.recursos.Recursos;
 
 import box2dLight.PointLight;
 import box2dLight.RayHandler;

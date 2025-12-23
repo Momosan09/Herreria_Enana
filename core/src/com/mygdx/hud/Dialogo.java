@@ -19,7 +19,7 @@ import com.mygdx.enums.Respuestas;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class Dialogo extends Actor implements HeadUpDisplay, Ocultable {
 
@@ -125,9 +125,9 @@ public class Dialogo extends Actor implements HeadUpDisplay, Ocultable {
 		agregarEventos();
 		
 		
-		retrato = new Image(new Texture(Recursos.VENDEDOR_AMBULANTE_PORTRAIT));
+		retrato = new Image(new Texture(Recursos.npc.enanos.portraits.VENDEDOR_AMBULANTE_PORTRAIT));
 		
-		fondo = new NinePatchDrawable(new NinePatch(new Texture(Recursos.DIALOGO_HUD)));
+		fondo = new NinePatchDrawable(new NinePatch(new Texture(Recursos.hud.DIALOGO_HUD)));
 	}
 	
 	@Override

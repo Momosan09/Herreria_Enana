@@ -10,7 +10,7 @@ import com.mygdx.eventos.EventoInteraccionObj;
 import com.mygdx.eventos.Listeners;
 import com.mygdx.hud.Fundicion;
 import com.mygdx.utiles.MundoConfig;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class AltoHorno extends ObjetoDelMapa implements EventoInteraccionObj{
 

@@ -6,15 +6,15 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.utiles.HelpDebug;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public enum NpcData implements DialogosNPC{
 
-	VENDEDOR_AMBULANTE("Vendedor Ambulante",  Recursos.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Vendedor_Ambulante.obtenerTodosLosMensajes()),
-	VIEJO("Viejin", Recursos.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Viejo.obtenerTodosLosMensajes()),
-	VENDEDOR_TIENDA("Vendedor Tienda", Recursos.VENDEDOR_TIENDA_PORTRAIT, Npc_Dialogos_Vendedor_Tienda.obtenerTodosLosMensajes()),
-	CARPINTERO("Carpintero", Recursos.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Carpintero.obtenerTodosLosMensajes()),
-	REY("Rey", Recursos.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Rey.obtenerTodosLosMensajes());
+	VENDEDOR_AMBULANTE("Vendedor Ambulante",  Recursos.npc.enanos.portraits.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Vendedor_Ambulante.obtenerTodosLosMensajes()),
+	VIEJO("Viejin", Recursos.npc.enanos.portraits.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Viejo.obtenerTodosLosMensajes()),
+	VENDEDOR_TIENDA("Vendedor Tienda", Recursos.npc.enanos.portraits.VENDEDOR_TIENDA_PORTRAIT, Npc_Dialogos_Vendedor_Tienda.obtenerTodosLosMensajes()),
+	CARPINTERO("Carpintero", Recursos.npc.enanos.portraits.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Carpintero.obtenerTodosLosMensajes()),
+	REY("Rey", Recursos.npc.enanos.portraits.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Rey.obtenerTodosLosMensajes());
 	
 	private final String _nombre;
 	private final Texture _retrato;

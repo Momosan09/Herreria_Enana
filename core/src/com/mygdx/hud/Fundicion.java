@@ -25,7 +25,7 @@ import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class Fundicion extends HUD{
 
@@ -52,9 +52,9 @@ public class Fundicion extends HUD{
 	
 	@Override
 	public void crearActores() {
-		skinArriba = new Skin(Gdx.files.internal(Recursos.SKIN_BOTON_ARRIBA));
-		skinAbajo = new Skin(Gdx.files.internal(Recursos.SKIN_BOTON_ABAJO));
-		skinTextButton = new Skin(Gdx.files.internal(Recursos.SKIN));
+		skinArriba = new Skin(Gdx.files.internal(Recursos.hud.SKIN_BOTON_ARRIBA));
+		skinAbajo = new Skin(Gdx.files.internal(Recursos.hud.SKIN_BOTON_ABAJO));
+		skinTextButton = new Skin(Gdx.files.internal(Recursos.hud.SKIN));
 
 		
 		
@@ -72,11 +72,11 @@ public class Fundicion extends HUD{
 		botonAbajo.setDisabled(true);
 		fundirBoton = new TextButton("Fundir x" + cantidad, skinTextButton);
 		
-		hierro = new Image(new Texture(Recursos.HIERRO_PURO));
-		imgElegido = new Image(new Texture(Recursos.HIERRO_PURO));
+		hierro = new Image(new Texture(Recursos.minerales.HIERRO_PURO));
+		imgElegido = new Image(new Texture(Recursos.minerales.HIERRO_PURO));
 		imgElegido.scaleBy(3);
 		
-		imgResultado = new Image(new Texture(Recursos.LINGOTE_HIERRO));
+		imgResultado = new Image(new Texture(Recursos.minerales.LINGOTE_HIERRO));
 		
 		
 		botonArriba.addListener(new ChangeListener() {
@@ -162,7 +162,7 @@ public class Fundicion extends HUD{
 
 	@Override
 	public void poblarStage() {
-		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.HORNO_TEXTURA)));
+		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.hud.HORNO_TEXTURA)));
 
 		contenedor.add();
 		contenedor.add(titulo);

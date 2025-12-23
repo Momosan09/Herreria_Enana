@@ -6,8 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
-import com.mygdx.utiles.Recursos;
-
+import com.mygdx.utiles.recursos.Recursos;
 import com.mygdx.eventos.EventoHudConexion;
 
 public class ConexionHUD extends HUD{

@@ -31,8 +31,8 @@ import com.mygdx.pantallas.Juego;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.MundoConfig;
-import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Tiempo;
+import com.mygdx.utiles.recursos.Recursos;
 
 
 /*
@@ -229,11 +229,11 @@ public class HUDPrincipal implements HeadUpDisplay, Ocultable, EventoMisionAgreg
 	}
 	
 	private void cargarTexturas() {
-		dinero_Tex = new Texture(Recursos.DINERO_HUD);
+		dinero_Tex = new Texture(Recursos.hud.DINERO_HUD);
 		dineroImgSpr = new Sprite(dinero_Tex);
 		
-		reloj_Tex = new Texture(Recursos.MARCO_RELOJ);
-		tiempo_Tex = new Texture(Recursos.DIBUJO_RELOJ);
+		reloj_Tex = new Texture(Recursos.hud.MARCO_RELOJ);
+		tiempo_Tex = new Texture(Recursos.hud.DIBUJO_RELOJ);
 		tiempo_Img = new Image(tiempo_Tex);
 	    tiempo_Img.setOrigin(tiempo_Img.getWidth() / 2f, tiempo_Img.getHeight() / 2f);
 		reloj = new Image(reloj_Tex);

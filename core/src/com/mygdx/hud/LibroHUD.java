@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.hud.actoresEspeciales.ProximaBatallaTabla;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class LibroHUD extends HUD{
 
@@ -26,7 +26,7 @@ public class LibroHUD extends HUD{
 		stage = new Stage();
 		tabla = new Table();
 		contenedor = new Table();
-		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.LIBRO_HUD)));
+		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.hud.LIBRO_HUD)));
 		contenedor.setDebug(true);
 		tabla.setFillParent(true);
 		tabla.setDebug(true);	

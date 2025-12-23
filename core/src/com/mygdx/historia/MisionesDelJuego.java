@@ -3,7 +3,7 @@ import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.npcs.Carpintero;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.utiles.Npcs;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public enum MisionesDelJuego {
 	

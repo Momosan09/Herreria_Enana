@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class ProximaBatallaHUD extends HUD{
 
@@ -32,14 +32,14 @@ public class ProximaBatallaHUD extends HUD{
 	
 	@Override
 	public void crearActores() {
-		skin = new Skin(Gdx.files.internal(Recursos.SKIN));
+		skin = new Skin(Gdx.files.internal(Recursos.hud.SKIN));
 		screenViewport = new ScreenViewport();
 		stage = new Stage(screenViewport);
 		
 		tabla = new Table();
 		tabla.setFillParent(true);
 		contenedor = new Table();
-		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.CARTA_TEXTURA)) );
+		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.hud.CARTA_TEXTURA)) );
 		
 		cerrarBoton = new Button(skin);
 		cerrarBoton.addListener(new ChangeListener() {

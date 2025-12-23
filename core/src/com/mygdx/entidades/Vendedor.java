@@ -8,7 +8,7 @@ import com.mygdx.entidades.npcs.VendedorData;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.enums.Items;
 import com.mygdx.hud.VentaHUD;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class Vendedor extends Npc{
 	

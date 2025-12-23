@@ -30,8 +30,8 @@ import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.Config;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
-import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class PantallaMenu extends HUD implements Screen{
 
@@ -66,12 +66,12 @@ public class PantallaMenu extends HUD implements Screen{
 		
 		camara = new OrthographicCamera();
 		camara.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		fondoImg = new Texture(Recursos.FONDO_MENU);
+		fondoImg = new Texture(Recursos.menu.FONDO_MENU);
 		fondo = new Sprite(fondoImg);
 		crearFuentes();
 		crearActores();
 		poblarStage();
-		musicaMenu = Gdx.audio.newMusic(Gdx.files.internal(Recursos.MUSICA_MENU));
+		musicaMenu = Gdx.audio.newMusic(Gdx.files.internal(Recursos.menu.MUSICA_MENU));
 		
 		Recursos.muxMenu.addProcessor(stage);
 		Recursos.muxMenu.addProcessor(entradas);
@@ -179,7 +179,7 @@ public class PantallaMenu extends HUD implements Screen{
 	
 	@Override
 	public void crearActores() {
-		skinImageButton = new Skin(Gdx.files.internal(Recursos.SKIN_NOTA_MUSICAL));
+		skinImageButton = new Skin(Gdx.files.internal(Recursos.menu.SKIN_NOTA_MUSICAL));
 		screenViewport = new ScreenViewport();
 		stage = new Stage(screenViewport);
 		Recursos.muxJuego.addProcessor(stage);

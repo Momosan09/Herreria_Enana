@@ -13,8 +13,8 @@ import com.mygdx.historia.CartasManager;
 import com.mygdx.hud.CartaHUD;
 import com.mygdx.hud.YunqueHUD;
 import com.mygdx.utiles.MundoConfig;
-import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
+import com.mygdx.utiles.recursos.Recursos;
 
 import box2dLight.Light;
 import box2dLight.PointLight;
@@ -29,7 +29,7 @@ public class Carta extends ObjetoDelMapa implements EventoInteraccionObj{
 	
 	public Carta(float x, float y, World world, String rutaTextura, Jugador jugador) {
 		super(x, y, world, rutaTextura, jugador);
-		sinLeer = new Sprite(new Texture(Recursos.EXCLAMACION));
+		sinLeer = new Sprite(new Texture(Recursos.objMapa.EXCLAMACION));
 		sinLeer.setPosition(this.posicion.x-8, this.posicion.y+24);
 		luzExclamacion = new PointLight(Render.rayHandler, 128, new Color(Color.valueOf("#ea8e0e")), 30, this.posicion.x+10, this.posicion.y+30);
 		 Listeners.agregarListener(this);

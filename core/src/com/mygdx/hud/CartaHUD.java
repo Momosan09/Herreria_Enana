@@ -18,7 +18,7 @@ import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class CartaHUD extends HUD implements Cerrable{
 
@@ -53,7 +53,7 @@ public class CartaHUD extends HUD implements Cerrable{
 	@Override
 	public void crearActores() {
 
-		skin = new Skin(Gdx.files.internal(Recursos.SKIN));
+		skin = new Skin(Gdx.files.internal(Recursos.hud.SKIN));
 		
 		tabla = new Table();
 		tabla.setFillParent(true);
@@ -81,7 +81,7 @@ public class CartaHUD extends HUD implements Cerrable{
 
 	@Override
 	public void poblarStage() {
-		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.CARTA_TEXTURA)));
+		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.hud.CARTA_TEXTURA)));
 		contenedor.add(cuerpoCarta).pad(10).expand().fill();//Te lo re afane Facu ejej
 		contenedor.add(cerrarBoton).top();
 		tabla.add(contenedor);

@@ -18,7 +18,7 @@ import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.MyDragAndDrop;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.TipoCombinacion;
@@ -65,12 +65,12 @@ public class Combinacion extends HUD{
     
 	@Override
     public void crearActores() {
-		skin = new Skin(Gdx.files.internal(Recursos.SKIN));
+		skin = new Skin(Gdx.files.internal(Recursos.hud.SKIN));
         
     	contenedor = new Table();
     	tabla = new Table();
     	tabla.setFillParent(true);
-    	contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.YUNQUE_TEXTURA)));
+    	contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.hud.YUNQUE_TEXTURA)));
     	contenedor.debug();
     	
     	cerrarBoton = new Button(skin);

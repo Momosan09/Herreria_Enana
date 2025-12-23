@@ -11,7 +11,7 @@ import com.mygdx.entidades.Jugador;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class MesaHUD extends HUD{
 
@@ -39,7 +39,7 @@ public class MesaHUD extends HUD{
 	@Override
 	public void poblarStage() {
 		contenedor.add(titulo);
-		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.MESA_TEXTURA)));
+		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.hud.MESA_TEXTURA)));
 		tabla.add(contenedor);
 		stage.addActor(tabla);
 	}

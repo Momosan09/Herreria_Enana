@@ -20,7 +20,7 @@ import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.MundoConfig;
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 import com.mygdx.historia.Mision;
 import com.mygdx.historia.misiones.MisionRecFab;
 
@@ -59,7 +59,7 @@ public class DiarioHUD extends HUD{
 
 	@Override
 	public void crearActores() {
-		skin = new Skin(Gdx.files.internal(Recursos.SKIN));
+		skin = new Skin(Gdx.files.internal(Recursos.hud.SKIN));
 		
 		contenedor = new Table();
 		contenedor.setDebug(true);
@@ -89,7 +89,7 @@ public class DiarioHUD extends HUD{
 	@Override
 	public void poblarStage() {
 		
-		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.CARTA_TEXTURA)));//cambiar por otra tetura
+		contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.hud.CARTA_TEXTURA)));//cambiar por otra tetura
 		
 		contenedor.add(titulo).top();
 		contenedor.row();

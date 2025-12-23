@@ -13,8 +13,8 @@ import com.mygdx.eventos.Listeners;
 import com.mygdx.hud.YunqueHUD;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.MyDragAndDrop;
-import com.mygdx.utiles.Recursos;
 import com.mygdx.utiles.Render;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class Yunque extends ObjetoDelMapa implements EventoInteraccionObj{
 

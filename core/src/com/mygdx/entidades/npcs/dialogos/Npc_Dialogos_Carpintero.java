@@ -2,7 +2,7 @@ package com.mygdx.entidades.npcs.dialogos;
 
 import java.util.ArrayList;
 
-import com.mygdx.utiles.Recursos;
+import com.mygdx.utiles.recursos.Recursos;
 
 public enum Npc_Dialogos_Carpintero implements DialogosNPC{
 
