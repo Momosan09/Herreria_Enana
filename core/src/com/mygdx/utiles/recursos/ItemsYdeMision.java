@@ -17,5 +17,5 @@ public class ItemsYdeMision {
 	
 	//de venta
 	// por el carpintero
-	public static final String MANGO_MADERA_0 = "objetosDelMundo/inanimados/Items/Espadas/Mangos/MaderaMango0.png";
+	public final String MANGO_MADERA_0 = "objetosDelMundo/inanimados/Items/Espadas/Mangos/MaderaMango0.png";
 }
