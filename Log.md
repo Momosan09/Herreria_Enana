@@ -448,3 +448,14 @@ por ejemplo:
 
 # 24 FEB
     - Modifica estructura de misiones    
+
+# DICIEMBRE 2025
+    (me olvide de escribir aca)
+    - Modifica la fundicion
+    - Modifica la estructura de los asstes y la forma de acceder a ellos
+
+# 2026
+
+# 1 ENE
+    - Arregla unos problemas con la fundicion
+    - Arregla unos problemas con las combinaciones

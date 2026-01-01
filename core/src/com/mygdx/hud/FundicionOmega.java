@@ -74,6 +74,19 @@ public class FundicionOmega extends HUD{
 		molde = new Image(texturaEntradaVacia);
 		salida = new Image(texturaEntradaVacia);
 		
+	    salida.addListener(new ClickListener() {
+			
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				if(mineralSalida != null) {					
+					j.agregarMineral(mineralSalida);
+					salida.setDrawable(new TextureRegionDrawable(texturaEntradaVacia));
+					actualizarTablaInventario();
+					mineralSalida = null;
+				}
+			}
+		});
+		
 		tabla = new Table();
 		tabla.setFillParent(true);
 		tabla.setDebug(true);
@@ -85,6 +98,8 @@ public class FundicionOmega extends HUD{
 		
 		contenedor = new Table();
 		contenedor.setDebug(true);
+		
+		crearTargets();
 		
 	}
 
@@ -108,6 +123,7 @@ public class FundicionOmega extends HUD{
 		contenedor.add(inventario);
 		
 		tabla.add(contenedor);
+		tabla.add(cerrarBtn);
 		stage.addActor(tabla);
 		
 	}
@@ -127,18 +143,10 @@ public class FundicionOmega extends HUD{
 	    	actualizarTablaInventario();
 	       
 	        }
-
 	        visible = true;
 	    }
 	
 
-
-	@Override
-	public void ocultar() {
-		visible = false;
-		stage.unfocusAll();
-		
-	}
 
 	@Override
 	public boolean getVisible() {
@@ -194,6 +202,7 @@ public class FundicionOmega extends HUD{
 
 		        mineralMolde = mineral;
 
+
 		        molde.setDrawable(new TextureRegionDrawable(mineral.getTextura()));
 		        consumirMineral(mineral, source.getActor());
 		        reproducirSonidoSoltar();
@@ -230,7 +239,7 @@ public class FundicionOmega extends HUD{
 	    if (mineralEntrada == null || mineralMolde == null) return;
 
 	    fundiendo = true;
-	    System.out.println("Fundiendo...");
+	    System.out.println(HelpDebug.debub(getClass())+"Fundiendo...");
 
 	    Timer.schedule(new Timer.Task() {
 	        @Override
@@ -241,29 +250,24 @@ public class FundicionOmega extends HUD{
 	}
 	
 	private void terminarFundicion() {
+		if(fundiendo) {
+			
 	    fundiendo = false;
-
-	    System.out.println("Fundición terminada");
+	    
+	    System.out.println(HelpDebug.debub(getClass())+"Fundición terminada");
 
 	    // Resultado (ejemplo)
 	    Texture resultado = new Texture(Recursos.minerales.LINGOTE_HIERRO);
 	    mineralSalida = new Mineral(TipoMinerales.HIERRO, EstadosMinerales.LINGOTE);
 	    salida.setDrawable(new TextureRegionDrawable(resultado));
-	    salida.addListener(new ClickListener() {
-			
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-					j.agregarMineral(mineralSalida);
-					salida.setDrawable(new TextureRegionDrawable(texturaEntradaVacia));
-					actualizarTablaInventario();
-				}
-		});
+
 
 	    mineralEntrada = null;
 	    mineralMolde = null;
 
 	    entrada.setDrawable(new TextureRegionDrawable(texturaEntradaVacia));
 	    molde.setDrawable(new TextureRegionDrawable(texturaEntradaVacia));
+		} 
 	}
 
 	private void reproducirSonidoSoltar() {

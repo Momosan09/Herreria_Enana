@@ -99,6 +99,7 @@ public class UIManager implements EventoRecibirCarta{
 			dialogo.ocultar();
 			venta.ocultar();
 			combinacion.ocultar();
+			fundicion.ocultar();
 			diario.ocultar();
 			dialogo.limpiarDatos();//Esto ayuda a que no queden datos del npc anterior en la caja de dialogo cuando se hable con uno nuevo
 			break;

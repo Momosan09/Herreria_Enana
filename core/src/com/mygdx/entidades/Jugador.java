@@ -381,6 +381,7 @@ public class Jugador {
 	        EnumMap<EstadosMinerales, ArrayList<Mineral>> estadoMap = mineralesInventario.get(tipo);
 	        if (estadoMap.containsKey(estado)) {
 	            estadoMap.get(estado).add(mineral);
+	            System.out.println(HelpDebug.debub(getClass())+"agregado");
 	        }
 	    }
 	}

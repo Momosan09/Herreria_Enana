@@ -178,16 +178,14 @@ public class MyDragAndDrop {
 																	// mineral
 																	//ITEM MINERAL
 							Item herramienta = (Item) payload.getObject();
-
-							if (esCombinacionValida(herramienta, mineralSource)) {
-								// Esto es medio generico, pero bueno cuando necesite mas especifico lo cambio
-								inventario.remove(mineralSource);
-								jugador.eliminarMineral(mineralSource, 1);
-								System.out.println("eliminado");
-								getActor().setColor(Color.GREEN);
-							}else {
-								getActor().setColor(Color.RED);
-							}
+							//TODO esto lo comento temporalmente porque el problema es que en "esCombinacionValida" se agrega el mineral y entonces eso hace que de una cantidad mayor a la adecuada cuando se quiere combinar. Para arreglarlo tengo que darle el mineral al jugador en otro metodo, o hacer la logica de comprobacion por separado a la de dar los minerales
+//							if (esCombinacionValida(herramienta, mineralSource)) {
+//								// Esto es medio generico, pero bueno cuando necesite mas especifico lo cambio
+//								System.out.println(HelpDebug.debub(getClass())+"eliminado");
+//								getActor().setColor(Color.GREEN);
+//							}else {
+//								getActor().setColor(Color.RED);
+//							}
 							
 						}
 						
@@ -250,13 +248,12 @@ public class MyDragAndDrop {
 
 					if(payload.getObject() instanceof Item) {
 						Item itemTarget = (Item) payload.getObject();
-					if (esCombinacionValida(itemTarget, itemSource)) {//ITEM CON ITEM
-						herramientas.remove(itemSource);
-						jugador.getItems().remove(itemSource);
-						getActor().setColor(Color.GREEN);
-					}else {
-						getActor().setColor(Color.RED);
-					}
+						//TODO esto lo comento temporalmente porque el problema es que en "esCombinacionValida" se agrega el mineral y entonces eso hace que de una cantidad mayor a la adecuada cuando se quiere combinar. Para arreglarlo tengo que darle el mineral al jugador en otro metodo, o hacer la logica de comprobacion por separado a la de dar los minerales
+//					if (esCombinacionValida(itemTarget, itemSource)) {//ITEM CON ITEM
+//						getActor().setColor(Color.GREEN);
+//					}else {
+//						getActor().setColor(Color.RED);
+//					}
 					
 					}
 
@@ -340,6 +337,7 @@ public class MyDragAndDrop {
 		Items herrTip = herramienta.getTipo();
 		if(herrTip == Items.CINCEL && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.MENA) {
 			jugador.agregarMineral(new HierroPuro());
+			System.out.println(HelpDebug.debub(getClass())+"cincelado");
 			herramienta.restarUsos();
 			return true;
 		}else if(herrTip == Items.CINCEL && mineral.tipo == TipoMinerales.CARBON && mineral.estado == EstadosMinerales.MENA){
