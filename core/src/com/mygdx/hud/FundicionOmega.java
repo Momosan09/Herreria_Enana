@@ -18,6 +18,7 @@ import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
+import com.mygdx.entidades.ObjetosDelMapa.procesados.CarbonPuro;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.LingoteHierro;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
@@ -39,11 +40,14 @@ public class FundicionOmega extends HUD{
 	
 	private DragAndDrop dragAndDrop;
 	
-	private Image entrada, salida, molde;
+	private Image entrada, salida, molde, combustibleImg;
 	private Texture texturaEntradaVacia;
 	private Mineral mineralEntrada;
 	private Mineral mineralMolde;
 	private Mineral mineralSalida;
+	private Mineral combustible;
+	
+	private long calor = 0;//calor de la fragua
 
 	private boolean fundiendo = false;
 	private Sound sonidoSoltar;
@@ -73,6 +77,7 @@ public class FundicionOmega extends HUD{
 		entrada = new Image(texturaEntradaVacia);
 		molde = new Image(texturaEntradaVacia);
 		salida = new Image(texturaEntradaVacia);
+		combustibleImg = new Image(texturaEntradaVacia);
 		
 	    salida.addListener(new ClickListener() {
 			
@@ -109,10 +114,13 @@ public class FundicionOmega extends HUD{
 		//inventario.setBackground(new TextureRegionDrawable(new Texture(Recursos.CARTA_TEXTURA)));
 		//fragua.setBackground(new TextureRegionDrawable(new Texture(Recursos.CAJA_ENTREGAS)));
 		
+		fragua.add(combustibleImg).size(64,64).pad(5);
 		fragua.add(entrada).size(64, 64).pad(5);
 		fragua.row();
+		fragua.add();
 		fragua.add(molde).size(64, 64).pad(5);
 		fragua.row();
+		fragua.add();
 		fragua.add(salida).size(64, 64).pad(5);
 		
 		fragua.setSize(500, 500);
@@ -154,6 +162,33 @@ public class FundicionOmega extends HUD{
 	}
 	
 	private void crearTargets() {
+		
+		Target targetCombustible = new Target(combustibleImg) {
+
+		    @Override
+		    public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
+		        if (!(payload.getObject() instanceof CarbonPuro)) return false;//TODO aca tengo que usar una interface que sea "combustible" para que me permita usar distintos combustibles con distintos aportes de calor
+
+		        Mineral m = (Mineral) payload.getObject();
+
+		        
+		        return combustible == null;
+		    }
+
+		    @Override
+		    public void drop(Source source, Payload payload, float x, float y, int pointer) {
+
+		        Mineral mineral = (Mineral) payload.getObject();
+
+		        combustible = mineral;
+
+		        combustibleImg.setDrawable(new TextureRegionDrawable(mineral.getTextura()));
+		        consumirMineral(mineral, source.getActor());
+		        reproducirSonidoSoltar();
+
+		        calentar();
+		    }
+		};
 
 		Target targetEntrada = new Target(entrada) {
 
@@ -228,13 +263,37 @@ public class FundicionOmega extends HUD{
 //	        }
 //	    };
 
+		dragAndDrop.addTarget(targetCombustible);
 	    dragAndDrop.addTarget(targetEntrada);
 	    dragAndDrop.addTarget(targetMolde);
 //	    dragAndDrop.addTarget(targetSalida);
 	}
 
-	private void iniciarFundicion() {
+	private void calentar() { //TODO aca tambien cambiarlo por la interface "combustible"
+		Timer.schedule(new Timer.Task() {
+	        @Override
+	        public void run() {
+	        	consumirCombustible();
+	        	
+	    		if(entrada != null && molde != null) {
+	    			iniciarFundicion();
+	    		}
+	        }
+	    }, 1f); // 1 segundo
+		
 
+		
+	}
+	
+	private void consumirCombustible() {
+    	combustibleImg.setDrawable(new TextureRegionDrawable(texturaEntradaVacia));
+		calor += combustible.calorDeFusion;
+		combustible = null;
+		System.out.println(HelpDebug.debub(getClass())+ "calor = " + calor);
+	}
+	
+	private void iniciarFundicion() {
+		if(calor >= mineralEntrada.calorDeFusion) {
 	    if (fundiendo) return;
 	    if (mineralEntrada == null || mineralMolde == null) return;
 
@@ -247,6 +306,9 @@ public class FundicionOmega extends HUD{
 	            terminarFundicion();
 	        }
 	    }, 3f); // 3 segundos
+		}else {
+			System.out.println(HelpDebug.debub(getClass())+ "falta calor");
+		}
 	}
 	
 	private void terminarFundicion() {
@@ -261,12 +323,14 @@ public class FundicionOmega extends HUD{
 	    mineralSalida = new Mineral(TipoMinerales.HIERRO, EstadosMinerales.LINGOTE);
 	    salida.setDrawable(new TextureRegionDrawable(resultado));
 
+	    calor -= mineralEntrada.calorDeFusion;
 
 	    mineralEntrada = null;
 	    mineralMolde = null;
 
 	    entrada.setDrawable(new TextureRegionDrawable(texturaEntradaVacia));
 	    molde.setDrawable(new TextureRegionDrawable(texturaEntradaVacia));
+	    System.out.println(HelpDebug.debub(getClass())+ "calor = " + calor);
 		} 
 	}
 

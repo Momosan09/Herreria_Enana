@@ -459,3 +459,4 @@ por ejemplo:
 # 1 ENE
     - Arregla unos problemas con la fundicion
     - Arregla unos problemas con las combinaciones
+    - La fragua ahora solo funciona con carbon, generando calor y perdiendolo por cada uso

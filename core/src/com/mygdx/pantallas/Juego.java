@@ -24,6 +24,7 @@ import com.mygdx.entidades.ObjetosDelMapa.Yunque;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.CarbonMena;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.HierroMena;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.PiedraMena;
+import com.mygdx.entidades.ObjetosDelMapa.procesados.CarbonPuro;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroPuro;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.LingoteHierro;
 import com.mygdx.entidades.npcs.Carpintero;
@@ -165,6 +166,8 @@ public class Juego implements Screen{
 		carta = new Carta(36, 12, world, Recursos.objMapa.CARTA, jugador);
 		MundoConfig.cartaAMostrar = CartasManager.getPrimeraCarta();
 		MundoConfig.estadoJuego = EstadosDelJuego.INICIO;
+		
+		jugador.agregarMineral(new CarbonPuro());
 		
 	}
 

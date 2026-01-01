@@ -29,6 +29,7 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar{
 	public TipoMinerales tipo;
 	public EstadosMinerales estado;
 	public int vida = 100;
+	public int calorDeFusion = 100;
 	public int valor = 5;
 	private boolean comprar = false, cerrar = false, comprable = false;
 	private Circle areaMinado;//Es el area en el que el jugador puede minar el mineral, mas grande que el area de interaccion la cual es en donde el jugador debe poner el cursor para minar
