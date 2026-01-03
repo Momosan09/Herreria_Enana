@@ -37,7 +37,7 @@ public class PantallaConfiguracion extends HUD implements Screen{
 
 	final Principal game;
 	private Skin skin;
-	private Table interfaz, barraDeArriba, pantalla, sonido, idioma;
+	private Table interfaz, barraDeArriba, pantalla, sonido, idioma, graficos;
 	//pantalla
 	private Label pantallaTextos[];
 	private SelectBox pantallaResolucionesSelectBox;
@@ -52,6 +52,11 @@ public class PantallaConfiguracion extends HUD implements Screen{
 	private ImageButton botonVolver;
 	private Label interfazTextos[];
 	private Label.LabelStyle estiloLabel, tituloEstilo;
+	
+	//Graficos
+	private Label particulasLbl;
+	private CheckBox particulasCheck;
+	
 	EntradaMenu entradas = new EntradaMenu();
 	OrthographicCamera camara;
 	
@@ -131,8 +136,16 @@ public class PantallaConfiguracion extends HUD implements Screen{
 	    sonido.row();
 	    sonido.add(sonidoTextos[1]);
 	    sonido.add(sonidoSliders[1]);
+	    sonido.row();
+	    sonido.add(sonidoTextos[2]);
+	    sonido.add(sonidoSliders[2]);
 	    interfaz.add(sonido).pad(5,10,10,10).expandY(); // Agrega margen a la tabla sonido
 
+	 // Graficos
+	    graficos.add(particulasCheck).left();
+	    interfaz.row();
+	    interfaz.add(graficos).pad(5,10,10,10).expandY();
+	    
 	    interfaz.setFillParent(true);
 	   
 	    stage.addActor(interfaz);
@@ -204,10 +217,12 @@ public class PantallaConfiguracion extends HUD implements Screen{
 		//Sonido
 		sonido = new Table();
 		
-		sonidoTextos = new Label[2];
+		sonidoTextos = new Label[4];
+		
+		//VOLUMEN MUSICAS
 		sonidoTextos[0] = new Label(Recursos.bundle.get("pantallaConfiguracion.volumenMusica"), estiloLabel);
 		
-		sonidoSliders = new Slider[3];
+		sonidoSliders = new Slider[4];
 		sonidoSliders[0] = new Slider(0,1,.01f, false,skin);
 		sonidoSliders[0].setValue(Config.prefs.getFloat("nivelVolumenMusica"));
 		sonidoSliders[0].addListener(new ChangeListener() {
@@ -220,6 +235,7 @@ public class PantallaConfiguracion extends HUD implements Screen{
 			}
 		});
 		
+		//VOLUMEN MENUS
 		sonidoTextos[1] = new Label(Recursos.bundle.get("pantallaConfiguracion.volumenMenus"), estiloLabel);
 		
 		sonidoSliders[1] = new Slider(0,1,.01f, false,skin);
@@ -231,6 +247,21 @@ public class PantallaConfiguracion extends HUD implements Screen{
 				Config.volumenMenues = sonidoSliders[1].getValue();
 				Config.prefs.putFloat("nivelVolumenMenues", Config.volumenMenues);
 				System.out.println(Config.volumenMenues);
+			}
+		});
+		
+		//EFECTOS DE SONIDO
+		sonidoTextos[2] = new Label(Recursos.bundle.get("pantallaConfiguracion.volumenEfectosSonido"), estiloLabel);
+		
+		sonidoSliders[2] = new Slider(0,1,.01f, false,skin);
+		sonidoSliders[2].setValue(Config.prefs.getFloat("nivelVolumenEfectos"));
+		sonidoSliders[2].addListener(new ChangeListener() {
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				Config.volumenEfectos = sonidoSliders[2].getValue();
+				Config.prefs.putFloat("nivelVolumenEfectos", Config.volumenEfectos);
+				System.out.println(Config.volumenEfectos);
 			}
 		});
 		
@@ -261,7 +292,25 @@ public class PantallaConfiguracion extends HUD implements Screen{
 		interfazTextos[1] = new Label(Recursos.bundle.get("pantallaConfiguracion.titulo"), tituloEstilo);
 		interfazTextos[2] = new Label(Recursos.bundle.get("pantallaConfiguracion.pantallaCompleta")+" "+ (Config.pantallaCompleta?Recursos.bundle.get("si"):Recursos.bundle.get("no")) , estiloLabel);
 		
+		//GRAFICOS
+		graficos = new Table();
 		
+		particulasCheck = new CheckBox(Recursos.bundle.get("pantallaConfiguracion.permitirParticulas"), skin);
+
+		// estado inicial desde prefs
+		boolean permitir = Config.prefs.getBoolean("permitirParticulas", true);
+		particulasCheck.setChecked(permitir);
+		Config.permitirParticulas = permitir;
+
+		// listener
+		particulasCheck.addListener(new ChangeListener() {
+		    @Override
+		    public void changed(ChangeEvent event, Actor actor) {
+		        Config.permitirParticulas = particulasCheck.isChecked();
+		        Config.prefs.putBoolean("permitirParticulas", Config.permitirParticulas);
+		        Config.prefs.flush();
+		    }
+		});
 
 	}
 	

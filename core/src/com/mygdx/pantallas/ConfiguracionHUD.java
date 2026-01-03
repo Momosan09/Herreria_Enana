@@ -122,6 +122,14 @@ public class ConfiguracionHUD implements Screen{
         slider = new Slider(0.0f, 100.0f, 1.0f, false, skin, "default-horizontal");
         table3.add(slider);
         table2.add(table3).align(Align.left);
+        
+        table3.row();
+        label = new Label("Volumen Efectos de sonido", skin);
+        table3.add(label).align(Align.left);
+
+        slider = new Slider(0.0f, 100.0f, 1.0f, false, skin, "default-horizontal");
+        table3.add(slider);
+        table2.add(table3).align(Align.left);
 
         table2.add();
         table1.add(table2).grow();
