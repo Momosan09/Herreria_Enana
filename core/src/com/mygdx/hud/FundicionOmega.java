@@ -35,6 +35,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 public class FundicionOmega extends HUD{
 
 	private Table inventario, fragua;
+	private Label calorLbl, msgLbl;
+	
+	private Label.LabelStyle labelAdvertencia;
 	
 	private Jugador j;
 	
@@ -68,6 +71,7 @@ public class FundicionOmega extends HUD{
 	@Override
 	public void crearFuentes() {
 		labelStyle = EstiloFuente.generarFuente(30, Colores.BLANCO, false);
+		labelAdvertencia = EstiloFuente.generarFuente(30, Colores.AU, false);
 		
 	}
 
@@ -104,6 +108,9 @@ public class FundicionOmega extends HUD{
 		contenedor = new Table();
 		contenedor.setDebug(true);
 		
+		calorLbl = new Label("Calor = " + calor,labelStyle);
+		msgLbl = new Label(Recursos.bundle.get("hud.fundicion.advertencia.calorInsuf"), labelAdvertencia);
+		msgLbl.setVisible(false);
 		crearTargets();
 		
 	}
@@ -129,6 +136,10 @@ public class FundicionOmega extends HUD{
 		
 		contenedor.add(fragua);
 		contenedor.add(inventario);
+		contenedor.row();
+		contenedor.add(calorLbl);
+		contenedor.row();
+		contenedor.add(msgLbl);
 		
 		tabla.add(contenedor);
 		tabla.add(cerrarBtn);
@@ -185,7 +196,7 @@ public class FundicionOmega extends HUD{
 		        combustibleImg.setDrawable(new TextureRegionDrawable(mineral.getTextura()));
 		        consumirMineral(mineral, source.getActor());
 		        reproducirSonidoSoltar();
-
+		        actualizarMensajeCalor();
 		        calentar();
 		    }
 		};
@@ -212,7 +223,7 @@ public class FundicionOmega extends HUD{
 		        entrada.setDrawable(new TextureRegionDrawable(mineral.getTextura()));
 		        consumirMineral(mineral, source.getActor());
 		        reproducirSonidoSoltar();
-
+		        actualizarMensajeCalor();
 		        iniciarFundicion();
 		    }
 		};
@@ -241,7 +252,7 @@ public class FundicionOmega extends HUD{
 		        molde.setDrawable(new TextureRegionDrawable(mineral.getTextura()));
 		        consumirMineral(mineral, source.getActor());
 		        reproducirSonidoSoltar();
-
+		        actualizarMensajeCalor();
 		        iniciarFundicion();
 		    }
 		};
@@ -289,11 +300,12 @@ public class FundicionOmega extends HUD{
     	combustibleImg.setDrawable(new TextureRegionDrawable(texturaEntradaVacia));
 		calor += combustible.calorDeFusion;
 		combustible = null;
-		System.out.println(HelpDebug.debub(getClass())+ "calor = " + calor);
+		calorLbl.setText("Calor = " + calor);
+		actualizarMensajeCalor();
 	}
 	
 	private void iniciarFundicion() {
-		if(calor >= mineralEntrada.calorDeFusion) {
+		if(mineralEntrada != null && calor >= mineralEntrada.calorDeFusion) {
 	    if (fundiendo) return;
 	    if (mineralEntrada == null || mineralMolde == null) return;
 
@@ -306,8 +318,6 @@ public class FundicionOmega extends HUD{
 	            terminarFundicion();
 	        }
 	    }, 3f); // 3 segundos
-		}else {
-			System.out.println(HelpDebug.debub(getClass())+ "falta calor");
 		}
 	}
 	
@@ -330,7 +340,7 @@ public class FundicionOmega extends HUD{
 
 	    entrada.setDrawable(new TextureRegionDrawable(texturaEntradaVacia));
 	    molde.setDrawable(new TextureRegionDrawable(texturaEntradaVacia));
-	    System.out.println(HelpDebug.debub(getClass())+ "calor = " + calor);
+		calorLbl.setText("Calor = " + calor);
 		} 
 	}
 
@@ -374,4 +384,27 @@ public class FundicionOmega extends HUD{
 	        }
 
 	}
+	
+	private void actualizarMensajeCalor() {
+
+	    // No hay nada para fundir
+	    if (mineralEntrada == null || mineralMolde == null) {
+	        msgLbl.setVisible(false);
+	        return;
+	    }
+
+	    // Ya esta fundiendo
+	    if (fundiendo) {
+	        msgLbl.setVisible(false);
+	        return;
+	    }
+
+	    // Hay intento de fundicion pero no alcanza el calor
+	    if (calor < mineralEntrada.calorDeFusion) {
+	        msgLbl.setVisible(true);
+	    } else {
+	        msgLbl.setVisible(false);
+	    }
+	}
+
 }

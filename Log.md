@@ -460,3 +460,6 @@ por ejemplo:
     - Arregla unos problemas con la fundicion
     - Arregla unos problemas con las combinaciones
     - La fragua ahora solo funciona con carbon, generando calor y perdiendolo por cada uso
+
+# 3 ENE
+    - Agrega labels con info en el hud de la fragua
