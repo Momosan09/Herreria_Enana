@@ -11,6 +11,9 @@ public abstract class Config {
 	public static Preferences prefs = Gdx.app.getPreferences("HerreriaEnanaPreferencias");
 	public static float volumenMusica = prefs.getFloat("nivelVolumenMusica");
 	public static float volumenMenues = prefs.getFloat("nivelVolumenMenues");
+	public static float volumenEfectos = prefs.getFloat("nivelVolumenEfectos");
+	
+	public static boolean permitirParticulas = prefs.getBoolean("permitirParticulas");
 	
 	public static float ancho =  1280;
 	public static float alto = 768;

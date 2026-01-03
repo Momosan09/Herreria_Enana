@@ -2,6 +2,8 @@ package com.mygdx.entidades.ObjetosDelMapa;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -17,12 +19,19 @@ import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.enums.Items;
 import com.mygdx.eventos.EventoMinar;
 import com.mygdx.eventos.Listeners;
+import com.mygdx.historia.Mision;
 import com.mygdx.historia.TipoMision;
 import com.mygdx.historia.misiones.MisionRecFab;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.DibujarFiguras;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
+import com.mygdx.utiles.Render;
+import com.mygdx.utiles.particulas.ListaDeParticulas;
+import com.mygdx.utiles.particulas.ParticulasManager;
+import com.mygdx.utiles.recursos.Recursos;
+import com.mygdx.utiles.sonidos.ListaSonidos;
+import com.mygdx.utiles.sonidos.SonidosManager;
 
 public class Mineral extends ObjetoDelMapa implements EventoMinar{
 	
@@ -33,6 +42,7 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar{
 	public int valor = 5;
 	private boolean comprar = false, cerrar = false, comprable = false;
 	private Circle areaMinado;//Es el area en el que el jugador puede minar el mineral, mas grande que el area de interaccion la cual es en donde el jugador debe poner el cursor para minar
+
 
 	
 	public Mineral(float x, float y, World world, boolean comprable, TipoMinerales tipo, EstadosMinerales estado, int ancho, int alto) {
@@ -72,6 +82,7 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar{
 		super(tipo.ruta+estado.ruta);
 		this.tipo = tipo;
 		this.estado = estado;
+		
 	}
 	
 	
@@ -90,6 +101,7 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar{
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
         shape.dispose();
+
 	}
 	
 	
@@ -147,30 +159,39 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar{
 		
 		private void recolectar(Jugador j) {
 			if(vida <= 0) {	
-	        System.out.println(HelpDebug.debub(getClass()) + "muerte");
 	        j.agregarMineral(this);
 
-	        for(int i = 0; i<j.getMisiones().size();i++) {
-	        	if(j.getMisiones().get(i).getTipo() == TipoMision.RECOLECTAR) {
-	        		MisionRecFab m = (MisionRecFab) j.getMisiones().get(i);
-	        		if(m.getObjeto().equals(this.tipo.toString())) {
-	        			j.avanzarMision(m);
-	        		}
-	        	}        	
+	        for (Mision m : j.getMisiones().values()) {
+	            if (m.getTipo() == TipoMision.RECOLECTAR) {
+	                MisionRecFab rec = (MisionRecFab) m;
+
+	                if (rec.getObjeto().equals(this.tipo.toString())) {
+	                    j.avanzarMision(rec);
+	                }
+	            }
 	        }
+
+	        Listeners.quitarListener(this);
 	        OrganizadorSpritesIndiceZ.eliminarMineral(this);
 			}
 		}
+		
 		
 		@Override
 		public void minar(Jugador j, int x, int y) {
 			if(vida > 0) { //evita que el mineral se pueda seguir minando post mortem
 			 Vector3 worldCoords = j.getCamara().unproject(new Vector3(x, y, 0));
-			if(getJugadorRangoMinado(j)) {
+
+			
+			 if(getJugadorRangoMinado(j)) {
 		        if (this.areaDeInteraccion.contains(worldCoords.x, worldCoords.y)) {
 		            // El toque está dentro del rango del mineral
 					vida -= 50;
 					recolectar(j);
+					
+					 //Particulas - Las particulas aca para que no toque en el aire y salgan igual
+					 ParticulasManager.get().spawn(ListaDeParticulas.MINADO_PIEDRA, worldCoords.x, worldCoords.y, false);
+					 SonidosManager.reproducirSonido(ListaSonidos.MINAR);
 					//j.getCamara().update();
 		        }
 			}
@@ -180,4 +201,5 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar{
 		public void dibujarAreaDeMinado() {
 			dibujarAreasInteraccion(areaMinado, Colores.ROSA_DEBUG);
 		}
+		
 }

@@ -11,7 +11,8 @@ import com.mygdx.utiles.HelpDebug;
 public abstract class Listeners {
 
 		public static ArrayList<EventListener> listeners = new ArrayList<>();
-		
+		private static final ArrayList<EventListener> pendientesDeEliminar = new ArrayList<>();
+
 		public static void agregarListener(EventListener listener) { 	//Anade las clases que tengan eventos. te lo re robe Facu
 			if (!listeners.contains(listener)) {
 				 System.out.println("Listener agregado: " + listener.getClass().getSimpleName());
@@ -98,5 +99,18 @@ public abstract class Listeners {
 				}
 			}
 		}
+		
+		public static void quitarListener(EventListener listener) {
+		    if (!pendientesDeEliminar.contains(listener)) {
+		        pendientesDeEliminar.add(listener);
+		    }
+		}
+
+		
+		public static void flush() {
+		    listeners.removeAll(pendientesDeEliminar);
+		    pendientesDeEliminar.clear();
+		}
+
 
 }

@@ -463,3 +463,6 @@ por ejemplo:
 
 # 3 ENE
     - Agrega labels con info en el hud de la fragua
+    - Agrega particulas de minado
+    - Agrega sonidos de minado
+    - Aregla error que hacia que el juego se cierre al tener una mision pendiente y tratar de recolectar un mineral

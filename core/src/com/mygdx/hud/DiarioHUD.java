@@ -75,7 +75,6 @@ public class DiarioHUD extends HUD{
 			
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
 				ocultar();
 			}
 		});
@@ -121,9 +120,10 @@ public class DiarioHUD extends HUD{
 
 	@Override
 	public void ocultar() {
-		if(visible) {			
-		visible = false;
-		stage.unfocusAll();//Cuando esta oculto desenfoca el stage para que no procese eventos
+		if(visible == true) {
+			visible = false;
+			MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
+			stage.unfocusAll();//Cuando esta oculto desenfoca el stage para que no procese eventos
 		}
 	}
 

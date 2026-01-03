@@ -19,7 +19,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.audio.AudioManager;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Cincel;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
@@ -46,6 +45,8 @@ import com.mygdx.utiles.Monedero;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Render;
 import com.mygdx.utiles.recursos.Recursos;
+import com.mygdx.utiles.sonidos.ListaSonidos;
+import com.mygdx.utiles.sonidos.SonidosManager;
 
 public class Jugador {
 
@@ -509,13 +510,13 @@ public class Jugador {
 		
 		tareas.put(mision.getId(), mision);
 		Listeners.misionAgregada(mision);
-		AudioManager.reproducirSonidoMisionRecibida();
+		SonidosManager.reproducirSonido(ListaSonidos.MISION_RECIBIDA);
 	}
 	
 	public void agregarMision(Mision mision) {
 		tareas.put(mision.getId(), mision);
 		Listeners.misionAgregada(mision);
-		AudioManager.reproducirSonidoMisionRecibida();
+		SonidosManager.reproducirSonido(ListaSonidos.MISION_RECIBIDA);
 	}
 	
 	public HashMap<String, Mision> getMisiones() {

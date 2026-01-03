@@ -34,18 +34,22 @@ import com.mygdx.entidades.npcs.Viejo;
 import com.mygdx.entidades.npcs.dialogos.CharlaManager;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.enums.EstadosDelJuego;
+import com.mygdx.eventos.Listeners;
 import com.mygdx.game.Principal;
 import com.mygdx.hud.UIManager;
 import com.mygdx.io.EntradaJuego;
 import com.mygdx.io.EntradasJugador;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
+import com.mygdx.utiles.Config;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.HelpMapa;
 import com.mygdx.utiles.Iluminacion;
 import com.mygdx.utiles.Render;
 import com.mygdx.utiles.Tiempo;
+import com.mygdx.utiles.particulas.ParticulasManager;
 import com.mygdx.utiles.recursos.Recursos;
+import com.mygdx.utiles.sonidos.SonidosManager;
 import com.mygdx.historia.CartasManager;
 import com.mygdx.historia.MisionesManager;
 
@@ -60,6 +64,9 @@ public class Juego implements Screen{
 	
 	//Box2dLight
 	private Iluminacion iluminacion;
+	
+	//Particulas
+	private ParticulasManager particulasManager;
 	 
 	
 	//Mapa
@@ -130,9 +137,16 @@ public class Juego implements Screen{
 		organizador = new OrganizadorSpritesIndiceZ();
 
 		ui = new UIManager(jugador,this);//Ui tiene que ir antes que iluminacion por el orden en el que se cargan los listeners TODO arreglar eso
+		
+		//Luces
 		Render.rayHandler = new RayHandler(world);
 		iluminacion = new Iluminacion(world, camaraJugador);
+		
+		//Particulas
+		particulasManager = new ParticulasManager();
 				
+		//Sonido
+		SonidosManager.cargar();
     	
 		//Npc
 		crearNPCs();
@@ -241,8 +255,15 @@ public class Juego implements Screen{
 		
 		
 		Render.tiledMapRenderer.render(helpMapa.getCapasDeFrente());// Estas son las capas que esconden al jugador
+		
+		//luces
 		iluminacion.render(camaraJugador);
-
+		
+		//Particulas
+		Render.batch.begin();
+		ParticulasManager.get().updateAndDraw();
+		Render.batch.end();
+		
 		Render.batch.begin();// HUD´s
 		ui.render();
 		
@@ -252,6 +273,9 @@ public class Juego implements Screen{
 			Render.batch.setProjectionMatrix(camaraHud.combined);// Una vez que renderiza el juego, se inicia el batch
 																	// para la camara del HUD y lo dibuja
 		Render.batch.end();
+		
+		//Al final de todo
+		Listeners.flush();//Limpia los listeners pendientes de, por ejemplo, los minerales ya minados
 	}
 
 	@Override

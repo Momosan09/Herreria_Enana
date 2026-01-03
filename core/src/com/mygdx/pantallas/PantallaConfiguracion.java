@@ -80,7 +80,7 @@ public class PantallaConfiguracion extends HUD implements Screen{
 	public void render(float delta) {
     	stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
-		System.out.println("jack pot");
+		//System.out.println("jack pot");
 		//seleccionarOpcion();
 		
 	}

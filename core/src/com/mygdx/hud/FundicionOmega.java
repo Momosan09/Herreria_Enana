@@ -24,7 +24,9 @@ import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.recursos.Recursos;
-import com.mygdx.utiles.recursos.Sonidos;
+import com.mygdx.utiles.recursos.SonidosRecursos;
+import com.mygdx.utiles.sonidos.ListaSonidos;
+import com.mygdx.utiles.sonidos.SonidosManager;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
@@ -53,7 +55,6 @@ public class FundicionOmega extends HUD{
 	private long calor = 0;//calor de la fragua
 
 	private boolean fundiendo = false;
-	private Sound sonidoSoltar;
 
 	
 	public FundicionOmega(Jugador jugador) {
@@ -62,8 +63,6 @@ public class FundicionOmega extends HUD{
         stage = new Stage(screenViewport);
         
         dragAndDrop = new DragAndDrop();
-        
-        sonidoSoltar = Gdx.audio.newSound(Gdx.files.internal(Recursos.sonidos.SONIDO_MISION_RECIBIDA));
 
         construir();
 	}
@@ -345,7 +344,7 @@ public class FundicionOmega extends HUD{
 	}
 
 	private void reproducirSonidoSoltar() {
-	    sonidoSoltar.play(0.8f);
+	    SonidosManager.reproducirSonido(ListaSonidos.MISION_RECIBIDA);
 	}
 
 	private void consumirMineral(Mineral mineral, Actor actor) {

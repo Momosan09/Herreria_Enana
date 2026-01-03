@@ -1,0 +1,9 @@
+particulas.png
+size:128,128
+repeat:none
+particle
+bounds:2,2,32,32
+particle-star
+bounds:2,36,64,64
+particulaPiedra
+bounds:68,94,6,6

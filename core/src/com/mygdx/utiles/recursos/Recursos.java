@@ -7,7 +7,7 @@ import com.mygdx.utiles.recursos.npc.NpcsRecursos;
 
 public abstract class Recursos {
 	
-	public static Sonidos sonidos = new Sonidos();
+	public static SonidosRecursos sonidos = new SonidosRecursos();
 	public static HudsRecursos hud = new HudsRecursos();
 	public static ItemsYdeMision itemsYmision = new ItemsYdeMision();
 	public static Props objMapa = new Props();
@@ -16,6 +16,7 @@ public abstract class Recursos {
 	public static MenuRecursos menu = new MenuRecursos();
 	public static ConfiguracionesRecursos config = new ConfiguracionesRecursos();
 	public static JugadorRecursos jugador = new JugadorRecursos();
+	public static Particulas particulas = new Particulas();
 	
 	
 	public static I18NBundle bundle = I18NBundle.createBundle(Gdx.files.internal("locale/locale"));

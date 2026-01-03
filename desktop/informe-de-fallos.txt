@@ -1,8 +1,12 @@
-java.lang.NullPointerException: Cannot read field "calorDeFusion" because "this.mineralEntrada" is null
-	at com.mygdx.hud.FundicionOmega.calorInsuficiente(FundicionOmega.java:391)
-	at com.mygdx.hud.FundicionOmega.consumirCombustible(FundicionOmega.java:304)
-	at com.mygdx.hud.FundicionOmega.access$19(FundicionOmega.java:299)
-	at com.mygdx.hud.FundicionOmega$5.run(FundicionOmega.java:287)
-	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:208)
+java.lang.NullPointerException: Cannot invoke "com.mygdx.historia.Mision.getTipo()" because the return value of "java.util.HashMap.get(Object)" is null
+	at com.mygdx.entidades.ObjetosDelMapa.Mineral.recolectar(Mineral.java:165)
+	at com.mygdx.entidades.ObjetosDelMapa.Mineral.minar(Mineral.java:188)
+	at com.mygdx.eventos.Listeners.minar(Listeners.java:98)
+	at com.mygdx.io.EntradasJugador.touchDown(EntradasJugador.java:57)
+	at com.badlogic.gdx.InputMultiplexer.touchDown(InputMultiplexer.java:113)
+	at com.badlogic.gdx.InputEventQueue.drain(InputEventQueue.java:67)
+	at com.badlogic.gdx.backends.lwjgl3.DefaultLwjgl3Input.update(DefaultLwjgl3Input.java:189)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:378)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:192)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:166)
 	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)

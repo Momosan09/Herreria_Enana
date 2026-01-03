@@ -19,6 +19,7 @@ public abstract class MundoConfig {
 	
 	public static EstadosDelJuego estadoJuego = null;
 	
+	
 	public static Npc locutor;
 	public static Vendedor vendedor;
 	
