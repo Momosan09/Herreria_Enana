@@ -67,23 +67,13 @@ public class MyDragAndDrop {
 		inventario = new ArrayList<Image>();
 		herramientas = new ArrayList<Image>();
 
-        if (jugador.contarTotalDeMinerales() > 0) {
-    		for (int i = 0; i<jugador.contarTotalDeMinerales();i++) {  				
-    			for(int j = 0; j < TipoMinerales.values().length;j++) {
-    				for(int k = 0; k < EstadosMinerales.values().length;k++) {
-    					int cantidad = jugador.contarMinerales(TipoMinerales.values()[j], EstadosMinerales.values()[k]);
-    					if(cantidad > 0) { // antes de crear la imagen se tiene que fijar que el jugador tenga por lo menos 1 de este mineral    						
-    					for(int l = 0;l< cantidad;l++) {
-    						inventario.add(new Image(new Sprite(new Texture(TipoMinerales.values()[j].ruta + EstadosMinerales.values()[k].ruta))));//crea las imagenes en funcion de la cantidad de cada tipo y estado de mineral que el jugador tenga en el inventario 										
-    					}
-    					}
-    				}
-    				
-    			}
-    			
-    			
-    		}
-        }
+
+		//Agrega las imagenes de los minerales en el inventario del jugador
+        for (int i = 0; i<jugador.obtenerTodosLosMinerales().size();i++) {
+			Mineral mineral = jugador.obtenerTodosLosMinerales().get(i);
+			inventario.add(new Image(new Sprite(new Texture(mineral.tipo.ruta+mineral.estado.ruta))));
+		}
+
 		
         if (jugador.getItems().size() > 0) {
             for (Item herramienta : jugador.getItems()) {
@@ -218,7 +208,7 @@ public class MyDragAndDrop {
 							if (esCombinacionValida(herramienta, mineralSource)) {
 								// Esto es medio generico, pero bueno cuando necesite mas especifico lo cambio
 								inventario.remove(mineralSource);
-								jugador.eliminarMineral(mineralSource, 1);
+								jugador.consumir(mineralSource, 1);
 								System.out.println("eliminado");
 								getActor().setColor(Color.GREEN);
 
@@ -337,29 +327,29 @@ public class MyDragAndDrop {
 	private boolean esCombinacionValida(Item herramienta, Mineral mineral) { //herramienta con mineral
 		Items herrTip = herramienta.getTipo();
 		if(herrTip == Items.CINCEL && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.MENA) {
-			jugador.agregarMineral(new HierroPuro());
+			jugador.agregar(IngredientesId.HIERRO_PURO,1);
 			System.out.println(HelpDebug.debub(getClass())+"cincelado");
 			herramienta.restarUsos();
 			return true;
 		}else if(herrTip == Items.CINCEL && mineral.tipo == TipoMinerales.CARBON && mineral.estado == EstadosMinerales.MENA){
-			jugador.agregarMineral((new CarbonPuro()));
+			jugador.agregar((new CarbonPuro()));
 			return true;
 		}else if(herrTip == Items.MAZA && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.LINGOTE){
-			jugador.agregarMineral((new HierroPlancha()));
+			jugador.agregar((new HierroPlancha()));
 			return true;
 		}else if(herrTip == Items.ESQUEMA_SIERRA_CIRCULAR && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.PLANCHA){
 			jugador.getItems().add(new HierroDisco());
-			jugador.eliminarMineral(mineral,1);
+			jugador.consumir(mineral,1);
 			//System.out.println("Eliminado correctamente ");
 			jugador.getItems().remove(herramienta);
 			return false;
 		}else if(herrTip == Items.SIERRA && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.PLANCHA){
-			jugador.agregarMineral(new HierroTira(),2);
-			jugador.eliminarMineral(mineral, 1);
+			jugador.agregar(IngredientesId.HIERRO_TIRA,2);
+			jugador.consumir(mineral, 1);
 			return false;
 		}else if(herrTip == Items.ESQUEMA_HOJA_ESPADA && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.TIRA) {
 			jugador.getItems().add(new Item(IngredientesId.HOJA_ESPADA_HIERRO_0));
-			jugador.eliminarMineral(mineral,1);
+			jugador.consumir(mineral,1);
 		}else {
 			return false;
 		}
@@ -412,19 +402,10 @@ public class MyDragAndDrop {
 			}
 		}
 
-			for(int j = 0; j < TipoMinerales.values().length;j++) {
-				//System.out.println("tipo minerales "+ TipoMinerales.values().length);
-				for(int k = 0; k < EstadosMinerales.values().length;k++) {
-					//System.out.println("estado minerales "+ EstadosMinerales.values().length);
-					int cantidad = jugador.contarMinerales(TipoMinerales.values()[j], EstadosMinerales.values()[k]);
-					if(cantidad > 0) { // antes de crear la imagen se tiene que fijar que el jugador tenga por lo menos 1 de este mineral    						
-					for(int l = 0;l< cantidad;l++) {
-						inventario.add(new Image(new Sprite(new Texture(TipoMinerales.values()[j].ruta + EstadosMinerales.values()[k].ruta))));//crea las imagenes en funcion de la cantidad de cada tipo y estado de mineral que el jugador tenga en el inventario 										
-					}
-					}
-					}
-			
-
+		//Agrega las imagenes de los minerales en el inventario del jugador
+        for (int i = 0; i<jugador.obtenerTodosLosMinerales().size();i++) {
+			Mineral mineral = jugador.obtenerTodosLosMinerales().get(i);
+			inventario.add(new Image(new Sprite(new Texture(mineral.tipo.ruta+mineral.estado.ruta))));
 		}
 
 			//los agrega a la tabla

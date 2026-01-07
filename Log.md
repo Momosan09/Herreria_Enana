@@ -468,3 +468,9 @@ por ejemplo:
     - Aregla error que hacia que el juego se cierre al tener una mision pendiente y tratar de recolectar un mineral
     - Agrega checkbox para deshabilitar las particulas
     - Agrga slider para el control del volumen de los efectos
+
+# 6 ENE
+    - Las combinaciones ahora estan definidas en json. Tuve que modificar un poco la estructura de los minerales, items y el jugador. pero esta estructura es muchisimo mejor
+   
+# 7 ENE
+    - La fundicionOmega ahora solo acepta como combustible los minerales que implementen la clase combustible

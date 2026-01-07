@@ -1,14 +1,11 @@
 package com.mygdx.entidades.ObjetosDelMapa;
 
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.eventos.EventoInteraccionObj;
 import com.mygdx.eventos.Listeners;
-import com.mygdx.hud.Fundicion;
-import com.mygdx.hud.SoporteArmaduraHUD;
 import com.mygdx.utiles.MundoConfig;
 
 public class SoporteArmadura extends ObjetoDelMapa implements EventoInteraccionObj{

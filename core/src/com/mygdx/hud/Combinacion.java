@@ -14,143 +14,161 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.utiles.Colores;
-import com.mygdx.utiles.EstiloFuente;
+import com.mygdx.combinaciones.IngredientesId;
+import com.mygdx.entidades.Jugador;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
+import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
+import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.MyDragAndDrop;
 import com.mygdx.utiles.recursos.Recursos;
-import com.mygdx.entidades.Jugador;
-import com.mygdx.enums.EstadosDelJuego;
-import com.mygdx.enums.TipoCombinacion;
 
-public class Combinacion extends HUD{
+public class Combinacion extends HUD {
 
-
-	private Label labelInv, titulo;
-	private Button cerrarBoton;
-	private Skin skin;
+    private Label labelInv, titulo;
+    private Button cerrarBoton;
+    private Skin skin;
 
     private MyDragAndDrop dragNDrop;
     private Jugador jugador;
+
     private ArrayList<Image> combinables;
-    
+
     private int pad = 20;
-    private boolean visible=false;
-    
+    private boolean visible = false;
+
     public Combinacion(Jugador jugador) {
-    	this.jugador = jugador;
-    	combinables = new ArrayList<Image>();
-        
+        this.jugador = jugador;
+        this.combinables = new ArrayList<>();
+
         dragNDrop = new MyDragAndDrop(this.jugador);
         dragNDrop.create();
 
-		construir();
-
-        
+        construir();
     }
+
     @Override
     public void dibujar() {
-    	if(visible) {
-    	stage.act(Gdx.graphics.getDeltaTime());
-    	stage.draw();
-    	dragNDrop.render();
-    	}
+        if (visible) {
+            stage.act(Gdx.graphics.getDeltaTime());
+            stage.draw();
+            dragNDrop.render();
+        }
     }
-    
+
     @Override
     public void reEscalar(int width, int heigth) {
-    	screenViewport.update(width, heigth, true);
-    	dragNDrop.resize(width, heigth);
+        screenViewport.update(width, heigth, true);
+        dragNDrop.resize(width, heigth);
     }
-    
-	@Override
+
+    @Override
     public void crearActores() {
-		skin = new Skin(Gdx.files.internal(Recursos.hud.SKIN));
-        
-    	contenedor = new Table();
-    	tabla = new Table();
-    	tabla.setFillParent(true);
-    	contenedor.setBackground(new TextureRegionDrawable(new Texture(Recursos.hud.YUNQUE_TEXTURA)));
-    	contenedor.debug();
-    	
-    	cerrarBoton = new Button(skin);
-    	cerrarBoton.addListener(new ChangeListener() {
-			
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				ocultar();
-				MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
-			}
-		});
-    	
-    	titulo = new Label(Recursos.bundle.get("combinacion.titulo"), labelStyle);
-    	labelInv = new Label(Recursos.bundle.get("combinacion.inventario"), labelStyle);
-    	//traerinventario();
+        skin = new Skin(Gdx.files.internal(Recursos.hud.SKIN));
+
+        contenedor = new Table();
+        tabla = new Table();
+        tabla.setFillParent(true);
+
+        contenedor.setBackground(
+                new TextureRegionDrawable(new Texture(Recursos.hud.YUNQUE_TEXTURA))
+        );
+
+        cerrarBoton = new Button(skin);
+        cerrarBoton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                ocultar();
+                MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
+            }
+        });
+
+        titulo = new Label(Recursos.bundle.get("combinacion.titulo"), labelStyle);
+        labelInv = new Label(Recursos.bundle.get("combinacion.inventario"), labelStyle);
     }
-	
-	public void traerInventario() {
-		for (int i = 0; i<jugador.obtenerTodosLosMinerales().size();i++) {
-			 combinables.add(new Image(jugador.obtenerTodosLosMinerales().get(i).getTextura()));
-			 combinables.get(i).setPosition(32, 32);
-		}
-	}
-	
-	@Override
+
+    /**
+     * Carga los ingredientes disponibles desde el inventario del jugador
+     */
+    public void traerInventario() {
+        combinables.clear();
+
+        for (IngredientesId id : IngredientesId.values()) {
+            int cantidad = jugador.getCantidad(id);
+
+            if (cantidad > 0) {
+                Texture textura = obtenerTextura(id);
+                if (textura != null) {
+                    Image img = new Image(textura);
+                    combinables.add(img);
+                }
+            }
+        }
+
+        // Posicionar (ejemplo simple)
+        int x = 32;
+        int y = 32;
+        for (Image img : combinables) {
+            img.setPosition(x, y);
+            stage.addActor(img);
+            x += 40;
+        }
+    }
+
+    /**
+     * Obtiene la textura segun el tipo de ingrediente
+     */
+    private Texture obtenerTextura(IngredientesId id) {
+
+        // ITEM
+        if (id.tipoI != null) {
+            return id.tipoI.getTextura();
+        }
+
+        // MINERAL
+        if (id.tipoM != null && id.estadoM != null) {
+            String ruta =
+                    id.tipoM.ruta + id.estadoM.ruta;
+            return new Texture(Gdx.files.internal(ruta));
+        }
+
+        return null;
+    }
+
+    @Override
     public void poblarStage() {
-		contenedor.pad(pad);
-		contenedor.add(labelInv).top();
-		contenedor.add(titulo).top();
-		contenedor.add(cerrarBoton);
-		contenedor.row();
-		contenedor.add();
-		contenedor.add().grow();
-		contenedor.add();
-		contenedor.add();
-		tabla.add(contenedor);
-    	stage.addActor(tabla);
-    	
+        contenedor.pad(pad);
+        contenedor.add(labelInv).top();
+        contenedor.add(titulo).top();
+        contenedor.add(cerrarBoton);
+        contenedor.row();
+
+        tabla.add(contenedor);
+        stage.addActor(tabla);
     }
 
-/*
-	public void cerrar() {
-	    contenedor.clear(); // Limpia todos los actores del contenedor
-	    stage.unfocusAll(); // Desenfoca el stage para que no procese eventos
-	    stage.clear(); // Limpia el stage completamente
-		
-	}
-	*/
-	public Stage getStage() {
-		return stage;
-	}
-	
-	public Stage getDragAndDrop() {
-		return dragNDrop.getStage();
-	}
-/*
-	public boolean getCerrar() {
-		return cerrar;
-	}
-	
-	public void setCerrar(boolean value) {
-		cerrar=value;
-	}
-*/
-	@Override
-	public void mostrar() {
-		if(!visible) {	
-			dragNDrop.refrescar();
-			visible = true;
-		}
+    public Stage getStage() {
+        return stage;
+    }
 
-	}
+    public Stage getDragAndDrop() {
+        return dragNDrop.getStage();
+    }
 
-	@Override
-	public void ocultar() {
-		visible = false;
-		stage.unfocusAll();//Cuando esta oculto desenfoca el stage para que no procese eventos
-		dragNDrop.ocultar();
-	}
+    @Override
+    public void mostrar() {
+        if (!visible) {
+            traerInventario();
+            dragNDrop.refrescar();
+            visible = true;
+        }
+    }
 
-	
-
+    @Override
+    public void ocultar() {
+        visible = false;
+        stage.unfocusAll();
+        stage.clear();
+        dragNDrop.ocultar();
+    }
 }

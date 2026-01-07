@@ -20,6 +20,7 @@ import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.CarbonPuro;
+import com.mygdx.entidades.ObjetosDelMapa.procesados.Combustible;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.LingoteHierro;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
@@ -51,7 +52,7 @@ public class FundicionOmega extends HUD{
 	private Mineral mineralEntrada;
 	private Mineral mineralMolde;
 	private Mineral mineralSalida;
-	private Mineral combustible;
+	private Combustible combustible;
 	
 	private long calor = 0;//calor de la fragua
 
@@ -88,7 +89,7 @@ public class FundicionOmega extends HUD{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if(mineralSalida != null) {					
-					j.agregarMineral(mineralSalida);
+					j.agregar(mineralSalida);
 					salida.setDrawable(new TextureRegionDrawable(texturaEntradaVacia));
 					actualizarTablaInventario();
 					mineralSalida = null;
@@ -178,27 +179,29 @@ public class FundicionOmega extends HUD{
 
 		    @Override
 		    public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
-		        if (!(payload.getObject() instanceof CarbonPuro)) return false;//TODO aca tengo que usar una interface que sea "combustible" para que me permita usar distintos combustibles con distintos aportes de calor
+		    	Mineral m = (Mineral) payload.getObject();
 
-		        Mineral m = (Mineral) payload.getObject();
 
-		        
+		        if (!(payload.getObject() instanceof Combustible)) return false;
+
 		        return combustible == null;
+
 		    }
 
 		    @Override
 		    public void drop(Source source, Payload payload, float x, float y, int pointer) {
 
+		        Combustible comb = (Combustible) payload.getObject();
 		        Mineral mineral = (Mineral) payload.getObject();
 
-		        combustible = mineral;
+		        combustible = comb;
 
 		        combustibleImg.setDrawable(new TextureRegionDrawable(mineral.getTextura()));
 		        consumirMineral(mineral, source.getActor());
 		        reproducirSonidoSoltar();
-		        actualizarMensajeCalor();
 		        calentar();
 		    }
+
 		};
 
 		Target targetEntrada = new Target(entrada) {
@@ -298,7 +301,7 @@ public class FundicionOmega extends HUD{
 	
 	private void consumirCombustible() {
     	combustibleImg.setDrawable(new TextureRegionDrawable(texturaEntradaVacia));
-		calor += combustible.calorDeFusion;
+		calor += combustible.getCalorias();
 		combustible = null;
 		calorLbl.setText("Calor = " + calor);
 		actualizarMensajeCalor();
@@ -349,7 +352,7 @@ public class FundicionOmega extends HUD{
 	}
 
 	private void consumirMineral(Mineral mineral, Actor actor) {
-	    j.eliminarMineral(mineral, 1);
+	    j.consumir(mineral);
 	    actor.remove();
 	}
 
@@ -365,11 +368,11 @@ public class FundicionOmega extends HUD{
 	            final Image mineralImage = new Image(mineral.getTextura());
 
 	            // Drag source
-	            dragAndDrop.addSource(new DragAndDrop.Source(mineralImage) {
+	            dragAndDrop.addSource(new Source(mineralImage) {
 	                @Override
-	                public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
+	                public Payload dragStart(InputEvent event, float x, float y, int pointer) {
 
-	                    DragAndDrop.Payload payload = new DragAndDrop.Payload();
+	                    Payload payload = new Payload();
 
 	                    Image dragImage = new Image(mineral.getTextura());
 	                    payload.setDragActor(dragImage);

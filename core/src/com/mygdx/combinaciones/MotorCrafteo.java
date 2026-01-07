@@ -1,7 +1,16 @@
 package com.mygdx.combinaciones;
 
+import com.mygdx.entidades.Jugador;
+
 public class MotorCrafteo {
 
+	InventarioCrafteo inventario;
+
+	
+	public MotorCrafteo(Jugador j) {
+		inventario = new InventarioJugador(j);
+	}
+	
     /**
      * Verifica si se puede fabricar una receta
      */

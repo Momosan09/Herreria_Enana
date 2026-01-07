@@ -41,7 +41,7 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar, Ingrediente{
 	public EstadosMinerales estado;
 	protected IngredientesId ingredienteId;
 	public int vida = 100;
-	public int calorDeFusion = 100;
+	public int calorDeFusion = 0;
 	public int valor = 5;
 	private boolean comprar = false, cerrar = false, comprable = false;
 	private Circle areaMinado;//Es el area en el que el jugador puede minar el mineral, mas grande que el area de interaccion la cual es en donde el jugador debe poner el cursor para minar
@@ -53,7 +53,7 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar, Ingrediente{
 		this.ingredienteId = ingredienteId;
 		this.comprable = comprable;
 		this.tipo = ingredienteId.tipoM;
-		this.estado = estado;
+		this.estado = ingredienteId.estadoM;
 		this.areaMinado = new Circle(this.posicion.x, this.posicion.y, 64);
 		crearCuerpo(world, ancho, alto);
 		Listeners.agregarListener(this);

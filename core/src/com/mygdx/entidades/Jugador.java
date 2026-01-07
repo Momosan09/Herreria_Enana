@@ -19,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.combinaciones.CreadorDeMinerales;
 import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.combinaciones.InventarioCrafteo;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
@@ -30,6 +31,7 @@ import com.mygdx.entidades.ObjetosDelMapa.Items.Pico;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Sierra;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
+import com.mygdx.entidades.ObjetosDelMapa.procesados.Combustible;
 import com.mygdx.enums.Direcciones;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
@@ -321,6 +323,12 @@ public class Jugador implements InventarioCrafteo {
         );
     }
 
+    public void agregar(Mineral mineral) {
+    	IngredientesId ingrediente = mineral.getIngredienteId();
+        inventario.put(ingrediente, getCantidad(ingrediente) + 1);
+    }
+
+    
     @Override
     public void consumir(IngredientesId ingrediente, int cantidad) {
         int actual = getCantidad(ingrediente);
@@ -329,6 +337,67 @@ public class Jugador implements InventarioCrafteo {
 
         inventario.put(ingrediente, actual - cantidad);
     }
+    
+    public void consumir(Mineral mineral) {
+    	IngredientesId ingrediente = mineral.getIngredienteId();
+        int actual = getCantidad(ingrediente);
+        if (actual < 1) {
+        	throw new IllegalStateException("No hay suficiente " + ingrediente);        	
+        }
+
+        inventario.put(ingrediente, actual - 1);
+    }
+    
+    public void consumir(Mineral mineral, int cantidad) {
+    	IngredientesId ingrediente = mineral.getIngredienteId();
+        int actual = getCantidad(ingrediente);
+        if (actual < cantidad) {
+        	throw new IllegalStateException("No hay suficiente " + ingrediente);        	
+        }
+
+        inventario.put(ingrediente, actual - cantidad);
+    }
+    
+    public ArrayList<Mineral> obtenerTodosLosMinerales() {
+
+        ArrayList<Mineral> resultado = new ArrayList<>();
+
+        for (IngredientesId id : inventario.keySet()) {
+        	if(id.tipoI == null) { //Solo es mineral si "tipoI" es nulo
+        		
+            int cantidad = inventario.get(id);
+
+            if (cantidad <= 0) continue;
+
+            for (int i = 0; i < cantidad; i++) {
+                resultado.add(CreadorDeMinerales.crear(id));
+            }
+        	}
+        }
+
+        return resultado;
+    }
+    
+//    public ArrayList<Mineral> obtenerTodosLosCombustibles(){
+//        ArrayList<Mineral> resultado = new ArrayList<>();
+//
+//        for (IngredientesId id : inventario.keySet()) {
+//        	if(id.tipoI == null) { //Solo es mineral si "tipoI" es nulo
+//        		if(new Mineral(id) instanceof Combustible) {
+//        			int cantidad = inventario.get(id);
+//        			if (cantidad <= 0) continue;
+//                    for (int i = 0; i < cantidad; i++) {
+//                        resultado.add(new Mineral(id));
+//                    }
+//        		}
+//
+//
+//
+//        	}
+//        }
+//
+//        return resultado;
+//    }
 
     // =========================
     // ITEMS GAMEPLAY

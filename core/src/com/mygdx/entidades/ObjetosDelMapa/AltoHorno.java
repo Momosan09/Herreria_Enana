@@ -8,7 +8,6 @@ import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.eventos.EventoInteraccionObj;
 import com.mygdx.eventos.Listeners;
-import com.mygdx.hud.Fundicion;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.recursos.Recursos;
 

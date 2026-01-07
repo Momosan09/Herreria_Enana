@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.combinaciones.CargadorRecetas;
+import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.NPCManager;
 import com.mygdx.entidades.Npc;
@@ -170,11 +171,11 @@ public class Juego implements Screen{
 		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.PIEDRA.toString(), 2,0,10,50);
 		*/
 	    
-		jugador.agregarMineral(new HierroMena(0, 0, world, false));
-		jugador.agregarMineral(new HierroMena(0, 0, world, false));
-		jugador.agregarMineral(new HierroPuro());
-		jugador.agregarMineral(new HierroPuro());
-
+		jugador.agregar(IngredientesId.HIERRO_MENA, 2);
+		jugador.agregar(IngredientesId.HIERRO_PURO, 2);
+		jugador.agregar(IngredientesId.CARBON_PURO, 1);
+		
+		
 		Recursos.muxJuego.addProcessor(new EntradaJuego());
 		Recursos.muxJuego.addProcessor(new EntradasJugador(jugador));
 		
@@ -182,7 +183,7 @@ public class Juego implements Screen{
 		MundoConfig.cartaAMostrar = CartasManager.getPrimeraCarta();
 		MundoConfig.estadoJuego = EstadosDelJuego.INICIO;
 		
-		jugador.agregarMineral(new CarbonPuro());
+
 		
 		CargadorRecetas.cargar(Recursos.RECETAS);
 		
