@@ -19,20 +19,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.combinaciones.CargadorRecetas;
 import com.mygdx.combinaciones.IngredientesId;
+import com.mygdx.combinaciones.Medios;
+import com.mygdx.combinaciones.MotorCrafteo;
+import com.mygdx.combinaciones.Receta;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
-import com.mygdx.entidades.ObjetosDelMapa.Items.SierraCircular;
-import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
-import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
-import com.mygdx.entidades.ObjetosDelMapa.procesados.CarbonPuro;
-import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroDisco;
-import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroPlancha;
-import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroPuro;
-import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroTira;
-import com.mygdx.enums.Items;
-import com.mygdx.enums.TipoCombinacion;
-import com.mygdx.historia.MisionesDelJuego;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
 
 public class MyDragAndDrop {
@@ -42,15 +35,21 @@ public class MyDragAndDrop {
 	private Label.LabelStyle labelStyle;
 	private Label actorLabelNombre;
 	private Table herramientasTabla, mineralesTabla, tabla, contenedor;
-	private ArrayList<Image> inventario, herramientas;
 	private Jugador jugador;
 	private DragAndDrop dragAndDrop;
+	private MotorCrafteo motorCraf;
+	private Medios medio = Medios.YUNQUE;
+	private ArrayList<Image> inventario, herramientas;
+	private ArrayList<IngredientesId> ingredientes;
 	
 	public MyDragAndDrop(Jugador jugador){
 		dragAndDrop = new DragAndDrop();
 		this.jugador = jugador;
+		this.motorCraf = new MotorCrafteo(jugador);
+
 		screenViewport = new ScreenViewport();
 		stage = new Stage(screenViewport);
+
 		
 		herramientasTabla = new Table();
 		mineralesTabla = new Table();
@@ -68,11 +67,12 @@ public class MyDragAndDrop {
 		herramientas = new ArrayList<Image>();
 
 
-		//Agrega las imagenes de los minerales en el inventario del jugador
-        for (int i = 0; i<jugador.obtenerTodosLosMinerales().size();i++) {
-			Mineral mineral = jugador.obtenerTodosLosMinerales().get(i);
-			inventario.add(new Image(new Sprite(new Texture(mineral.tipo.ruta+mineral.estado.ruta))));
+		 ingredientes = jugador.obtenerIngredientesParaCrafteo();
+		for (IngredientesId id : ingredientes) {
+		    inventario.add(new Image(id.getTextura()));
 		}
+
+		
 
 		
         if (jugador.getItems().size() > 0) {
@@ -90,36 +90,26 @@ public class MyDragAndDrop {
 	public void create () {
 		stage.setDebugAll(true);
 		System.out.println(HelpDebug.debub(getClass())+ "creado");
-		
+		System.out.println(ingredientes.size()+"++++++++++++++++++++++++++"+inventario.size());
 		for (int i = 0; i < inventario.size(); i++) {
-			 final Mineral mineral = jugador.obtenerTodosLosMinerales().get(i);
-			    dragAndDrop.addSource(new Source(inventario.get(i)) {//addSource permite que la imagen sea arrastrable, por eso necesito que cada imagen del inventario sea source
-				
-				@Null
-				public Payload dragStart (InputEvent event, float x, float y, int pointer) {
-					Payload payload = new Payload();
-					payload.setObject(mineral);
+		    final IngredientesId ingrediente = ingredientes.get(i);
 
-					payload.setDragActor(getActor());
-					stage.addActor(getActor());//esta linea arregla el tema del offset
-
-					Label validLabel = new Label("Valido!", labelStyle);//crea la label que se muestra cuando es valido
-					validLabel.setColor(0, 1, 0, 1);
-					payload.setValidDragActor(validLabel);
-
-					Label invalidLabel = new Label("Invalido", labelStyle);//crea la label que se muestra cuando no es valido
-					invalidLabel.setColor(1, 0, 0, 1);
-					payload.setInvalidDragActor(invalidLabel);
-					
-					
-					return payload;
-				}
-			});
+		    dragAndDrop.addSource(new Source(inventario.get(i)) {
+		        @Override
+		        public Payload dragStart(InputEvent event, float x, float y, int pointer) {
+		            Payload payload = new Payload();
+		            payload.setObject(ingrediente);
+		            payload.setDragActor(getActor());
+		            stage.addActor(getActor());
+		            return payload;
+		        }
+		    });
 		}
+
 		
 		
 		for (int i = 0; i < jugador.getItems().size(); i++) {
-            final Item herramienta = jugador.getItems().get(i);
+            final IngredientesId herramienta = jugador.getItems().get(i).getIngredienteId();
             dragAndDrop.addSource(new Source(herramientas.get(i)) {
                 @Null
                 public Payload dragStart(InputEvent event, float x, float y, int pointer) {
@@ -128,6 +118,7 @@ public class MyDragAndDrop {
                     payload.setObject(herramienta);
 
                     payload.setDragActor(getActor());
+                    
                     stage.addActor(getActor());//esta linea arregla el tema del offset
 
                     Label validLabel = new Label("Valido!", labelStyle);
@@ -147,41 +138,27 @@ public class MyDragAndDrop {
 
 		
 		for (int i = 0; i < inventario.size(); i++) {
-			final Mineral mineralSource;
-			 mineralSource = jugador.obtenerTodosLosMinerales().get(i);
+			final IngredientesId mineralSource;
+
+			 mineralSource = jugador.obtenerIngredientesParaCrafteo().get(i);
 				dragAndDrop.addTarget(new Target(inventario.get(i)) {
 
 					public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
-						//getActor().setColor(Color.GREEN);
 
-						if (payload.getObject() instanceof Mineral) {// Aca para cosas que involucren dos minerales
-							Mineral mineralTarget = (Mineral) payload.getObject();
+					    if (!(payload.getObject() instanceof IngredientesId)) return false;
 
-							if (esCombinacionValida(mineralSource, mineralTarget)) {
-								getActor().setColor(Color.GREEN);
-							} else {
-								getActor().setColor(Color.RED);
-							}
+					    IngredientesId origen = (IngredientesId) payload.getObject();
+					    Receta receta = CargadorRecetas.buscar(origen, mineralSource, medio);
 
-						}
+					    if (MotorCrafteo.puedeFabricar(receta, motorCraf.getInventario(), medio)) {
+					        getActor().setColor(Color.GREEN);
+					    } else {
+					        getActor().setColor(Color.RED);
+					    }
 
-						if (payload.getObject() instanceof Item) {// Aca para cosas que involucren una herramienta y un
-																	// mineral
-																	//ITEM MINERAL
-							Item herramienta = (Item) payload.getObject();
-							//TODO esto lo comento temporalmente porque el problema es que en "esCombinacionValida" se agrega el mineral y entonces eso hace que de una cantidad mayor a la adecuada cuando se quiere combinar. Para arreglarlo tengo que darle el mineral al jugador en otro metodo, o hacer la logica de comprobacion por separado a la de dar los minerales
-//							if (esCombinacionValida(herramienta, mineralSource)) {
-//								// Esto es medio generico, pero bueno cuando necesite mas especifico lo cambio
-//								System.out.println(HelpDebug.debub(getClass())+"eliminado");
-//								getActor().setColor(Color.GREEN);
-//							}else {
-//								getActor().setColor(Color.RED);
-//							}
-							
-						}
-						
-						return true;
+					    return true;
 					}
+
 
 					public void reset(Source source, Payload payload) {
 						getActor().setColor(Color.WHITE);
@@ -189,41 +166,19 @@ public class MyDragAndDrop {
 
 					public void drop(Source source, Payload payload, float x, float y, int pointer) {
 
-						if (payload.getObject() instanceof Mineral) {// Aca para cosas que involucren dos minerales
-							Mineral mineralTarget = (Mineral) payload.getObject();
+					    if (!(payload.getObject() instanceof IngredientesId)) return;
 
-							if (esCombinacionValida(mineralSource, mineralTarget)) {
-								getActor().setColor(Color.GREEN);
-							} else {
-								getActor().setColor(Color.RED);
-							}
+					    IngredientesId origen = (IngredientesId) payload.getObject();
 
-						}
+					    Receta receta = CargadorRecetas.buscar(origen, mineralSource, medio);
+					    
+					    if (receta != null && MotorCrafteo.puedeFabricar(receta, motorCraf.getInventario(), medio)) {
+					        MotorCrafteo.fabricar(receta, motorCraf.getInventario());
+					        refrescar();
+					    }
+					}
 
-						if (payload.getObject() instanceof Item) {// Aca para cosas que involucren una herramienta y un
-																	// mineral
-																	//ITEM MINERAL
-							Item herramienta = (Item) payload.getObject();
-
-							if (esCombinacionValida(herramienta, mineralSource)) {
-								// Esto es medio generico, pero bueno cuando necesite mas especifico lo cambio
-								inventario.remove(mineralSource);
-								jugador.consumir(mineralSource, 1);
-								System.out.println("eliminado");
-								getActor().setColor(Color.GREEN);
-
-							}else {
-								getActor().setColor(Color.RED);
-							}
-
-
-						}
-
-						refrescar();
-
-			        }
-					
-					
+						
 				
 			    });
 			
@@ -237,14 +192,15 @@ public class MyDragAndDrop {
 				@Override
 				public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
 
-					if(payload.getObject() instanceof Item) {
-						Item itemTarget = (Item) payload.getObject();
-						//TODO esto lo comento temporalmente porque el problema es que en "esCombinacionValida" se agrega el mineral y entonces eso hace que de una cantidad mayor a la adecuada cuando se quiere combinar. Para arreglarlo tengo que darle el mineral al jugador en otro metodo, o hacer la logica de comprobacion por separado a la de dar los minerales
-//					if (esCombinacionValida(itemTarget, itemSource)) {//ITEM CON ITEM
-//						getActor().setColor(Color.GREEN);
-//					}else {
-//						getActor().setColor(Color.RED);
-//					}
+					if(payload.getObject() instanceof IngredientesId) {
+						IngredientesId itemTarget = (IngredientesId) payload.getObject();
+						Receta receta = CargadorRecetas.buscar(itemTarget, itemSource.getIngredienteId(), medio);
+						
+						if(MotorCrafteo.puedeFabricar(receta, motorCraf.getInventario(), medio)) {
+							getActor().setColor(Color.GREEN);
+						}else {
+							getActor().setColor(Color.RED);
+						}
 					
 					}
 
@@ -257,17 +213,23 @@ public class MyDragAndDrop {
 				}
 
 				public void drop(Source source, Payload payload, float x, float y, int pointer) {
-					if(payload.getObject() instanceof Item) {
-						Item itemTarget = (Item) payload.getObject();
-					if (esCombinacionValida(itemTarget, itemSource)) {//ITEM CON ITEM
-						herramientas.remove(itemSource);
-						jugador.getItems().remove(itemSource);
+					if (payload.getObject() instanceof IngredientesId) {
 
-					}else {
-						getActor().setColor(Color.RED);
+						IngredientesId herramienta = (IngredientesId) payload.getObject();
+
+					    Receta receta = CargadorRecetas.buscar(herramienta, itemSource.getIngredienteId(), medio);
+
+					    if (receta != null &&
+					        MotorCrafteo.puedeFabricar(receta,motorCraf.getInventario(), medio)) {
+
+					        MotorCrafteo.fabricar(receta, motorCraf.getInventario());
+
+					        //jugador.avanzarMision(MisionesDelJuego.CARP_00);
+
+					        refrescar();
+					    }
 					}
-					
-					}
+
 
 					refrescar();
 		        }
@@ -276,88 +238,9 @@ public class MyDragAndDrop {
 		}	
 			
 
-//		dragAndDrop.addTarget(new Target() {
-//			public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
-//				getActor().setColor(Color.RED);
-//				return false;
-//			}
-//
-//			public void reset (Source source, Payload payload) {
-//				getActor().setColor(Color.WHITE);
-//			}
-//
-//			public void drop (Source source, Payload payload, float x, float y, int pointer) {
-//			}
-//		});
-
 		mostrarLabelOnEnter();
 	}
 
-	
-
-	
-	private boolean esCombinacionValida(Mineral mineralFuente, Mineral mineralObjetivo) {
-		if(mineralFuente.tipo == mineralObjetivo.tipo) {
-			System.out.println("Exito");
-			return true;
-		}else {
-			return false;
-		}
-	}
-	
-	private boolean esCombinacionValida(Item itemFuente, Item itemObjetivo) { //Items con items
-		Items fuente = itemFuente.getTipo();
-		Items objeti = itemObjetivo.getTipo();
-		if(fuente == Items.LIMA_PLANA && objeti == Items.DISCO_HIERRO) {
-			jugador.getItems().remove(itemObjetivo);
-			jugador.getItems().add(new SierraCircular());
-			jugador.avanzarMision(MisionesDelJuego.CARP_00);
-			return true;
-		}else if(fuente == Items.MANGO_MADERA_0 && objeti == Items.HOJA_ESPADA_HIERRO_0){
-			jugador.eliminarItem(itemFuente);
-			jugador.eliminarItem(itemObjetivo);
-			jugador.avanzarMision(MisionesDelJuego.RC1_FESP);
-			jugador.getItems().add(new Item(IngredientesId.ESPADA_HIERRO_0));
-			return true;
-		}else {
-		}
-		return false;
-	}
-	
-	private boolean esCombinacionValida(Item herramienta, Mineral mineral) { //herramienta con mineral
-		Items herrTip = herramienta.getTipo();
-		if(herrTip == Items.CINCEL && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.MENA) {
-			jugador.agregar(IngredientesId.HIERRO_PURO,1);
-			System.out.println(HelpDebug.debub(getClass())+"cincelado");
-			herramienta.restarUsos();
-			return true;
-		}else if(herrTip == Items.CINCEL && mineral.tipo == TipoMinerales.CARBON && mineral.estado == EstadosMinerales.MENA){
-			jugador.agregar((new CarbonPuro()));
-			return true;
-		}else if(herrTip == Items.MAZA && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.LINGOTE){
-			jugador.agregar((new HierroPlancha()));
-			return true;
-		}else if(herrTip == Items.ESQUEMA_SIERRA_CIRCULAR && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.PLANCHA){
-			jugador.getItems().add(new HierroDisco());
-			jugador.consumir(mineral,1);
-			//System.out.println("Eliminado correctamente ");
-			jugador.getItems().remove(herramienta);
-			return false;
-		}else if(herrTip == Items.SIERRA && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.PLANCHA){
-			jugador.agregar(IngredientesId.HIERRO_TIRA,2);
-			jugador.consumir(mineral, 1);
-			return false;
-		}else if(herrTip == Items.ESQUEMA_HOJA_ESPADA && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.TIRA) {
-			jugador.getItems().add(new Item(IngredientesId.HOJA_ESPADA_HIERRO_0));
-			jugador.consumir(mineral,1);
-		}else {
-			return false;
-		}
-		return false;
-			
-	}
-	
-	
 	public void render () {
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
@@ -394,28 +277,34 @@ public class MyDragAndDrop {
 		contenedor.clear();
 		tabla.clear();
 
-		for (int i = 0; i < jugador.getItems().size(); i++) {
-			herramientas.add(new Image(new Sprite(jugador.getItems().get(i).getTextura())));
-			herramientasTabla.add(herramientas.get(i));				
-			if(i%2 == 0 && i != 0) {
-				herramientasTabla.row();
-			}
+		System.out.println(HelpDebug.debub(getClass()) + stage.getActors().size);
+		
+	    dragAndDrop.clear();
+		
+		//Agrega las imagenes de los minerales en el inventario del jugador
+		 ingredientes = jugador.obtenerIngredientesParaCrafteo();
+		for (IngredientesId id : ingredientes) {
+		    inventario.add(new Image(id.getTextura()));
 		}
 
-		//Agrega las imagenes de los minerales en el inventario del jugador
-        for (int i = 0; i<jugador.obtenerTodosLosMinerales().size();i++) {
-			Mineral mineral = jugador.obtenerTodosLosMinerales().get(i);
-			inventario.add(new Image(new Sprite(new Texture(mineral.tipo.ruta+mineral.estado.ruta))));
-		}
+		
+        for (int i = 0; i < jugador.getItems().size(); i++) {
+            herramientas.add(new Image(new Sprite(jugador.getItems().get(i).getTextura())));
+            herramientasTabla.add(herramientas.get(i));
+            if(i % 2 == 0 && i != 0) herramientasTabla.row();
+        }
 
 			//los agrega a la tabla
 			for(int i = 0; i<inventario.size();i++) {
 				mineralesTabla.add(inventario.get(i));
 			}
 	
-		System.out.println(HelpDebug.debub(getClass()) + stage.getActors().size);
-		
-		create();
+
+
+
+	    // vuelve a crear drag & drop (una sola vez)
+	    create();
+
 		contenedor.add(herramientasTabla);
 		contenedor.add(mineralesTabla);
 	    tabla.add(contenedor);
@@ -427,13 +316,13 @@ public class MyDragAndDrop {
 	private void mostrarLabelOnEnter() {
 		//Label nombre 
 		 for (int i = 0; i < inventario.size(); i++) {
-		        final Mineral mineral = jugador.obtenerTodosLosMinerales().get(i);
+		        final IngredientesId ingrediente = jugador.obtenerIngredientesParaCrafteo().get(i);
 		        final Image image = inventario.get(i);
 		        image.addListener(new InputListener() {
 		            @Override
 		            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
 		                // Muestra la etiqueta con el nombre del actor cuando el cursor entra en la imagen
-		                actorLabelNombre.setText(mineral.getNombre() + " " + mineral.getEstado());
+		                actorLabelNombre.setText(ingrediente.toString());
 		                actorLabelNombre.setPosition(event.getStageX(), event.getStageY());
 		                actorLabelNombre.setVisible(true);
 		            }

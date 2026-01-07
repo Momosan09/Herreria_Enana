@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
@@ -135,8 +136,8 @@ public class InventarioHUD extends HUD{
 		tablaMinerales.add(encabezadoMinerales).row();
 		tablaMinerales.setDebug(true);
 		//Este if me permite saber si el la tabla no esta actualizada y si no lo esta, actualizarla
-		if(tablaMinerales.getChildren().size-1 != jugador.obtenerTodosLosMinerales().size()) {//Le resto 1 porque la Label es un children tambien
-	    for (Mineral mineral : jugador.obtenerTodosLosMinerales()) {
+		if(tablaMinerales.getChildren().size-1 != jugador.obtenerIngredientesParaCrafteo().size()) {//Le resto 1 porque la Label es un children tambien
+	    for (IngredientesId mineral : jugador.obtenerIngredientesParaCrafteo()) {
 	    	//System.out.println(HelpDebug.debub(getClass())+"Hay mineral");
 	        // Crea una imagen para el mineral y la agrega a la tabla
 	        Image mineralImage = new Image(mineral.getTextura());

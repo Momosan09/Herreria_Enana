@@ -185,7 +185,7 @@ public class Juego implements Screen{
 		
 
 		
-		CargadorRecetas.cargar(Recursos.RECETAS);
+		MundoConfig.recetas = CargadorRecetas.cargar(Recursos.RECETAS);
 		
 	}
 

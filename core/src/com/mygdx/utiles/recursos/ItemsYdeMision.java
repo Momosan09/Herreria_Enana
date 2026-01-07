@@ -3,7 +3,7 @@ package com.mygdx.utiles.recursos;
 public class ItemsYdeMision {
 	
 	//ITEMS Y DE MISION
-	public final String DISCO_HIERRO = "objetosDelMundo/inanimados/hierroDisco.png";
+	public final String DISCO_HIERRO = "objetosDelMundo/inanimados/minerales/hierro/hierroDisco.png";
 	public final String SIERRA_CIRCULAR= "objetosDelMundo/inanimados/sierraCircular.png";
 	
 	//Items

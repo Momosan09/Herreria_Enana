@@ -1,7 +1,7 @@
 package com.mygdx.utiles;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
+import java.util.List;
+import com.mygdx.combinaciones.Receta;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.Vendedor;
 import com.mygdx.enums.EstadosDelJuego;
@@ -33,4 +33,7 @@ public abstract class MundoConfig {
 	
 	//Carta a mostrar
 	public static CartaHUD cartaAMostrar;
+	
+	//Recetas
+	public static List<Receta> recetas;
 }

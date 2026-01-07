@@ -1,5 +1,6 @@
 package com.mygdx.combinaciones;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Null;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
@@ -78,4 +79,26 @@ public enum IngredientesId {
 		this.tipoM = tipo;
 		this.estadoM = estado;
 	}
+	
+	
+	public boolean esIngredienteCrafteable() {//Estos items NO son ingredientes, son herramientas
+		if(tipoI != null){
+			if(this.tipoI != Items.PICO && this.tipoI != Items.MAZA && this.tipoI != Items.CINCEL && this.tipoI != Items.SIERRA && this.tipoI != Items.LIMA_PLANA) {
+				return true;
+			}else {
+				return false;				
+			}
+		}else {
+			return false;
+		}
+	}
+	
+	public Texture getTextura() {
+		if(tipoI != null) {
+			return tipoI.getTextura();
+		}else {
+			return new Texture(tipoM.ruta+estadoM.ruta);
+		}
+	}
+
 }

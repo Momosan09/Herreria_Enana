@@ -24,6 +24,7 @@ import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.combinaciones.InventarioCrafteo;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Cincel;
+import com.mygdx.entidades.ObjetosDelMapa.Items.Esquema;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
 import com.mygdx.entidades.ObjetosDelMapa.Items.LimaPlana;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Maza;
@@ -66,10 +67,9 @@ public class Jugador implements InventarioCrafteo {
 	private ItemEquipadoJugador itemEnMano;
 	
 	//Inventarios
-	private ArrayList<Item> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
+	private ArrayList<Item> items = new ArrayList<>();//LOS ITEMS "FISICOS" son los cuales tienen interaccion, se pueden equipar o interactuan con el mundo
 
-    private EnumMap<IngredientesId, Integer> inventario =
-            new EnumMap<>(IngredientesId.class);
+    private EnumMap<IngredientesId, Integer> inventario = new EnumMap<>(IngredientesId.class); //Los items "abstractos" son los que sirven para las combinaciones, contar cantidades y no existen en el mapa
 
 	
 	private HashMap<String,Mision> tareas = new HashMap<String,Mision>();
@@ -117,15 +117,7 @@ public class Jugador implements InventarioCrafteo {
         }
         
 		//ESTO ES TEMPORAL, DESPUES EL JUGADOR NO VA A EMPEZAR CON LAS HERRAMIENTAS
-        // Herramientas iniciales
-        agregar(IngredientesId.PICO, 1);
-        agregar(IngredientesId.MAZA, 1);
-        agregar(IngredientesId.CINCEL, 1);
-
-        // Items físicos (solo gameplay)
-        items.add(new Pico());
-        items.add(new Maza());
-        items.add(new Cincel());
+        cheats();
 
 	
 		itemEnMano = new ItemEquipadoJugador();
@@ -317,10 +309,11 @@ public class Jugador implements InventarioCrafteo {
 
     @Override
     public void agregar(IngredientesId ingrediente, int cantidad) {
-        inventario.put(
-                ingrediente,
-                getCantidad(ingrediente) + cantidad
-        );
+        inventario.put(ingrediente, getCantidad(ingrediente) + cantidad);
+    }
+    
+    public void agregar(IngredientesId ingrediente) {
+        inventario.put(ingrediente, getCantidad(ingrediente) + 1);
     }
 
     public void agregar(Mineral mineral) {
@@ -357,6 +350,44 @@ public class Jugador implements InventarioCrafteo {
 
         inventario.put(ingrediente, actual - cantidad);
     }
+    
+    @Override
+    public ArrayList<Mineral> getMinerales(){
+    	return obtenerTodosLosMinerales();
+    }
+    
+    @Override
+    public boolean tieneItem(IngredientesId id) {
+        // primero: herramientas físicas
+        for (Item item : items) {
+            if (item.getIngredienteId() == id) {
+                return true;
+            }
+        }
+
+        // segundo: ingredientes contables (por si alguna receta usa eso)
+        return getCantidad(id) > 0;
+    }
+
+
+    public ArrayList<IngredientesId> obtenerIngredientesParaCrafteo() {
+
+        ArrayList<IngredientesId> lista = new ArrayList<>();
+
+        for (IngredientesId id : inventario.keySet()) {
+            if (inventario.get(id) > 0 && id.esIngredienteCrafteable()) {
+                lista.add(id);
+            }
+        }
+        
+        ArrayList<Mineral> minerales = obtenerTodosLosMinerales();
+        for(int i = 0; i<minerales.size();i++) {
+        	lista.add(minerales.get(i).getIngredienteId());
+        }
+
+        return lista;
+    }
+
     
     public ArrayList<Mineral> obtenerTodosLosMinerales() {
 
@@ -419,6 +450,17 @@ public class Jugador implements InventarioCrafteo {
         });
         
     }
+
+//    public ArrayList<IngredientesId> obtenerIngredientesCrafteables() {
+//        ArrayList<IngredientesId> lista = new ArrayList<>();
+//
+//        for (IngredientesId id : inventario.keySet()) {
+//            if (inventario.get(id) > 0 && id.esIngredienteCrafteable() && id.tipoI != null) {
+//                lista.add(id);
+//            }
+//        }
+//        return lista;
+//    }
 
 
 	/*
@@ -676,6 +718,25 @@ public class Jugador implements InventarioCrafteo {
 		itemEnMano.setTipo(Items.VACIO);
 		itemEnMano.borrarSprite();
 		itemEnMano.ocultar();
+	}
+	
+	private void cheats() {
+        // Herramientas iniciales
+        agregar(IngredientesId.PICO);
+        agregar(IngredientesId.MAZA);
+        agregar(IngredientesId.CINCEL);
+        agregar(IngredientesId.SIERRA);
+        agregar(IngredientesId.LIMA_PLANA);
+        agregar(IngredientesId.ESQUEMA_SIERRA_CIRCULAR);
+        
+        agregar(IngredientesId.HIERRO_LINGOTE, 2);
+
+        // Items físicos (solo gameplay)
+        items.add(new Pico());
+        items.add(new Maza());
+        items.add(new Cincel());
+        items.add(new Sierra());
+        items.add(new LimaPlana());
 	}
 
 }
