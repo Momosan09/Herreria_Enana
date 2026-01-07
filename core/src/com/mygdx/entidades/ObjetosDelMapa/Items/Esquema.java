@@ -1,15 +1,15 @@
 package com.mygdx.entidades.ObjetosDelMapa.Items;
 
-import com.mygdx.enums.Items;
+import com.mygdx.combinaciones.IngredientesId;
 
 public class Esquema extends Item{
 
-	public Esquema(Items tipo) {
-		super(tipo);
+	public Esquema(IngredientesId ingredientesId) {
+		super(ingredientesId);
 	}
 	
-	public Esquema(Items tipo, String nombre) {
-		super(tipo, nombre);
+	public Esquema(IngredientesId ingredientesId, String nombre) {
+		super(ingredientesId, nombre);
 	}
 
 }

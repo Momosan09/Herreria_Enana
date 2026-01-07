@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.combinaciones.CargadorRecetas;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.NPCManager;
 import com.mygdx.entidades.Npc;
@@ -182,6 +183,8 @@ public class Juego implements Screen{
 		MundoConfig.estadoJuego = EstadosDelJuego.INICIO;
 		
 		jugador.agregarMineral(new CarbonPuro());
+		
+		CargadorRecetas.cargar(Recursos.RECETAS);
 		
 	}
 

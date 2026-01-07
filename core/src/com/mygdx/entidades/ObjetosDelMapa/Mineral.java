@@ -11,6 +11,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.combinaciones.Ingrediente;
+import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetoDelMapa;
@@ -33,10 +35,11 @@ import com.mygdx.utiles.recursos.Recursos;
 import com.mygdx.utiles.sonidos.ListaSonidos;
 import com.mygdx.utiles.sonidos.SonidosManager;
 
-public class Mineral extends ObjetoDelMapa implements EventoMinar{
+public class Mineral extends ObjetoDelMapa implements EventoMinar, Ingrediente{
 	
 	public TipoMinerales tipo;
 	public EstadosMinerales estado;
+	protected IngredientesId ingredienteId;
 	public int vida = 100;
 	public int calorDeFusion = 100;
 	public int valor = 5;
@@ -45,10 +48,11 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar{
 
 
 	
-	public Mineral(float x, float y, World world, boolean comprable, TipoMinerales tipo, EstadosMinerales estado, int ancho, int alto) {
-		super(x, y, world, tipo.ruta + estado.ruta);
+	public Mineral(float x, float y, World world, boolean comprable, int ancho, int alto, IngredientesId ingredienteId) {
+		super(x, y, world, ingredienteId.tipoM.ruta + ingredienteId.estadoM.ruta);
+		this.ingredienteId = ingredienteId;
 		this.comprable = comprable;
-		this.tipo = tipo;
+		this.tipo = ingredienteId.tipoM;
 		this.estado = estado;
 		this.areaMinado = new Circle(this.posicion.x, this.posicion.y, 64);
 		crearCuerpo(world, ancho, alto);
@@ -56,20 +60,22 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar{
 	}
 
 	
-	public Mineral(float x, float y, boolean comprable, TipoMinerales tipo, EstadosMinerales estado) {
-		super(x, y,comprable, tipo.ruta + estado.ruta);
+	public Mineral(float x, float y, boolean comprable, IngredientesId ingredienteId) {
+		super(x, y,comprable, ingredienteId.tipoM.ruta + ingredienteId.estadoM.ruta);
+		this.ingredienteId = ingredienteId;
 		this.comprable = comprable;
-		this.tipo = tipo;
-		this.estado = estado;
+		this.tipo = ingredienteId.tipoM;
+		this.estado = ingredienteId.estadoM;
 		this.areaMinado = new Circle(this.posicion.x, this.posicion.y, 64);
 		Listeners.agregarListener(this);
 	}
 
-	public Mineral(boolean comprable, TipoMinerales tipo, EstadosMinerales estado) {
-		super(tipo.ruta + estado.ruta);
+	public Mineral(boolean comprable, IngredientesId ingredienteId) {
+		super(ingredienteId.tipoM.ruta + ingredienteId.estadoM.ruta);
+		this.ingredienteId = ingredienteId;
 		this.comprable = comprable;
-		this.tipo = tipo;
-		this.estado = estado;
+		this.tipo = ingredienteId.tipoM;
+		this.estado = ingredienteId.estadoM;
 		this.areaMinado = new Circle(this.posicion.x, this.posicion.y, 64);
 		Listeners.agregarListener(this);
 	}
@@ -78,10 +84,11 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar{
 	 * @param rutaTextura
 	 */
 	
-	public Mineral(TipoMinerales tipo, EstadosMinerales estado) {
-		super(tipo.ruta+estado.ruta);
-		this.tipo = tipo;
-		this.estado = estado;
+	public Mineral(IngredientesId ingredienteId) {
+		super(ingredienteId.tipoM.ruta + ingredienteId.estadoM.ruta);
+		this.ingredienteId = ingredienteId;
+		this.tipo = ingredienteId.tipoM;
+		this.estado = ingredienteId.estadoM;
 		
 	}
 	
@@ -159,7 +166,7 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar{
 		
 		private void recolectar(Jugador j) {
 			if(vida <= 0) {	
-	        j.agregarMineral(this);
+	        j.agregar(ingredienteId, 1);
 
 	        for (Mision m : j.getMisiones().values()) {
 	            if (m.getTipo() == TipoMision.RECOLECTAR) {
@@ -200,6 +207,12 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar{
 		
 		public void dibujarAreaDeMinado() {
 			dibujarAreasInteraccion(areaMinado, Colores.ROSA_DEBUG);
+		}
+
+
+		@Override
+		public IngredientesId getIngredienteId() {
+			return ingredienteId;
 		}
 		
 }

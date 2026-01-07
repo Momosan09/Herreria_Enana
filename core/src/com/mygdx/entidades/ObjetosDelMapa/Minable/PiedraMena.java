@@ -1,6 +1,7 @@
 package com.mygdx.entidades.ObjetosDelMapa.Minable;
 
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.utiles.recursos.Recursos;
@@ -9,7 +10,7 @@ public class PiedraMena extends Mineral{
 
 	public PiedraMena(float x, float y, World world, boolean comprable) {
 		//Los dos enum componen la ruta de la textura TipoMinerales.HIERRO.ruta + EstadoMinerales.PURO.ruta
-		super(x, y, world,comprable, TipoMinerales.PIEDRA, EstadosMinerales.MENA, 16,10);
+		super(x, y, world,comprable, 16,10, IngredientesId.PIEDRA_MENA);
 	}
 
 }

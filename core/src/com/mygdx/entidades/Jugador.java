@@ -19,6 +19,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.combinaciones.IngredientesId;
+import com.mygdx.combinaciones.InventarioCrafteo;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Cincel;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
@@ -48,7 +50,7 @@ import com.mygdx.utiles.recursos.Recursos;
 import com.mygdx.utiles.sonidos.ListaSonidos;
 import com.mygdx.utiles.sonidos.SonidosManager;
 
-public class Jugador {
+public class Jugador implements InventarioCrafteo {
 
 	private float velocidad = 100f;
 	public boolean puedeMoverse = false;
@@ -63,8 +65,10 @@ public class Jugador {
 	
 	//Inventarios
 	private ArrayList<Item> items = new ArrayList<>();//Por ahora el jugador va a poder tener varios items, pero talvez mas adelante hago que solo pueda tener uno a la vez
-	private EnumMap<TipoMinerales, EnumMap<EstadosMinerales, ArrayList<Mineral>>> mineralesInventario =
-		    new EnumMap<>(TipoMinerales.class);
+
+    private EnumMap<IngredientesId, Integer> inventario =
+            new EnumMap<>(IngredientesId.class);
+
 	
 	private HashMap<String,Mision> tareas = new HashMap<String,Mision>();
 	
@@ -103,23 +107,23 @@ public class Jugador {
 		areaJugador = new Circle(posicion.x, posicion.y, 32);
 		
 		
-		//ESTO ES TEMPORAL, DESPUES EL JUGADOR NO VA A EMPEZAR CON LAS HERRAMIENTAS
-		items.add(new Pico());
-		items.add(new Maza());
-		items.add(new Cincel());
-		items.add(new LimaPlana());
-		items.add(new Sierra());
-		
 
 		
 		//Inicializa el inventario de minerales
-		for (TipoMinerales tipo : TipoMinerales.values()) {
-		    EnumMap<EstadosMinerales, ArrayList<Mineral>> estadoMap = new EnumMap<>(EstadosMinerales.class); // crea un enumMap por cada TipoMineral
-		    for (EstadosMinerales estado : EstadosMinerales.values()) {
-		        estadoMap.put(estado, new ArrayList<Mineral>());
-		    }
-		    mineralesInventario.put(tipo, estadoMap);
-		}
+        for (IngredientesId id : IngredientesId.values()) {
+            inventario.put(id, 0);
+        }
+        
+		//ESTO ES TEMPORAL, DESPUES EL JUGADOR NO VA A EMPEZAR CON LAS HERRAMIENTAS
+        // Herramientas iniciales
+        agregar(IngredientesId.PICO, 1);
+        agregar(IngredientesId.MAZA, 1);
+        agregar(IngredientesId.CINCEL, 1);
+
+        // Items físicos (solo gameplay)
+        items.add(new Pico());
+        items.add(new Maza());
+        items.add(new Cincel());
 
 	
 		itemEnMano = new ItemEquipadoJugador();
@@ -271,7 +275,7 @@ public class Jugador {
 		items.remove(item);
 	}
 	
-	public void eliminarItem(Items item) {
+	public void eliminarItem(IngredientesId item) {
 		items.remove(new Item(item));
 	}
 	
@@ -304,101 +308,49 @@ public class Jugador {
 		return itemEnMano.getTipo();
 	}
 	
-	public void eliminarItemRoto() {
-		if(MundoConfig.estadoJuego == EstadosDelJuego.INVENTARIO ) {
-			
-		for(int i=0;i<items.size();i++) {
-			if(items.get(i).getUsos() == 0) {
-				System.out.println("Eliminado " + items.get(i).getNombre());
-				items.remove(i);
-			}
-		}
-		}
-	}
-	
-	public ArrayList<Mineral> obtenerTodosLosMinerales() {
-	    ArrayList<Mineral> todosLosMinerales = new ArrayList<>();
+	@Override
+    public int getCantidad(IngredientesId ingrediente) {
+        return inventario.getOrDefault(ingrediente, 0);
+    }
 
-	    // Iterar sobre cada tipo de mineral (TipoMinerales)
-	    for (EnumMap<EstadosMinerales, ArrayList<Mineral>> estadoMap : mineralesInventario.values()) {
-	        // Iterar sobre cada estado de mineral (EstadosMinerales)
-	        for (ArrayList<Mineral> minerales : estadoMap.values()) {
-	            // Añadir todos los minerales a la lista
-	            todosLosMinerales.addAll(minerales);
-	        }
-	    }
-	    
-	    return todosLosMinerales;
-	}
+    @Override
+    public void agregar(IngredientesId ingrediente, int cantidad) {
+        inventario.put(
+                ingrediente,
+                getCantidad(ingrediente) + cantidad
+        );
+    }
 
-	
-	
-	public ArrayList<Mineral> obtenerMineral(TipoMinerales tipo, EstadosMinerales estado) {
-	    return mineralesInventario.get(tipo).get(estado);
-	}
-	
-	public ArrayList<Mineral> obtenerMineral(Mineral mineral) {
-	    return mineralesInventario.get(mineral.tipo).get(mineral.estado);
-	}
+    @Override
+    public void consumir(IngredientesId ingrediente, int cantidad) {
+        int actual = getCantidad(ingrediente);
+        if (actual < cantidad)
+            throw new IllegalStateException("No hay suficiente " + ingrediente);
 
-	public int contarMinerales(TipoMinerales tipo, EstadosMinerales estado) {
-	    return obtenerMineral(tipo, estado).size();
-	}
-	
-	public int contarMinerales(Mineral mineral) {
-	    return obtenerMineral(mineral.tipo, mineral.estado).size();
-	}
+        inventario.put(ingrediente, actual - cantidad);
+    }
 
-	public int contarTotalDeMinerales() {
-	    int total = 0;
-	    for (EnumMap<EstadosMinerales, ArrayList<Mineral>> estadoMap : mineralesInventario.values()) {
-	        for (ArrayList<Mineral> listaMinerales : estadoMap.values()) {
-	            total += listaMinerales.size();
-	        }
-	    }
-	    return total;
-	}
+    // =========================
+    // ITEMS GAMEPLAY
+    // =========================
 
-	
-	public void eliminarMineral(Mineral mineral, int cantidad) {
-	    ArrayList<Mineral> minerales = obtenerMineral(mineral.tipo, mineral.estado);
-	    for (int i = 0; i < cantidad && !minerales.isEmpty(); i++) {
-	        minerales.remove(0); // Elimina el primero de la lista
-	    }
-	}
-	
-	public void eliminarMineral(TipoMinerales tipo, EstadosMinerales estado, int cantidad) {
-	    ArrayList<Mineral> minerales = obtenerMineral(tipo, estado);
-	    for (int i = 0; i < cantidad && !minerales.isEmpty(); i++) {
-	        minerales.remove(0); // Elimina el primero de la lista
-	    }
-	}
-	
-	
-	public void agregarMineral(Mineral mineral) {
-	    TipoMinerales tipo = mineral.getTipoMineral();
-	    EstadosMinerales estado = mineral.getEstadoMineral();
-	    if (mineralesInventario.containsKey(tipo)) {
-	        EnumMap<EstadosMinerales, ArrayList<Mineral>> estadoMap = mineralesInventario.get(tipo);
-	        if (estadoMap.containsKey(estado)) {
-	            estadoMap.get(estado).add(mineral);
-	            System.out.println(HelpDebug.debub(getClass())+"agregado");
-	        }
-	    }
-	}
-	
-	public void agregarMineral(Mineral mineral, int cantidad) {
-	    TipoMinerales tipo = mineral.getTipoMineral();
-	    EstadosMinerales estado = mineral.getEstadoMineral();
-	    if (mineralesInventario.containsKey(tipo)) {
-	        EnumMap<EstadosMinerales, ArrayList<Mineral>> estadoMap = mineralesInventario.get(tipo);
-	        if (estadoMap.containsKey(estado)) {
-	        	for(int i = 0;i<cantidad;i++) {
-	        		estadoMap.get(estado).add(mineral);	        		
-	        	}
-	        }
-	    }
-	}
+    public void eliminarItemRoto() {
+        items.removeIf(i -> i.getUsos() == 0);
+    }
+
+    // =========================
+    // DEBUG
+    // =========================
+
+    public void imprimirInventario() {
+        System.out.println("=== INVENTARIO ===");
+        inventario.forEach((k, v) -> {
+            if (v > 0)
+                System.out.println(k + " x" + v);
+        });
+        
+    }
+
 
 	/*
 	public void devolverMineralesEnElInventario(TipoMinerales mineral, EstadosMinerales estado){
@@ -657,10 +609,4 @@ public class Jugador {
 		itemEnMano.ocultar();
 	}
 
-
-
-
-	
-
-	
 }

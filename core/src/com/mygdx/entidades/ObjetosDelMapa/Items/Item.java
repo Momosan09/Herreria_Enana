@@ -1,20 +1,24 @@
 package com.mygdx.entidades.ObjetosDelMapa.Items;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.combinaciones.Ingrediente;
+import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.enums.Items;
 import com.mygdx.utiles.Dinero;
 
-public class Item {
+public class Item implements Ingrediente{
 
 	private Texture textura;
 	private String nombre;
 	private Items tipo;
+	protected IngredientesId ingredienteId;
 	private int usos;
 	private Dinero valor;
 	
-	public Item(Items tipo) {
-		this.tipo = tipo;
+	public Item(IngredientesId ingredienteId) {
+		this.ingredienteId = ingredienteId;
+		this.tipo = ingredienteId.tipoI;
 		this.textura = tipo.getTextura();
 		this.nombre = tipo.getNombre();
 		this.usos = tipo.getUsos();
@@ -22,8 +26,9 @@ public class Item {
 		
 	}
 	
-	public Item(Items tipo, String nombre) {
-		this.tipo = tipo;
+	public Item(IngredientesId ingredienteId, String nombre) {
+		this.ingredienteId = ingredienteId;
+		this.tipo = ingredienteId.tipoI;
 		this.nombre = nombre;
 		this.textura = tipo.getTextura();
 		this.usos = -1;
@@ -51,5 +56,10 @@ public class Item {
 	
 	public Dinero getValor() {
 		return valor;
+	}
+
+	@Override
+	public IngredientesId getIngredienteId() {
+		return ingredienteId;
 	}
 }

@@ -2,26 +2,27 @@ package com.mygdx.entidades.npcs;
 
 import java.util.ArrayList;
 
+import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
 import com.mygdx.enums.Items;
 
 public enum VendedorData {
 
 	
-	CARPINTERO(Items.MANGO_MADERA_0, Items.ESQUEMA_HOJA_ESPADA),
-	TIENDA(Items.CINCEL), 
-	AMBULANTE(Items.SIERRA_CIRCULAR);
+	CARPINTERO(IngredientesId.MANGO_MADERA_0, IngredientesId.ESQUEMA_HOJA_ESPADA),
+	TIENDA(IngredientesId.CINCEL), 
+	AMBULANTE(IngredientesId.SIERRA_CIRCULAR);
 	
-	private ArrayList<Items> inventario = new ArrayList();
+	private ArrayList<IngredientesId> inventario = new ArrayList();
 	
-	VendedorData(Items ...items ) {
+	VendedorData(IngredientesId ...items ) {
 		for(int i=0;i<items.length;i++) {
 			inventario.add(items[i]);
 		}
 		
 	}
 	
-	public ArrayList<Items> getInventario(){
+	public ArrayList<IngredientesId> getInventario(){
 		return inventario;
 	}
 }

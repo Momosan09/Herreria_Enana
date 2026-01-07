@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
@@ -329,7 +330,7 @@ public class FundicionOmega extends HUD{
 
 	    // Resultado (ejemplo)
 	    Texture resultado = new Texture(Recursos.minerales.LINGOTE_HIERRO);
-	    mineralSalida = new Mineral(TipoMinerales.HIERRO, EstadosMinerales.LINGOTE);
+	    mineralSalida = new Mineral(IngredientesId.HIERRO_LINGOTE);
 	    salida.setDrawable(new TextureRegionDrawable(resultado));
 
 	    calor -= mineralEntrada.calorDeFusion;

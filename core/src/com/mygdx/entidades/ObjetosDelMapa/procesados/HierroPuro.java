@@ -1,5 +1,6 @@
 package com.mygdx.entidades.ObjetosDelMapa.procesados;
 
+import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
@@ -9,7 +10,7 @@ public class HierroPuro extends Mineral{
 
 	public HierroPuro() {
 		//Los dos enum componen la ruta de la textura TipoMinerales.HIERRO.ruta + EstadoMinerales.PURO.ruta
-		super(TipoMinerales.HIERRO, EstadosMinerales.PURO);
+		super(IngredientesId.HIERRO_PURO);
 		
 	}
 

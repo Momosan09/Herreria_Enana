@@ -1,0 +1,38 @@
+{
+    "recetas": [
+        {
+            "entradas": [
+              { "ingrediente": "HIERRO_LINGOTE", "cantidad": 1 }
+            ],
+            "herramienta": "MAZA",
+            "salidas": [
+              { "ingrediente": "HIERRO_PLANCHA", "cantidad": 1 }
+            ],
+            "medio":"YUNQUE"
+          },
+
+          {
+            "entradas": [
+              { "ingrediente": "HIERRO_PLANCHA", "cantidad": 1 }
+            ],
+            "herramienta": "SIERRA",
+            "salidas": [
+              { "ingrediente": "HIERRO_TIRA", "cantidad": 2 }
+            ],
+            "medio":"YUNQUE"
+            
+          },
+
+          {
+            "entradas": [
+              { "ingrediente": "HIERRO_TIRA", "cantidad": 2 }
+            ],
+            "herramienta": null,
+            "salidas": [
+              { "ingrediente": "HOJA_ESPADA_HIERRO_0", "cantidad": 1 }
+            ],
+            "medio":"YUNQUE"
+          }
+    ]
+  }
+  

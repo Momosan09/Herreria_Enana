@@ -34,7 +34,6 @@ public abstract class Entidad {
 	private boolean comprable = false;
 	private int distanciaInteraccion = 20;
 
-	
 	public Entidad(float x, float y, World world, String rutaTextura) {
 		x=x*MundoConfig.tamanoTile;
 		y=(MundoConfig.altoMundo - y) * MundoConfig.tamanoTile;

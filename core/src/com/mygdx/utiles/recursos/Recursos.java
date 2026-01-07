@@ -38,6 +38,9 @@ public abstract class Recursos {
 	//Mapas
 	public static final String MAPA = "mapas/mapa.tmx";
 	
+	//RECETAS
+	public static final String RECETAS ="combinaciones/recetas.json";
+	
 
 
 

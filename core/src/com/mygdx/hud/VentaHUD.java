@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.Vendedor;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
@@ -87,15 +88,15 @@ public class VentaHUD extends HUD {
 
 
 	
-    private void comprarItem(Items item) {
-        int precioOro = item.getValor().getMonedasOro();
-        int precioPlata = item.getValor().getMonedasPlata();
-        int precioCobre = item.getValor().getMonedasCobre();
+    private void comprarItem(IngredientesId item) {
+        int precioOro = item.tipoI.getValor().getMonedasOro();
+        int precioPlata = item.tipoI.getValor().getMonedasPlata();
+        int precioCobre = item.tipoI.getValor().getMonedasCobre();
 
         if (jugador.monedero.tieneElDinero(precioOro, precioPlata, precioCobre)) {
             jugador.monedero.restarDinero(precioOro, precioPlata, precioCobre);
             jugador.getItems().add(new Item(item));
-            vendedor.getInventario().remove(item);
+            vendedor.getInventario().remove(item.tipoI);
             actualizarProductos();
         } else {
             System.out.println("No tienes suficiente dinero.");
@@ -106,7 +107,7 @@ public class VentaHUD extends HUD {
         contenedor.clear();
         int indiceFilas = 0;
 
-        for (final Items item : vendedor.getInventario()) {
+        for (final IngredientesId item : vendedor.getInventario()) {
             CuadraditoItem cuadraditoItem = new CuadraditoItem(item);
             cuadraditoItem.setTouchable(Touchable.enabled);
             contenedor.add(cuadraditoItem).pad(10);

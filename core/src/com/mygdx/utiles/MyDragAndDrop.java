@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Items.SierraCircular;
@@ -326,7 +327,7 @@ public class MyDragAndDrop {
 			jugador.eliminarItem(itemFuente);
 			jugador.eliminarItem(itemObjetivo);
 			jugador.avanzarMision(MisionesDelJuego.RC1_FESP);
-			jugador.getItems().add(new Item(Items.ESPADA_HIERRO_0));
+			jugador.getItems().add(new Item(IngredientesId.ESPADA_HIERRO_0));
 			return true;
 		}else {
 		}
@@ -357,7 +358,7 @@ public class MyDragAndDrop {
 			jugador.eliminarMineral(mineral, 1);
 			return false;
 		}else if(herrTip == Items.ESQUEMA_HOJA_ESPADA && mineral.tipo == TipoMinerales.HIERRO && mineral.estado == EstadosMinerales.TIRA) {
-			jugador.getItems().add(new Item(Items.HOJA_ESPADA_HIERRO_0));
+			jugador.getItems().add(new Item(IngredientesId.HOJA_ESPADA_HIERRO_0));
 			jugador.eliminarMineral(mineral,1);
 		}else {
 			return false;

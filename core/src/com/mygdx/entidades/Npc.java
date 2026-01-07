@@ -2,6 +2,8 @@ package com.mygdx.entidades;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.combinaciones.Ingrediente;
+import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.entidades.npcs.VendedorData;
 import com.mygdx.entidades.npcs.dialogos.Charla;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
@@ -26,7 +28,7 @@ public abstract class Npc extends Entidad implements NpcInterface, EventoInterac
 	private Animator animacion;
 	private Texture retrato;
 	private NpcData data;
-	private ArrayList<Items> inventario;
+	private ArrayList<IngredientesId> inventario;
 	private String nombreCharlaActual;//nombre de la charla que se va a usar
 	
 	public ArrayList<Charla> charlas;

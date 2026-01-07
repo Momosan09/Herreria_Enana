@@ -3,6 +3,7 @@ package com.mygdx.entidades.npcs.dialogos;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.Vendedor;
@@ -226,7 +227,7 @@ public class CharlaManager {
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
 					if (!jugador.buscarMisionPorId("CARP_00")) {
 						jugador.agregarMision(MisionesDelJuego.CARP_00);
-						jugador.agregarItem(new Esquema(Items.ESQUEMA_SIERRA_CIRCULAR));
+						jugador.agregarItem(new Esquema(IngredientesId.ESQUEMA_SIERRA_CIRCULAR));
 
 					}
 				} else if (jugador.respuesta2 == Respuestas.VERDADERO) {

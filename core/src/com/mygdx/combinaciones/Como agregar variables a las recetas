@@ -1,0 +1,3 @@
+Para agregar Recetas variables a las recetas (ejemplo calor, experiencia, tiempo de fabricacion)
+
+Hay que agregar los campos "IngredienteReceta", "IngredienteDTO"
