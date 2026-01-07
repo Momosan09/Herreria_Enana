@@ -55,6 +55,10 @@ public abstract class HUD {
 		labelStyle = EstiloFuente.generarFuente(30, Colores.BLANCO, false);
 	}
 	
+	protected void crearFuentes(int tamañoLetra) {
+		labelStyle = EstiloFuente.generarFuente(tamañoLetra, Colores.BLANCO, false);
+	}
+	
     private void crearActoresBase() {
         tabla = new Table();
         tabla.setFillParent(true);

@@ -475,3 +475,4 @@ por ejemplo:
 # 7 ENE
     - La fundicionOmega ahora solo acepta como combustible los minerales que implementen la clase combustible
     - MyDragAndDrop ahora usa el nuevo sistema de recetas del json, si bien quedo funcionando igual que antes, puede que surgan errores por el modo que ahora se guardan los items (en dos inventarios, uno de objetos abstractos el cual puede llevar cuenta de ellos y otro de objetos fisicos que existen en el mapa/mundo). En el inventario por ejemplo solo aparece una sierra circular por mas que hayas fabricado muchas, ademas ahora tengo que modificar el sistema de misiones para que se adapte a esta nueva estructura
+    - Agrega pantalla primera

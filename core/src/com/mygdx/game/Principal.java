@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.pantallas.Juego;
 import com.mygdx.pantallas.PantallaConfiguracion;
+import com.mygdx.pantallas.PantallaPrimera;
 import com.mygdx.pantallas.PantallaMenu;
 import com.mygdx.utiles.Config;
 import com.mygdx.utiles.Render;

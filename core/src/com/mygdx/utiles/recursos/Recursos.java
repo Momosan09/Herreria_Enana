@@ -24,6 +24,11 @@ public abstract class Recursos {
 	public static InputMultiplexer muxJuego = new InputMultiplexer();//El input multiplexer es una especie de gestor de inputProcessors
 	public static InputMultiplexer muxMenu = new InputMultiplexer();
 	
+	
+	//Pantalla de inicio
+	public static final String BANDERA = "pantallaInicial/banderaArgentina.png";
+	public static final String HIMNO = "pantallaInicial/himno1.wav";
+	
 	//Box2d
 	public static final float PPM = 32.0f;//Pixeles por metro
 	
@@ -40,6 +45,7 @@ public abstract class Recursos {
 	
 	//RECETAS
 	public static final String RECETAS ="combinaciones/recetas.json";
+
 	
 
 
