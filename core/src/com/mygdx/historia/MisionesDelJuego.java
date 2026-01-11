@@ -1,4 +1,5 @@
-package com.mygdx.historia;import com.mygdx.entidades.Entidad;
+package com.mygdx.historia;import com.mygdx.combinaciones.IngredientesId;
+import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.npcs.Carpintero;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
@@ -18,7 +19,7 @@ public enum MisionesDelJuego {
 				Recursos.bundle.get("misiones.descripciones.rey.RC1_FESP"),
 				7,
 				TipoMision.FABRICAR,
-				Recursos.bundle.get("item.fabricable.espada"),
+				IngredientesId.ESPADA_HIERRO_0,
 				15, 0, 50,100,
 				"RC1_FESP"),
 	
@@ -38,7 +39,8 @@ public enum MisionesDelJuego {
 		CARP_00(Recursos.bundle.get("npc.nombre.carpintero"), 
 				Recursos.bundle.get("misiones.descripciones.carpintero.CARP_00"),
 				-1,
-				TipoMision.FABRICAR,Recursos.bundle.get("mision.fabricable.sierra_circular"),
+				TipoMision.FABRICAR,
+				IngredientesId.SIERRA_CIRCULAR,
 				1,0,0,0,
 				"CARP_00");
 	
@@ -47,7 +49,7 @@ public enum MisionesDelJuego {
 	private String descripcion;
 	private int diasParaCompletar;
 	private TipoMision tipo;
-	private String objeto;
+	private IngredientesId objeto;
 	private int cantidadObjetivo;
 	private Npc npcObjetivo;
 	private String charlaObjetivo;
@@ -67,7 +69,7 @@ public enum MisionesDelJuego {
 	 * @param cobre
 	 * @param id
 	 */
-	MisionesDelJuego(String requisor, String descripcion, int diasParaCompletar, TipoMision tipo, String objeto, int cantidadObjetivo, int oro, int plata, int cobre, String id){
+	MisionesDelJuego(String requisor, String descripcion, int diasParaCompletar, TipoMision tipo, IngredientesId objeto, int cantidadObjetivo, int oro, int plata, int cobre, String id){
 		this.requisor = requisor;
 		this.descripcion = descripcion;
 		this.diasParaCompletar = diasParaCompletar;
@@ -122,7 +124,7 @@ public enum MisionesDelJuego {
 		return tipo;
 	}
 
-	public String getObjeto() {
+	public IngredientesId getObjeto() {
 		return objeto;
 	}
 

@@ -18,7 +18,12 @@ public class SonidosManager {
     public static void cargar() {
     	agregar(ListaSonidos.MINAR);
     	agregar(ListaSonidos.MISION_RECIBIDA);
-
+    	agregar(ListaSonidos.VENTA);
+    	agregar(ListaSonidos.FALLA);
+    	agregar(ListaSonidos.GOLPE_MARTILLO_METAL);
+    	agregar(ListaSonidos.SONIDO_ESQUEMA);
+    	agregar(ListaSonidos.SIERRA_METAL);
+    
     }
     
     private static void agregar(ListaSonidos tipo) {

@@ -30,6 +30,8 @@ import com.mygdx.utiles.EstiloFuente;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.recursos.Recursos;
+import com.mygdx.utiles.sonidos.ListaSonidos;
+import com.mygdx.utiles.sonidos.SonidosManager;
 
 public class VentaHUD extends HUD {
 
@@ -95,10 +97,12 @@ public class VentaHUD extends HUD {
 
         if (jugador.monedero.tieneElDinero(precioOro, precioPlata, precioCobre)) {
             jugador.monedero.restarDinero(precioOro, precioPlata, precioCobre);
-            jugador.getItems().add(new Item(item));
-            vendedor.getInventario().remove(item.tipoI);
+            jugador.agregar(item);;
+            //vendedor.getInventario().remove(item.tipoI); // esto para que el vendedor se quede sin recursos
             actualizarProductos();
+            SonidosManager.reproducirSonido(ListaSonidos.VENTA);
         } else {
+        	SonidosManager.reproducirSonido(ListaSonidos.FALLA);
             System.out.println("No tienes suficiente dinero.");
         }
     }

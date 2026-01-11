@@ -1,17 +1,15 @@
-com.badlogic.gdx.utils.GdxRuntimeException: java.lang.Error: Unresolved compilation problem: 
-	Syntax error, insert ")" to complete Expression
-
-	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:172)
-	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)
-Caused by: java.lang.Error: Unresolved compilation problem: 
-	Syntax error, insert ")" to complete Expression
-
-	at com.mygdx.pantallas.PantallaDeInicio.crearActores(PantallaDeInicio.java:90)
-	at com.mygdx.pantallas.PantallaDeInicio.show(PantallaDeInicio.java:42)
-	at com.badlogic.gdx.Game.setScreen(Game.java:63)
-	at com.mygdx.game.Principal.create(Principal.java:40)
-	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.initializeListener(Lwjgl3Window.java:416)
-	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:366)
+java.lang.IllegalArgumentException: Unexpected value: HIERRO_PURO
+	at com.mygdx.combinaciones.MotorCrafteo.sonidosDeFabricar(MotorCrafteo.java:107)
+	at com.mygdx.combinaciones.MotorCrafteo.fabricar(MotorCrafteo.java:68)
+	at com.mygdx.utiles.MyDragAndDrop$3.drop(MyDragAndDrop.java:175)
+	at com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop$1.dragStop(DragAndDrop.java:159)
+	at com.badlogic.gdx.scenes.scene2d.utils.DragListener.touchUp(DragListener.java:67)
+	at com.badlogic.gdx.scenes.scene2d.InputListener.handle(InputListener.java:71)
+	at com.badlogic.gdx.scenes.scene2d.Stage.touchUp(Stage.java:355)
+	at com.badlogic.gdx.InputMultiplexer.touchUp(InputMultiplexer.java:124)
+	at com.badlogic.gdx.InputEventQueue.drain(InputEventQueue.java:70)
+	at com.badlogic.gdx.backends.lwjgl3.DefaultLwjgl3Input.update(DefaultLwjgl3Input.java:189)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:378)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:192)
 	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:166)
-	... 1 more
+	at com.mygdx.game.DesktopLauncher.main(DesktopLauncher.java:24)

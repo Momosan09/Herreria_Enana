@@ -27,9 +27,6 @@ public class MisionesManager implements EventoRestarDiasDeMision{
 	}
 	
 
-
-	
-
 	/**
 	 * resta los dias en los que se puede completar la mision
 	 * Se llama con el evento de cambio de dia (en Listeners dentro de otro metodo)

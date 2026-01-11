@@ -42,6 +42,7 @@ import com.mygdx.eventos.Listeners;
 import com.mygdx.historia.Mision;
 import com.mygdx.historia.MisionHablar;
 import com.mygdx.historia.MisionesDelJuego;
+import com.mygdx.historia.TipoMision;
 import com.mygdx.historia.misiones.MisionRecFab;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.HelpDebug;
@@ -602,6 +603,21 @@ public class Jugador implements InventarioCrafteo {
 		return null;
 	}
 	
+	public ArrayList<MisionRecFab> conseguirMisionesPorTipo(TipoMision tipo) {
+
+		ArrayList<MisionRecFab> misionesFiltradas = new ArrayList<>();
+
+		for (Mision mision : tareas.values()) {
+			if (mision.getTipo() == tipo && mision instanceof MisionRecFab) {
+				misionesFiltradas.add((MisionRecFab) mision);
+			}
+		}
+
+		return misionesFiltradas;
+	}
+
+
+	
 	/**
 	 * Se le pasa una MisionDelJuego y devuelve el tipo exacto de la mision
 	 * Por ejemplo: return MisionRecFab
@@ -667,6 +683,23 @@ public class Jugador implements InventarioCrafteo {
 			
 	}
 	
+	public void avanzarMision(Mision n, int cantidad) {
+		Mision mision = tareas.get(n.getId());
+		switch (mision.getTipo()) {
+		case FABRICAR:
+	    	MisionRecFab m = (MisionRecFab) mision;
+	    	m.setCantidadConseguida(cantidad);
+		case RECOLECTAR:
+	    	MisionRecFab m1 = (MisionRecFab) mision;
+	    	m1.setCantidadConseguida(cantidad);
+			
+		case HABLAR:
+
+
+		}
+			
+	}
+	
 	public void avanzarMision(MisionesDelJuego n, int cantidad) {
 		Mision mision = tareas.get(n.getId());
 		switch (n.getTipo()) {
@@ -681,10 +714,9 @@ public class Jugador implements InventarioCrafteo {
 
 
 		}
-		
-		
-		
 	}
+	
+
 	
 	public void resetearRespuestas() {
 		respuesta1 = Respuestas.NOVALOR;

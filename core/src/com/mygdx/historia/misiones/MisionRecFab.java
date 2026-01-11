@@ -1,5 +1,6 @@
 package com.mygdx.historia.misiones;
 
+import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.enums.EstadosMision;
 import com.mygdx.historia.Mision;
 import com.mygdx.historia.MisionesDelJuego;
@@ -8,7 +9,7 @@ public class MisionRecFab extends Mision{
 
 	protected int cantidadObjetivo;
 	protected int cantidadConseguida;
-	protected String objeto;
+	protected IngredientesId objeto;
 	protected boolean objetoFabricado = false; //Por ahora no esta comprobando si lo fabrico, o sea que lo puede comprar y que se complete igual
 	
 	public MisionRecFab(MisionesDelJuego datosMision) {
@@ -44,7 +45,7 @@ public class MisionRecFab extends Mision{
 		objetoFabricado = true;
 	}
 	
-	public String getObjeto() {
+	public IngredientesId getObjeto() {
 		return objeto;
 	}
 	

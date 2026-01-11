@@ -27,6 +27,8 @@ import com.mygdx.combinaciones.Receta;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
+import com.mygdx.utiles.sonidos.ListaSonidos;
+import com.mygdx.utiles.sonidos.SonidosManager;
 
 public class MyDragAndDrop {
 	
@@ -90,7 +92,6 @@ public class MyDragAndDrop {
 	public void create () {
 		stage.setDebugAll(true);
 		System.out.println(HelpDebug.debub(getClass())+ "creado");
-		System.out.println(ingredientes.size()+"++++++++++++++++++++++++++"+inventario.size());
 		for (int i = 0; i < inventario.size(); i++) {
 		    final IngredientesId ingrediente = ingredientes.get(i);
 
@@ -175,6 +176,8 @@ public class MyDragAndDrop {
 					    if (receta != null && MotorCrafteo.puedeFabricar(receta, motorCraf.getInventario(), medio)) {
 					        MotorCrafteo.fabricar(receta, motorCraf.getInventario());
 					        refrescar();
+					    }else {
+					    	SonidosManager.reproducirSonido(ListaSonidos.FALLA);
 					    }
 					}
 

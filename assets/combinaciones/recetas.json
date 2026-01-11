@@ -81,9 +81,9 @@
 
           {
             "entradas": [
-              { "ingrediente": "HIERRO_TIRA", "cantidad": 2 }
+              { "ingrediente": "HIERRO_TIRA", "cantidad": 1 }
             ],
-            "herramienta": "HOJA_ESPADA_HIERRO_0",
+            "herramienta": "ESQUEMA_HOJA_ESPADA",
             "salidas": [
               { "ingrediente": "HOJA_ESPADA_HIERRO_0", "cantidad": 1 }
             ],
