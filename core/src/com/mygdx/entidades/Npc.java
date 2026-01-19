@@ -1,6 +1,8 @@
 package com.mygdx.entidades;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.combinaciones.Ingrediente;
 import com.mygdx.combinaciones.IngredientesId;
@@ -139,8 +141,28 @@ public abstract class Npc extends Entidad implements NpcInterface, EventoInterac
 	}
 	 
 	 public void ejecutarAnimacion() {
-		 animacion.render();
+		 if(estaEnPantalla(MundoConfig.camaraJugador)) {	//Se fija si esta en pantalla para dibujar, sino no dibuja		 
+			 animacion.render();
+		 }
 	 }
+	 
+	 @Override
+	 public boolean estaEnPantalla(OrthographicCamera camera) {
+
+		    Rectangle bounds = animacion.getSprite().getBoundingRectangle();
+
+		    return camera.frustum.boundsInFrustum(
+		        bounds.x + bounds.width / 2f,
+		        bounds.y + bounds.height / 2f,
+		        0,
+		        bounds.width / 2f,
+		        bounds.height / 2f,
+		        0
+		        
+		    );
+		    
+		}
+
 	 
 	 public String getNombreCharlaActual() {
 		 return nombreCharlaActual;

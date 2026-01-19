@@ -1,6 +1,8 @@
 package com.mygdx.utiles;
 
 import java.util.List;
+
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.mygdx.combinaciones.Receta;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.Vendedor;
@@ -22,6 +24,8 @@ public abstract class MundoConfig {
 	
 	public static Npc locutor;
 	public static Vendedor vendedor;
+	
+	public static OrthographicCamera camaraJugador; //No se si es la mejor idea tener la camara aca pero sirve para optimizar, chequeando en distintos lugares si x sprite o efecto esta en pantalla para dibujarlo, sino no lo dibuja
 	
 	//Tiempo
 	public static boolean pausarTiempo = false; // El tiempo del mundo, los minutos y las horas no cambian, la luz tampoco. Eso no significa que se frena el juego

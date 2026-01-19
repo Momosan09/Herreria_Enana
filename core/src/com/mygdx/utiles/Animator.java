@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -37,6 +38,20 @@ public class Animator implements ApplicationListener {
 		this.filaDelSpriteSheet = filaDelSpriteSheet;
 		this.posicion = posicion;
 		this.filasTotal = filasTotal;
+	}
+	
+	public Texture getTextura() {
+		return spriteSheet;
+	}
+	
+	/**
+	 * Tener en cuenta que esta clase no necesita un sprite. Este sprite se crea solo cuando se llama a este metodo. El sprite no se usa en la clase y no tiene ningun valor mas que para usarse en la clase NPC o ENTIDAD
+	 * @return
+	 */
+	public Sprite getSprite() {
+		Sprite spr = new Sprite(spriteSheet);
+		spr.setPosition(posicion.x, posicion.y);
+		return spr;
 	}
 
 	@Override

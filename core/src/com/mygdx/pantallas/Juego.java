@@ -49,6 +49,7 @@ import com.mygdx.utiles.HelpMapa;
 import com.mygdx.utiles.Iluminacion;
 import com.mygdx.utiles.Render;
 import com.mygdx.utiles.Tiempo;
+import com.mygdx.utiles.particulas.ListaDeParticulas;
 import com.mygdx.utiles.particulas.ParticulasManager;
 import com.mygdx.utiles.recursos.Recursos;
 import com.mygdx.utiles.sonidos.SonidosManager;
@@ -128,6 +129,7 @@ public class Juego implements Screen{
 		camaraJugador = new OrthographicCamera(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		camaraJugador.setToOrtho(false);
 		camaraJugador.zoom = .4f;
+		MundoConfig.camaraJugador = camaraJugador;
 
 		
 		camaraHud = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -200,7 +202,7 @@ public class Juego implements Screen{
 			camaraJugador.zoom = .4f;
 		}
 	    
-	  
+		particulasManager.spawn(ListaDeParticulas.FUEGO, jugador.getPosicion().x, jugador.getPosicion().y, true);
 		
 //		if (Gdx.input.isKeyJustPressed(Keys.NUM_1) && MundoConfig.habilitadoHUDS) {
 //			toggleBarraItems1 = !toggleBarraItems1;
@@ -280,6 +282,7 @@ public class Juego implements Screen{
 		
 		//Al final de todo
 		Listeners.flush();//Limpia los listeners pendientes de, por ejemplo, los minerales ya minados
+
 	}
 
 	@Override

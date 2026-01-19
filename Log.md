@@ -481,3 +481,6 @@ por ejemplo:
 # 11 ENE
     - Vuelve a funcionar la mision del carpintero (todas las de fabricacion deberian funcionar)
     - Agrega algunos sonidos a las combinaciones
+
+# 19 ENE
+    - Agrega una pequeña optimizacion, los npcs no se dibujan ni ejecutan su animacion si no estan dentro del rango de vision del jugador. Surgio como efecto secundario del metodo para determinar si el npc esta dentro de la vision del jguador lo que luego me va a permitir agregar los horarios/itinerarios de los npcs y que, si el jugador no los esta mirando (o esta en otra area directamente) se teletransporten al lugar en lugar de caminar.

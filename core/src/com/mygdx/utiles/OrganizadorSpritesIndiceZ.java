@@ -30,7 +30,6 @@ public class OrganizadorSpritesIndiceZ {
 			}
 		}
 		
-		
 		//elDinamico.draw(Render.batch);
 		jugador.draw(Render.batch);
 		

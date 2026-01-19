@@ -65,7 +65,14 @@ public class MotorCrafteo {
 
         // Agregar salidas
         for (IngredienteReceta out : receta.salidas()) {
-            inventario.agregar(out.ingrediente(),out.cantidad());
+         
+            if(receta.estadio() == EstadiosDeCombinacion.INGREDIENTE) {
+            	inventario.agregar(out.ingrediente(),out.cantidad());
+            }else if(receta.estadio() == EstadiosDeCombinacion.OBRA_DE_HERRERO) {
+            	
+            	//j.agregarObraDeHerrero(out.ingrediente());
+            }
+            
             comprobarMisionesDeFabricar(out, out.cantidad());//TODO aca puede haber un error de que se repita mas veces de lo necesario
 
         }

@@ -9,7 +9,9 @@
         "salidas": [
           { "ingrediente": "HIERRO_PURO", "cantidad": 1 }
         ],
-        "medio":"YUNQUE"
+        "medio":"YUNQUE",
+
+        "estadio":"INGREDIENTE"
       },
 
       {
@@ -20,7 +22,9 @@
         "salidas": [
           { "ingrediente": "SIERRA_CIRCULAR", "cantidad": 1 }
         ],
-        "medio":"YUNQUE"
+        "medio":"YUNQUE",
+        
+        "estadio":"INGREDIENTE"
       },
 
       {
@@ -31,7 +35,9 @@
         "salidas": [
           { "ingrediente": "ESPADA_HIERRO_0", "cantidad": 1 }
         ],
-        "medio":"YUNQUE"
+        "medio":"YUNQUE",
+
+        "estadio":"OBRA_DE_HERRERO"      
       },
 
       {
@@ -42,7 +48,10 @@
         "salidas": [
           { "ingrediente": "CARBON_PURO", "cantidad": 1 }
         ],
-        "medio":"YUNQUE"
+        "medio":"YUNQUE",
+        
+        "estadio":"INGREDIENTE"
+
       },
 
         {
@@ -53,7 +62,8 @@
             "salidas": [
               { "ingrediente": "HIERRO_PLANCHA", "cantidad": 1 }
             ],
-            "medio":"YUNQUE"
+            "medio":"YUNQUE",
+            "estadio":"INGREDIENTE"
           },
 
           {
@@ -64,7 +74,9 @@
             "salidas": [
               { "ingrediente": "HIERRO_TIRA", "cantidad": 2 }
             ],
-            "medio":"YUNQUE"
+            "medio":"YUNQUE",
+
+            "estadio":"INGREDIENTE"
             
           },
 
@@ -76,7 +88,9 @@
             "salidas": [
               { "ingrediente": "HIERRO_DISCO", "cantidad": 1 }
             ],
-            "medio":"YUNQUE"
+            "medio":"YUNQUE",
+            
+            "estadio":"INGREDIENTE"
           },
 
           {
@@ -87,7 +101,11 @@
             "salidas": [
               { "ingrediente": "HOJA_ESPADA_HIERRO_0", "cantidad": 1 }
             ],
-            "medio":"YUNQUE"
+            "medio":"YUNQUE",
+
+            "estadio":"OBRA_DE_HERRERO"
+
+
           }
           
     ]

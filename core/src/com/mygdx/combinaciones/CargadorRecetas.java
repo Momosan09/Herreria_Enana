@@ -39,8 +39,10 @@ public class CargadorRecetas {
 
             // Medio
             Medios medio = Medios.valueOf(dto.medio);
+            
+            EstadiosDeCombinacion estadio = EstadiosDeCombinacion.valueOf(dto.estadio);
 
-            recetas.add(new Receta(entradas,herramienta,salidas,medio));
+            recetas.add(new Receta(entradas,herramienta,salidas,medio, estadio));
         }
         System.out.println(HelpDebug.debub(CargadorRecetas.class)+ recetas.size()+ " recetas cargadas desde "+ Recursos.RECETAS);
         return recetas;

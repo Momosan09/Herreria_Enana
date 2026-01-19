@@ -1,6 +1,7 @@
 package com.mygdx.entidades;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -112,6 +113,21 @@ public abstract class Entidad {
 //		dibujarAreaInteraccion();
 	}
 	
+	public boolean estaEnPantalla(OrthographicCamera camera) {
+		if(sprite != null) {
+	    Rectangle bounds = sprite.getBoundingRectangle();
+	    return camera.frustum.boundsInFrustum(
+	        bounds.x + bounds.width / 2f,
+	        bounds.y + bounds.height / 2f,
+	        0,
+	        bounds.width / 2f,
+	        bounds.height / 2f,
+	        0
+	    );
+		}else {
+			return false;
+		}
+	}
 	
 	public void dibujarAreasInteraccion() {
 		ShapeRenderer shapeRenderer = new ShapeRenderer();

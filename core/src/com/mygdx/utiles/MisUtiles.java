@@ -10,4 +10,6 @@ public abstract class MisUtiles {
 		return (r.nextInt(max+1)-min) + min;
 		
 	}
+	
+
 }

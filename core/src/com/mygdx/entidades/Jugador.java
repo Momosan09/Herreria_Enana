@@ -28,6 +28,7 @@ import com.mygdx.entidades.ObjetosDelMapa.Items.Esquema;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
 import com.mygdx.entidades.ObjetosDelMapa.Items.LimaPlana;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Maza;
+import com.mygdx.entidades.ObjetosDelMapa.Items.ObraDeHerrero;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Pico;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Sierra;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
@@ -71,7 +72,8 @@ public class Jugador implements InventarioCrafteo {
 	private ArrayList<Item> items = new ArrayList<>();//LOS ITEMS "FISICOS" son los cuales tienen interaccion, se pueden equipar o interactuan con el mundo
 
     private EnumMap<IngredientesId, Integer> inventario = new EnumMap<>(IngredientesId.class); //Los items "abstractos" son los que sirven para las combinaciones, contar cantidades y no existen en el mapa
-
+    private ArrayList<ObraDeHerrero> obrasDeHerrero = new ArrayList<>();
+    
 	
 	private HashMap<String,Mision> tareas = new HashMap<String,Mision>();
 	
@@ -298,6 +300,20 @@ public class Jugador implements InventarioCrafteo {
 		
 		return null;
 	}
+	
+	public ArrayList<ObraDeHerrero> getObrasDeHerrero(){
+		return obrasDeHerrero;
+	}
+	
+	public void agregarObraDeHerrero(ObraDeHerrero obraDeHerrero) {
+		obrasDeHerrero.add(obraDeHerrero);
+		mostrarMensaje = true;
+	}
+	
+	public void eliminarObraDeHerrero(ObraDeHerrero obraDeHerrero) {
+		obrasDeHerrero.remove(obraDeHerrero);
+	}
+
 	
 	public Items getItemEnMano() {
 		return itemEnMano.getTipo();

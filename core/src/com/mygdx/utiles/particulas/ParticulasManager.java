@@ -1,20 +1,24 @@
 package com.mygdx.utiles.particulas;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g3d.particles.emitters.Emitter;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.mygdx.utiles.Config;
+import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Render;
 import com.mygdx.utiles.recursos.Recursos;
 
 public class ParticulasManager {
 	
 	private TextureAtlas atlas;
-	private ParticleEffect efectoMinarPiedra;
 	
     private final ObjectMap<ListaDeParticulas, ParticleEffect> prototipos = new ObjectMap<>();
     private final Array<ParticleEffect> activos = new Array<>();
@@ -28,6 +32,7 @@ public class ParticulasManager {
 		
 		//Minar piedra
 		cargar(ListaDeParticulas.MINADO_PIEDRA);
+		cargar(ListaDeParticulas.FUEGO);
 	
 	}
 	
@@ -45,6 +50,8 @@ public class ParticulasManager {
      * @param continuo El efecto se repite indefinidamente
      */
     public void spawn(ListaDeParticulas tipo, float x, float y, boolean continuo) {
+    	if(!estaEnPantalla(x, y, 64f)) return; // Si no esta visible no se crea TODO aca puede haber un problema 
+    	
         ParticleEffect efecto = new ParticleEffect(prototipos.get(tipo));
 
         if(!continuo) {        	
@@ -60,12 +67,13 @@ public class ParticulasManager {
     
 
     public void updateAndDraw() {
-    	if(Config.permitirParticulas) {
-    		
+    	if(!Config.permitirParticulas) return;
+    	
         float delta = Gdx.graphics.getDeltaTime();
 
         for (int i = activos.size - 1; i >= 0; i--) {
             ParticleEffect e = activos.get(i);
+            	
             e.update(delta);
             e.draw(Render.batch);
 
@@ -74,7 +82,7 @@ public class ParticulasManager {
                 activos.removeIndex(i);
             }
         }
-    	}
+
     }
 
     public static ParticulasManager get() {
@@ -87,4 +95,15 @@ public class ParticulasManager {
         for (ParticleEffect e : activos) e.dispose();
     }
 	
+	 
+    private boolean estaEnPantalla(float x, float y, float radio) {
+        OrthographicCamera cam = MundoConfig.camaraJugador;
+
+        return cam.frustum.boundsInFrustum(
+            x, y, 0,
+            radio, radio, 0
+        );
+    }
+
+    
 }
