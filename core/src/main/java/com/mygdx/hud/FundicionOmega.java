@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -161,7 +162,7 @@ public class FundicionOmega extends HUD{
 
 	    if (!visible) {
 	    	actualizarTablaInventario();
-	       
+	        stage.getRoot().setTouchable(Touchable.enabled);
 	        }
 	        visible = true;
 	    }

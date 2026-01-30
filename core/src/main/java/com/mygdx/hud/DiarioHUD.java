@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -111,6 +112,7 @@ public class DiarioHUD extends HUD{
 	@Override
 	public void mostrar() {
 		if(!visible) {			
+		  stage.getRoot().setTouchable(Touchable.enabled);
 		agregarMisiones();
 		actualizarContenedor();
 		visible = true;
@@ -122,6 +124,7 @@ public class DiarioHUD extends HUD{
 	public void ocultar() {
 		if(visible == true) {
 			visible = false;
+		    stage.getRoot().setTouchable(Touchable.disabled);
 			MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
 			stage.unfocusAll();//Cuando esta oculto desenfoca el stage para que no procese eventos
 		}

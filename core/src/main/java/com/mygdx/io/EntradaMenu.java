@@ -142,4 +142,10 @@ public class EntradaMenu implements InputProcessor {
 		return -1;
 	}
 
+	@Override
+	public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

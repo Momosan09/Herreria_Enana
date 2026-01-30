@@ -108,7 +108,7 @@ public class Juego implements Screen{
 	public Juego(final Principal game) {
 		this.game = game;
 
-		Gdx.input.setInputProcessor(Recursos.muxJuego);
+//		Gdx.input.setInputProcessor(Recursos.muxJuego);
 	}
 
 	@Override
@@ -178,9 +178,13 @@ public class Juego implements Screen{
 		
 		Recursos.muxJuego.addProcessor(new EntradaJuego());
 		Recursos.muxJuego.addProcessor(new EntradasJugador(jugador));
+		Gdx.input.setInputProcessor(Recursos.muxJuego);
+		
+		
 		
 		carta = new Carta(36, 12, world, Recursos.objMapa.CARTA, jugador);
 		MundoConfig.cartaAMostrar = CartasManager.getPrimeraCarta();
+
 		MundoConfig.estadoJuego = EstadosDelJuego.INICIO;
 		
 

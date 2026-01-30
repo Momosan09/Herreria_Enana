@@ -2,7 +2,9 @@ package com.mygdx.hud;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -66,10 +68,10 @@ public abstract class HUD {
         contenedor = new Table();
         
         cerrarBtn = new Button(skin);
-        cerrarBtn.addListener(new ChangeListener() {
+        cerrarBtn.addListener(new ClickListener() {
 			
 			@Override
-			public void changed(ChangeEvent event, Actor actor) {
+			public void clicked(InputEvent event, float x, float y) {
 				ocultar();
 			}
 		});
@@ -104,6 +106,7 @@ public abstract class HUD {
 	protected void mostrar() {
 		if(visible == false) {
 			inicializar();
+			   stage.getRoot().setTouchable(Touchable.enabled);
 			visible = true;
 		}
 	}
@@ -112,6 +115,7 @@ public abstract class HUD {
 		if(visible == true) {
 			visible = false;
 			MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
+			   stage.getRoot().setTouchable(Touchable.disabled);
 			stage.unfocusAll();//Cuando esta oculto desenfoca el stage para que no procese eventos
 		}
 	}

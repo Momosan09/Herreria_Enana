@@ -4,6 +4,7 @@ import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.recursos.Recursos;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.npcs.dialogos.Mensaje;
@@ -55,17 +56,7 @@ public class UIManager implements EventoRecibirCarta{
 		
 	    mensajeAnadido = new Mensaje();
 		
-		Recursos.muxJuego.addProcessor(hud.getStage());
-		Recursos.muxJuego.addProcessor(hud.getDiarioHUD().getStage());
-		Recursos.muxJuego.addProcessor(hud.getProximaBatallaHUD().getStage());
-		Recursos.muxJuego.addProcessor(hud.getResultadosBatallasHUD().getStage());
-		Recursos.muxJuego.addProcessor(pausa.getStage());
-    	Recursos.muxJuego.addProcessor(combinacion.getStage());
-    	Recursos.muxJuego.addProcessor(combinacion.getDragAndDrop());
-		Recursos.muxJuego.addProcessor(venta.getStage());
-		Recursos.muxJuego.addProcessor(fundicion.getStage());
-		Recursos.muxJuego.addProcessor(libroHUD.getStage());
-		Recursos.muxJuego.addProcessor(diario.getStage());
+		
 
 		Listeners.agregarListener(this);
 	}
@@ -86,7 +77,7 @@ public class UIManager implements EventoRecibirCarta{
 		if(jugador.mostrarMensaje) {
 		}*/
 		
-		Gdx.input.setInputProcessor(Recursos.muxJuego);
+		
 		
 //		System.out.println(HelpDebug.debub(getClass())+ "Estado actual = " + MundoConfig.estadoJuego);
 		switch (MundoConfig.estadoJuego) {
@@ -94,13 +85,7 @@ public class UIManager implements EventoRecibirCarta{
 			MundoConfig.pausarTiempo = false;
 			hud.mostrar();
 			jugador.puedeMoverse = true;
-			pausa.ocultar();
-			inventario.ocultar();
-			dialogo.ocultar();
-			venta.ocultar();
-			combinacion.ocultar();
-			fundicion.ocultar();
-			diario.ocultar();
+		    activarSolo(hud.getStage());
 			dialogo.limpiarDatos();//Esto ayuda a que no queden datos del npc anterior en la caja de dialogo cuando se hable con uno nuevo
 			break;
 
@@ -118,7 +103,7 @@ public class UIManager implements EventoRecibirCarta{
 			break;
 			
 		case PAUSA:
-			pausa.mostrar();
+			 activarSolo(pausa.getStage());
 
 			jugador.puedeMoverse = false;
 			MundoConfig.mostrarHUD = false;
@@ -132,21 +117,21 @@ public class UIManager implements EventoRecibirCarta{
 			break;
 		case COMBINACION:
 			combinacion.mostrar();
-			ocultar(inventario, diario);
+			 activarSolo(combinacion.getStage(), combinacion.getDragAndDrop());
 			break;
 			
 		case FUNDICION:
-			Gdx.input.setInputProcessor(fundicion.getStage());
+			
 			jugador.puedeMoverse = false;
 			fundicion.mostrar();
 			
-			ocultar(inventario,pausa, diario);
+			 activarSolo(fundicion.getStage());
 			break;
 			
 		case DIARIO:
 			jugador.puedeMoverse = true;
 			diario.mostrar();
-			ocultar(fundicion, inventario);
+			activarSolo(diario.getStage());
 			
 			break;
 		case ESCENA:
@@ -168,7 +153,7 @@ public class UIManager implements EventoRecibirCarta{
 			if(!MundoConfig.cartaAMostrar.getCerrar()) {
 				MundoConfig.cartaAMostrar.dibujar();
 				hud.ocultar();
-				ocultar(inventario,combinacion);
+				activarSolo(MundoConfig.cartaAMostrar.getStage());
 				jugador.puedeMoverse = false;
 				MundoConfig.pausarTiempo = true;
 				
@@ -248,6 +233,48 @@ public class UIManager implements EventoRecibirCarta{
 		mostrarLibro = false;
 	}
 	
+	private void activarSolo(InputProcessor processor) {
+		//No puedo usar "clear" porque me saca los processors del teclado que estan en Juego.java
+		Recursos.muxJuego.removeProcessor(hud.getStage());
+		Recursos.muxJuego.removeProcessor(hud.getDiarioHUD().getStage());
+		Recursos.muxJuego.removeProcessor(hud.getProximaBatallaHUD().getStage());
+		Recursos.muxJuego.removeProcessor(hud.getResultadosBatallasHUD().getStage());
+		Recursos.muxJuego.removeProcessor(pausa.getStage());
+    	Recursos.muxJuego.removeProcessor(combinacion.getStage());
+    	Recursos.muxJuego.removeProcessor(combinacion.getDragAndDrop());
+		Recursos.muxJuego.removeProcessor(venta.getStage());
+		Recursos.muxJuego.removeProcessor(fundicion.getStage());
+		Recursos.muxJuego.removeProcessor(libroHUD.getStage());
+		Recursos.muxJuego.removeProcessor(diario.getStage());
+		
+	    Recursos.muxJuego.addProcessor(processor);
+	    Gdx.input.setInputProcessor(Recursos.muxJuego);
+	}
+	
+	/**
+	 * Este metodo es porque combinacion tiene dos procesors
+	 * @param processor
+	 * @param procesorDelDragAndDrop
+	 */
+	private void activarSolo(InputProcessor processor, InputProcessor procesorDelDragAndDrop) {
+		//No puedo usar "clear" porque me saca los processors del teclado que estan en Juego.java
+		Recursos.muxJuego.removeProcessor(hud.getStage());
+		Recursos.muxJuego.removeProcessor(hud.getDiarioHUD().getStage());
+		Recursos.muxJuego.removeProcessor(hud.getProximaBatallaHUD().getStage());
+		Recursos.muxJuego.removeProcessor(hud.getResultadosBatallasHUD().getStage());
+		Recursos.muxJuego.removeProcessor(pausa.getStage());
+    	Recursos.muxJuego.removeProcessor(combinacion.getStage());
+    	Recursos.muxJuego.removeProcessor(combinacion.getDragAndDrop());
+		Recursos.muxJuego.removeProcessor(venta.getStage());
+		Recursos.muxJuego.removeProcessor(fundicion.getStage());
+		Recursos.muxJuego.removeProcessor(libroHUD.getStage());
+		Recursos.muxJuego.removeProcessor(diario.getStage());
+		
+	    Recursos.muxJuego.addProcessor(processor);
+	    Recursos.muxJuego.addProcessor(procesorDelDragAndDrop);
+	    Gdx.input.setInputProcessor(Recursos.muxJuego);
+	}
+
 	
 	public void dispose() {
 		hud.dispose();

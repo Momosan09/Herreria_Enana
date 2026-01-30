@@ -84,4 +84,10 @@ public class EntradasJugador implements InputProcessor{
 		return false;
 	}
 
+	@Override
+	public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

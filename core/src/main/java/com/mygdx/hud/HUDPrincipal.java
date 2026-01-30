@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -387,12 +388,14 @@ public class HUDPrincipal implements HeadUpDisplay, Ocultable, EventoMisionAgreg
 	@Override
 	public void mostrar() {
 		visible = true;
+	    stage.getRoot().setTouchable(Touchable.enabled);
 		
 	}
 
 	@Override
 	public void ocultar() {
 		visible = false;
+	    stage.getRoot().setTouchable(Touchable.disabled);
 		stage.unfocusAll();//Cuando esta oculto desenfoca el stage para que no procese eventos
 		
 	}

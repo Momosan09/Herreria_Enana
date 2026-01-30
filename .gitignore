@@ -19,7 +19,6 @@ gradle-app.setting
 ## Java
 
 
-<<<<<<< HEAD
 .attach_pid*
 
 ## Android:
@@ -79,9 +78,14 @@ com_crashlytics_export_strings.xml
 /html/bin/
 /ios/bin/
 
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+
 ## NetBeans:
-## NetBeans
->>>>>>> viejo/main
+
 
 /nbproject/private/
 /android/nbproject/private/
