@@ -1,0 +1,10 @@
+{
+"com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
+	"default": {
+		"up": "abajo_up",
+		"down": "abajo_down",
+		"over": "abajo_over",
+		"disabled": "abajo_disabled"
+	}
+}
+}

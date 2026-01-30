@@ -1,0 +1,3 @@
+Para agregar combinaciones con distintos parametros (dos herramientas por ejemplo)
+
+hay que sobrecargar el Record "Receta", "RecetaDTO"

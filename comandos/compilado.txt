@@ -1,0 +1,2 @@
+para crear el Fat Jar de la version de escritorio -> ./gradlew desktop:dist
+para ejecutar por consola el jar creado -> java -jar desktop-1.0.jar (en el directorio que este el jar (\desktop\build\libs))

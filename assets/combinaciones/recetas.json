@@ -1,0 +1,95 @@
+{
+    "recetas": [
+
+      {
+        "entradas": [
+          { "ingrediente": "HIERRO_MENA", "cantidad": 1 }
+        ],
+        "herramienta": "CINCEL",
+        "salidas": [
+          { "ingrediente": "HIERRO_PURO", "cantidad": 1 }
+        ],
+        "medio":"YUNQUE"
+      },
+
+      {
+        "entradas": [
+          { "ingrediente": "HIERRO_DISCO", "cantidad": 1 }
+        ],
+        "herramienta": "LIMA_PLANA",
+        "salidas": [
+          { "ingrediente": "SIERRA_CIRCULAR", "cantidad": 1 }
+        ],
+        "medio":"YUNQUE"
+      },
+
+      {
+        "entradas": [
+          { "ingrediente": "MANGO_MADERA_0", "cantidad": 1 }
+        ],
+        "herramienta": "HOJA_ESPADA_HIERRO_0",
+        "salidas": [
+          { "ingrediente": "ESPADA_HIERRO_0", "cantidad": 1 }
+        ],
+        "medio":"YUNQUE"
+      },
+
+      {
+        "entradas": [
+          { "ingrediente": "CARBON_MENA", "cantidad": 1 }
+        ],
+        "herramienta": "CINCEL",
+        "salidas": [
+          { "ingrediente": "CARBON_PURO", "cantidad": 1 }
+        ],
+        "medio":"YUNQUE"
+      },
+
+        {
+            "entradas": [
+              { "ingrediente": "HIERRO_LINGOTE", "cantidad": 1 }
+            ],
+            "herramienta": "MAZA",
+            "salidas": [
+              { "ingrediente": "HIERRO_PLANCHA", "cantidad": 1 }
+            ],
+            "medio":"YUNQUE"
+          },
+
+          {
+            "entradas": [
+              { "ingrediente": "HIERRO_PLANCHA", "cantidad": 1 }
+            ],
+            "herramienta": "SIERRA",
+            "salidas": [
+              { "ingrediente": "HIERRO_TIRA", "cantidad": 2 }
+            ],
+            "medio":"YUNQUE"
+            
+          },
+
+          {
+            "entradas": [
+              { "ingrediente": "HIERRO_PLANCHA", "cantidad": 1 }
+            ],
+            "herramienta": "ESQUEMA_SIERRA_CIRCULAR",
+            "salidas": [
+              { "ingrediente": "HIERRO_DISCO", "cantidad": 1 }
+            ],
+            "medio":"YUNQUE"
+          },
+
+          {
+            "entradas": [
+              { "ingrediente": "HIERRO_TIRA", "cantidad": 1 }
+            ],
+            "herramienta": "ESQUEMA_HOJA_ESPADA",
+            "salidas": [
+              { "ingrediente": "HOJA_ESPADA_HIERRO_0", "cantidad": 1 }
+            ],
+            "medio":"YUNQUE"
+          }
+          
+    ]
+  }
+  

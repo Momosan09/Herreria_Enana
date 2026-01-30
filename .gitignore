@@ -1,3 +1,4 @@
+
 ## Gradle:
 .gradle/
 gradle-app.setting
@@ -15,10 +16,10 @@ gradle-app.setting
 /shared/build/
 
 ## Java:
-*.class
-*.war
-*.ear
-hs_err_pid*
+## Java
+
+
+<<<<<<< HEAD
 .attach_pid*
 
 ## Android:
@@ -48,46 +49,39 @@ com_crashlytics_export_strings.xml
 .apt_generated/
 /html/war/WEB-INF/deploy/
 /html/war/WEB-INF/classes/
-.gwt/
-gwt-unitCache/
-www-test/
-.gwt-tmp/
+
+## Robovm
+/ios/robovm-build/
+
+## GWT
+/html/war/
+/html/gwt-unitCache/
+.apt_generated/
 
 ## TeaVM:
 # Not sure yet...
 
 ## IntelliJ, Android Studio:
-.idea/
-*.ipr
-*.iws
-*.iml
+## Android Studio and Intellij and Android in general
+/android/libs/armeabi-v7a/
+/android/libs/arm64-v8a/
+/android/libs/x86/
+/android/libs/x86_64/
+/android/gen/
 
 ## Eclipse:
-.classpath
-.project
-.metadata/
-/android/bin/
-/core/bin/
-/lwjgl2/bin/
-/lwjgl3/bin/
-/html/bin/
-/teavm/bin/
-/ios/bin/
-/ios-moe/bin/
-/headless/bin/
-/server/bin/
-/shared/bin/
-*.tmp
-*.bak
-*.swp
-*~.nib
-.settings/
-.loadpath
-.externalToolBuilders/
-*.launch
+/android/out/
+com_crashlytics_export_strings.xml
 
+## Eclipse
+
+/desktop/bin/
+/html/bin/
+/ios/bin/
 
 ## NetBeans:
+## NetBeans
+>>>>>>> viejo/main
 
 /nbproject/private/
 /android/nbproject/private/
@@ -101,6 +95,7 @@ www-test/
 /headless/nbproject/private/
 /server/nbproject/private/
 /shared/nbproject/private/
+
 
 /nbbuild/
 /android/nbbuild/
@@ -162,3 +157,4 @@ Thumbs.db
 ## You could also add that configuration to the text in nativeimage.gradle .
 ## You should delete or comment out the next line if you have configuration in a different resource-config.json .
 **/resource-config.json
+
