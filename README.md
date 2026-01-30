@@ -1,3 +1,4 @@
+
 # Herreria_Enana
 Videojuego hecho con Libgdx para proyecto escolar
 
@@ -18,8 +19,3 @@ Reloj
 
 Sitio de minado
 ![muestraMinerales](https://github.com/user-attachments/assets/5e82a3cb-6d82-4ab8-8e8a-603434a5bd8e)
-
-
-
-
-

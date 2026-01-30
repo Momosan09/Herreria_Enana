@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -159,6 +160,7 @@ public class Combinacion extends HUD {
     public void mostrar() {
         if (!visible) {
             traerInventario();
+            stage.getRoot().setTouchable(Touchable.enabled);
             dragNDrop.refrescar();
             visible = true;
         }
@@ -168,6 +170,7 @@ public class Combinacion extends HUD {
     public void ocultar() {
         visible = false;
         stage.unfocusAll();
+        stage.getRoot().setTouchable(Touchable.disabled);
         stage.clear();
         dragNDrop.ocultar();
     }

@@ -6,6 +6,7 @@ import com.mygdx.combinaciones.dto.*;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.recursos.Recursos;
+import com.mygdx.combinaciones.Receta;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -67,10 +68,12 @@ public class Dialogo extends Actor implements HeadUpDisplay, Ocultable {
 	
 	public void mostrar() {
 		mostrar = true;
+	    stage.getRoot().setTouchable(Touchable.enabled);
 	}
 	
 	public void ocultar() {
 		mostrar = false;
+	    stage.getRoot().setTouchable(Touchable.disabled);
 	}
 	
 	public void dispose() {
