@@ -174,6 +174,7 @@ public class Juego implements Screen{
 		jugador.agregar(IngredientesId.HIERRO_MENA, 2);
 		jugador.agregar(IngredientesId.HIERRO_PURO, 2);
 		jugador.agregar(IngredientesId.CARBON_PURO, 1);
+
 		
 		
 		Recursos.muxJuego.addProcessor(new EntradaJuego());

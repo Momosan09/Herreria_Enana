@@ -44,6 +44,8 @@ public class MyDragAndDrop {
 	private ArrayList<Image> inventario, herramientas;
 	private ArrayList<IngredientesId> ingredientes;
 	
+	
+	
 	public MyDragAndDrop(Jugador jugador){
 		dragAndDrop = new DragAndDrop();
 		this.jugador = jugador;

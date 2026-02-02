@@ -6,8 +6,17 @@ package com.mygdx.entidades.ObjetosDelMapa.Minable;
  *
  */
 public enum TipoMinerales {
-
-	PIEDRA("objetosDelMundo/inanimados/minerales/piedra/piedra"), HIERRO("objetosDelMundo/inanimados/minerales/hierro/hierro"), CARBON("objetosDelMundo/inanimados/minerales/carbon/carbon");
+	
+	/*Sobre la arcilla y los moldes.
+	 * Arcilla se lo toma como un mineral en TipoMinerales.
+	 * En EstadosMinerales se usa "Molde" para poder diferenciar que es por molde pero puede servir para el mineral una vez procesado.
+	 * O sea, ahora hago TipoMinerales.ARCILLA EstadosMinerales.MOLDE_CABEZA_MAZA para que sea el molde. Pero tambien puedo hacer TipoMinerales.HIERRO EstadosMinerales.MOLDE_CABEZA_MAZA, en este caso no significa que sea un molde de hierro, sino el item ya fabricado.
+	 * 
+	 * */
+	PIEDRA("objetosDelMundo/inanimados/minerales/piedra/piedra"),
+	HIERRO("objetosDelMundo/inanimados/minerales/hierro/hierro"),
+	CARBON("objetosDelMundo/inanimados/minerales/carbon/carbon"),
+	ARCILLA("objetosDelMundo/inanimados/minerales/arcilla/arcilla");
 	
 	public String ruta;
 	

@@ -21,6 +21,10 @@ public enum IngredientesId {
 	PICO(Items.PICO), 
 	SIERRA(Items.SIERRA),
 	SIERRA_CIRCULAR(Items.SIERRA_CIRCULAR),
+
+	MANGO_MADERA_MAZA(Items.MANGO_MADERA_MAZA),
+	
+	
 	
 	//ESPADAS
 		//COMPLETAS
@@ -28,6 +32,8 @@ public enum IngredientesId {
 	
 		//HOJAS
 		HOJA_ESPADA_HIERRO_0(Items.HOJA_ESPADA_HIERRO_0),
+		
+	//MAZAS
 		
 		
 	//MINERALES
@@ -44,13 +50,22 @@ public enum IngredientesId {
 	HIERRO_TIRA(TipoMinerales.HIERRO, EstadosMinerales.TIRA),
 	HIERRO_LINGOTE(TipoMinerales.HIERRO, EstadosMinerales.LINGOTE),
 	
+	HIERRO_TIRA_PILA(TipoMinerales.HIERRO, EstadosMinerales.TIRA_PILA),
+	
+	HIERRO_CABEZA_MAZA(TipoMinerales.HIERRO, EstadosMinerales.MOLDE_CABEZA_MAZA),//TODO aca hay un problema porque siempre el mineral esta siendo hierro, tengo que modificar el sistema
+
+	
 		//PIEDRA
 	PIEDRA_MENA(TipoMinerales.PIEDRA, EstadosMinerales.MENA), 
 	
 	
+		//MOLDES
+	MOLDE_ARCILLA_MAZA(TipoMinerales.ARCILLA, EstadosMinerales.MOLDE_CABEZA_MAZA),
+	
 	//ESQUEMAS
 	ESQUEMA_SIERRA_CIRCULAR(Items.ESQUEMA_SIERRA_CIRCULAR),
 	ESQUEMA_HOJA_ESPADA(Items.ESQUEMA_HOJA_ESPADA),
+	
 	
 	
 	//MADERA

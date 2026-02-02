@@ -8,7 +8,6 @@ public class HierroDisco extends Item{
 
 	public HierroDisco() {
 		super(IngredientesId.HIERRO_DISCO);
-		// TODO Auto-generated constructor stub
 	}
 
 }

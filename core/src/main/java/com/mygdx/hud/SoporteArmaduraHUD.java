@@ -29,9 +29,7 @@ public class SoporteArmaduraHUD extends HUD{
 	}
 
 	@Override
-	public void poblarStage() {
-		// TODO Auto-generated method stub
-		
+	public void poblarStage() {	
 	}
 
 }

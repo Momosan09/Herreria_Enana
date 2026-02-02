@@ -94,6 +94,15 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar, Ingrediente{
 	
 	
 
+	public Mineral(TipoMinerales tipoMineral, EstadosMinerales estadoMineral) {
+		super(tipoMineral.ruta + estadoMineral.ruta);
+		this.tipo = tipoMineral;
+		this.estado = estadoMineral;
+		this.ingredienteId = IngredientesRegistry.get(tipo, estado);
+		
+	}
+
+
 	protected void crearCuerpo(World world, int ancho, int alto) {//esto lo puedo sacar mas adelante, si le hago animacion a los minerales...
 		// Crear el cuerpo del jugador
         BodyDef bodyDef = new BodyDef();

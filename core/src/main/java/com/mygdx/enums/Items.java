@@ -24,6 +24,7 @@ public enum Items {
 	
 	//de compra
 	MANGO_MADERA_0(new Texture(Recursos.itemsYmision.MANGO_MADERA_0),-1,0,0,5),
+	MANGO_MADERA_MAZA(new Texture(Recursos.itemsYmision.MANGO_MADERA_MAZA)),
 	
 	
 	//Esquemas

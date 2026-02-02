@@ -166,7 +166,6 @@ public class ConfiguracionHUD implements Screen{
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -178,21 +177,15 @@ public class ConfiguracionHUD implements Screen{
 	}
 
 	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
+	public void pause() {	
 	}
 
 	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-		
+	public void resume() {	
 	}
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-		
 	}
     
 }

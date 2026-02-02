@@ -6,6 +6,7 @@ import com.mygdx.combinaciones.dto.*;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.recursos.Recursos;
+import com.mygdx.armas.ResultadoFinalId;
 import com.mygdx.combinaciones.Receta;
 
 import java.util.ArrayList;
@@ -21,8 +22,15 @@ public class CargadorRecetas {
 
         List<Receta> recetas = new ArrayList<>();
 
+        
+        
         for (RecetaDTO dto : data.recetas) {
-
+        	
+        	//Control
+            if (dto.salidas != null && dto.salidaFinal != null) {
+                throw new RuntimeException("Receta invalida: tiene ambas salidas y salidaFinal");
+            }
+            
             // Entradas
             List<IngredienteReceta> entradas = new ArrayList<>();
             for (IngredienteDTO i : dto.entradas) {
@@ -30,10 +38,27 @@ public class CargadorRecetas {
             }
 
             // Salidas
-            List<IngredienteReceta> salidas = new ArrayList<>();
-            for (IngredienteDTO i : dto.salidas) {
-                salidas.add(new IngredienteReceta(IngredientesId.valueOf(i.ingrediente),i.cantidad));
+            List<IngredienteReceta> salidas = null;
+            ResultadoFinalId salidaFinal = null;
+
+            // Caso 1: receta normal
+            if (dto.salidas != null) {
+                salidas = new ArrayList<>();
+                for (IngredienteDTO i : dto.salidas) {
+                    salidas.add(
+                        new IngredienteReceta(
+                            IngredientesId.valueOf(i.ingrediente),
+                            i.cantidad
+                        )
+                    );
+                }
             }
+
+            // Caso 2: receta de resultado final
+            if (dto.salidaFinal != null) {
+                salidaFinal = dto.salidaFinal;
+            }
+
 
             // Herramienta (opcional)
             IngredientesId herramienta = dto.herramienta == null? null : IngredientesId.valueOf(dto.herramienta);
@@ -41,7 +66,10 @@ public class CargadorRecetas {
             // Medio
             Medios medio = Medios.valueOf(dto.medio);
 
-            recetas.add(new Receta(entradas,herramienta,salidas,medio));
+            recetas.add(new Receta(entradas,herramienta,salidas,salidaFinal, medio));
+            
+
+
         }
         System.out.println(HelpDebug.debub(CargadorRecetas.class)+ recetas.size()+ " recetas cargadas desde "+ Recursos.RECETAS);
         return recetas;

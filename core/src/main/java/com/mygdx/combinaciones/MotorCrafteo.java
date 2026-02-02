@@ -1,6 +1,8 @@
 package com.mygdx.combinaciones;
 
+import com.mygdx.armas.Equipo;
 import com.mygdx.entidades.Jugador;
+import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.enums.EstadosMision;
 import com.mygdx.historia.Mision;
 import com.mygdx.historia.TipoMision;
@@ -58,22 +60,44 @@ public class MotorCrafteo {
 
         // Consumir entradas
         for (IngredienteReceta ing : receta.entradas()) {
-            inventario.consumir(ing.ingrediente(),ing.cantidad());
+            inventario.consumir(ing.ingrediente(), ing.cantidad());
             sonidosDeFabricar(receta.herramienta());
         }
-        
 
-        // Agregar salidas
-        for (IngredienteReceta out : receta.salidas()) {
-            inventario.agregar(out.ingrediente(),out.cantidad());
-            comprobarMisionesDeFabricar(out, out.cantidad());//TODO aca puede haber un error de que se repita mas veces de lo necesario
-
+        // Caso 1: receta normal (ingredientes)
+        if (receta.salidas() != null) {
+            for (IngredienteReceta out : receta.salidas()) {
+                inventario.agregar(out.ingrediente(), out.cantidad());
+                comprobarMisionesDeFabricar(out, out.cantidad());
+            }
+            return;
         }
+
+        // Caso 2: receta de resultado final (arma/equipo)
+        if (receta.salidaFinal() != null) {
+
+            Mineral metalBase = obtenerMetalBase(receta);
+            Equipo equipo = ResultadoFinalFactory.crear(receta.salidaFinal(), metalBase);
+
+            j.getInventarioArmas().add(equipo);
+        }
+    }
+
+
+	private static Mineral obtenerMetalBase(Receta receta) {
+		for (IngredienteReceta ing : receta.entradas()) {
+			if (ing.ingrediente().tipoM != null) {
+				return CreadorDeMinerales.crear(ing.ingrediente());
+			}
+		}
+		return null;
+	}
+
         
         
 
         
-    }
+    
 
 	public InventarioCrafteo getInventario() {
 		return inventario;
@@ -92,6 +116,11 @@ public class MotorCrafteo {
 	}
 	
 	private static void sonidosDeFabricar(IngredientesId herramienta) {
+		
+	    if (herramienta == null) {
+	        return; // no hay sonido de herramienta
+	    }
+		
 		switch (herramienta) {
 		case SIERRA: {
 			SonidosManager.reproducirSonido(ListaSonidos.SIERRA_METAL);

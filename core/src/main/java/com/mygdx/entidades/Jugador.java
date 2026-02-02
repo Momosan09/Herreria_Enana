@@ -19,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.armas.Equipo;
 import com.mygdx.combinaciones.CreadorDeMinerales;
 import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.combinaciones.InventarioCrafteo;
@@ -46,6 +47,7 @@ import com.mygdx.historia.TipoMision;
 import com.mygdx.historia.misiones.MisionRecFab;
 import com.mygdx.utiles.Animator;
 import com.mygdx.utiles.HelpDebug;
+import com.mygdx.utiles.InventarioList;
 import com.mygdx.utiles.ItemEquipadoJugador;
 import com.mygdx.utiles.Monedero;
 import com.mygdx.utiles.MundoConfig;
@@ -68,10 +70,11 @@ public class Jugador implements InventarioCrafteo {
 	private ItemEquipadoJugador itemEnMano;
 	
 	//Inventarios
-	private ArrayList<Item> items = new ArrayList<>();//LOS ITEMS "FISICOS" son los cuales tienen interaccion, se pueden equipar o interactuan con el mundo
+	private InventarioList<Item> items = new InventarioList<>();//LOS ITEMS "FISICOS" son los cuales tienen interaccion, se pueden equipar o interactuan con el mundo
 
     private EnumMap<IngredientesId, Integer> inventario = new EnumMap<>(IngredientesId.class); //Los items "abstractos" son los que sirven para las combinaciones, contar cantidades y no existen en el mapa
 
+    private InventarioList<Equipo> armas = new InventarioList<>();
 	
 	private HashMap<String,Mision> tareas = new HashMap<String,Mision>();
 	
@@ -257,7 +260,7 @@ public class Jugador implements InventarioCrafteo {
 
 	}
 	
-	public ArrayList<Item> getItems(){
+	public InventarioList<Item> getItems(){
 		return items;
 	}
 	
@@ -266,10 +269,7 @@ public class Jugador implements InventarioCrafteo {
 		mostrarMensaje = true;
 	}
 	
-	public void eliminarItem(Item item) {
-		items.remove(item);
-	}
-	
+
 	public void eliminarItem(IngredientesId item) {
 		items.remove(new Item(item));
 	}
@@ -290,7 +290,7 @@ public class Jugador implements InventarioCrafteo {
 		return null;
 	}
 	
-	
+//	
 	public Item getItem(int i) {
 		if(!items.isEmpty()) {			
 			return items.get(i);
@@ -718,6 +718,10 @@ public class Jugador implements InventarioCrafteo {
 	
 
 	
+	public InventarioList<Equipo> getInventarioArmas() {
+		return armas;
+	}
+	
 	public void resetearRespuestas() {
 		respuesta1 = Respuestas.NOVALOR;
 		respuesta2 = Respuestas.NOVALOR;
@@ -762,6 +766,10 @@ public class Jugador implements InventarioCrafteo {
         agregar(IngredientesId.ESQUEMA_SIERRA_CIRCULAR);
         
         agregar(IngredientesId.HIERRO_LINGOTE, 2);
+        
+		agregar(IngredientesId.MOLDE_ARCILLA_MAZA, 1);
+		agregar(IngredientesId.MANGO_MADERA_MAZA, 1);
+		agregar(IngredientesId.HIERRO_CABEZA_MAZA, 1);
 
         // Items físicos (solo gameplay)
         items.add(new Pico());

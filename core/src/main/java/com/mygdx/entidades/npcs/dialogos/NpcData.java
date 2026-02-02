@@ -44,7 +44,6 @@ public enum NpcData implements DialogosNPC{
 
 	@Override
 	public String getMensaje(int index) {
-		// TODO Auto-generated method stub
 		return _dialogos.get(index);
 	}
 	

@@ -481,3 +481,17 @@ por ejemplo:
 # 11 ENE
     - Vuelve a funcionar la mision del carpintero (todas las de fabricacion deberian funcionar)
     - Agrega algunos sonidos a las combinaciones
+
+# 30 ENE
+    - Reconstrui el proyecto en gdx-liftoff
+    - Modifique el muxJuego ya que con la diferencia de versiones de libgdx se rompio un poco el comportamiento
+
+# 2 FEB
+    - Agrega paquete Armas con clases pertientes a las armas
+    - Modifica el Record Receta para poder tener "salidasFinales" en las combinaciones (items que no ya no se pueden combinar como los items con IngredienteId)
+    - Crea clase generica InventarioList la cual hereda ArrayList pero lo potencia con metodos utiles
+    - Se puede crear ya la primera arma (Maza de hierro) (Aun no es visible en los inventarios)
+    - Crea IngredientesRegistry la cual sirve para asignarle el IngredienteId a los items de combinacion creados fuera de la combinacion (ejemplo de uso en FundicionOmega) (Ademas: leer clase IngredientesRegistry que tiene una pequeña descripcion)
+    - Limpia todos los "TODO" auto generados, para poder empezar a usarlos de verdad
+    - Cambios minimos en algunas clases
+    - Agrega algunas clases menores

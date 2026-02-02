@@ -151,8 +151,6 @@ public class FundicionOmega extends HUD{
 
 	@Override
 	public void reEscalar(int width, int heigth) {
-		// TODO Auto-generated method stub
-		
 	}
 
 
@@ -241,8 +239,8 @@ public class FundicionOmega extends HUD{
 
 		        Mineral m = (Mineral) payload.getObject();
 
-		        // Ejemplo: solo hierro como molde
-		        return m.getTipoMineral() == TipoMinerales.HIERRO && mineralMolde == null;
+		        //Solo moldes de arcilla (no importa que tipo) (mas adelante lo tengo que vincular con el json igual)
+		        return m.getTipoMineral() == TipoMinerales.ARCILLA && mineralMolde == null;
 		    }
 
 		    @Override
@@ -332,9 +330,11 @@ public class FundicionOmega extends HUD{
 	    
 	    System.out.println(HelpDebug.debub(getClass())+"Fundición terminada");
 
-	    // Resultado (ejemplo)
-	    Texture resultado = new Texture(Recursos.minerales.LINGOTE_HIERRO);
-	    mineralSalida = new Mineral(IngredientesId.HIERRO_LINGOTE);
+	    
+	    Texture resultado = new Texture(mineralEntrada.getTipoMineral().ruta + mineralMolde.getEstadoMineral().ruta);
+	    //La salida es la combinacion del tipo de mineral de entrada + la figura del molde
+	    mineralSalida = new Mineral(mineralEntrada.getTipoMineral(), mineralMolde.getEstadoMineral());
+	    
 	    salida.setDrawable(new TextureRegionDrawable(resultado));
 
 	    calor -= mineralEntrada.calorDeFusion;
