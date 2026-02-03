@@ -768,8 +768,9 @@ public class Jugador implements InventarioCrafteo {
         agregar(IngredientesId.HIERRO_LINGOTE, 2);
         
 		agregar(IngredientesId.MOLDE_ARCILLA_MAZA, 1);
-		agregar(IngredientesId.MANGO_MADERA_MAZA, 1);
+		agregar(IngredientesId.MANGO_MADERA_MAZA, 2);
 		agregar(IngredientesId.HIERRO_CABEZA_MAZA, 1);
+		agregar(IngredientesId.ORO_CABEZA_MAZA, 1);
 
         // Items físicos (solo gameplay)
         items.add(new Pico());

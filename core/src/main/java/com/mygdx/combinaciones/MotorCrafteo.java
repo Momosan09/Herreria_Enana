@@ -1,9 +1,13 @@
 package com.mygdx.combinaciones;
 
+import java.util.ArrayList;
+
 import com.mygdx.armas.Equipo;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
+import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
 import com.mygdx.enums.EstadosMision;
+import com.mygdx.enums.Items;
 import com.mygdx.historia.Mision;
 import com.mygdx.historia.TipoMision;
 import com.mygdx.historia.misiones.MisionRecFab;
@@ -77,7 +81,8 @@ public class MotorCrafteo {
         if (receta.salidaFinal() != null) {
 
             Mineral metalBase = obtenerMetalBase(receta);
-            Equipo equipo = ResultadoFinalFactory.crear(receta.salidaFinal(), metalBase);
+            ArrayList<Items> items = obtenerOtrosIngredientes(receta);
+            Equipo equipo = ResultadoFinalFactory.crear(receta.salidaFinal(), metalBase, items);
 
             j.getInventarioArmas().add(equipo);
         }
@@ -91,6 +96,18 @@ public class MotorCrafteo {
 			}
 		}
 		return null;
+	}
+	
+	private static ArrayList<Items> obtenerOtrosIngredientes(Receta receta) {
+		ArrayList<Items> lista = new ArrayList<>();
+
+		for (IngredienteReceta ing : receta.entradas()) {
+			if (ing.ingrediente().tipoI != null) {
+				lista.add(ing.ingrediente().tipoI);
+			}
+
+		}
+		return lista;
 	}
 
         

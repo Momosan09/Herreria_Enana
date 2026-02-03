@@ -2,6 +2,7 @@ package com.mygdx.enums;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.armas.ArmasYEquipo;
 import com.mygdx.utiles.Dinero;
 import com.mygdx.utiles.recursos.Recursos;
 
@@ -35,11 +36,13 @@ public enum Items {
 	DISCO_HIERRO(new Texture(Recursos.itemsYmision.DISCO_HIERRO)),
 	SIERRA_CIRCULAR(new Texture(Recursos.itemsYmision.SIERRA_CIRCULAR));
 
+
+	
 	private Texture textura;
 	private int oro, plata, cobre;
 	private Dinero valor;
 	private int usos;
-
+	
 	Items(Texture textura, int usos, int oro, int plata, int cobre){
 		this.textura = textura;
 		valor = new Dinero(oro,plata,cobre);

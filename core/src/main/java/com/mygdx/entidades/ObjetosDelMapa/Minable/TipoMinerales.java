@@ -16,6 +16,7 @@ public enum TipoMinerales {
 	PIEDRA("objetosDelMundo/inanimados/minerales/piedra/piedra"),
 	HIERRO("objetosDelMundo/inanimados/minerales/hierro/hierro"),
 	CARBON("objetosDelMundo/inanimados/minerales/carbon/carbon"),
+	ORO("objetosDelMundo/inanimados/minerales/oro/oro"),
 	ARCILLA("objetosDelMundo/inanimados/minerales/arcilla/arcilla");
 	
 	public String ruta;

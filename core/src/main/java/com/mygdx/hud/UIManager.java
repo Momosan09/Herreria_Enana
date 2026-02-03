@@ -85,6 +85,7 @@ public class UIManager implements EventoRecibirCarta{
 			MundoConfig.pausarTiempo = false;
 			hud.mostrar();
 			jugador.puedeMoverse = true;
+			inventario.ocultar();
 		    activarSolo(hud.getStage());
 			dialogo.limpiarDatos();//Esto ayuda a que no queden datos del npc anterior en la caja de dialogo cuando se hable con uno nuevo
 			break;
@@ -113,7 +114,8 @@ public class UIManager implements EventoRecibirCarta{
 			
 		case INVENTARIO:
 			inventario.mostrar();
-			ocultar(diario);
+			activarSolo(inventario.getStage());
+//			ocultar(diario);
 			break;
 		case COMBINACION:
 			combinacion.mostrar();

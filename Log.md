@@ -497,3 +497,37 @@ por ejemplo:
     - Limpia todos los "TODO" auto generados, para poder empezar a usarlos de verdad
     - Cambios minimos en algunas clases
     - Agrega algunas clases menores
+
+## 3 FEB
+    - Agrega tabla en inventario para mostrar las armas y armaduras crafteadas
+    - Agrega sistema dinamico para conseguir las texturas de las armas por combinacion. es decir, solo con las partes base de la herramienta el juego reconstruye la info necesaria para el funcionamiento
+    - Ahora la textura de un arma se crea dinamicamente utilizando las texturas de los ingredientes que la componen
+#### ¡Importante!
+Las armas y armaduras (equipo) ahora usan un sistema similar al que conforman los enums ```TipoMinerales``` y ```EstadosMinerales```.
+De hecho se sigue usando ```TipoMinerales``` y, creando en cada carpeta de cada mineral una nueva carpeta llamada ```"nombreDelMineral + Equipo"``` (ejemplo: oroEquipo/) se accede a todos los equipos de ese mineral y usando el enum ```EstadosArmas``` se puede pedir la textura de las armas de ese mineral igual que con el sistema de ```EstadosMinerales```.
+
+La estructura es:
+ ```
+├── assets
+│   ├── objetosDelMundo
+│   │   ├── inanimados
+│   │   │   ├── minerales
+│   │   │   │   ├── hierro
+                   ├── hierroEquipo
+                       ├── Maza1.png
+                       ├── Maza2.png
+                       ├── ...
+│   │   │   │   │  ├── hierroMena.png
+│   │   │   │   │  ├── hierroPuro.png
+│   │   │   │   │  ├── hierroLingote.png
+│   │   │   │   │  ├── ...
+│   │   │   │   ├── oro
+│   │   │   │   │  ├── oroEquipo
+                       ├── Maza1.png
+                       ├── ...                       
+│   │   │   │   │  ├── piedraMena.png 
+│   │   │   │   │  ├── ... 
+│   │   │   │   ├── ... 
+```
+
+Tener en cuenta que el equipo "igual" o equivalente entre minerales debe tener exactamente el mismo nombre en todas las carpetas, por la forma en la que ```TipoMinerales``` y ```EstadosArmas``` componen la ruta.

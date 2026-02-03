@@ -110,6 +110,17 @@
             "salidaFinal": "MAZA_DE_GUERRA",
 
             "medio":"YUNQUE"
+          },
+
+          {
+            "entradas": [
+              { "ingrediente": "ORO_CABEZA_MAZA", "cantidad": 1 },
+              { "ingrediente": "MANGO_MADERA_MAZA", "cantidad": 1 }
+            ],
+
+            "salidaFinal": "MAZA_DE_GUERRA",
+
+            "medio":"YUNQUE"
           }
           
     ]

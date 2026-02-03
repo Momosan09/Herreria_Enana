@@ -55,6 +55,9 @@ public enum IngredientesId {
 	HIERRO_CABEZA_MAZA(TipoMinerales.HIERRO, EstadosMinerales.MOLDE_CABEZA_MAZA),//TODO aca hay un problema porque siempre el mineral esta siendo hierro, tengo que modificar el sistema
 
 	
+	//ORO
+	ORO_CABEZA_MAZA(TipoMinerales.ORO, EstadosMinerales.MOLDE_CABEZA_MAZA),
+	
 		//PIEDRA
 	PIEDRA_MENA(TipoMinerales.PIEDRA, EstadosMinerales.MENA), 
 	
