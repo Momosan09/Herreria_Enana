@@ -84,7 +84,7 @@ public class MotorCrafteo {
             ArrayList<Items> items = obtenerOtrosIngredientes(receta);
             Equipo equipo = ResultadoFinalFactory.crear(receta.salidaFinal(), metalBase, items);
 
-            j.getInventarioArmas().add(equipo);
+            j.getInventarios().armas.add(equipo);
         }
     }
 
@@ -125,9 +125,9 @@ public class MotorCrafteo {
 	}
 	
 	private static void comprobarMisionesDeFabricar(IngredienteReceta out, int cantidad) {
-        for(MisionRecFab m : j.conseguirMisionesPorTipo(TipoMision.FABRICAR)) {
+        for(MisionRecFab m : j.getInventarios().tareas.conseguirMisionesPorTipo(TipoMision.FABRICAR)) {
         	if(m.getObjeto() == out.ingrediente() && (m.getEstado() == EstadosMision.PENDIENTE)) {
-        		j.avanzarMision(m, cantidad);
+        		j.getInventarios().tareas.avanzarMision(m, cantidad);
         	}
         }
 	}

@@ -90,7 +90,7 @@ public class FundicionOmega extends HUD{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if(mineralSalida != null) {					
-					j.agregar(mineralSalida);
+					j.getInventarios().ingredientes.agregar(mineralSalida);
 					salida.setDrawable(new TextureRegionDrawable(texturaEntradaVacia));
 					actualizarTablaInventario();
 					mineralSalida = null;
@@ -353,7 +353,7 @@ public class FundicionOmega extends HUD{
 	}
 
 	private void consumirMineral(Mineral mineral, Actor actor) {
-	    j.consumir(mineral);
+		j.getInventarios().ingredientes.consumir(mineral);
 	    actor.remove();
 	}
 
@@ -364,7 +364,7 @@ public class FundicionOmega extends HUD{
 	private void actualizarTablaInventario() {
 		 inventario.clearChildren(); // evita duplicados
 
-	        for (final Mineral mineral : j.obtenerTodosLosMinerales()) {
+	        for (final Mineral mineral : j.getInventarios().ingredientes.obtenerTodosLosMinerales()) {
 
 	            final Image mineralImage = new Image(mineral.getTextura());
 

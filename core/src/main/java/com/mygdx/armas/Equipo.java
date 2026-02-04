@@ -6,6 +6,11 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Null;
+import com.mygdx.armas.modificadores.AplicadorDeModificadores;
+import com.mygdx.armas.modificadores.EfectosArma;
+import com.mygdx.armas.modificadores.Modificador;
+import com.mygdx.armas.modificadores.Modificadores;
+import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
 import com.mygdx.enums.Items;
@@ -16,7 +21,16 @@ import com.mygdx.utiles.HelpDebug;
  */
 public abstract class Equipo {
 	
-	protected Texture textura;
+	
+	/*Existe una textura base la cual es el metal base + la forma del arma
+	* overlays guarda todas las capas que se le tienen que aplicar a esa textura
+	* combinarTexturas se encarga de la logica de apilacion
+	* reconstruir se debe llamr cada vez que se le haga un cambio a la pila de texturas
+	*/
+	protected Texture texturaBase;
+	protected ArrayList<Texture> overlays;
+	protected Texture texturaFinal;
+
 	protected Sprite sprite;
 	
 	protected float verde;
@@ -25,19 +39,18 @@ public abstract class Equipo {
 	
 	protected Mineral metalBase;
 	protected EstadosArmas tipoArma;
-	protected int modificador;//cambiar
+	protected Modificadores modificador = null;
+	protected EfectosArma efecto;
 	
-	public Equipo(Mineral metalBase, EstadosArmas tipoArma) {
-		
-		this.tipoArma = tipoArma;
-		this.metalBase = metalBase;
-		
-		Texture t1 = new Texture(metalBase.tipo.ruta + tipoArma.ruta);
-		Texture t2 = Items.MANGO_MADERA_MAZA.getTextura();
-		Texture t3 = Items.SIERRA_CIRCULAR.getTextura();
-		this.textura = combinarTexturas(t3,t2,t1);
-//TODO DESHARCODEARLO
-	}
+//	public Equipo(Mineral metalBase, EstadosArmas tipoArma) {
+//		
+//		this.tipoArma = tipoArma;
+//		this.metalBase = metalBase;
+//		
+//		Texture t1 = new Texture(metalBase.tipo.ruta + tipoArma.ruta);
+//
+//
+//	}
 	
 	public Equipo(Mineral metalBase, @Null ArrayList<Items> items, EstadosArmas tipoArma) {
 		
@@ -48,18 +61,61 @@ public abstract class Equipo {
 		
 		for (int i = 0; i<texturasItem.length;i++) {
 			texturasItem[i] = items.get(i).getTextura();
-			System.out.println(HelpDebug.debub(getClass())+"--------"+items.get(i).getNombre());
 		}
 		
 		
-		this.textura = combinarTexturas(texturasItem, t1);
 		this.metalBase = metalBase;
+		
+	    texturaBase = new Texture(metalBase.tipo.ruta + tipoArma.ruta);
+	    overlays = new ArrayList<>();
+
+	    if (items != null) {
+	        for (Items item : items) {
+	            overlays.add(item.getTextura());
+	        }
+	    }
+
+	    reconstruirTextura();
+		
 	}
 	
 	public Texture getTextura() {
-		return textura;
+		return texturaFinal;
 	}
 	
+	public void aplicarModificador(Modificadores mod) {
+	    this.modificador = mod;
+	    efecto = AplicadorDeModificadores.darEfecto(mod, metalBase, tipoArma);
+
+	    overlays.add(new Texture(mod.ruta));//Agrega la nueva textura a las capas
+
+	    reconstruirTextura();//Reconstruye la textura agregando la textura del modificador
+	}
+
+	
+	public void atacar(Entidad objetivo/*, ContextoCombate ctx*/) {
+
+	    // daño base
+	    //objetivo.recibirDanio(calcularDanio());
+
+	    // efecto especial
+	    if (efecto != null) {
+	       // efecto.aplicar(general, objetivo/*, ctx*/);
+	    }
+	}
+
+	private void reconstruirTextura() {
+	    ArrayList<Texture> todas = new ArrayList<>();
+	    todas.addAll(overlays);
+	    todas.add(texturaBase);
+
+	    if (texturaFinal != null) {
+	        texturaFinal.dispose();
+	    }
+
+	    texturaFinal = combinarTexturas(todas.toArray(new Texture[0]));
+	}
+
 
 
 	/*
@@ -68,16 +124,19 @@ public abstract class Equipo {
 	 */
 	public static Texture combinarTexturas(Texture ...texturas) {
 		Pixmap pixmaps[] = new Pixmap[texturas.length];
-		
+
 		//Preparar texturas y crear pixmaps
 		for(int i = 0; i<texturas.length;i++) {
-			texturas[i].getTextureData().prepare();
+			
+			if (!texturas[i].getTextureData().isPrepared()) {
+				texturas[i].getTextureData().prepare();
+			}
+			
 			pixmaps[i] = texturas[i].getTextureData().consumePixmap();
 		}
 		
 		
 		for(int i = pixmaps.length-1; i>=1;i--) {
-			System.out.println(i);
 			pixmaps[i-1].drawPixmap(pixmaps[i], 0, 0);
 		}
 
@@ -86,6 +145,7 @@ public abstract class Equipo {
 	    //Disposear los pixmaps
 		for(int i = 0; i<pixmaps.length;i++) {
 			pixmaps[i].dispose();
+			
 		}
 		
 	    return textureResult;
@@ -109,13 +169,15 @@ public abstract class Equipo {
 		
 		//Preparar texturas y crear pixmaps
 		for(int i = 0; i<pixmaps.length;i++) {
-			texturasTODAS[i].getTextureData().prepare();
+			
+			if (!texturasTODAS[i].getTextureData().isPrepared()) {
+				texturasTODAS[i].getTextureData().prepare();
+			}
 			pixmaps[i] = texturasTODAS[i].getTextureData().consumePixmap();
 		}
 		
 		
 		for(int i = pixmaps.length-1; i>=1;i--) {
-			System.out.println(i);
 			pixmaps[i-1].drawPixmap(pixmaps[i], 0, 0);
 		}
 

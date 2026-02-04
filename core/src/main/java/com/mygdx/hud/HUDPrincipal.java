@@ -193,8 +193,8 @@ public class HUDPrincipal implements HeadUpDisplay, Ocultable, EventoMisionAgreg
 		hudDer.add(mensaje).fillX().expandY().top();
 
 		//barra items
-		for(int i = 0; i< jugador.getItems().size();i++) { 
-			barraItems.add(new Image(jugador.getItem(i).getTextura()));
+		for(int i = 0; i< jugador.getInventarios().items.getItems().size();i++) { 
+			barraItems.add(new Image(jugador.getInventarios().items.getItem(i).getTextura()));
 		}
 		
 	

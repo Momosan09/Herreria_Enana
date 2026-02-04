@@ -138,7 +138,7 @@ public class CharlaManager {
 			}
 			if (viejo.getNombreCharlaActual().equals(Recursos.bundle.get("viejo.charla.nombre.montanas_minerales"))) {
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
-					if(!jugador.getMisiones().get(MisionesDelJuego.RC2_VIE.getId()).isFallada()) {						
+					if(!jugador.getInventarios().tareas.getMisiones().get(MisionesDelJuego.RC2_VIE.getId()).isFallada()) {						
 					viejo.setCharlaActual(Recursos.bundle.get("viejo_RC2_VIE_0"));
 					}else {
 						cerrarDialogo(viejo); 
@@ -163,7 +163,7 @@ public class CharlaManager {
 			
 			if (viejo.getNombreCharlaActual().equals(Recursos.bundle.get("viejo_RC2_VIE_1"))) {
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
-					jugador.getMisiones().get(MisionesDelJuego.RC2_VIE.getId()).setFallada();
+					jugador.getInventarios().tareas.getMisiones().get(MisionesDelJuego.RC2_VIE.getId()).setFallada();
 					viejo.setCharlaActual(Recursos.bundle.get("viejo.charla.nombre.saludo"));
 
 				} else if (jugador.respuesta2 == Respuestas.VERDADERO) {//Si el jugador fallo la mision de hablar con el viejo
@@ -225,9 +225,9 @@ public class CharlaManager {
 
 			if(carpintero.getNombreCharlaActual().equals(Recursos.bundle.get("carpintero.charla.nombre.mision.sierra_circular"))) {
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
-					if (!jugador.buscarMisionPorId("CARP_00")) {
-						jugador.agregarMision(MisionesDelJuego.CARP_00);
-						jugador.agregarItem(new Esquema(IngredientesId.ESQUEMA_SIERRA_CIRCULAR));
+					if (!jugador.getInventarios().tareas.buscarMisionPorId("CARP_00")) {
+						jugador.getInventarios().tareas.agregarMision(MisionesDelJuego.CARP_00);
+						jugador.getInventarios().items.agregarItem(new Esquema(IngredientesId.ESQUEMA_SIERRA_CIRCULAR), true);
 
 					}
 				} else if (jugador.respuesta2 == Respuestas.VERDADERO) {
@@ -241,8 +241,8 @@ public class CharlaManager {
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
 					cerrarDialogo(carpintero);
 				} else if (jugador.respuesta2 == Respuestas.VERDADERO
-						&& jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).getEstado() == EstadosMision.COMPLETADA) {
-					jugador.getItems().remove(jugador.getItem(Items.SIERRA_CIRCULAR));
+						&& jugador.getInventarios().tareas.conseguirMisionPorId(MisionesDelJuego.CARP_00).getEstado() == EstadosMision.COMPLETADA) {
+					jugador.getInventarios().items.getItems().remove(jugador.getInventarios().items.getItem(Items.SIERRA_CIRCULAR));
 					carpintero.setCharlaActual(Recursos.bundle.get("carpintero.charla.nombre.venta"));
 				}
 				}
@@ -258,8 +258,8 @@ public class CharlaManager {
 			
 			
 
-			if (jugador.buscarMisionPorId(MisionesDelJuego.CARP_00.getId())) {//Esto esta aca aproposito, es para las condiciones de misiones
-				if (jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).getEstado() == EstadosMision.PENDIENTE) {
+			if (jugador.getInventarios().tareas.buscarMisionPorId(MisionesDelJuego.CARP_00.getId())) {//Esto esta aca aproposito, es para las condiciones de misiones
+				if (jugador.getInventarios().tareas.conseguirMisionPorId(MisionesDelJuego.CARP_00).getEstado() == EstadosMision.PENDIENTE) {
 					carpintero.setCharlaActual(Recursos.bundle.get("carpintero.charla.nombre.mision.sierra_circular.completada"));
 				}
 			}

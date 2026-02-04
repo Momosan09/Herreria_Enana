@@ -531,3 +531,18 @@ La estructura es:
 ```
 
 Tener en cuenta que el equipo "igual" o equivalente entre minerales debe tener exactamente el mismo nombre en todas las carpetas, por la forma en la que ```TipoMinerales``` y ```EstadosArmas``` componen la ruta.
+
+## 4 FEB
+
+    - Empieza estructura de modificadores
+    - El equipo (armas/armaduras) ahora agrega su textura una imagen correspondiente al agregado modificador
+    - Crea clase Inventarios para Jugador
+
+ ```Inventarios``` mueve toda la logica de cada inventario a clases por separado, reduciendo la cantidad de lineas de Jugador y ganando una sintaxis mas limpia del tipo:
+  ```java 
+ jugador.getInventarios().ingredientes.agregar();
+ ```
+o
+  ```java 
+ jugador.getInventarios().tareas.agregarMision("RCS_2");
+ ```

@@ -43,7 +43,7 @@ public class DiarioHUD extends HUD{
 	
 	public DiarioHUD(Jugador jugador) {
 		this.jugador = jugador;
-		misiones = new ArrayList<>(jugador.getMisiones().values());
+		misiones = new ArrayList<>(jugador.getInventarios().tareas.getMisiones().values());
 		construir();
 	}
 	
@@ -132,8 +132,8 @@ public class DiarioHUD extends HUD{
 
 	public void agregarMisiones() {
 		tareas.clear();
-		misiones = new ArrayList<>(jugador.getMisiones().values());
-		for(int i=0; i<jugador.getMisiones().size();i++) {
+		misiones = new ArrayList<>(jugador.getInventarios().tareas.getMisiones().values());
+		for(int i=0; i<jugador.getInventarios().tareas.getMisiones().size();i++) {
 			
 		Table tabla = new Table();
 //		tabla.setDebug(true);

@@ -97,7 +97,7 @@ public class VentaHUD extends HUD {
 
         if (jugador.monedero.tieneElDinero(precioOro, precioPlata, precioCobre)) {
             jugador.monedero.restarDinero(precioOro, precioPlata, precioCobre);
-            jugador.agregar(item);;
+            jugador.getInventarios().ingredientes.agregar(item);;
             //vendedor.getInventario().remove(item.tipoI); // esto para que el vendedor se quede sin recursos
             actualizarProductos();
             SonidosManager.reproducirSonido(ListaSonidos.VENTA);

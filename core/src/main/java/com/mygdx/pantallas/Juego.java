@@ -171,9 +171,9 @@ public class Juego implements Screen{
 		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.PIEDRA.toString(), 2,0,10,50);
 		*/
 	    
-		jugador.agregar(IngredientesId.HIERRO_MENA, 2);
-		jugador.agregar(IngredientesId.HIERRO_PURO, 2);
-		jugador.agregar(IngredientesId.CARBON_PURO, 1);
+		jugador.getInventarios().ingredientes.agregar(IngredientesId.HIERRO_MENA, 2);
+		jugador.getInventarios().ingredientes.agregar(IngredientesId.HIERRO_PURO, 2);
+		jugador.getInventarios().ingredientes.agregar(IngredientesId.CARBON_PURO, 1);
 
 		
 		

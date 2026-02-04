@@ -20,6 +20,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.armas.Equipo;
+import com.mygdx.armas.modificadores.Modificadores;
 import com.mygdx.combinaciones.CreadorDeMinerales;
 import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.combinaciones.InventarioCrafteo;
@@ -34,6 +35,7 @@ import com.mygdx.entidades.ObjetosDelMapa.Items.Sierra;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.procesados.Combustible;
+import com.mygdx.entidades.jugador.Inventarios;
 import com.mygdx.enums.Direcciones;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
@@ -56,7 +58,7 @@ import com.mygdx.utiles.recursos.Recursos;
 import com.mygdx.utiles.sonidos.ListaSonidos;
 import com.mygdx.utiles.sonidos.SonidosManager;
 
-public class Jugador implements InventarioCrafteo {
+public class Jugador {
 
 	private float velocidad = 100f;
 	public boolean puedeMoverse = false;
@@ -70,13 +72,9 @@ public class Jugador implements InventarioCrafteo {
 	private ItemEquipadoJugador itemEnMano;
 	
 	//Inventarios
-	private InventarioList<Item> items = new InventarioList<>();//LOS ITEMS "FISICOS" son los cuales tienen interaccion, se pueden equipar o interactuan con el mundo
-
-    private EnumMap<IngredientesId, Integer> inventario = new EnumMap<>(IngredientesId.class); //Los items "abstractos" son los que sirven para las combinaciones, contar cantidades y no existen en el mapa
-
-    private InventarioList<Equipo> armas = new InventarioList<>();
 	
-	private HashMap<String,Mision> tareas = new HashMap<String,Mision>();
+	private Inventarios inventarios = new Inventarios();
+
 	
 	public Direcciones direccionActual = Direcciones.QUIETO;
 	public Direcciones direccionDelChoque = null;
@@ -84,7 +82,7 @@ public class Jugador implements InventarioCrafteo {
 	
 	
 	public Respuestas respuesta1 = Respuestas.NOVALOR, respuesta2 = Respuestas.NOVALOR;
-	public boolean mostrarMensaje = true;
+
 	
 	public Jugador(OrthographicCamera camara, World world, Vector2 spawnPosicion) {
 		posicion = new Vector2(); // posicion inicial
@@ -116,9 +114,7 @@ public class Jugador implements InventarioCrafteo {
 
 		
 		//Inicializa el inventario de minerales
-        for (IngredientesId id : IngredientesId.values()) {
-            inventario.put(id, 0);
-        }
+
         
 		//ESTO ES TEMPORAL, DESPUES EL JUGADOR NO VA A EMPEZAR CON LAS HERRAMIENTAS
         cheats();
@@ -141,7 +137,7 @@ public class Jugador implements InventarioCrafteo {
 
 	private void update() {
 		movimiento(Gdx.graphics.getDeltaTime());
-		eliminarItemRoto();
+		getInventarios().items.eliminarItemRoto();
 	}
 
 	
@@ -260,155 +256,29 @@ public class Jugador implements InventarioCrafteo {
 
 	}
 	
-	public InventarioList<Item> getItems(){
-		return items;
-	}
 	
-	public void agregarItem(Item item) {
-		items.add(item);
-		mostrarMensaje = true;
-	}
-	
-
-	public void eliminarItem(IngredientesId item) {
-		items.remove(new Item(item));
-	}
-	
-	public String getItemMensaje() {
-		return "Añadido: " + items.get(items.size()-1).getNombre();
-	}
-	
-	public Item getItem(Items item) {
-		if(!items.isEmpty()) {			
-		for(int i = 0; i<items.size();i++) {
-			if(item == items.get(i).getTipo()) {
-				return items.get(i);
-			}
-		}
-		}
-		
-		return null;
-	}
-	
-//	
-	public Item getItem(int i) {
-		if(!items.isEmpty()) {			
-			return items.get(i);
-		}
-		
-		return null;
-	}
 	
 	public Items getItemEnMano() {
 		return itemEnMano.getTipo();
 	}
 	
-	@Override
-    public int getCantidad(IngredientesId ingrediente) {
-        return inventario.getOrDefault(ingrediente, 0);
-    }
-
-    @Override
-    public void agregar(IngredientesId ingrediente, int cantidad) {
-        inventario.put(ingrediente, getCantidad(ingrediente) + cantidad);
-    }
-    
-    public void agregar(IngredientesId ingrediente) {
-        inventario.put(ingrediente, getCantidad(ingrediente) + 1);
-    }
-
-    public void agregar(Mineral mineral) {
-    	IngredientesId ingrediente = mineral.getIngredienteId();
-        inventario.put(ingrediente, getCantidad(ingrediente) + 1);
-    }
-
-    
-    @Override
-    public void consumir(IngredientesId ingrediente, int cantidad) {
-        int actual = getCantidad(ingrediente);
-        if (actual < cantidad)
-            throw new IllegalStateException("No hay suficiente " + ingrediente);
-
-        inventario.put(ingrediente, actual - cantidad);
-    }
-    
-    public void consumir(Mineral mineral) {
-    	IngredientesId ingrediente = mineral.getIngredienteId();
-        int actual = getCantidad(ingrediente);
-        if (actual < 1) {
-        	throw new IllegalStateException("No hay suficiente " + ingrediente);        	
-        }
-
-        inventario.put(ingrediente, actual - 1);
-    }
-    
-    public void consumir(Mineral mineral, int cantidad) {
-    	IngredientesId ingrediente = mineral.getIngredienteId();
-        int actual = getCantidad(ingrediente);
-        if (actual < cantidad) {
-        	throw new IllegalStateException("No hay suficiente " + ingrediente);        	
-        }
-
-        inventario.put(ingrediente, actual - cantidad);
-    }
-    
-    @Override
-    public ArrayList<Mineral> getMinerales(){
-    	return obtenerTodosLosMinerales();
-    }
-    
-    @Override
-    public boolean tieneItem(IngredientesId id) {
-        // primero: herramientas físicas
-        for (Item item : items) {
-            if (item.getIngredienteId() == id) {
-                return true;
-            }
-        }
-
-        // segundo: ingredientes contables (por si alguna receta usa eso)
-        return getCantidad(id) > 0;
-    }
 
 
-    public ArrayList<IngredientesId> obtenerIngredientesParaCrafteo() {
 
-        ArrayList<IngredientesId> lista = new ArrayList<>();
+//    public boolean tieneItem(IngredientesId id) {
+//        // primero: herramientas físicas
+//        for (Item item : items) {
+//            if (item.getIngredienteId() == id) {
+//                return true;
+//            }
+//        }
+//
+//        // segundo: ingredientes contables (por si alguna receta usa eso)
+//        return getCantidad(id) > 0;
+//    }
 
-        for (IngredientesId id : inventario.keySet()) {
-            if (inventario.get(id) > 0 && id.esIngredienteCrafteable()) {
-                lista.add(id);
-            }
-        }
-        
-        ArrayList<Mineral> minerales = obtenerTodosLosMinerales();
-        for(int i = 0; i<minerales.size();i++) {
-        	lista.add(minerales.get(i).getIngredienteId());
-        }
 
-        return lista;
-    }
 
-    
-    public ArrayList<Mineral> obtenerTodosLosMinerales() {
-
-        ArrayList<Mineral> resultado = new ArrayList<>();
-
-        for (IngredientesId id : inventario.keySet()) {
-        	if(id.tipoI == null) { //Solo es mineral si "tipoI" es nulo
-        		
-            int cantidad = inventario.get(id);
-
-            if (cantidad <= 0) continue;
-
-            for (int i = 0; i < cantidad; i++) {
-                resultado.add(CreadorDeMinerales.crear(id));
-            }
-        	}
-        }
-
-        return resultado;
-    }
     
 //    public ArrayList<Mineral> obtenerTodosLosCombustibles(){
 //        ArrayList<Mineral> resultado = new ArrayList<>();
@@ -435,22 +305,13 @@ public class Jugador implements InventarioCrafteo {
     // ITEMS GAMEPLAY
     // =========================
 
-    public void eliminarItemRoto() {
-        items.removeIf(i -> i.getUsos() == 0);
-    }
+
 
     // =========================
     // DEBUG
     // =========================
 
-    public void imprimirInventario() {
-        System.out.println("=== INVENTARIO ===");
-        inventario.forEach((k, v) -> {
-            if (v > 0)
-                System.out.println(k + " x" + v);
-        });
-        
-    }
+
 
 //    public ArrayList<IngredientesId> obtenerIngredientesCrafteables() {
 //        ArrayList<IngredientesId> lista = new ArrayList<>();
@@ -550,177 +411,11 @@ public class Jugador implements InventarioCrafteo {
 		return camara;
 	}
 
-	public void agregarMision(MisionesDelJuego misionD) {
-		Mision mision = null;
-		switch (misionD.getTipo()) {
-		case FABRICAR:
-			mision = new MisionRecFab(misionD);
-			break;
-		case RECOLECTAR:
-			mision = new MisionRecFab(misionD);
-			break;
-			
-		case ENTREGAR:
-			break;
-			
-		case HABLAR:
-			mision = new MisionHablar(misionD);
-			break;
-		}
-		
-		if(mision == null) {
-			System.out.println(HelpDebug.debub(getClass())+ "error en agregarMision()");
-		}
-		
-		tareas.put(mision.getId(), mision);
-		Listeners.misionAgregada(mision);
-		SonidosManager.reproducirSonido(ListaSonidos.MISION_RECIBIDA);
-	}
 	
-	public void agregarMision(Mision mision) {
-		tareas.put(mision.getId(), mision);
-		Listeners.misionAgregada(mision);
-		SonidosManager.reproducirSonido(ListaSonidos.MISION_RECIBIDA);
-	}
-	
-	public HashMap<String, Mision> getMisiones() {
-		return tareas;
-		
-	}
-	
-	public boolean buscarMisionPorId(String id) {
-		if (tareas.containsKey(id)) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-	
-	public Mision conseguirMisionPorId(MisionesDelJuego mision) {
-			if(!tareas.isEmpty()) {
-				return buscarMisionDevolverHijo(mision);
-			}
-		return null;
-	}
-	
-	public ArrayList<MisionRecFab> conseguirMisionesPorTipo(TipoMision tipo) {
-
-		ArrayList<MisionRecFab> misionesFiltradas = new ArrayList<>();
-
-		for (Mision mision : tareas.values()) {
-			if (mision.getTipo() == tipo && mision instanceof MisionRecFab) {
-				misionesFiltradas.add((MisionRecFab) mision);
-			}
-		}
-
-		return misionesFiltradas;
-	}
-
-
-	
-	/**
-	 * Se le pasa una MisionDelJuego y devuelve el tipo exacto de la mision
-	 * Por ejemplo: return MisionRecFab
-	 * @param mision
-	 * @return
-	 */
-	private Mision buscarMisionDevolverHijo(MisionesDelJuego mision) {
-		Mision m = tareas.get(mision.getId());
-		switch (mision.getTipo()) {
-		case FABRICAR:
-			return (MisionRecFab)m;
-			
-		case RECOLECTAR:
-			return (MisionRecFab)m;
-			
-		case HABLAR:
-			return (MisionHablar)m;
-
-		}
-		return m;
-	}
-	
-	public void avanzarMision(MisionesDelJuego n) {
-		Mision mision = tareas.get(n.getId());
-		switch (n.getTipo()) {
-		case FABRICAR:
-	    	MisionRecFab m = (MisionRecFab) mision;
-	    	m.setCantidadConseguida(1);
-	    	m.comprobarCondicion();
-	    	
-	    	break;
-		case RECOLECTAR:
-	    	MisionRecFab m1 = (MisionRecFab) mision;
-	    	m1.setCantidadConseguida(1);
-	    	m1.comprobarCondicion();
-			break;
-		case HABLAR:
-			break;
-		case ENTREGAR:
-			break;
-		default:
-			break;
-
-
-		}
-		
-	}
-	
-	public void avanzarMision(Mision n) {
-		Mision mision = tareas.get(n.getId());
-		switch (mision.getTipo()) {
-		case FABRICAR:
-	    	MisionRecFab m = (MisionRecFab) mision;
-	    	m.setCantidadConseguida(1);
-		case RECOLECTAR:
-	    	MisionRecFab m1 = (MisionRecFab) mision;
-	    	m1.setCantidadConseguida(1);
-			
-		case HABLAR:
-
-
-		}
-			
-	}
-	
-	public void avanzarMision(Mision n, int cantidad) {
-		Mision mision = tareas.get(n.getId());
-		switch (mision.getTipo()) {
-		case FABRICAR:
-	    	MisionRecFab m = (MisionRecFab) mision;
-	    	m.setCantidadConseguida(cantidad);
-		case RECOLECTAR:
-	    	MisionRecFab m1 = (MisionRecFab) mision;
-	    	m1.setCantidadConseguida(cantidad);
-			
-		case HABLAR:
-
-
-		}
-			
-	}
-	
-	public void avanzarMision(MisionesDelJuego n, int cantidad) {
-		Mision mision = tareas.get(n.getId());
-		switch (n.getTipo()) {
-		case FABRICAR:
-	    	MisionRecFab m = (MisionRecFab) mision;
-	    	m.setCantidadConseguida(cantidad);
-		case RECOLECTAR:
-	    	MisionRecFab m1 = (MisionRecFab) mision;
-	    	m1.setCantidadConseguida(cantidad);
-			
-		case HABLAR:
-
-
-		}
-	}
 	
 
 	
-	public InventarioList<Equipo> getInventarioArmas() {
-		return armas;
-	}
+
 	
 	public void resetearRespuestas() {
 		respuesta1 = Respuestas.NOVALOR;
@@ -758,26 +453,33 @@ public class Jugador implements InventarioCrafteo {
 	
 	private void cheats() {
         // Herramientas iniciales
-        agregar(IngredientesId.PICO);
-        agregar(IngredientesId.MAZA);
-        agregar(IngredientesId.CINCEL);
-        agregar(IngredientesId.SIERRA);
-        agregar(IngredientesId.LIMA_PLANA);
-        agregar(IngredientesId.ESQUEMA_SIERRA_CIRCULAR);
+		
+		getInventarios().ingredientes.agregar(IngredientesId.PICO);
+		getInventarios().ingredientes.agregar(IngredientesId.MAZA);
+		getInventarios().ingredientes.agregar(IngredientesId.CINCEL);
+		getInventarios().ingredientes.agregar(IngredientesId.SIERRA);
+		getInventarios().ingredientes.agregar(IngredientesId.LIMA_PLANA);
+		getInventarios().ingredientes.agregar(IngredientesId.ESQUEMA_SIERRA_CIRCULAR);
         
-        agregar(IngredientesId.HIERRO_LINGOTE, 2);
+		getInventarios().ingredientes.agregar(IngredientesId.HIERRO_LINGOTE, 2);
         
-		agregar(IngredientesId.MOLDE_ARCILLA_MAZA, 1);
-		agregar(IngredientesId.MANGO_MADERA_MAZA, 2);
-		agregar(IngredientesId.HIERRO_CABEZA_MAZA, 1);
-		agregar(IngredientesId.ORO_CABEZA_MAZA, 1);
+		getInventarios().ingredientes.agregar(IngredientesId.MOLDE_ARCILLA_MAZA, 1);
+        getInventarios().ingredientes.agregar(IngredientesId.MANGO_MADERA_MAZA, 2);
+        getInventarios().ingredientes.agregar(IngredientesId.HIERRO_CABEZA_MAZA, 1);
+        getInventarios().ingredientes.agregar(IngredientesId.ORO_CABEZA_MAZA, 1);
 
         // Items físicos (solo gameplay)
-        items.add(new Pico());
-        items.add(new Maza());
-        items.add(new Cincel());
-        items.add(new Sierra());
-        items.add(new LimaPlana());
+        getInventarios().items.agregarItem(new Pico());
+        getInventarios().items.agregarItem(new Maza());
+        getInventarios().items.agregarItem(new Cincel());
+        getInventarios().items.agregarItem(new Sierra());
+        getInventarios().items.agregarItem(new LimaPlana());
+	}
+
+
+
+	public Inventarios getInventarios() {
+		return inventarios;
 	}
 
 }
