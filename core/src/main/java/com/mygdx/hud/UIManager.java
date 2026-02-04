@@ -27,6 +27,7 @@ public class UIManager implements EventoRecibirCarta{
 	private Combinacion combinacion;
 	private Mensaje mensajeAnadido;
 	private FundicionOmega fundicion;
+	private ModificadoresHUD modificadores;
 	private DiarioHUD diario;
 	
 	private CartaHUD carta;
@@ -52,6 +53,7 @@ public class UIManager implements EventoRecibirCarta{
 	    fundicion = new FundicionOmega(jugador);
 	    //carta = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);
 	    diario = new DiarioHUD(jugador);
+	    modificadores = new ModificadoresHUD(jugador);
 	    
 		
 	    mensajeAnadido = new Mensaje();
@@ -69,7 +71,9 @@ public class UIManager implements EventoRecibirCarta{
 		venta.dibujar();
 		combinacion.dibujar();
 		fundicion.dibujar();
+		modificadores.dibujar();
 		diario.dibujar();
+		
 		
 		
 		/*
@@ -194,6 +198,12 @@ public class UIManager implements EventoRecibirCarta{
 			break;
 		case INVENTARIO_BATALLAS:
 			break;
+			
+		case MODIFICADORES:
+			jugador.puedeMoverse = false;
+			modificadores.mostrar();
+			activarSolo(modificadores.getStage());
+			break;
 		default:
 			break;
 		}
@@ -224,6 +234,7 @@ public class UIManager implements EventoRecibirCarta{
 		inventario.reEscalar(width, height);
 		combinacion.reEscalar(width, height);
 		fundicion.reEscalar(width, height);
+		modificadores.reEscalar(width, height);
 		diario.reEscalar(width, height);
 	}
 	

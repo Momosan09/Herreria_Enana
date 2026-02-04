@@ -467,6 +467,9 @@ public class Jugador {
         getInventarios().ingredientes.agregar(IngredientesId.MANGO_MADERA_MAZA, 2);
         getInventarios().ingredientes.agregar(IngredientesId.HIERRO_CABEZA_MAZA, 1);
         getInventarios().ingredientes.agregar(IngredientesId.ORO_CABEZA_MAZA, 1);
+        
+        getInventarios().modificadores.agregar(Modificadores.ELECTRICIDAD);
+        getInventarios().modificadores.agregar(Modificadores.FUEGO);
 
         // Items físicos (solo gameplay)
         getInventarios().items.agregarItem(new Pico());

@@ -36,7 +36,7 @@ public abstract class Equipo {
 	protected float verde;
 	protected float rojo;
 	protected float azul;
-	
+
 	protected Mineral metalBase;
 	protected EstadosArmas tipoArma;
 	protected Modificadores modificador = null;
@@ -79,6 +79,10 @@ public abstract class Equipo {
 		
 	}
 	
+	/**
+	 * Devuelve la textura final
+	 * @return
+	 */
 	public Texture getTextura() {
 		return texturaFinal;
 	}
@@ -189,6 +193,32 @@ public abstract class Equipo {
 		}
 		
 	    return textureResult;
+	}
+	
+
+	public EstadosArmas getTipoArma() {
+		return tipoArma;
+	}
+
+	public Modificadores getModificador() {
+		return modificador;
+	}
+
+	public void setModificador(Modificadores modificador) {
+		this.modificador = modificador;
+	}
+
+	public EfectosArma getEfecto() {
+		return efecto;
+	}
+
+	public void setEfecto(EfectosArma efecto) {
+		this.efecto = efecto;
+	}
+
+	
+	public Mineral getMetalBase() {
+		return metalBase;
 	}
 
 }

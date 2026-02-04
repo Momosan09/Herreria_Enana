@@ -35,6 +35,9 @@ public class EntradasJugador implements InputProcessor{
 			}
 			ultimoNumeroApretado = 2;
 		}
+		if(keycode == Keys.NUM_3) {
+			MundoConfig.estadoJuego = EstadosDelJuego.MODIFICADORES;
+		}
 		return false;
 	}
 

@@ -126,7 +126,7 @@ public class IngredientesInventarioManager implements InventarioCrafteo{
     
     public boolean tieneItem(IngredientesId id) {
         // primero: herramientas físicas
-        for (Item item : items) {//FIXME pendinte ya
+        for (Item item : items) {
             if (item.getIngredienteId() == id) {
                 return true;
             }

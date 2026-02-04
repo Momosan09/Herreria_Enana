@@ -537,6 +537,7 @@ Tener en cuenta que el equipo "igual" o equivalente entre minerales debe tener e
     - Empieza estructura de modificadores
     - El equipo (armas/armaduras) ahora agrega su textura una imagen correspondiente al agregado modificador
     - Crea clase Inventarios para Jugador
+    - Agrega UI para los modificadores
 
  ```Inventarios``` mueve toda la logica de cada inventario a clases por separado, reduciendo la cantidad de lineas de Jugador y ganando una sintaxis mas limpia del tipo:
   ```java 
