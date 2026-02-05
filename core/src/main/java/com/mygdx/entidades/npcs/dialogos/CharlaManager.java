@@ -28,25 +28,32 @@ public class CharlaManager {
 	private Jugador jugador;
 
 
-	public CharlaManager(Jugador jugador, Npc vendedorTienda, Npc vendedorAmbulante, Npc viejo, Npc carpintero) {
+	//TODO cambiar este sistema de mierda, usar json
+	
+	public CharlaManager(Jugador jugador, Npc vendedorTienda, Npc vendedorAmbulante, Npc viejo, Npc carpintero, Npc general) {
 		crearCharlasVendedorTienda(vendedorTienda);
 		crearCharlasVendedorAmbulante(vendedorAmbulante);
 		crearCharlasViejo(viejo);
 		crearCharlasCarpintero(carpintero);
+		crearCharlasGeneral(general);
+		
 		vendedorTienda.setCharlaActual(Recursos.bundle.get("vendedor_tienda.charla.saludo"));
 		vendedorAmbulante.setCharlaActual(Recursos.bundle.get("vendedor_ambulante.charla.saludo"));
 		viejo.setCharlaActual(Recursos.bundle.get("viejo.charla.nombre.saludo"));
 		carpintero.setCharlaActual(Recursos.bundle.get("carpintero.charla.nombre.saludo"));
-		checkearCharlas(vendedorTienda, vendedorAmbulante, viejo, carpintero);
+		general.setCharlaActual(Recursos.bundle.get("general.charla.nombre.saludo"));
+		
+		checkearCharlas(vendedorTienda, vendedorAmbulante, viejo, carpintero, general);
 
 		this.jugador = jugador;
 	}
 
-	public void checkearCharlas(Npc vendedorTienda, Npc vendedorAmbulante, Npc viejo, Npc carpintero) {
+	public void checkearCharlas(Npc vendedorTienda, Npc vendedorAmbulante, Npc viejo, Npc carpintero, Npc general) {
 		npcVendedorTienda(vendedorTienda);
 		npcVendedorAmbulante(vendedorAmbulante);
 		npcViejo(viejo);
 		npcCarpintero(carpintero);
+		npcGeneral(general);
 
 	}
 
@@ -76,6 +83,10 @@ public class CharlaManager {
 		carpintero.charlas.add(new Charla(Recursos.bundle.get("carpintero.charla.nombre.venta"), carpintero.getPaqueteDeDialogosNro(4)));
 
 	}
+	
+	public void crearCharlasGeneral(Npc general) {
+		general.charlas.add(new Charla(Recursos.bundle.get("viejo.charla.nombre.saludo"), general.getPaqueteDeDialogosNro(0)));
+		}
 
 	public void npcVendedorTienda(Npc vendedorTienda) {// Aca va toda la logica en donde, dependiendo del npc, se evalua
 														// que charla es la que sigue. Ejemplo: aca poner que si es
@@ -266,6 +277,34 @@ public class CharlaManager {
 			
 		}
 		}
+	
+
+			
+		public void npcGeneral(Npc general) {// Aca va toda la logica en donde, dependiendo del npc,
+																	// se
+			// evalua que charla es la que sigue. Ejemplo: aca poner
+			// que si es viernes el npc tenga un dialogo y si es
+			// lunes que tenga uno distinto
+			if (general.getJugadorEnRango()) {
+
+				if (general.getNombreCharlaActual()
+						.equals(Recursos.bundle.get("general.charla.nombre.saludo"))) {
+
+					if (jugador.respuesta1 == Respuestas.VERDADERO) {
+						cerrarDialogo(general);
+					} else if (jugador.respuesta2 == Respuestas.VERDADERO) {
+						cerrarDialogo(general);
+
+					}
+
+				}
+
+				general.setCharlaActual(Recursos.bundle.get("general.charla.nombre.saludo"));
+
+			}
+
+		}
+	
 
 
 	private void cerrarDialogo(Npc npc) {

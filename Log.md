@@ -547,3 +547,6 @@ o
   ```java 
  jugador.getInventarios().tareas.agregarMision("RCS_2");
  ```
+
+## 5 FEB
+    - Empieza estructura de generales
