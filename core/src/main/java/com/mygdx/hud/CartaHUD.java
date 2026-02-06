@@ -76,6 +76,7 @@ public class CartaHUD extends HUD implements Cerrable{
 			public void clicked(InputEvent event, float x, float y) {
 
 				cerrar = true;
+				cerrar();
 				System.out.println(HelpDebug.debub(getClass())+cerrar);
 				MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
 				cerrar = false;

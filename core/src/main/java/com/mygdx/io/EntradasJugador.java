@@ -38,6 +38,10 @@ public class EntradasJugador implements InputProcessor{
 		if(keycode == Keys.NUM_3) {
 			MundoConfig.estadoJuego = EstadosDelJuego.MODIFICADORES;
 		}
+		if(keycode == Keys.NUM_4) {
+			MundoConfig.estadoJuego = EstadosDelJuego.FICHERO_DE_GUERRA;
+
+		}
 		return false;
 	}
 

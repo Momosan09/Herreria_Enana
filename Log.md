@@ -550,3 +550,6 @@ o
 
 ## 5 FEB
     - Empieza estructura de generales
+
+## 6 FEB
+    - Agrega HUD de generales

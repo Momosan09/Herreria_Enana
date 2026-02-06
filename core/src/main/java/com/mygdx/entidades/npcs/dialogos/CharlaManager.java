@@ -287,8 +287,7 @@ public class CharlaManager {
 			// lunes que tenga uno distinto
 			if (general.getJugadorEnRango()) {
 
-				if (general.getNombreCharlaActual()
-						.equals(Recursos.bundle.get("general.charla.nombre.saludo"))) {
+				if (general.getNombreCharlaActual().equals(Recursos.bundle.get("general.charla.nombre.saludo"))) {
 
 					if (jugador.respuesta1 == Respuestas.VERDADERO) {
 						cerrarDialogo(general);
