@@ -18,7 +18,7 @@ public class ResultadoFinalFactory {
 
         return switch (id) {
             case MAZA_DE_GUERRA -> new MazaDeGuerra(metalBase, items, EstadosArmas.MAZA_1);
-            case ARCO -> new Arco(metalBase);
+            //case ARCO -> new Arco(metalBase);
             
             default -> throw new IllegalArgumentException("Unexpected value: " + id);
         };

@@ -109,7 +109,6 @@ public class SolapaGeneralesHUD extends Table{
 			
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-
 				System.out.println("click");
 			}
 		});
