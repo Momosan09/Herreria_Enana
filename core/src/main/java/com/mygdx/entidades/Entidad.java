@@ -21,18 +21,21 @@ import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 import com.mygdx.utiles.Render;
 
-public abstract class Entidad {
+public abstract class Entidad implements Interactuable{
 
 	protected Vector2 posicion;//La necesito en las hijas
 	protected Texture textura;//La necesito en las hijas
 
 	protected boolean jugadorEnRango = false;
 	protected Body body;
-	protected Circle areaDeInteraccion;
 	protected Sprite sprite;
 	protected int indiceZ;
 	private boolean comprable = false;
-	private int distanciaInteraccion = 20;
+
+	
+	//interaccion
+	protected int radioInteraccion = 2*32;
+	protected Circle areaInteraccion;
 
 	public Entidad(float x, float y, World world, String rutaTextura) {
 		x=x*MundoConfig.tamanoTile;
@@ -40,8 +43,8 @@ public abstract class Entidad {
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
 		
-		areaDeInteraccion = new Circle(posicion.x+MundoConfig.tamanoTile/2 , posicion.y+MundoConfig.tamanoTile/2,
-				MundoConfig.tamanoTile/1.3f);
+		areaInteraccion = new Circle(posicion, radioInteraccion);
+		areaInteraccion.setPosition(posicion.x+textura.getWidth()/2, posicion.y+textura.getHeight()/2);
 	}
 	
 	public Entidad(float x, float y, boolean comprable, World world ,String rutaTextura) {
@@ -52,6 +55,8 @@ public abstract class Entidad {
 		this.comprable = comprable;
 //		sprite = new SpriteOrdenableIndiceZ(this.textura);
 //		sprite.setPosition(this.posicion.x, this.posicion.y);
+		areaInteraccion = new Circle(posicion, radioInteraccion);
+		areaInteraccion.setPosition(posicion.x+textura.getWidth()/2, posicion.y+textura.getHeight()/2);
 	}
 	
 	public Entidad(boolean comprable, String rutaTextura) {
@@ -59,7 +64,6 @@ public abstract class Entidad {
 		this.comprable = comprable;
 //		sprite = new SpriteOrdenableIndiceZ(this.textura);
 //		sprite.setPosition(this.posicion.x, this.posicion.y);
-
 	}
 	
 	
@@ -67,12 +71,14 @@ public abstract class Entidad {
 		this.posicion = new Vector2(x,y);
 		this.textura = new Texture(rutaTextura);
 		this.sprite = new Sprite(textura);
-		areaDeInteraccion = new Circle(posicion.x+MundoConfig.tamanoTile/2 , posicion.y+MundoConfig.tamanoTile/2,
-				MundoConfig.tamanoTile/1.3f);
+		
+		areaInteraccion = new Circle(posicion, radioInteraccion);
+		areaInteraccion.setPosition(posicion.x+textura.getWidth()/2, posicion.y+textura.getHeight()/2);
 	}
 	public Entidad(String rutaTextura) {
 		this.textura = new Texture(rutaTextura);
 		this.sprite = new Sprite(textura);
+
 	}
 
 	protected void crearCuerpo(World world) {// cuerpos basicos por defecto
@@ -113,57 +119,20 @@ public abstract class Entidad {
 	}
 	
 	
-	public void dibujarAreasInteraccion() {
-		ShapeRenderer shapeRenderer = new ShapeRenderer();
-		shapeRenderer.setProjectionMatrix(Render.batch.getProjectionMatrix());
-		shapeRenderer.begin(ShapeType.Line);
-		shapeRenderer.setColor(Color.RED);
-		shapeRenderer.circle(areaDeInteraccion.x, areaDeInteraccion.y, areaDeInteraccion.radius);
-		shapeRenderer.end();
+	public void dibujarAreaDeInteraccion() {
+		Render.shapeDr.circle(areaInteraccion.x, areaInteraccion.y, areaInteraccion.radius);
+
 	}
 	
-	public void dibujarAreasInteraccion(Circle c, String color) {
-		ShapeRenderer shapeRenderer = new ShapeRenderer();
-		shapeRenderer.setProjectionMatrix(Render.batch.getProjectionMatrix());
-		shapeRenderer.begin(ShapeType.Line);
-		shapeRenderer.setColor(Color.valueOf(color));
-		shapeRenderer.circle(c.x+c.radius/4, c.y+c.radius/4, c.radius);
-		shapeRenderer.end();
+	public void dibujarAreaDeInteraccion(String colorHex) {
+		Render.shapeDr.setColor(Color.valueOf(colorHex));
+		Render.shapeDr.circle(areaInteraccion.x, areaInteraccion.y, areaInteraccion.radius);
+
 	}
 	
-	public void dibujarAreasInteraccion(Rectangle r, String color) {
-		ShapeRenderer shapeRenderer = new ShapeRenderer();
-		shapeRenderer.setProjectionMatrix(Render.batch.getProjectionMatrix());
-		shapeRenderer.begin(ShapeType.Line);
-		shapeRenderer.setColor(Color.valueOf(color));
-		shapeRenderer.rect(r.x, r.y, r.width, r.height);
-		shapeRenderer.end();
-	}
-	
-	
-	public void detectarJugador(Jugador jugador) {
-		if(areaDeInteraccion.overlaps(jugador.areaJugador)) {		
-		//		if(((jugador.getPosicion().x - this.posicion.x) < distanciaInteraccion && (jugador.getPosicion().x - this.posicion.x) > -distanciaInteraccion) && ((jugador.getPosicion().y - this.posicion.y) < distanciaInteraccion && (jugador.getPosicion().y - this.posicion.y) > -distanciaInteraccion)){	
-			jugadorEnRango = true;
-		}else {
-			jugadorEnRango = false;
-			
-		}
-		
-		indiceZ = (posicion.y > jugador.getPosicion().y-16 ? 0 : 1);//para el auto sorting de sprites
-		
-	}
-	
-	public boolean getJugadorEnRango() {
-		return jugadorEnRango;
-	}
-	
+
 	public Vector2 getPosicion() {
 		return posicion;
-	}
-	
-	public int getDistanciaInteraccion() {
-		return distanciaInteraccion;
 	}
 	
 	
@@ -187,6 +156,16 @@ public abstract class Entidad {
 	public void dispose() {
 		textura.dispose();
 	}
+	
+    @Override
+    public void interactuar(Jugador jugador) {
+    	System.out.println(HelpDebug.debub(getClass())+"Interaccion con el jugador");
+    }
+    
+    @Override
+    public Circle getAreaInteraccion() {
+        return areaInteraccion;
+    }
 	
 //	public SpriteOrdenableIndiceZ getSprite() {
 //		return sprite;

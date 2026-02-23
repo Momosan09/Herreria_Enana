@@ -1,0 +1,19 @@
+[
+  {
+    "id": "1",
+    "monologo": "Im here all day",
+    "condiciones": [
+     
+    ],
+    "respuestas": [
+      {
+        "texto": "Show me your stuff",
+        "consecuencia": { "tipo": "nada" }
+      },
+      {
+        "texto": "Thats ok",
+        "consecuencia": { "tipo": "nada" }
+      }
+    ]
+  }
+]

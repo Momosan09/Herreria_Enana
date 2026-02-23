@@ -1,14 +1,19 @@
 package com.mygdx.entidades.ObjetosDelMapa;
 
 import java.util.ArrayList;
+
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.entidades.InteraccionManager;
 import com.mygdx.entidades.Jugador;
+import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.CarbonMena;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.HierroMena;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.PiedraMena;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
+import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.MisUtiles;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
@@ -17,15 +22,18 @@ import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 public class MineralesManager {
 	private ArrayList<Mineral> minerales;
 	private World world;
+	private InteraccionManager interaccionManager;
 	
-    public MineralesManager(World world) {
+    public MineralesManager(World world, InteraccionManager interaccionManager) {
     	minerales = new ArrayList<Mineral>();
     	this.world = world;
+    	this.interaccionManager = interaccionManager;
     	minerales.add(new HierroMena(200/32, 200/32, world, false));
     }
 
     public void agregarMineral(Mineral mineral) {
     	minerales.add(mineral);
+    	interaccionManager.registrar(mineral);
     }
 
 //    public void eliminarMineral(Mineral mineral) {
@@ -59,13 +67,36 @@ public class MineralesManager {
     	}while(!fin && i<minerales.size());
     }
 
-    public void detectarJugador(Jugador jugador) {
-        for (Mineral mineral : minerales) {
-        	if(mineral.vida >0) {//Si el mineral esta vivo, detecta al jugador
-        	mineral.detectarJugador(jugador);
-        	}
-        }
-    }
+	public void resolverInteracciones(Jugador jugador) {
+
+	    if (!jugador.quiereInteractuar()) return;
+
+	    Mineral masCercano = null;
+	    float menorDistancia = Float.MAX_VALUE;
+
+	    Circle areaJugador = jugador.getAreaInteraccion();
+
+	    for (Mineral mineral : minerales) {
+
+	        Circle areaMineral = mineral.getAreaInteraccion();
+
+	        if (areaMineral.overlaps(areaJugador)) {
+
+	            float distancia = Vector2.dst(areaMineral.x, areaMineral.y,areaJugador.x, areaJugador.y);
+
+	            if (distancia < menorDistancia) {
+	                menorDistancia = distancia;
+	                masCercano = mineral;
+	            }
+	        }
+	    }
+
+	    if (masCercano != null) {
+	        masCercano.interactuar(jugador);
+	    }
+
+	    jugador.resetInteraccion();
+	}
 
     public void renderizar() {
         for (Mineral mineral : minerales) {
@@ -86,16 +117,16 @@ public class MineralesManager {
 		}
     }
     
-    public boolean comprar(Jugador jugador) { //necesito al jugador para saber a quien pasarle el mineral cuando es picado
-    	for (Mineral mineral : minerales) {
-    		if(mineral.isComprable()) {//Si el mineral es comprable, se puede comprar
-    			if(mineral.getComprar()) {
-    				mineral.comprar(jugador);
-    			}
-    		}
-		}
-    	return false;
-    }
+//    public boolean comprar(Jugador jugador) { //necesito al jugador para saber a quien pasarle el mineral cuando es picado
+//    	for (Mineral mineral : minerales) {
+//    		if(mineral.isComprable()) {//Si el mineral es comprable, se puede comprar
+//    			if(mineral.getComprar()) {
+//    				mineral.comprar(jugador);
+//    			}
+//    		}
+//		}
+//    	return false;
+//    }
     public boolean dialogoCompra() {
     	for (Mineral mineral : minerales) {
 			if(mineral.isComprable()) {
@@ -146,7 +177,7 @@ public class MineralesManager {
     
     public void dibujarAreaInteraccion() {
     	for (Mineral mineral : minerales) {
-    			mineral.dibujarAreasInteraccion();
+    			mineral.dibujarAreaDeInteraccion(Colores.ROSA_DEBUG);
     	}
 	}
     

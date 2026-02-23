@@ -1,10 +1,8 @@
 package com.mygdx.utiles;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.mygdx.entidades.Npc;
-import com.mygdx.entidades.npcs.dialogos.NpcData;
 
 
 /**
@@ -14,5 +12,5 @@ import com.mygdx.entidades.npcs.dialogos.NpcData;
  *
  */
 public abstract class Npcs {
-	public static HashMap<NpcData,Npc> NPCS = new HashMap<NpcData, Npc>();//Esto es por las animaciones que tienen los npc
+	public static ArrayList<Npc> NPCS = new ArrayList<Npc>();//Esto es por las animaciones que tienen los npc
 }

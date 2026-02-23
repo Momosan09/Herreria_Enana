@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "monologo": "Hello hello hello. Buy, buy, buy!",
+    "condiciones": [
+     
+      { "tipo": "lluvia", "valor": false }
+    ],
+    "respuestas": [
+      {
+        "texto": "Geesh! show me what you got.",
+        "consecuencia": { "tipo": "nada" }
+      },
+      {
+        "texto": "Stop that!.",
+        "consecuencia": { "tipo": "nada" }
+      }
+    ]
+  }
+]

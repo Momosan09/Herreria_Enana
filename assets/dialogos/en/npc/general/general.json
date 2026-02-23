@@ -1,0 +1,21 @@
+[
+    {
+      "id": "1",
+      "monologo": "¡¿¿¡ESTAS LISTO PARA LA MUERTE!?!",
+      "condiciones": [
+       
+        { "tipo": "lluvia", "valor": false }
+      ],
+      "respuestas": [
+        {
+          "texto": "¿eh?",
+          "consecuencia": { "tipo": "nada" }
+        },
+        {
+          "texto": "No.",
+          "consecuencia": { "tipo": "nada" }
+        }
+      ]
+    }
+  ]
+  

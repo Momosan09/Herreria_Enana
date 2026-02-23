@@ -1,0 +1,42 @@
+[
+    {
+      "id": "1",
+      "monologo": "Hello! I am the old man",
+      "condiciones": [
+       
+        { "tipo": "lluvia", "valor": false }
+      ],
+      "respuestas": [
+        {
+          "texto": "Hi, how are you?",
+          "consecuencia": { "tipo": "irA", "id": "charla_lluvia" }
+
+        },
+        {
+          "texto": "I dont have time for this",
+          "consecuencia": { "tipo": "nada" }
+        }
+      ]
+    },
+
+    {
+        "id": "viejo_montanas_minerales",
+        "monologo": "Im fine. did you know that these mountains are rich in minerals?",
+        "condiciones": [
+         
+          { "tipo": "lluvia", "valor": false }
+
+        ],
+        "respuestas": [
+          {
+            "texto": "Yes, already know that.",
+            "consecuencia": { "tipo": "nada" }
+  
+          },
+          {
+            "texto": "No, didnt know it",
+            "consecuencia": { "tipo": "nada" }
+          }
+        ]
+      }
+  ]

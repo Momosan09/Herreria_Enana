@@ -1,12 +1,7 @@
 package com.mygdx.entidades;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.eventos.EventoInteraccionObj;
-import com.mygdx.eventos.Listeners;
-import com.mygdx.utiles.HelpDebug;
-import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 
 public abstract class ObjetoDelMapa extends Entidad{
@@ -41,12 +36,5 @@ public abstract class ObjetoDelMapa extends Entidad{
 		super(rutaTextura);
 	}
 
-	
-
-	
-	
-
-
-	
 	
 }

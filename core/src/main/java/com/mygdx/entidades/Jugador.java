@@ -68,7 +68,6 @@ public class Jugador {
 	private Body body;
 	public OrthographicCamera camara;
 	public String spritesheet;
-	public Circle areaJugador;
 	private ItemEquipadoJugador itemEnMano;
 	
 	//Inventarios
@@ -83,6 +82,12 @@ public class Jugador {
 	
 	public Respuestas respuesta1 = Respuestas.NOVALOR, respuesta2 = Respuestas.NOVALOR;
 
+	
+	//Interaccion
+	private int radioInteraccion = 2*32;
+	private boolean quiereInteractuar = false;
+	
+	private Circle areaInteraccion;
 	
 	public Jugador(OrthographicCamera camara, World world, Vector2 spawnPosicion) {
 		posicion = new Vector2(); // posicion inicial
@@ -108,7 +113,7 @@ public class Jugador {
 		
 		monedero = new Monedero(1,100,1000);
 		
-		areaJugador = new Circle(posicion.x, posicion.y, 32);
+		areaInteraccion = new Circle(posicion, radioInteraccion);
 		
 		
 
@@ -131,8 +136,9 @@ public class Jugador {
 		// sprite.draw(batch);
 		update();
 		itemEnMano.dibujarYPosicion(this.posicion);
+		dibujarAreaDeInteraccion();
 		//dibujarItemActual();
-		areaJugador.set(posicion.x, posicion.y, 16);
+
 	}
 
 	private void update() {
@@ -182,7 +188,7 @@ public class Jugador {
             body.setLinearVelocity(movimientoX, movimientoY);
             //Esta es la velocidad que tiene cuando se mueva diagonalmente, ya que, sino su velocidad diagonal seria mayor que la horizontal o vertical
        }
-
+		areaInteraccion.setPosition(posicion.x, posicion.y);//esa cuenta es para acordarme que de alto tiene dos tiles
         movimientoCamara();
         }else {
         	quieto();
@@ -208,15 +214,6 @@ public class Jugador {
 		return posicion;
 	}
 	
-	public void dibujarAreaInteraccion() {
-		ShapeRenderer shapeRenderer = new ShapeRenderer();
-		shapeRenderer.setProjectionMatrix(Render.batch.getProjectionMatrix());
-		shapeRenderer.begin(ShapeType.Line);
-		shapeRenderer.setColor(Color.RED);
-		shapeRenderer.circle(areaJugador.x, areaJugador.y, areaJugador.radius);
-		shapeRenderer.end();
-	}
-
 	public Animator alternarSprites(Direcciones direccion) {
 		switch (direccion) {
 		case ABAJO:
@@ -264,7 +261,30 @@ public class Jugador {
 	
 
 
+	//INTERACCION -----
+	public void dibujarAreaDeInteraccion() {
+		Render.shapeDr.circle(areaInteraccion.x, areaInteraccion.y, areaInteraccion.radius);
+		
+	}
+	
+	public Circle getAreaInteraccion() {
+	    return areaInteraccion;
+	}
 
+	public void solicitarInteraccion() {
+	    quiereInteractuar = true;
+	}
+
+	public boolean quiereInteractuar() {
+	    return quiereInteractuar;
+	}
+
+	public void resetInteraccion() {
+	    quiereInteractuar = false;
+	}
+	
+	//INTERACCION -----
+	
 //    public boolean tieneItem(IngredientesId id) {
 //        // primero: herramientas físicas
 //        for (Item item : items) {

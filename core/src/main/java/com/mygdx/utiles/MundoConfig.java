@@ -4,6 +4,7 @@ import java.util.List;
 import com.mygdx.combinaciones.Receta;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.Vendedor;
+import com.mygdx.entidades.npcs.dialogos.charlas.DialogoManager;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.hud.CartaHUD;
 
@@ -22,6 +23,7 @@ public abstract class MundoConfig {
 	
 	public static Npc locutor;
 	public static Vendedor vendedor;
+	public static DialogoManager dialogoManager;
 	
 	//Tiempo
 	public static boolean pausarTiempo = false; // El tiempo del mundo, los minutos y las horas no cambian, la luz tampoco. Eso no significa que se frena el juego

@@ -1,20 +1,16 @@
 package com.mygdx.hud;
 
-import com.mygdx.utiles.HelpDebug;
-import com.mygdx.utiles.MundoConfig;
-import com.mygdx.utiles.recursos.Recursos;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.npcs.dialogos.Mensaje;
-import com.mygdx.entidades.npcs.dialogos.Npc_Dialogos_Rey;
-import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.eventos.EventoRecibirCarta;
 import com.mygdx.eventos.Listeners;
-import com.mygdx.historia.CartasManager;
 import com.mygdx.hud.actoresEspeciales.SolapaGeneralesHUD;
 import com.mygdx.pantallas.Juego;
+import com.mygdx.utiles.MundoConfig;
+import com.mygdx.utiles.recursos.Recursos;
 
 public class UIManager implements EventoRecibirCarta{
 	
@@ -103,7 +99,7 @@ public class UIManager implements EventoRecibirCarta{
 			jugador.puedeMoverse = true;
 			inventario.ocultar();
 		    activarSolo(hud.getStage());
-			dialogo.limpiarDatos();//Esto ayuda a que no queden datos del npc anterior en la caja de dialogo cuando se hable con uno nuevo
+			//dialogo.limpiarDatos();//Esto ayuda a que no queden datos del npc anterior en la caja de dialogo cuando se hable con uno nuevo
 			break;
 
 
@@ -113,7 +109,7 @@ public class UIManager implements EventoRecibirCarta{
 			if(dialogo.getLocutor() != MundoConfig.locutor) {//se llama solo una vez
 			dialogo.setLocutor(MundoConfig.locutor);				
 			}
-			dialogo.update();
+			//dialogo.update();
 			dialogo.mostrar();
 			jugador.puedeMoverse = false;
 			ocultar(pausa,inventario, diario);

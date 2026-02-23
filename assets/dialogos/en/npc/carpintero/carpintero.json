@@ -1,0 +1,101 @@
+[
+  {
+    "id": "1",
+    "monologo": "Damm it, its you again",
+    "condiciones": [
+     
+      { "tipo": "lluvia", "valor": false }
+    ],
+    "respuestas": [
+      {
+        "texto": "Yeah its me you ugly pice of wood",
+        "consecuencia": { "tipo": "irA", "id": "carpintero_sobre_la_guerra" }
+
+      },
+      {
+        "texto": "I dont have time for this",
+        "consecuencia": { "tipo": "nada" }
+      }
+    ]
+  },
+  {
+    "id": "carpintero_sobre_la_guerra",
+    "monologo": "I heard that you were given your inherited position again. Dammit! That means the carpenter and blacksmith work together again.",
+    "condiciones": [
+     
+      { "tipo": "lluvia", "valor": false }
+    ],
+    "respuestas": [
+      {
+        "texto": "Thats right and Im going to need a steady, good, cheap flow of wood.",
+        "consecuencia": { "tipo": "nada" }
+
+      },
+      {
+        "texto": "Blacksmith and carpenter together, what joy. Wait, just kidding",
+        "consecuencia": { "tipo": "nada" }
+      }
+    ]
+  },
+
+  {
+    "id": "carpintero_mision_sierra_circular",
+    "monologo": "Dont let the fumes go up, blacksmith. I, too, received a letter from the king.\nYoure just going to be in your beautiful blacksmith shop, Ill have to provide pre-assembled constructions for the camps.\nIf youre going to want my sticks and shields, I need you to do some things for me first.\nTake this scheme, my circular saw broke and I need a new one. Bring it to me and Ill see what I can do for you.",
+    "condiciones": [
+     
+      { "tipo": "lluvia", "valor": false }
+    ],
+    "respuestas": [
+      {
+        "texto": "Damn carpenter.",
+        "consecuencia": { "tipo": "nada" }
+
+      },
+      {
+        "texto": "Im not going to work for you.",
+        "consecuencia": { "tipo": "nada" }
+      }
+    ]
+  },
+
+  {
+    "id": "carpintero_entrega_primera_mision",
+    "monologo": "Why are you taking so long? \nIs my saw ready? \nYou dont know how to do something so simple and you want to supply an army?",
+    "condiciones": [
+     
+      { "tipo": "lluvia", "valor": false }
+    ],
+    "respuestas": [
+      {
+        "texto": "I still need time damn carpenter",
+        "consecuencia": { "tipo": "nada" }
+
+      },
+      {
+        "texto": "Here is your filthy saw",
+        "consecuencia": { "tipo": "irA", "id": "carpintero_venta" }
+      }
+    ]
+  },
+
+  {
+    "id": "carpintero_venta",
+    "monologo": "Welcome to the only good commerce officially recognized by the king",
+    "condiciones": [
+     
+      { "tipo": "lluvia", "valor": false }
+    ],
+    "respuestas": [
+      {
+        "texto": "I come to buy sticks and branches, show me",
+        "consecuencia": { "tipo": "nada" }
+
+      },
+      {
+        "texto": "Nah, I lost interest, bye",
+        "consecuencia": { "tipo": "nada" }
+      }
+    ]
+  }
+
+]

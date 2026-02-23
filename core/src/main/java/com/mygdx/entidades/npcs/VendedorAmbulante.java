@@ -1,15 +1,14 @@
 package com.mygdx.entidades.npcs;
 
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.entidades.Npc;
-import com.mygdx.entidades.NpcInterface;
+import com.mygdx.entidades.NpcData;
 import com.mygdx.entidades.Vendedor;
-import com.mygdx.entidades.npcs.dialogos.NpcData;
+import com.mygdx.utiles.EstadoMundo;
 
 public class VendedorAmbulante extends Vendedor{
 
-		public VendedorAmbulante(float x, float y, World world, String ruta, NpcData data) {
-			super(x, y, world, ruta, data, VendedorData.AMBULANTE);
+		public VendedorAmbulante(float x, float y, World world, String ruta, NpcData data, EstadoMundo estadoM, String rutaDialogos) {
+			super(x, y, world, ruta, data, VendedorData.AMBULANTE, estadoM, rutaDialogos);
 
 		}
 

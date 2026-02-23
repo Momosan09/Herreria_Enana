@@ -1,8 +1,8 @@
 package com.mygdx.pantallas;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -11,51 +11,44 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.combinaciones.CargadorRecetas;
 import com.mygdx.combinaciones.IngredientesId;
-import com.mygdx.entidades.General;
+import com.mygdx.entidades.InteraccionManager;
 import com.mygdx.entidades.Jugador;
-import com.mygdx.entidades.NPCManager;
 import com.mygdx.entidades.Npc;
+import com.mygdx.entidades.NpcData;
+import com.mygdx.entidades.NpcManager;
 import com.mygdx.entidades.ObjetosDelMapa.AltoHorno;
 import com.mygdx.entidades.ObjetosDelMapa.CajaEntregas;
 import com.mygdx.entidades.ObjetosDelMapa.Carta;
 import com.mygdx.entidades.ObjetosDelMapa.Mesa;
-import com.mygdx.entidades.ObjetosDelMapa.Mineral;
 import com.mygdx.entidades.ObjetosDelMapa.MineralesManager;
 import com.mygdx.entidades.ObjetosDelMapa.ObjetosTallerManager;
 import com.mygdx.entidades.ObjetosDelMapa.SoporteArmadura;
 import com.mygdx.entidades.ObjetosDelMapa.Yunque;
-import com.mygdx.entidades.ObjetosDelMapa.Minable.CarbonMena;
-import com.mygdx.entidades.ObjetosDelMapa.Minable.HierroMena;
-import com.mygdx.entidades.ObjetosDelMapa.Minable.PiedraMena;
-import com.mygdx.entidades.ObjetosDelMapa.procesados.CarbonPuro;
-import com.mygdx.entidades.ObjetosDelMapa.procesados.HierroPuro;
-import com.mygdx.entidades.ObjetosDelMapa.procesados.LingoteHierro;
 import com.mygdx.entidades.npcs.Carpintero;
 import com.mygdx.entidades.npcs.VendedorAmbulante;
 import com.mygdx.entidades.npcs.VendedorDeTienda;
 import com.mygdx.entidades.npcs.Viejo;
-import com.mygdx.entidades.npcs.dialogos.CharlaManager;
-import com.mygdx.entidades.npcs.dialogos.NpcData;
+import com.mygdx.entidades.npcs.dialogos.charlas.DialogoManager;
 import com.mygdx.entidades.npcs.generales.General_1;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.eventos.Listeners;
 import com.mygdx.game.Principal;
+import com.mygdx.historia.CartasManager;
+import com.mygdx.historia.MisionesManager;
 import com.mygdx.hud.UIManager;
 import com.mygdx.io.EntradaJuego;
 import com.mygdx.io.EntradasJugador;
-import com.mygdx.utiles.MundoConfig;
-import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
-import com.mygdx.utiles.Config;
+import com.mygdx.utiles.EstadoMundo;
 import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.HelpMapa;
 import com.mygdx.utiles.Iluminacion;
+import com.mygdx.utiles.MundoConfig;
+import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 import com.mygdx.utiles.Render;
 import com.mygdx.utiles.Tiempo;
 import com.mygdx.utiles.particulas.ParticulasManager;
 import com.mygdx.utiles.recursos.Recursos;
 import com.mygdx.utiles.sonidos.SonidosManager;
-import com.mygdx.historia.CartasManager;
-import com.mygdx.historia.MisionesManager;
 
 import box2dLight.RayHandler;
 
@@ -76,11 +69,13 @@ public class Juego implements Screen{
 	//Mapa
 	private TiledMap tiledMap;
 	private OrganizadorSpritesIndiceZ organizador;
+    private EstadoMundo estadoM;
+
 	
 	//Entidades
 	private Jugador jugador;
-	private Carta carta;
-	private Npc viejo, vendedorAmbulate, vendedorTienda, carpintero, general, rey;
+	//private Carta carta;
+
 	private Texture jugadorTextura;
 	private AltoHorno altoHorno;
 	private SoporteArmadura soporteArmadura;
@@ -89,10 +84,14 @@ public class Juego implements Screen{
 	private CajaEntregas cajaEntregas;
 	
 	
+	
 	//Managers
-	private NPCManager npcManager;
+	
+	private InteraccionManager interaccionManager;
+    private NpcManager npcManager;
+    private MisionesManager misionesManager;
+    
 	private MineralesManager mineralesManager;
-	private MisionesManager misionesManager;
 	private ObjetosTallerManager objetosDelTallerManager;
 
 	//Camaras
@@ -100,9 +99,6 @@ public class Juego implements Screen{
 
 	//Scene2d.ui
 	private UIManager ui;
-	
-	//Charlas
-	public CharlaManager charlaManager;
 	
 	//Screens
 	private final Principal game;
@@ -124,6 +120,9 @@ public class Juego implements Screen{
 		Render.tiledMapRenderer = helpMapa.Inicializar();
 		MundoConfig.anchoMundo = helpMapa.getCantTilesAncho();
 		MundoConfig.altoMundo = helpMapa.getCantTilesAlto();
+		
+    	estadoM = new EstadoMundo(); 
+    	MundoConfig.dialogoManager = new DialogoManager(estadoM);
 
 		
 		//camaras
@@ -151,16 +150,23 @@ public class Juego implements Screen{
 				
 		//Sonido
 		SonidosManager.cargar();
+		
+		//Debug
+		Render.iniciarShapeDrawer();
     	
+		//Interacciones 
+		interaccionManager = new InteraccionManager();
+		
 		//Npc
-		crearNPCs();
 		npcManagerConfig();
-		charlaManagerConfig();
 		crearObjetosDelTaller();	
 				
 		mineralesManagerConfig();
 		misionesMangerConfig();
 		objetosDleTallerManagerConfig();
+		
+
+
 		
 		//InputMultiplexer
 			
@@ -185,10 +191,10 @@ public class Juego implements Screen{
 		
 		
 		
-		carta = new Carta(36, 12, world, Recursos.objMapa.CARTA, jugador);
-		MundoConfig.cartaAMostrar = CartasManager.getPrimeraCarta();
+		//carta = new Carta(36, 12, world, Recursos.objMapa.CARTA, jugador);
+		//MundoConfig.cartaAMostrar = CartasManager.getPrimeraCarta();
 
-		MundoConfig.estadoJuego = EstadosDelJuego.INICIO;
+		MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
 		
 
 		
@@ -238,16 +244,16 @@ public class Juego implements Screen{
 		Render.batch.begin();
 		//npcManager.renderizar();
 		//mineralesManager.renderizar();
+
+        npcManager.dibujarNpcs();
 		objetosDelTallerManager.renderizar();
+		interaccionManager.resolver(jugador);
 		
 	
-		carta.draw();
-		carta.detectarJugador(jugador);
+		//carta.draw();
+		//carta.detectarJugador(jugador);
 		
-		
-		npcManager.detectarJugador(jugador);
-		mineralesManager.detectarJugador(jugador);
-		objetosDelTallerManager.detectarJugador(jugador);
+
 		
 //		mineralesManager.minar(jugador);
 		mineralesManager.limpiarMinerales();
@@ -277,8 +283,7 @@ public class Juego implements Screen{
 		
 		Render.batch.begin();// HUD´s
 		ui.render();
-		
-			charlaManager.checkearCharlas(vendedorTienda, vendedorAmbulate, viejo, carpintero, general);
+	
 			// Renderiza el HUD
 			camaraHud.update();
 			Render.batch.setProjectionMatrix(camaraHud.combined);// Una vez que renderiza el juego, se inicia el batch
@@ -319,15 +324,7 @@ public class Juego implements Screen{
 	}
 
 	
-	public void crearNPCs() {
-		viejo = new Viejo(19,34, world,Recursos.npc.enanos.VIEJO, NpcData.VIEJO);
-		vendedorTienda = new VendedorDeTienda(12,33.5f, world,Recursos.npc.enanos.VENDEDOR_TIENDA, NpcData.VENDEDOR_TIENDA);
-		vendedorAmbulate = new VendedorAmbulante(22,40, world,Recursos.npc.enanos.VENDEDOR_AMBULANTE, NpcData.VENDEDOR_AMBULANTE);
-		carpintero = new Carpintero(6,5, world, Recursos.npc.enanos.CARPINTERO, NpcData.CARPINTERO);
-		general = new General_1(20,36, world);
-//		rey = new Rey(0,0,Recursos.VENDEDOR, NpcData.REY);
-	}
-	
+
 	public void crearObjetosDelTaller() {
 		mesa = new Mesa(39, 15, world, Recursos.objMapa.MESA, jugador);
 		yunque = new Yunque(34, 13, world, Recursos.objMapa.YUNQUE, jugador);
@@ -338,7 +335,7 @@ public class Juego implements Screen{
 	}
 	
 	private void objetosDleTallerManagerConfig() {
-		objetosDelTallerManager = new ObjetosTallerManager();
+		objetosDelTallerManager = new ObjetosTallerManager(interaccionManager);
 		objetosDelTallerManager.agregarObjeto(mesa);
 		objetosDelTallerManager.agregarObjeto(yunque);
 		objetosDelTallerManager.agregarObjeto(altoHorno);
@@ -349,19 +346,11 @@ public class Juego implements Screen{
 	}
 	
 	private void npcManagerConfig() {
-		npcManager = new NPCManager();
-		npcManager.agregarEntidad(viejo);
-		npcManager.agregarEntidad(vendedorAmbulate);
-		npcManager.agregarEntidad(vendedorTienda);
-		npcManager.agregarEntidad(carpintero);
-		npcManager.agregarEntidad(general);
+        npcManager = new NpcManager(estadoM, world, interaccionManager);
 	}
-	private void charlaManagerConfig() {
-		charlaManager = new CharlaManager(jugador, vendedorTienda, vendedorAmbulate, viejo, carpintero, general);
-	}
-	
+
 	private void mineralesManagerConfig() {
-		mineralesManager = new MineralesManager(world);
+		mineralesManager = new MineralesManager(world, interaccionManager);
 		mineralesManager.generarVetas(helpMapa.getSitioDeMinado());
 	}
 	

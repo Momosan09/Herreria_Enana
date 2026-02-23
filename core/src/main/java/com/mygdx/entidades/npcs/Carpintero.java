@@ -1,18 +1,15 @@
 package com.mygdx.entidades.npcs;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.entidades.Npc;
+import com.mygdx.entidades.NpcData;
 import com.mygdx.entidades.Vendedor;
-import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
-import com.mygdx.entidades.npcs.dialogos.NpcData;
+import com.mygdx.utiles.EstadoMundo;
 
 public class Carpintero extends Vendedor{
 
 	
-	public Carpintero(float x, float y, World world, String ruta, NpcData data) {
-		super(x, y, world, ruta, data, VendedorData.CARPINTERO);
+	public Carpintero(float x, float y, World world, String ruta, NpcData data, EstadoMundo estadoM, String rutaDialogos) {
+		super(x, y, world, ruta, data, VendedorData.CARPINTERO, estadoM, rutaDialogos);
 
 	}
 

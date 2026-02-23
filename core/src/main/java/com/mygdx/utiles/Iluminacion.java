@@ -201,15 +201,15 @@ public class Iluminacion implements EventoCambioDeDia{
 	@throws what kind of exception does this method throw
 	*/
 	public void revisarCartas() {
-        //Ver si hay carta para ese dia
-        CartaHUD cartaDelDia = CartasManager.determinarCarta();
-        if(cartaDelDia != null) {
-        	MundoConfig.cartaAMostrar = cartaDelDia;
-        	Listeners.recibirCarta(MundoConfig.cartaAMostrar);    
-        }else {
-        	MundoConfig.cartaAMostrar = null;
-        	//System.out.println("No hay carta para hoy \n");
-        }
+//        //Ver si hay carta para ese dia
+//        CartaHUD cartaDelDia = CartasManager.determinarCarta();
+//        if(cartaDelDia != null) {
+//        	MundoConfig.cartaAMostrar = cartaDelDia;
+//        	Listeners.recibirCarta(MundoConfig.cartaAMostrar);    
+//        }else {
+//        	MundoConfig.cartaAMostrar = null;
+//        	//System.out.println("No hay carta para hoy \n");
+//        }
 	}
 
 }

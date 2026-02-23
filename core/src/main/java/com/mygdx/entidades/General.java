@@ -6,7 +6,7 @@ import com.mygdx.armas.Arma;
 import com.mygdx.armas.EstadosArmas;
 import com.mygdx.armas.modificadores.Modificadores;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
-import com.mygdx.entidades.npcs.dialogos.NpcData;
+import com.mygdx.utiles.EstadoMundo;
 
 public abstract class General extends Npc{
 
@@ -23,8 +23,8 @@ public abstract class General extends Npc{
 	
 	@Null private EstadosArmas formaFavorita;
 	
-	public General(float x, float y, World world, String ruta, NpcData data, int ancho, int alto) {
-		super(x, y, world, ruta, data, ancho, alto);
+	public General(float x, float y, World world, String ruta, NpcData data, int ancho, int alto, EstadoMundo estadoM, String rutaDialogos) {
+		super(x, y, world, ruta, data, ancho, alto, estadoM, rutaDialogos);
 	}
 
 	

@@ -553,3 +553,7 @@ o
 
 ## 6 FEB
     - Agrega HUD de generales
+
+## 23 FEB
+    - Modifica sistema de dialogos. Ahora usa .json
+    - Modifica sistema de interacciones.

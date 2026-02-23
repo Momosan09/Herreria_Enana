@@ -1,0 +1,20 @@
+[
+  {
+    "id": "saludo_maniana",
+    "monologo": "Buenos días!",
+    "condiciones": [
+     
+      { "tipo": "lluvia", "valor": false }
+    ],
+    "respuestas": [
+      {
+        "texto": "Buenos días",
+        "consecuencia": { "tipo": "nada" }
+      },
+      {
+        "texto": "¿Está lloviendo?",
+        "consecuencia": { "tipo": "irA", "id": "charla_lluvia" }
+      }
+    ]
+  }
+]

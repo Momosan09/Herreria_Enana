@@ -13,10 +13,6 @@ public class EntradaJuego implements InputProcessor{
 	@Override
 	public boolean keyDown(int keycode) {
 		
-		if(keycode == Keys.E) {
-			Listeners.interaccion();
-		}
-		
 		if(keycode == Keys.TAB) {
 			MundoConfig.estadoJuego = (MundoConfig.estadoJuego == EstadosDelJuego.JUEGO ? EstadosDelJuego.INVENTARIO : EstadosDelJuego.JUEGO);
 			System.out.println(HelpDebug.debub(getClass())+ "Inventario");

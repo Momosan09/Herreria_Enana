@@ -3,24 +3,18 @@ package com.mygdx.entidades.ObjetosDelMapa;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.enums.EstadosDelJuego;
-import com.mygdx.eventos.EventoInteraccionObj;
-import com.mygdx.eventos.Listeners;
-import com.mygdx.historia.CartasManager;
-import com.mygdx.hud.CartaHUD;
-import com.mygdx.hud.YunqueHUD;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.Render;
 import com.mygdx.utiles.recursos.Recursos;
 
-import box2dLight.Light;
 import box2dLight.PointLight;
-import box2dLight.RayHandler;
 
-public class Carta extends ObjetoDelMapa implements EventoInteraccionObj{
+public class Carta extends ObjetoDelMapa{
 	
 	private boolean dibujar = false;
 	private boolean primeraVez = true; // primera vez que lee la carta
@@ -32,7 +26,6 @@ public class Carta extends ObjetoDelMapa implements EventoInteraccionObj{
 		sinLeer = new Sprite(new Texture(Recursos.objMapa.EXCLAMACION));
 		sinLeer.setPosition(this.posicion.x-8, this.posicion.y+24);
 		luzExclamacion = new PointLight(Render.rayHandler, 128, new Color(Color.valueOf("#ea8e0e")), 30, this.posicion.x+10, this.posicion.y+30);
-		 Listeners.agregarListener(this);
 	}
 	
 	
@@ -65,12 +58,13 @@ public class Carta extends ObjetoDelMapa implements EventoInteraccionObj{
 	
 	
 	@Override
-	public void interaccionObj() {
-		if(getJugadorEnRango() && dibujar) {
-				primeraVez = false;
-				MundoConfig.estadoJuego = EstadosDelJuego.CARTA;
-			}
+	public void interactuar(Jugador jugador) {
+		if (dibujar) {
+			primeraVez = false;
+			MundoConfig.estadoJuego = EstadosDelJuego.CARTA;
 		}
 	}
-	
 
+
+	
+}

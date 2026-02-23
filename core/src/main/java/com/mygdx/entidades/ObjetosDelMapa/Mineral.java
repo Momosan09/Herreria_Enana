@@ -70,15 +70,7 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar, Ingrediente{
 		Listeners.agregarListener(this);
 	}
 
-	public Mineral(boolean comprable, IngredientesId ingredienteId) {
-		super(ingredienteId.tipoM.ruta + ingredienteId.estadoM.ruta);
-		this.ingredienteId = ingredienteId;
-		this.comprable = comprable;
-		this.tipo = ingredienteId.tipoM;
-		this.estado = ingredienteId.estadoM;
-		this.areaMinado = new Circle(this.posicion.x, this.posicion.y, 64);
-		Listeners.agregarListener(this);
-	}
+
 	/**
 	 * Este Es para los que nunca van a salir al mundo, es decir, se compra o aparece al inicio del juego
 	 * @param rutaTextura
@@ -121,14 +113,14 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar, Ingrediente{
 	}
 	
 	
-	public boolean comprar(Jugador jugador) {
-	    if ((getJugadorEnRango() && isComprable()) && Gdx.input.isTouched()) {
-	        // Cambiar el estado del diálogo
-	        comprar = true;
-	        return comprar;
-	    }
-	    return comprar;
-	}
+//	public boolean comprar(Jugador jugador) {
+//	    if ((getJugadorEnRango() && isComprable()) && Gdx.input.isTouched()) {
+//	        // Cambiar el estado del diálogo
+//	        comprar = true;
+//	        return comprar;
+//	    }
+//	    return comprar;
+//	}
 	
 	public boolean getComprar() {
 		return comprar;
@@ -165,7 +157,7 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar, Ingrediente{
 		 * @param j
 		 */
 		private boolean getJugadorRangoMinado(Jugador j) {
-			if(areaMinado.overlaps(j.areaJugador)) {
+			if(areaMinado.overlaps(j.getAreaInteraccion())) {
 				return true;
 			}else {
 				return false;
@@ -200,7 +192,7 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar, Ingrediente{
 
 			
 			 if(getJugadorRangoMinado(j)) {
-		        if (this.areaDeInteraccion.contains(worldCoords.x, worldCoords.y)) {
+		        if (getAreaInteraccion().contains(worldCoords.x, worldCoords.y)) {
 		            // El toque está dentro del rango del mineral
 					vida -= 50;
 					recolectar(j);
@@ -215,13 +207,20 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar, Ingrediente{
 		}
 		
 		public void dibujarAreaDeMinado() {
-			dibujarAreasInteraccion(areaMinado, Colores.ROSA_DEBUG);
+			dibujarAreaDeInteraccion(Colores.ROSA_DEBUG);
 		}
 
 
 		@Override
 		public IngredientesId getIngredienteId() {
 			return ingredienteId;
+		}
+		
+		
+		@Override
+		public void interactuar(Jugador jugador) {
+			System.out.println(HelpDebug.debub(getClass())+"Interaccion con mineral \n Tipo: " + this.tipo + "\n Estado: " + this.estado + "\n Calor de fusion: " + this.calorDeFusion);
+			
 		}
 		
 }

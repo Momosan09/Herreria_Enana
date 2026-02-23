@@ -20,6 +20,10 @@ public class EntradasJugador implements InputProcessor{
 	@Override
 	public boolean keyDown(int keycode) {
 		
+		if(keycode == Keys.E) {
+			//jugador.solicitarInteraccion();
+		}
+		
 		if(keycode == Keys.NUM_1) {
 			if(ultimoNumeroApretado == 1 && jugador.getItemEnMano() == Items.PICO) {
 				jugador.desequipar();

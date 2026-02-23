@@ -1,119 +1,115 @@
 package com.mygdx.entidades;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.combinaciones.Ingrediente;
-import com.mygdx.combinaciones.IngredientesId;
-import com.mygdx.entidades.npcs.VendedorData;
-import com.mygdx.entidades.npcs.dialogos.Charla;
-import com.mygdx.entidades.npcs.dialogos.NpcData;
-import com.mygdx.enums.EstadosDelJuego;
-import com.mygdx.enums.Items;
-import com.mygdx.eventos.EventoInteraccionNPC;
-import com.mygdx.eventos.Listeners;
-import com.mygdx.hud.Dialogo;
-import com.mygdx.utiles.Animator;
-import com.mygdx.utiles.Config;
-import com.mygdx.utiles.MundoConfig;
-import com.mygdx.utiles.Npcs;
-import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-public abstract class Npc extends Entidad implements NpcInterface, EventoInteraccionNPC{
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.combinaciones.IngredientesId;
+import com.mygdx.entidades.npcs.VendedorData;
+import com.mygdx.entidades.npcs.dialogos.charlas.Charla;
+import com.mygdx.entidades.npcs.dialogos.charlas.DialogoLoader;
+import com.mygdx.enums.EstadosDelJuego;
+import com.mygdx.eventos.Listeners;
+import com.mygdx.utiles.Animator;
+import com.mygdx.utiles.EstadoMundo;
+import com.mygdx.utiles.HelpDebug;
+import com.mygdx.utiles.MundoConfig;
+import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
+
+public abstract class Npc extends Entidad implements NpcInterface{
+	
+	protected NpcData data;
 	
 	protected String nombre;
-	private ArrayList<String[]> paqueteDeCharlas;//Tiene los datos de las charlas. Es muy importante el que tenga en el npc_dialogos_***
 	private Animator animacion;
 	private Texture retrato;
-	private NpcData data;
 	private ArrayList<IngredientesId> inventario;
-	private String nombreCharlaActual;//nombre de la charla que se va a usar
 	
-	public ArrayList<Charla> charlas;
-	public boolean respuesta1 = false;
-	public boolean respuesta2 = false;
 	public boolean mostrarDialogo = true;
 	private boolean cerroDialogo = false;
 
-	public Npc(float x, float y, World world, String ruta, NpcData data){
+	private EstadoMundo estadoM;
+	
+	//charlas
+	private Map<String, Charla> charlas = new LinkedHashMap<>();//(Nodos)
+	private Charla charlaActual;//(Nodo actual)
+	private String charlaInicialId = "1";
+	
+	public Npc(float x, float y, World world, String ruta, NpcData data, EstadoMundo estadoM, String rutaCharlas){
 		super(x, y, world, ruta);
 		crearCuerpo(world,8,8);
-		charlas = new ArrayList<Charla>();
-		paqueteDeCharlas = new ArrayList<String[]>();
+
 		
-		this.data = data;
 		this.nombre = this.data.getNombre();
-		this.paqueteDeCharlas = data.getBloquesDeCharla();
 		this.retrato = data.getTextura();
 
-		Npcs.NPCS.put(data,this);
 		animacion = new Animator(ruta, posicion, 0);
 		animacion.create();
-		Listeners.agregarListener(this);
+		cargarCharlas(rutaCharlas);
+		charlaActual = charlas.get("1");//setea la charla actual (inicial) de todos los npcs con la charla con id 1 de el .json correspondiente de cada npc
+
+		areaInteraccion = new Circle(posicion, radioInteraccion);
+		areaInteraccion.setPosition(posicion.x, posicion.y);
+		
 	}
 	
-	public Npc(float x, float y, World world, String ruta, NpcData data, VendedorData itemsData){
+	public Npc(float x, float y, World world, String ruta, NpcData data, VendedorData itemsData, EstadoMundo estadoM, String rutaCharlas){
 		super(x, y, world, ruta);
 		crearCuerpo(world,8,8);
-		charlas = new ArrayList<Charla>();
-		paqueteDeCharlas = new ArrayList<String[]>();
 		
 		this.data = data;
 		this.nombre = this.data.getNombre();
-		this.paqueteDeCharlas = data.getBloquesDeCharla();
 		this.retrato = data.getTextura();
 		this.inventario = itemsData.getInventario();
 
 		OrganizadorSpritesIndiceZ.NPCS.add(this);
 		animacion = new Animator(ruta, posicion, 0);
 		animacion.create();
-		Listeners.agregarListener(this);
+		cargarCharlas(rutaCharlas);
+		charlaActual = charlas.get("1");//setea la charla actual (inicial) de todos los npcs con la charla con id 1 de el .json correspondiente de cada npc
+
+		areaInteraccion = new Circle(posicion, radioInteraccion);
+		areaInteraccion.setPosition(posicion.x, posicion.y);
 	}
 	
-	public Npc(float x, float y, World world, String ruta, NpcData data, int ancho, int alto){//para los npc con colisiones mas grandes o mas chicas
+	public Npc(float x, float y, World world, String ruta, NpcData data, int ancho, int alto, EstadoMundo estadoM, String rutaCharlas){//para los npc con colisiones mas grandes o mas chicas
 		super(x, y, world, ruta);
 		crearCuerpo(world, ancho, alto);
-		charlas = new ArrayList<Charla>();
-		paqueteDeCharlas = new ArrayList<String[]>();
 		
 		this.data = data;
 		this.nombre = this.data.getNombre();
-		this.paqueteDeCharlas = data.getBloquesDeCharla();
 		this.retrato = data.getTextura();
 
 		OrganizadorSpritesIndiceZ.NPCS.add(this);
 		animacion = new Animator(ruta, posicion, 0);
 		animacion.create();
-		Listeners.agregarListener(this);
+		cargarCharlas(rutaCharlas);
+		charlaActual = charlas.get("1");//setea la charla actual (inicial) de todos los npcs con la charla con id 1 de el .json correspondiente de cada npc
+
+		areaInteraccion = new Circle(posicion, radioInteraccion);
+		areaInteraccion.setPosition(posicion.x, posicion.y);
 	}
 	
-	public Npc(float x, float y, World world, String ruta, int ancho, int alto){//para los npc con colisiones mas grandes o mas chicas
+	public Npc(float x, float y, World world, String ruta, int ancho, int alto, EstadoMundo estadoM, String rutaCharlas){//para los npc con colisiones mas grandes o mas chicas
 		super(x, y, world, ruta);
 		crearCuerpo(world, ancho, alto);
 		
 		this.nombre = this.data.getNombre();
-		this.paqueteDeCharlas = data.getBloquesDeCharla();
 		this.retrato = data.getTextura();
 
 		OrganizadorSpritesIndiceZ.NPCS.add(this);
 		animacion = new Animator(ruta, posicion, 0);
 		animacion.create();
-		Listeners.agregarListener(this);
-	}
-	
-	
-	@Override
-	public void interaccionNPC() {
-		if(getJugadorEnRango()) {
-				MundoConfig.estadoJuego = EstadosDelJuego.DIALOGO;
-				MundoConfig.locutor = this;	
-		}
-		
-		if(!getJugadorEnRango()) {
-			resetearRespuestas();
-		}
+		cargarCharlas(rutaCharlas);
+		charlaActual = charlas.get("1");//setea la charla actual (inicial) de todos los npcs con la charla con id 1 de el .json correspondiente de cada npc
+
+		areaInteraccion = new Circle(posicion, radioInteraccion);
+		areaInteraccion.setPosition(posicion.x, posicion.y);
 	}
 	
 	public String getNombre() {
@@ -129,44 +125,69 @@ public abstract class Npc extends Entidad implements NpcInterface, EventoInterac
 		return data;
 	}
 	
-	
-	public String getMensajeNroDePaqueteNro(int mensajeNro, int paqueteNro) {
-		return paqueteDeCharlas.get(paqueteNro)[mensajeNro];
-	}
-	
-	public String[] getPaqueteDeDialogosNro(int paqueteNro) {
-		return paqueteDeCharlas.get(paqueteNro);
-	}
 	 
 	 public void ejecutarAnimacion() {
 		 animacion.render();
 	 }
 	 
-	 public String getNombreCharlaActual() {
-		 return nombreCharlaActual;
-	 }
-	 
-	 public Charla getCharlaActual() {
-		 for(int i = 0; i<charlas.size(); i++) {
-			 if(charlas.get(i).nombreCharla.equals(nombreCharlaActual)) {
-				 return charlas.get(i);
-			 }
-		 }
-		return null;
-	 }
-	 
-	 public void setCharlaActual(String nombreCharla) {
-		 nombreCharlaActual = nombreCharla;
-	 }
-	 
-	 
-	 public void resetearRespuestas() {
-		 respuesta1 = false;
-		 respuesta2 = false;
-	 }
 	 
 	 public void ocultarDialogo() {
 		 mostrarDialogo = true;
 	 }
+	 
+	    @Override
+	    public Circle getAreaInteraccion() {
+	        return areaInteraccion;
+	    }
+
+	    
+	    @Override
+	    public void interactuar(Jugador jugador) {
+	    	System.out.println(HelpDebug.debub(getClass())+"Jugador interactuo con npc: " + nombre);
+			MundoConfig.estadoJuego = EstadosDelJuego.DIALOGO;
+			MundoConfig.locutor = this;	
+	        MundoConfig.dialogoManager.iniciar(MundoConfig.locutor);
+	    }
+
+		public void agregarCharla(Charla charla) {
+		    charlas.put(charla.id(), charla);
+		}
+
+		public void iniciarCharla(EstadoMundo mundo) {
+
+		    // Si no hay charla actual, arranca por la inicial fija
+		    if (charlaActual == null) {
+		        charlaActual = charlas.get(charlaInicialId);
+		        return;
+		    }
+
+		}
+
+
+
+		public void setCharlaActual(String idSiguienteCharla) {
+
+		    Charla siguiente = charlas.get(idSiguienteCharla);
+
+		    if (siguiente != null) {
+		        charlaActual = siguiente;
+		    }
+		}
+
+		public void cargarCharlas(String rutaJson) {
+
+		    List<Charla> lista = DialogoLoader.cargar(rutaJson);
+
+		    for (Charla charla : lista) {
+		        agregarCharla(charla);
+		    }
+		}
+
+		public Charla getCharlaActual() {
+			return charlaActual;
+		}
+		public void setCharlaInicial(String id) {
+		    this.charlaInicialId = id;
+		}
 	 
 }
