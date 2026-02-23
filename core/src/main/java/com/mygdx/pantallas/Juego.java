@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.combinaciones.CargadorRecetas;
 import com.mygdx.combinaciones.IngredientesId;
+import com.mygdx.entidades.General;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.NPCManager;
 import com.mygdx.entidades.Npc;
@@ -35,6 +36,7 @@ import com.mygdx.entidades.npcs.VendedorDeTienda;
 import com.mygdx.entidades.npcs.Viejo;
 import com.mygdx.entidades.npcs.dialogos.CharlaManager;
 import com.mygdx.entidades.npcs.dialogos.NpcData;
+import com.mygdx.entidades.npcs.generales.General_1;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.eventos.Listeners;
 import com.mygdx.game.Principal;
@@ -78,7 +80,7 @@ public class Juego implements Screen{
 	//Entidades
 	private Jugador jugador;
 	private Carta carta;
-	private Npc viejo, vendedorAmbulate, vendedorTienda, carpintero, rey;
+	private Npc viejo, vendedorAmbulate, vendedorTienda, carpintero, general, rey;
 	private Texture jugadorTextura;
 	private AltoHorno altoHorno;
 	private SoporteArmadura soporteArmadura;
@@ -171,9 +173,10 @@ public class Juego implements Screen{
 		jugador.agregarMision(viejo, TipoMision.RECOLECTAR, TipoMinerales.PIEDRA.toString(), 2,0,10,50);
 		*/
 	    
-		jugador.agregar(IngredientesId.HIERRO_MENA, 2);
-		jugador.agregar(IngredientesId.HIERRO_PURO, 2);
-		jugador.agregar(IngredientesId.CARBON_PURO, 1);
+		jugador.getInventarios().ingredientes.agregar(IngredientesId.HIERRO_MENA, 2);
+		jugador.getInventarios().ingredientes.agregar(IngredientesId.HIERRO_PURO, 2);
+		jugador.getInventarios().ingredientes.agregar(IngredientesId.CARBON_PURO, 1);
+
 		
 		
 		Recursos.muxJuego.addProcessor(new EntradaJuego());
@@ -275,7 +278,7 @@ public class Juego implements Screen{
 		Render.batch.begin();// HUD´s
 		ui.render();
 		
-			charlaManager.checkearCharlas(vendedorTienda, vendedorAmbulate, viejo, carpintero);
+			charlaManager.checkearCharlas(vendedorTienda, vendedorAmbulate, viejo, carpintero, general);
 			// Renderiza el HUD
 			camaraHud.update();
 			Render.batch.setProjectionMatrix(camaraHud.combined);// Una vez que renderiza el juego, se inicia el batch
@@ -321,6 +324,7 @@ public class Juego implements Screen{
 		vendedorTienda = new VendedorDeTienda(12,33.5f, world,Recursos.npc.enanos.VENDEDOR_TIENDA, NpcData.VENDEDOR_TIENDA);
 		vendedorAmbulate = new VendedorAmbulante(22,40, world,Recursos.npc.enanos.VENDEDOR_AMBULANTE, NpcData.VENDEDOR_AMBULANTE);
 		carpintero = new Carpintero(6,5, world, Recursos.npc.enanos.CARPINTERO, NpcData.CARPINTERO);
+		general = new General_1(20,36, world);
 //		rey = new Rey(0,0,Recursos.VENDEDOR, NpcData.REY);
 	}
 	
@@ -350,9 +354,10 @@ public class Juego implements Screen{
 		npcManager.agregarEntidad(vendedorAmbulate);
 		npcManager.agregarEntidad(vendedorTienda);
 		npcManager.agregarEntidad(carpintero);
+		npcManager.agregarEntidad(general);
 	}
 	private void charlaManagerConfig() {
-		charlaManager = new CharlaManager(jugador, vendedorTienda, vendedorAmbulate, viejo, carpintero);
+		charlaManager = new CharlaManager(jugador, vendedorTienda, vendedorAmbulate, viejo, carpintero, general);
 	}
 	
 	private void mineralesManagerConfig() {

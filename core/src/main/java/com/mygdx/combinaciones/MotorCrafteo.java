@@ -1,7 +1,13 @@
 package com.mygdx.combinaciones;
 
+import java.util.ArrayList;
+
+import com.mygdx.armas.Equipo;
 import com.mygdx.entidades.Jugador;
+import com.mygdx.entidades.ObjetosDelMapa.Mineral;
+import com.mygdx.entidades.ObjetosDelMapa.Items.Item;
 import com.mygdx.enums.EstadosMision;
+import com.mygdx.enums.Items;
 import com.mygdx.historia.Mision;
 import com.mygdx.historia.TipoMision;
 import com.mygdx.historia.misiones.MisionRecFab;
@@ -58,22 +64,57 @@ public class MotorCrafteo {
 
         // Consumir entradas
         for (IngredienteReceta ing : receta.entradas()) {
-            inventario.consumir(ing.ingrediente(),ing.cantidad());
+            inventario.consumir(ing.ingrediente(), ing.cantidad());
             sonidosDeFabricar(receta.herramienta());
         }
-        
 
-        // Agregar salidas
-        for (IngredienteReceta out : receta.salidas()) {
-            inventario.agregar(out.ingrediente(),out.cantidad());
-            comprobarMisionesDeFabricar(out, out.cantidad());//TODO aca puede haber un error de que se repita mas veces de lo necesario
-
+        // Caso 1: receta normal (ingredientes)
+        if (receta.salidas() != null) {
+            for (IngredienteReceta out : receta.salidas()) {
+                inventario.agregar(out.ingrediente(), out.cantidad());
+                comprobarMisionesDeFabricar(out, out.cantidad());
+            }
+            return;
         }
+
+        // Caso 2: receta de resultado final (arma/equipo)
+        if (receta.salidaFinal() != null) {
+
+            Mineral metalBase = obtenerMetalBase(receta);
+            ArrayList<Items> items = obtenerOtrosIngredientes(receta);
+            Equipo equipo = ResultadoFinalFactory.crear(receta.salidaFinal(), metalBase, items);
+
+            j.getInventarios().armas.add(equipo);
+        }
+    }
+
+
+	private static Mineral obtenerMetalBase(Receta receta) {
+		for (IngredienteReceta ing : receta.entradas()) {
+			if (ing.ingrediente().tipoM != null) {
+				return CreadorDeMinerales.crear(ing.ingrediente());
+			}
+		}
+		return null;
+	}
+	
+	private static ArrayList<Items> obtenerOtrosIngredientes(Receta receta) {
+		ArrayList<Items> lista = new ArrayList<>();
+
+		for (IngredienteReceta ing : receta.entradas()) {
+			if (ing.ingrediente().tipoI != null) {
+				lista.add(ing.ingrediente().tipoI);
+			}
+
+		}
+		return lista;
+	}
+
         
         
 
         
-    }
+    
 
 	public InventarioCrafteo getInventario() {
 		return inventario;
@@ -84,14 +125,19 @@ public class MotorCrafteo {
 	}
 	
 	private static void comprobarMisionesDeFabricar(IngredienteReceta out, int cantidad) {
-        for(MisionRecFab m : j.conseguirMisionesPorTipo(TipoMision.FABRICAR)) {
+        for(MisionRecFab m : j.getInventarios().tareas.conseguirMisionesPorTipo(TipoMision.FABRICAR)) {
         	if(m.getObjeto() == out.ingrediente() && (m.getEstado() == EstadosMision.PENDIENTE)) {
-        		j.avanzarMision(m, cantidad);
+        		j.getInventarios().tareas.avanzarMision(m, cantidad);
         	}
         }
 	}
 	
 	private static void sonidosDeFabricar(IngredientesId herramienta) {
+		
+	    if (herramienta == null) {
+	        return; // no hay sonido de herramienta
+	    }
+		
 		switch (herramienta) {
 		case SIERRA: {
 			SonidosManager.reproducirSonido(ListaSonidos.SIERRA_METAL);

@@ -15,4 +15,5 @@ public interface InventarioCrafteo {
     boolean tieneItem(IngredientesId ingrediente);
     
     ArrayList<Mineral> getMinerales();
+    
 }

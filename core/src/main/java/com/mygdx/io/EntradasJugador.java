@@ -35,18 +35,23 @@ public class EntradasJugador implements InputProcessor{
 			}
 			ultimoNumeroApretado = 2;
 		}
+		if(keycode == Keys.NUM_3) {
+			MundoConfig.estadoJuego = EstadosDelJuego.MODIFICADORES;
+		}
+		if(keycode == Keys.NUM_4) {
+			MundoConfig.estadoJuego = EstadosDelJuego.FICHERO_DE_GUERRA;
+
+		}
 		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -62,31 +67,26 @@ public class EntradasJugador implements InputProcessor{
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean scrolled(float amountX, float amountY) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

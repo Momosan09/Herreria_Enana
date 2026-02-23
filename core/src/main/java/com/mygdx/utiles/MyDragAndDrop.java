@@ -44,6 +44,8 @@ public class MyDragAndDrop {
 	private ArrayList<Image> inventario, herramientas;
 	private ArrayList<IngredientesId> ingredientes;
 	
+	
+	
 	public MyDragAndDrop(Jugador jugador){
 		dragAndDrop = new DragAndDrop();
 		this.jugador = jugador;
@@ -69,7 +71,7 @@ public class MyDragAndDrop {
 		herramientas = new ArrayList<Image>();
 
 
-		 ingredientes = jugador.obtenerIngredientesParaCrafteo();
+		 ingredientes = jugador.getInventarios().ingredientes.obtenerIngredientesParaCrafteo();
 		for (IngredientesId id : ingredientes) {
 		    inventario.add(new Image(id.getTextura()));
 		}
@@ -77,8 +79,8 @@ public class MyDragAndDrop {
 		
 
 		
-        if (jugador.getItems().size() > 0) {
-            for (Item herramienta : jugador.getItems()) {
+        if (jugador.getInventarios().items.getItems().size() > 0) {
+            for (Item herramienta : jugador.getInventarios().items.getItems()) {
                 herramientas.add(new Image(new Sprite(herramienta.getTextura())));
                 
             }
@@ -109,8 +111,8 @@ public class MyDragAndDrop {
 
 		
 		
-		for (int i = 0; i < jugador.getItems().size(); i++) {
-            final IngredientesId herramienta = jugador.getItems().get(i).getIngredienteId();
+		for (int i = 0; i < jugador.getInventarios().items.getItems().size(); i++) {
+            final IngredientesId herramienta = jugador.getInventarios().items.getItems().get(i).getIngredienteId();
             dragAndDrop.addSource(new Source(herramientas.get(i)) {
                 @Null
                 public Payload dragStart(InputEvent event, float x, float y, int pointer) {
@@ -141,7 +143,7 @@ public class MyDragAndDrop {
 		for (int i = 0; i < inventario.size(); i++) {
 			final IngredientesId mineralSource;
 
-			 mineralSource = jugador.obtenerIngredientesParaCrafteo().get(i);
+			 mineralSource = jugador.getInventarios().ingredientes.obtenerIngredientesParaCrafteo().get(i);
 				dragAndDrop.addTarget(new Target(inventario.get(i)) {
 
 					public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
@@ -189,7 +191,7 @@ public class MyDragAndDrop {
 		
 		for(int i = 0; i < herramientas.size(); i++) {
 			final Item itemSource;
-			itemSource = jugador.getItems().get(i);
+			itemSource = jugador.getInventarios().items.getItems().get(i);
 			dragAndDrop.addTarget(new Target(herramientas.get(i)) {
 
 				@Override
@@ -285,14 +287,14 @@ public class MyDragAndDrop {
 	    dragAndDrop.clear();
 		
 		//Agrega las imagenes de los minerales en el inventario del jugador
-		 ingredientes = jugador.obtenerIngredientesParaCrafteo();
+		 ingredientes = jugador.getInventarios().ingredientes.obtenerIngredientesParaCrafteo();
 		for (IngredientesId id : ingredientes) {
 		    inventario.add(new Image(id.getTextura()));
 		}
 
 		
-        for (int i = 0; i < jugador.getItems().size(); i++) {
-            herramientas.add(new Image(new Sprite(jugador.getItems().get(i).getTextura())));
+        for (int i = 0; i < jugador.getInventarios().items.getItems().size(); i++) {
+            herramientas.add(new Image(new Sprite(jugador.getInventarios().items.getItems().get(i).getTextura())));
             herramientasTabla.add(herramientas.get(i));
             if(i % 2 == 0 && i != 0) herramientasTabla.row();
         }
@@ -319,7 +321,7 @@ public class MyDragAndDrop {
 	private void mostrarLabelOnEnter() {
 		//Label nombre 
 		 for (int i = 0; i < inventario.size(); i++) {
-		        final IngredientesId ingrediente = jugador.obtenerIngredientesParaCrafteo().get(i);
+		        final IngredientesId ingrediente = jugador.getInventarios().ingredientes.obtenerIngredientesParaCrafteo().get(i);
 		        final Image image = inventario.get(i);
 		        image.addListener(new InputListener() {
 		            @Override
@@ -340,9 +342,9 @@ public class MyDragAndDrop {
 		 
 		 
 		 
-		 for (int i = 0; i < jugador.getItems().size(); i++) {
+		 for (int i = 0; i < jugador.getInventarios().items.getItems().size(); i++) {
 
-	            final Item herramienta = jugador.getItems().get(i);
+	            final Item herramienta = jugador.getInventarios().items.getItems().get(i);
 		        final Image image = herramientas.get(i);
 		        image.addListener(new InputListener() {
 		            @Override

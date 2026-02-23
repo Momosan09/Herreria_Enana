@@ -15,7 +15,6 @@ public class Viejo extends Npc{
 	
 	@Override
 	public NpcData getData() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

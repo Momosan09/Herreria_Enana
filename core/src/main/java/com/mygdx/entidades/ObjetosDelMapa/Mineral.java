@@ -94,6 +94,15 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar, Ingrediente{
 	
 	
 
+	public Mineral(TipoMinerales tipoMineral, EstadosMinerales estadoMineral) {
+		super(tipoMineral.ruta + estadoMineral.ruta);
+		this.tipo = tipoMineral;
+		this.estado = estadoMineral;
+		this.ingredienteId = IngredientesRegistry.get(tipo, estado);
+		
+	}
+
+
 	protected void crearCuerpo(World world, int ancho, int alto) {//esto lo puedo sacar mas adelante, si le hago animacion a los minerales...
 		// Crear el cuerpo del jugador
         BodyDef bodyDef = new BodyDef();
@@ -166,14 +175,14 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar, Ingrediente{
 		
 		private void recolectar(Jugador j) {
 			if(vida <= 0) {	
-	        j.agregar(ingredienteId, 1);
+	        j.getInventarios().ingredientes.agregar(ingredienteId, 1);
 
-	        for (Mision m : j.getMisiones().values()) {
+	        for (Mision m : j.getInventarios().tareas.getMisiones().values()) {
 	            if (m.getTipo() == TipoMision.RECOLECTAR) {
 	                MisionRecFab rec = (MisionRecFab) m;
 
 	                if (rec.getObjeto().equals(this.tipo.toString())) {
-	                    j.avanzarMision(rec);
+	                    j.getInventarios().tareas.avanzarMision(rec);
 	                }
 	            }
 	        }

@@ -28,25 +28,32 @@ public class CharlaManager {
 	private Jugador jugador;
 
 
-	public CharlaManager(Jugador jugador, Npc vendedorTienda, Npc vendedorAmbulante, Npc viejo, Npc carpintero) {
+	//TODO cambiar este sistema de mierda, usar json
+	
+	public CharlaManager(Jugador jugador, Npc vendedorTienda, Npc vendedorAmbulante, Npc viejo, Npc carpintero, Npc general) {
 		crearCharlasVendedorTienda(vendedorTienda);
 		crearCharlasVendedorAmbulante(vendedorAmbulante);
 		crearCharlasViejo(viejo);
 		crearCharlasCarpintero(carpintero);
+		crearCharlasGeneral(general);
+		
 		vendedorTienda.setCharlaActual(Recursos.bundle.get("vendedor_tienda.charla.saludo"));
 		vendedorAmbulante.setCharlaActual(Recursos.bundle.get("vendedor_ambulante.charla.saludo"));
 		viejo.setCharlaActual(Recursos.bundle.get("viejo.charla.nombre.saludo"));
 		carpintero.setCharlaActual(Recursos.bundle.get("carpintero.charla.nombre.saludo"));
-		checkearCharlas(vendedorTienda, vendedorAmbulante, viejo, carpintero);
+		general.setCharlaActual(Recursos.bundle.get("general.charla.nombre.saludo"));
+		
+		checkearCharlas(vendedorTienda, vendedorAmbulante, viejo, carpintero, general);
 
 		this.jugador = jugador;
 	}
 
-	public void checkearCharlas(Npc vendedorTienda, Npc vendedorAmbulante, Npc viejo, Npc carpintero) {
+	public void checkearCharlas(Npc vendedorTienda, Npc vendedorAmbulante, Npc viejo, Npc carpintero, Npc general) {
 		npcVendedorTienda(vendedorTienda);
 		npcVendedorAmbulante(vendedorAmbulante);
 		npcViejo(viejo);
 		npcCarpintero(carpintero);
+		npcGeneral(general);
 
 	}
 
@@ -76,6 +83,10 @@ public class CharlaManager {
 		carpintero.charlas.add(new Charla(Recursos.bundle.get("carpintero.charla.nombre.venta"), carpintero.getPaqueteDeDialogosNro(4)));
 
 	}
+	
+	public void crearCharlasGeneral(Npc general) {
+		general.charlas.add(new Charla(Recursos.bundle.get("viejo.charla.nombre.saludo"), general.getPaqueteDeDialogosNro(0)));
+		}
 
 	public void npcVendedorTienda(Npc vendedorTienda) {// Aca va toda la logica en donde, dependiendo del npc, se evalua
 														// que charla es la que sigue. Ejemplo: aca poner que si es
@@ -138,7 +149,7 @@ public class CharlaManager {
 			}
 			if (viejo.getNombreCharlaActual().equals(Recursos.bundle.get("viejo.charla.nombre.montanas_minerales"))) {
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
-					if(!jugador.getMisiones().get(MisionesDelJuego.RC2_VIE.getId()).isFallada()) {						
+					if(!jugador.getInventarios().tareas.getMisiones().get(MisionesDelJuego.RC2_VIE.getId()).isFallada()) {						
 					viejo.setCharlaActual(Recursos.bundle.get("viejo_RC2_VIE_0"));
 					}else {
 						cerrarDialogo(viejo); 
@@ -163,7 +174,7 @@ public class CharlaManager {
 			
 			if (viejo.getNombreCharlaActual().equals(Recursos.bundle.get("viejo_RC2_VIE_1"))) {
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
-					jugador.getMisiones().get(MisionesDelJuego.RC2_VIE.getId()).setFallada();
+					jugador.getInventarios().tareas.getMisiones().get(MisionesDelJuego.RC2_VIE.getId()).setFallada();
 					viejo.setCharlaActual(Recursos.bundle.get("viejo.charla.nombre.saludo"));
 
 				} else if (jugador.respuesta2 == Respuestas.VERDADERO) {//Si el jugador fallo la mision de hablar con el viejo
@@ -225,9 +236,9 @@ public class CharlaManager {
 
 			if(carpintero.getNombreCharlaActual().equals(Recursos.bundle.get("carpintero.charla.nombre.mision.sierra_circular"))) {
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
-					if (!jugador.buscarMisionPorId("CARP_00")) {
-						jugador.agregarMision(MisionesDelJuego.CARP_00);
-						jugador.agregarItem(new Esquema(IngredientesId.ESQUEMA_SIERRA_CIRCULAR));
+					if (!jugador.getInventarios().tareas.buscarMisionPorId("CARP_00")) {
+						jugador.getInventarios().tareas.agregarMision(MisionesDelJuego.CARP_00);
+						jugador.getInventarios().items.agregarItem(new Esquema(IngredientesId.ESQUEMA_SIERRA_CIRCULAR), true);
 
 					}
 				} else if (jugador.respuesta2 == Respuestas.VERDADERO) {
@@ -241,8 +252,8 @@ public class CharlaManager {
 				if (jugador.respuesta1 == Respuestas.VERDADERO) {
 					cerrarDialogo(carpintero);
 				} else if (jugador.respuesta2 == Respuestas.VERDADERO
-						&& jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).getEstado() == EstadosMision.COMPLETADA) {
-					jugador.getItems().remove(jugador.getItem(Items.SIERRA_CIRCULAR));
+						&& jugador.getInventarios().tareas.conseguirMisionPorId(MisionesDelJuego.CARP_00).getEstado() == EstadosMision.COMPLETADA) {
+					jugador.getInventarios().items.getItems().remove(jugador.getInventarios().items.getItem(Items.SIERRA_CIRCULAR));
 					carpintero.setCharlaActual(Recursos.bundle.get("carpintero.charla.nombre.venta"));
 				}
 				}
@@ -258,14 +269,41 @@ public class CharlaManager {
 			
 			
 
-			if (jugador.buscarMisionPorId(MisionesDelJuego.CARP_00.getId())) {//Esto esta aca aproposito, es para las condiciones de misiones
-				if (jugador.conseguirMisionPorId(MisionesDelJuego.CARP_00).getEstado() == EstadosMision.PENDIENTE) {
+			if (jugador.getInventarios().tareas.buscarMisionPorId(MisionesDelJuego.CARP_00.getId())) {//Esto esta aca aproposito, es para las condiciones de misiones
+				if (jugador.getInventarios().tareas.conseguirMisionPorId(MisionesDelJuego.CARP_00).getEstado() == EstadosMision.PENDIENTE) {
 					carpintero.setCharlaActual(Recursos.bundle.get("carpintero.charla.nombre.mision.sierra_circular.completada"));
 				}
 			}
 			
 		}
 		}
+	
+
+			
+		public void npcGeneral(Npc general) {// Aca va toda la logica en donde, dependiendo del npc,
+																	// se
+			// evalua que charla es la que sigue. Ejemplo: aca poner
+			// que si es viernes el npc tenga un dialogo y si es
+			// lunes que tenga uno distinto
+			if (general.getJugadorEnRango()) {
+
+				if (general.getNombreCharlaActual().equals(Recursos.bundle.get("general.charla.nombre.saludo"))) {
+
+					if (jugador.respuesta1 == Respuestas.VERDADERO) {
+						cerrarDialogo(general);
+					} else if (jugador.respuesta2 == Respuestas.VERDADERO) {
+						cerrarDialogo(general);
+
+					}
+
+				}
+
+				general.setCharlaActual(Recursos.bundle.get("general.charla.nombre.saludo"));
+
+			}
+
+		}
+	
 
 
 	private void cerrarDialogo(Npc npc) {

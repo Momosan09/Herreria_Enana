@@ -88,6 +88,39 @@
               { "ingrediente": "HOJA_ESPADA_HIERRO_0", "cantidad": 1 }
             ],
             "medio":"YUNQUE"
+          },
+
+          {
+            "entradas": [
+              { "ingrediente": "HIERRO_TIRA", "cantidad": 2 }
+            ],
+
+            "salidas": [
+              { "ingrediente": "HOJA_ESPADA_HIERRO_0", "cantidad": 1 }
+            ],
+            "medio":"YUNQUE"
+          },
+
+          {
+            "entradas": [
+              { "ingrediente": "HIERRO_CABEZA_MAZA", "cantidad": 1 },
+              { "ingrediente": "MANGO_MADERA_MAZA", "cantidad": 1 }
+            ],
+
+            "salidaFinal": "MAZA_DE_GUERRA",
+
+            "medio":"YUNQUE"
+          },
+
+          {
+            "entradas": [
+              { "ingrediente": "ORO_CABEZA_MAZA", "cantidad": 1 },
+              { "ingrediente": "MANGO_MADERA_MAZA", "cantidad": 1 }
+            ],
+
+            "salidaFinal": "MAZA_DE_GUERRA",
+
+            "medio":"YUNQUE"
           }
           
     ]

@@ -95,7 +95,7 @@ public class Combinacion extends HUD {
         combinables.clear();
 
         for (IngredientesId id : IngredientesId.values()) {
-            int cantidad = jugador.getCantidad(id);
+            int cantidad = jugador.getInventarios().ingredientes.getCantidad(id);
 
             if (cantidad > 0) {
                 Texture textura = obtenerTextura(id);

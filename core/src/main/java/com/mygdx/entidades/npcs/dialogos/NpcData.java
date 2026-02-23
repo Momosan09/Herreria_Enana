@@ -14,6 +14,7 @@ public enum NpcData implements DialogosNPC{
 	VIEJO("Viejin", Recursos.npc.enanos.portraits.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Viejo.obtenerTodosLosMensajes()),
 	VENDEDOR_TIENDA("Vendedor Tienda", Recursos.npc.enanos.portraits.VENDEDOR_TIENDA_PORTRAIT, Npc_Dialogos_Vendedor_Tienda.obtenerTodosLosMensajes()),
 	CARPINTERO("Carpintero", Recursos.npc.enanos.portraits.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Carpintero.obtenerTodosLosMensajes()),
+	GENERAL_1("General_1", Recursos.npc.enanos.portraits.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_General_1.obtenerTodosLosMensajes()),
 	REY("Rey", Recursos.npc.enanos.portraits.VENDEDOR_AMBULANTE_PORTRAIT, Npc_Dialogos_Rey.obtenerTodosLosMensajes());
 	
 	private final String _nombre;
@@ -44,7 +45,6 @@ public enum NpcData implements DialogosNPC{
 
 	@Override
 	public String getMensaje(int index) {
-		// TODO Auto-generated method stub
 		return _dialogos.get(index);
 	}
 	

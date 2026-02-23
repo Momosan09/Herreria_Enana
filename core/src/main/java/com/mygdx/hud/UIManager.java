@@ -13,6 +13,7 @@ import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.eventos.EventoRecibirCarta;
 import com.mygdx.eventos.Listeners;
 import com.mygdx.historia.CartasManager;
+import com.mygdx.hud.actoresEspeciales.SolapaGeneralesHUD;
 import com.mygdx.pantallas.Juego;
 
 public class UIManager implements EventoRecibirCarta{
@@ -27,7 +28,9 @@ public class UIManager implements EventoRecibirCarta{
 	private Combinacion combinacion;
 	private Mensaje mensajeAnadido;
 	private FundicionOmega fundicion;
+	private ModificadoresHUD modificadores;
 	private DiarioHUD diario;
+	private GeneralesHUD ficheroDeGeneralesGuerra;
 	
 	private CartaHUD carta;
 	
@@ -35,6 +38,8 @@ public class UIManager implements EventoRecibirCarta{
 	private Juego juego;
 	
 	private boolean mostrarLibro;
+	
+	boolean variableDeControl = false;
 	
 	public UIManager(Jugador jugador, Juego juego) {
 		
@@ -52,12 +57,20 @@ public class UIManager implements EventoRecibirCarta{
 	    fundicion = new FundicionOmega(jugador);
 	    //carta = new CartaHUD(Npc_Dialogos_Rey.CARTA_0);
 	    diario = new DiarioHUD(jugador);
+	    modificadores = new ModificadoresHUD(jugador);
+	    ficheroDeGeneralesGuerra = new GeneralesHUD(jugador);
 	    
 		
 	    mensajeAnadido = new Mensaje();
 		
 		
+	    //FIXME mover de aca cuando tenga las guerras bien hechas
+	    ficheroDeGeneralesGuerra.agregarSolapa("General_1", new SolapaGeneralesHUD(Recursos.npc.enanos.portraits.VENDEDOR_AMBULANTE_PORTRAIT, "General_1"));
+	    ficheroDeGeneralesGuerra.agregarSolapa("General_2", new SolapaGeneralesHUD(Recursos.npc.enanos.portraits.VENDEDOR_AMBULANTE_PORTRAIT, "General_2"));
+	    ficheroDeGeneralesGuerra.agregarSolapa("General_3", new SolapaGeneralesHUD(Recursos.npc.enanos.portraits.VENDEDOR_AMBULANTE_PORTRAIT, "General_3"));
 
+
+	    
 		Listeners.agregarListener(this);
 	}
 	
@@ -69,7 +82,10 @@ public class UIManager implements EventoRecibirCarta{
 		venta.dibujar();
 		combinacion.dibujar();
 		fundicion.dibujar();
+		modificadores.dibujar();
+		ficheroDeGeneralesGuerra.dibujar();
 		diario.dibujar();
+		
 		
 		
 		/*
@@ -85,6 +101,7 @@ public class UIManager implements EventoRecibirCarta{
 			MundoConfig.pausarTiempo = false;
 			hud.mostrar();
 			jugador.puedeMoverse = true;
+			inventario.ocultar();
 		    activarSolo(hud.getStage());
 			dialogo.limpiarDatos();//Esto ayuda a que no queden datos del npc anterior en la caja de dialogo cuando se hable con uno nuevo
 			break;
@@ -113,7 +130,8 @@ public class UIManager implements EventoRecibirCarta{
 			
 		case INVENTARIO:
 			inventario.mostrar();
-			ocultar(diario);
+			activarSolo(inventario.getStage());
+//			ocultar(diario);
 			break;
 		case COMBINACION:
 			combinacion.mostrar();
@@ -158,8 +176,8 @@ public class UIManager implements EventoRecibirCarta{
 				MundoConfig.pausarTiempo = true;
 				
 				if(MundoConfig.cartaAMostrar.getMision() != null) { // si la carta da mision
-					if(!jugador.getMisiones().containsValue(MundoConfig.cartaAMostrar.getMision())) {//si el jugador no tiene asiganda esa mision
-						jugador.agregarMision(MundoConfig.cartaAMostrar.getMision());
+					if(!jugador.getInventarios().tareas.getMisiones().containsValue(MundoConfig.cartaAMostrar.getMision())) {//si el jugador no tiene asiganda esa mision
+						jugador.getInventarios().tareas.agregarMision(MundoConfig.cartaAMostrar.getMision());
 					}
 					
 				}
@@ -192,6 +210,25 @@ public class UIManager implements EventoRecibirCarta{
 			break;
 		case INVENTARIO_BATALLAS:
 			break;
+			
+		case MODIFICADORES:
+			jugador.puedeMoverse = false;
+			modificadores.mostrar();
+			activarSolo(modificadores.getStage());
+			break;
+			
+		case FICHERO_DE_GUERRA:
+			jugador.puedeMoverse = false;
+
+			if(!variableDeControl) {
+				if(!jugador.getInventarios().armas.isEmpty()) {					
+			    ficheroDeGeneralesGuerra.getSolapaActiva().poblarTablaArma("Martillo de zeus", jugador.getInventarios().armas.get(0).getTextura(), "yabadabdo");
+			    variableDeControl = true;
+				}
+			}
+			ficheroDeGeneralesGuerra.mostrar();
+			activarSolo(ficheroDeGeneralesGuerra.getStage());
+			break;
 		default:
 			break;
 		}
@@ -222,6 +259,8 @@ public class UIManager implements EventoRecibirCarta{
 		inventario.reEscalar(width, height);
 		combinacion.reEscalar(width, height);
 		fundicion.reEscalar(width, height);
+		modificadores.reEscalar(width, height);
+		ficheroDeGeneralesGuerra.reEscalar(width, height);
 		diario.reEscalar(width, height);
 	}
 	
@@ -245,6 +284,8 @@ public class UIManager implements EventoRecibirCarta{
 		Recursos.muxJuego.removeProcessor(venta.getStage());
 		Recursos.muxJuego.removeProcessor(fundicion.getStage());
 		Recursos.muxJuego.removeProcessor(libroHUD.getStage());
+		Recursos.muxJuego.removeProcessor(ficheroDeGeneralesGuerra.getStage());
+		Recursos.muxJuego.removeProcessor(modificadores.getStage());
 		Recursos.muxJuego.removeProcessor(diario.getStage());
 		
 	    Recursos.muxJuego.addProcessor(processor);
@@ -268,6 +309,8 @@ public class UIManager implements EventoRecibirCarta{
 		Recursos.muxJuego.removeProcessor(venta.getStage());
 		Recursos.muxJuego.removeProcessor(fundicion.getStage());
 		Recursos.muxJuego.removeProcessor(libroHUD.getStage());
+		Recursos.muxJuego.removeProcessor(modificadores.getStage());
+		Recursos.muxJuego.removeProcessor(ficheroDeGeneralesGuerra.getStage());
 		Recursos.muxJuego.removeProcessor(diario.getStage());
 		
 	    Recursos.muxJuego.addProcessor(processor);

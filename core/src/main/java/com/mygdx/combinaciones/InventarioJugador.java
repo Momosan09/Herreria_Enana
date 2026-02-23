@@ -15,27 +15,27 @@ public class InventarioJugador implements InventarioCrafteo {
 
     @Override
     public int getCantidad(IngredientesId id) {
-        return jugador.getCantidad(id);
+        return jugador.getInventarios().ingredientes.getCantidad(id);
     }
 
     @Override
     public void consumir(IngredientesId id, int cantidad) {
-        jugador.consumir(id, cantidad);
+        jugador.getInventarios().ingredientes.consumir(id, cantidad);
     }
 
     @Override
     public void agregar(IngredientesId id, int cantidad) {
-        jugador.agregar(id, cantidad);
+        jugador.getInventarios().ingredientes.agregar(id, cantidad);
     }
 
 	@Override
 	public ArrayList<Mineral> getMinerales() {
-		return jugador.getMinerales();
+		return jugador.getInventarios().ingredientes.getMinerales();
 	}
 	
 	@Override
 	public boolean tieneItem(IngredientesId id) {
-	    return jugador.tieneItem(id);
+	    return jugador.getInventarios().ingredientes.tieneItem(id);
 	}
 
 }

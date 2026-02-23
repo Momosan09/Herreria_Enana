@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.armas.Equipo;
 import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.ObjetosDelMapa.Mineral;
@@ -33,8 +34,8 @@ import java.util.Map;
 public class InventarioHUD extends HUD{
 
 
-	private Table tablaMinerales, tablaArtefactos, tablaBarraItems;
-	private Label encabezadoMinerales, encabezadoArtefactos, cantidadMineral;
+	private Table tablaMinerales, tablaArtefactos, tablaEquipo,tablaBarraItems;
+	private Label encabezadoMinerales, encabezadoArtefactos, encabezadoEquipo, cantidadMineral;
 	private Label[] nombreMineral;
 	private ObjetoDelInventarioApilable hierroMena;
 	
@@ -70,10 +71,12 @@ public class InventarioHUD extends HUD{
 		
 		tablaMinerales = new Table();
 		tablaArtefactos = new Table();
+		tablaEquipo = new Table();
 		tablaBarraItems = new Table();
 		
 		encabezadoMinerales = new Label(Recursos.bundle.get("inventario.minerales"), labelStyle);
 		encabezadoArtefactos = new Label(Recursos.bundle.get("inventario.artefactos"), labelStyle);
+		encabezadoEquipo = new Label(Recursos.bundle.get("inventario.equipo"), labelStyle);
 		
 		nombreMineral = new Label[2];
 		nombreMineral[0] = new Label("Piedra", labelStyle);
@@ -93,7 +96,12 @@ public class InventarioHUD extends HUD{
 		tablaArtefactos.add(encabezadoArtefactos);
 		tablaArtefactos.row();
 		
+		tablaEquipo.add(encabezadoEquipo);
+		tablaEquipo.row();
+		
 		contenedor.add(tablaMinerales).expand().top().left();
+		contenedor.row();
+		contenedor.add(tablaEquipo).expand().top().left();
 		contenedor.row();
 		contenedor.add(tablaArtefactos).expand().top().left();
 		contenedor.row();
@@ -129,6 +137,7 @@ public class InventarioHUD extends HUD{
 	public void llenarInventario() {
 		llenarMinerales();
 		llenarArtefactos();
+		llenarEquipo();
 	}
 	
 	public void llenarMinerales() {
@@ -136,8 +145,8 @@ public class InventarioHUD extends HUD{
 		tablaMinerales.add(encabezadoMinerales).row();
 		tablaMinerales.setDebug(true);
 		//Este if me permite saber si el la tabla no esta actualizada y si no lo esta, actualizarla
-		if(tablaMinerales.getChildren().size-1 != jugador.obtenerIngredientesParaCrafteo().size()) {//Le resto 1 porque la Label es un children tambien
-	    for (IngredientesId mineral : jugador.obtenerIngredientesParaCrafteo()) {
+		if(tablaMinerales.getChildren().size-1 != jugador.getInventarios().ingredientes.obtenerIngredientesParaCrafteo().size()) {//Le resto 1 porque la Label es un children tambien
+	    for (IngredientesId mineral : jugador.getInventarios().ingredientes.obtenerIngredientesParaCrafteo()) {
 	    	//System.out.println(HelpDebug.debub(getClass())+"Hay mineral");
 	        // Crea una imagen para el mineral y la agrega a la tabla
 	        Image mineralImage = new Image(mineral.getTextura());
@@ -204,7 +213,7 @@ public class InventarioHUD extends HUD{
 	        mineralesApilados.clear();
 	        
 	        // Recorrer la lista de minerales del inventario
-	        for (Mineral mineral : jugador.obtenerTodosLosMinerales()) {
+	        for (Mineral mineral : jugador.getInventarios().ingredientes.obtenerTodosLosMinerales()) {
 	            // Obtener la combinación de tipo y estado del mineral
 	            String clave = mineral.tipo.toString() + "_" + mineral.getEstado().toString();
 	            
@@ -217,13 +226,27 @@ public class InventarioHUD extends HUD{
 		tablaArtefactos.clear();
 		tablaArtefactos.add(encabezadoArtefactos).row();
 		//Este if me permite saber si el la tabla no esta actualizada y si no lo esta, actualizarla
-		if(tablaArtefactos.getChildren().size-1 != jugador.getItems().size()) {//Le resto 1 porque la Label es un children tambien
-	    for (Item artefacto : jugador.getItems()) {
+		if(tablaArtefactos.getChildren().size-1 != jugador.getInventarios().items.getItems().size()) {//Le resto 1 porque la Label es un children tambien
+	    for (Item artefacto : jugador.getInventarios().items.getItems()) {
 	    	//System.out.println(HelpDebug.debub(getClass())+"Hay mineral");
 	        // Crea una imagen para el mineral y la agrega a la tabla
 	        Image artefactoImage = new Image(artefacto.getTextura());
 
 	        tablaArtefactos.add(artefactoImage).size(64, 64).pad(5);
+	    }
+	    
+		}
+	}
+	
+	public void llenarEquipo() {
+		tablaEquipo.clear();
+		tablaEquipo.add(encabezadoEquipo).row();
+		//Este if me permite saber si el la tabla no esta actualizada y si no lo esta, actualizarla
+		if(tablaEquipo.getChildren().size-1 != jugador.getInventarios().armas.size()) {//Le resto 1 porque la Label es un children tambien
+	    
+	    for(Equipo equipo : jugador.getInventarios().armas) {
+	    	Image equipoImage = new Image(equipo.getTextura());
+	    	 tablaEquipo.add(equipoImage).size(64, 64).pad(5);
 	    }
 		}
 	}
