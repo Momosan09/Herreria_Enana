@@ -50,6 +50,8 @@ public class TareasInventarioManager {
 		SonidosManager.reproducirSonido(ListaSonidos.MISION_RECIBIDA);
 	}
 	
+
+	
 	public HashMap<String, Mision> getMisiones() {
 		return tareas;
 		

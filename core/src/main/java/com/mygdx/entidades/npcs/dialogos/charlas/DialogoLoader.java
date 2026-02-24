@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.mygdx.entidades.npcs.dialogos.charlas.condiciones.CondicionHora;
 import com.mygdx.entidades.npcs.dialogos.charlas.condiciones.CondicionLluvia;
+import com.mygdx.entidades.npcs.dialogos.charlas.consecuencias.ConsecuenciaAsignarMision;
 import com.mygdx.entidades.npcs.dialogos.charlas.consecuencias.ConsecuenciaIniciarCharla;
 import com.mygdx.entidades.npcs.dialogos.charlas.dto.CharlaDTO;
 import com.mygdx.entidades.npcs.dialogos.charlas.dto.CondicionDTO;
@@ -75,13 +76,16 @@ public class DialogoLoader {
 
     private static Consecuencia crearConsecuencia(ConsecuenciaDTO dto) {
 
-        if (dto == null) return (mundo, npc) -> {};
+        if (dto == null) return (mundo, npc, jugador) -> {};
 
         switch (dto.tipo) {
             case "irA":
                 return new ConsecuenciaIniciarCharla(dto.id);
+                
+            case "agregarMision":
+            	//return new ConsecuenciaAsignarMision(dto.id);
             case "nada":
-                return (mundo, npc) -> {};
+                return (mundo, npc, jugador) -> {};
             default:
                 throw new RuntimeException("Consecuencia desconocida: " + dto.tipo);
         }

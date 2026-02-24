@@ -4,7 +4,7 @@ import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.Npc;
 import com.mygdx.utiles.EstadoMundo;
 
-public interface Consecuencia {
-    void ejecutar(EstadoMundo mundo, Npc npc, Jugador jugador);
+public interface ConsecuenciaJugador extends Consecuencia{
 
+	   void ejecutar(Jugador jugador);
 }

@@ -80,7 +80,6 @@ public class Jugador {
 	private Animator animacionQuieto, animacionAbajo, animacionArriba, animacionDerecha, animacionIzquierda, animacionMinar;
 	
 	
-	public Respuestas respuesta1 = Respuestas.NOVALOR, respuesta2 = Respuestas.NOVALOR;
 
 	
 	//Interaccion
@@ -433,15 +432,6 @@ public class Jugador {
 
 	
 	
-
-	
-
-	
-	public void resetearRespuestas() {
-		respuesta1 = Respuestas.NOVALOR;
-		respuesta2 = Respuestas.NOVALOR;
-	}
-
 	/**
 	 * Para equipar en la mano
 	 * @param numero
