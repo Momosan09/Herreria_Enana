@@ -2,7 +2,6 @@ package com.mygdx.historia;import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.entidades.Entidad;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.npcs.Carpintero;
-import com.mygdx.entidades.npcs.dialogos.NpcData;
 import com.mygdx.utiles.Npcs;
 import com.mygdx.utiles.recursos.Recursos;
 
@@ -27,7 +26,7 @@ public enum MisionesDelJuego {
 				Recursos.bundle.get("misiones.descripciones.rey.RC2_VIE"),
 				-1,
 				TipoMision.HABLAR,
-				Npcs.NPCS.get(NpcData.VIEJO),
+				//Npcs.NPCS.get(NpcData.VIEJO),
 				"viejo_REC2_VIE_0",
 				0,0,0,
 				"REC2_VIE"
@@ -88,14 +87,13 @@ public enum MisionesDelJuego {
 	 * @param descripcion
 	 * @param diasParaCompletar
 	 * @param tipo
-	 * @param npcObjetivo El npc al que se le debe hablar
 	 * @param charlaObjetivo Es la charla que se debe tener con el npc para que se complete la mision
 	 * @param oro
 	 * @param plata
 	 * @param cobre
 	 * @param id
 	 */
-	MisionesDelJuego(String requisor, String descripcion, int diasParaCompletar, TipoMision tipo, Npc npcObjetivo, String charlaObjetivo,int oro, int plata, int cobre, String id){
+	MisionesDelJuego(String requisor, String descripcion, int diasParaCompletar, TipoMision tipo, String charlaObjetivo,int oro, int plata, int cobre, String id){
 		this.requisor = requisor;
 		this.descripcion = descripcion;
 		this.diasParaCompletar = diasParaCompletar;

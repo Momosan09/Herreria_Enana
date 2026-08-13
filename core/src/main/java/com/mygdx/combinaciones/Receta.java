@@ -1,4 +1,5 @@
 package com.mygdx.combinaciones;
+
 import java.util.List;
 
 import com.badlogic.gdx.utils.Null;
