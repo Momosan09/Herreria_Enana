@@ -6,4 +6,6 @@ import com.mygdx.eventos.EventoInteraccion;
 public interface Interactuable extends EventoInteraccion {
     Circle getAreaInteraccion();
 
+	void interactuar(Jugador jugador);
+
 }

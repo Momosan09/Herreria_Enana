@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 
-public abstract class ObjetoDelMapa extends Entidad{
+public abstract class ObjetoDelMapa extends Entidad implements Interactuable{
 
 	protected Jugador jugador;
 	

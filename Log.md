@@ -560,3 +560,5 @@ o
 
 ## 13 AGO
     - Modifica el sistema de dialogos, permite consecuencias
+    - Vuelve a activar el minado de minerales
+    - Vuelve a activar la interaccion con objetos del mapa

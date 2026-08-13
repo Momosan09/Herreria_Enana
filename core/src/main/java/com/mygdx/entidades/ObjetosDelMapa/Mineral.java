@@ -14,7 +14,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.combinaciones.Ingrediente;
 import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.entidades.Entidad;
+import com.mygdx.entidades.Interactuable;
 import com.mygdx.entidades.Jugador;
+import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.ObjetoDelMapa;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.EstadosMinerales;
 import com.mygdx.entidades.ObjetosDelMapa.Minable.TipoMinerales;
@@ -35,7 +37,7 @@ import com.mygdx.utiles.recursos.Recursos;
 import com.mygdx.utiles.sonidos.ListaSonidos;
 import com.mygdx.utiles.sonidos.SonidosManager;
 
-public class Mineral extends ObjetoDelMapa implements EventoMinar, Ingrediente{
+public class Mineral extends ObjetoDelMapa implements EventoMinar, Interactuable,Ingrediente{
 	
 	public TipoMinerales tipo;
 	public EstadosMinerales estado;
@@ -221,6 +223,13 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar, Ingrediente{
 		public void interactuar(Jugador jugador) {
 			System.out.println(HelpDebug.debub(getClass())+"Interaccion con mineral \n Tipo: " + this.tipo + "\n Estado: " + this.estado + "\n Calor de fusion: " + this.calorDeFusion);
 			
+		}
+
+		public Circle getAreaInteraccion() {
+			return areaInteraccion;
+		}
+		@Override
+		public void interactuar(Npc npc) {
 		}
 		
 }

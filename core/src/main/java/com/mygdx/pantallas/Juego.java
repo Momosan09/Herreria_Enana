@@ -91,8 +91,9 @@ public class Juego implements Screen{
 //    private DialogoManager dialogoManager; creado static en mundoConfig
     private MisionesManager misionesManager;
     
-//	private MineralesManager mineralesManager;
-//	private ObjetosTallerManager objetosDelTallerManager;
+    private InteraccionManager interaccionManager;
+	private MineralesManager mineralesManager;
+	private ObjetosTallerManager objetosDelTallerManager;
 
 	//Camaras
 	private OrthographicCamera camaraJugador, camaraHud;
@@ -153,6 +154,7 @@ public class Juego implements Screen{
 		//Interacciones 
 		
     	MundoConfig.dialogoManager = new DialogoManager(estadoM, jugador);
+    	interaccionManager = new InteraccionManager();
 		
 		//Npc
 		npcManagerConfig();
@@ -240,20 +242,20 @@ public class Juego implements Screen{
 		//Managers
 		Render.batch.begin();
 		//npcManager.renderizar();
-		//mineralesManager.renderizar();
+		mineralesManager.renderizar();
 
         npcManager.dibujarNpcs();
         npcManager.resolverInteracciones(jugador);
-//		objetosDelTallerManager.renderizar();
-		
+		objetosDelTallerManager.renderizar();
+		interaccionManager.resolver(jugador);
 	
 		//carta.draw();
 		//carta.detectarJugador(jugador);
 		
 
 		
-//		mineralesManager.minar(jugador);
-//		mineralesManager.limpiarMinerales();
+		mineralesManager.minar(jugador);
+		mineralesManager.limpiarMinerales();
 //		mineralesManager.comprar(jugador);
 
 
@@ -332,12 +334,12 @@ public class Juego implements Screen{
 	}
 	
 	private void objetosDleTallerManagerConfig() {
-//		objetosDelTallerManager = new ObjetosTallerManager(interaccionManager);
-//		objetosDelTallerManager.agregarObjeto(mesa);
-//		objetosDelTallerManager.agregarObjeto(yunque);
-//		objetosDelTallerManager.agregarObjeto(altoHorno);
-//		objetosDelTallerManager.agregarObjeto(cajaEntregas);
-//		objetosDelTallerManager.agregarObjeto(soporteArmadura);
+		objetosDelTallerManager = new ObjetosTallerManager(interaccionManager);
+		objetosDelTallerManager.agregarObjeto(mesa);
+		objetosDelTallerManager.agregarObjeto(yunque);
+		objetosDelTallerManager.agregarObjeto(altoHorno);
+		objetosDelTallerManager.agregarObjeto(cajaEntregas);
+		objetosDelTallerManager.agregarObjeto(soporteArmadura);
 		
 		
 	}
@@ -347,8 +349,8 @@ public class Juego implements Screen{
 	}
 
 	private void mineralesManagerConfig() {
-//		mineralesManager = new MineralesManager(world, interaccionManager);
-//		mineralesManager.generarVetas(helpMapa.getSitioDeMinado());
+		mineralesManager = new MineralesManager(world, interaccionManager);
+		mineralesManager.generarVetas(helpMapa.getSitioDeMinado());
 	}
 	
 	private void misionesMangerConfig() {
