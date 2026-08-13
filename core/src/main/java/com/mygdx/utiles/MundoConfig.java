@@ -24,6 +24,7 @@ public abstract class MundoConfig {
 	public static Npc locutor;
 	public static Vendedor vendedor;
 	public static DialogoManager dialogoManager;
+	public static boolean acutualizarCharla = true;
 	
 	//Tiempo
 	public static boolean pausarTiempo = false; // El tiempo del mundo, los minutos y las horas no cambian, la luz tampoco. Eso no significa que se frena el juego

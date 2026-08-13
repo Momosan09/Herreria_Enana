@@ -21,7 +21,7 @@ import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 
-public abstract class Npc extends Entidad implements NpcInterface{
+public abstract class Npc extends Entidad implements NpcInterface, Interactuable{
 	
 	protected NpcData data;
 	
@@ -55,7 +55,7 @@ public abstract class Npc extends Entidad implements NpcInterface{
 
 		areaInteraccion = new Circle(posicion, radioInteraccion);
 		areaInteraccion.setPosition(posicion.x, posicion.y);
-		
+		Listeners.agregarListener(this);
 	}
 	
 	public Npc(float x, float y, World world, String ruta, NpcData data, VendedorData itemsData, EstadoMundo estadoM, String rutaCharlas){
@@ -141,29 +141,40 @@ public abstract class Npc extends Entidad implements NpcInterface{
 	    }
 
 	    
-	    @Override
-	    public void interactuar(Jugador jugador) {
-	    	System.out.println(HelpDebug.debub(getClass())+"Jugador interactuo con npc: " + nombre);
-			MundoConfig.estadoJuego = EstadosDelJuego.DIALOGO;
-			MundoConfig.locutor = this;	
-	        MundoConfig.dialogoManager.iniciar(MundoConfig.locutor);
-	    }
+//	    @Override
+//	    public void interactuar(Jugador jugador) {
+//	    	System.out.println(HelpDebug.debub(getClass())+"Jugador interactuo con npc: " + nombre);
+//			MundoConfig.estadoJuego = EstadosDelJuego.DIALOGO;
+//			MundoConfig.locutor = this;	
+//	        MundoConfig.dialogoManager.iniciar(MundoConfig.locutor);
+//	    }
 
 		public void agregarCharla(Charla charla) {
 		    charlas.put(charla.id(), charla);
 		}
 
 		public void iniciarCharla(EstadoMundo mundo) {
+	        if (charlaActual.puedeMostrarse(mundo, this)) {
+	            //mostrarCharla();
+	            return;
+	        
+	    }
 
-		    // Si no hay charla actual, arranca por la inicial fija
-		    if (charlaActual == null) {
-		        charlaActual = charlas.get(charlaInicialId);
-		        return;
+	    //System.out.println(HelpDebug.debub(getClass())+"No hay charla disponible.");
+	}
+
+		private void mostrarCharla() {
+			
+		    System.out.println(charlaActual.monologo());
+
+		    int i = 1;
+		    for (var respuesta : charlaActual.respuestas()) {
+		        System.out.println(i + ": " + respuesta.texto());
+		        i++;
 		    }
-
+		    
 		}
-
-
+		
 
 		public void setCharlaActual(String idSiguienteCharla) {
 
@@ -171,6 +182,7 @@ public abstract class Npc extends Entidad implements NpcInterface{
 
 		    if (siguiente != null) {
 		        charlaActual = siguiente;
+		        mostrarCharla();
 		    }
 		}
 
@@ -178,9 +190,13 @@ public abstract class Npc extends Entidad implements NpcInterface{
 
 		    List<Charla> lista = DialogoLoader.cargar(rutaJson);
 
-		    for (Charla charla : lista) {
-		        agregarCharla(charla);
+		    for (int i = 0; i<lista.size();i++) {
+		        agregarCharla(lista.get(i));
 		    }
+		    
+		    charlaActual = lista.get(0);
+		    
+		    setCharlaActual(lista.get(0).id());
 		}
 
 		public Charla getCharlaActual() {
@@ -189,5 +205,6 @@ public abstract class Npc extends Entidad implements NpcInterface{
 		public void setCharlaInicial(String id) {
 		    this.charlaInicialId = id;
 		}
+		
 	 
 }

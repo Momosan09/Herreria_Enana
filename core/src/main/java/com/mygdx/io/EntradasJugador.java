@@ -21,7 +21,7 @@ public class EntradasJugador implements InputProcessor{
 	public boolean keyDown(int keycode) {
 		
 		if(keycode == Keys.E) {
-			//jugador.solicitarInteraccion();
+			jugador.solicitarInteraccion();
 		}
 		
 		if(keycode == Keys.NUM_1) {

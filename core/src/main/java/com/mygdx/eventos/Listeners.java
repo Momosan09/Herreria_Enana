@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.EventListener;
 
 import com.mygdx.entidades.Jugador;
+import com.mygdx.entidades.Npc;
+import com.mygdx.entidades.npcs.dialogos.charlas.Respuesta;
 import com.mygdx.historia.Mision;
 import com.mygdx.hud.CartaHUD;
 import com.mygdx.utiles.HelpDebug;
@@ -50,6 +52,26 @@ public abstract class Listeners {
 		            ((EventoRestarDiasDeMision) listener).restarDias();
 		        }
 		    }
+		}
+		
+		public static void ejecutarInteraccion(Npc npc) {
+			for(int i = 0; i<listeners.size();i++) {
+				if((listeners.get(i) instanceof EventoInteraccion)) {
+					((EventoInteraccion) listeners.get(i)).interactuar(npc);;
+				}
+			}
+		}
+		
+		public static void setRespuestaElegida(Respuesta r) {
+
+		    for (EventListener listener : listeners) {
+
+		        if (listener instanceof EventoSeleccionRespuesta) {
+		            ((EventoSeleccionRespuesta) listener).respuestaSeleccionada(r);
+		        }
+
+		    }
+
 		}
 	
 		

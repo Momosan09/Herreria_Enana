@@ -11,7 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -19,201 +23,130 @@ import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.npcs.dialogos.charlas.Charla;
 import com.mygdx.entidades.npcs.dialogos.charlas.Respuesta;
+import com.mygdx.enums.EstadosDelJuego;
+import com.mygdx.eventos.Listeners;
 import com.mygdx.utiles.Colores;
 import com.mygdx.utiles.EstiloFuente;
+import com.mygdx.utiles.HelpDebug;
 import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.recursos.Recursos;
 
-public class Dialogo extends Actor implements HeadUpDisplay, Ocultable {
+public class Dialogo extends Actor implements Ocultable {
 
-    private Npc locutor;
-    private Jugador jugador;
+	private Stage stage = new Stage(new ScreenViewport());
+	private Label monologo;
+	private List<String> respuestas;
+	private boolean visible = false;
+	private Skin skin = new Skin(Gdx.files.internal(Recursos.hud.SKIN_DIALOGO_TEMPORAL));
+	//Gdx.input.setInputProcessor(stage);
 
-    private ScreenViewport screenViewport;
-    private Stage stage;
-    private Table tabla, contenedor;
+	public Dialogo() {
 
-    private Label nombre, mensaje;
-    private Array<Label> respuestas = new Array<>();
+	Table table = new Table();
+	table.setFillParent(true);
 
-    private Image retrato;
-    private NinePatchDrawable fondo;
-    private Label.LabelStyle labelStyle;
+	Table table1 = new Table();
 
-    private int padding = 20;
-    private boolean mostrar = false;
-    private String charlaActualId = "";
+	table1.add().grow();
 
-    public Dialogo(Jugador jugador) {
-        this.jugador = jugador;
-        poblarStage();
-        Recursos.muxJuego.addProcessor(stage);
-    }
+	table1.row();
+	VerticalGroup verticalGroup = new VerticalGroup();
 
-    public void setLocutor(Npc locutor) {
-        this.locutor = locutor;
-        actualizarContenido();
-    }
+	monologo = new Label("El texto de la charla", skin);
+//	monologo.setColor(skin.getColor("black"));
+	verticalGroup.addActor(monologo);
 
-    public Npc getLocutor() {
-        return locutor;
-    }
+	respuestas = new List<>(skin);
+	respuestas.setName("listaRespuestas");
+	respuestas.setItems("respuesta1", "respuesta2", "respuesta3");
+	verticalGroup.addActor(respuestas);
+	table1.add(verticalGroup).pad(10.0f);
+	table.add(table1).grow();
+	stage.addActor(table);
+	
+	
+	respuestas.addListener(new ChangeListener() {
 
-    @Override
-    public void dibujar() {
-        if (mostrar) {
-            stage.act(Gdx.graphics.getDeltaTime());
-            stage.draw();
-        }
-    }
+	    @Override
+	    public void changed(ChangeEvent event, Actor actor) {
 
-    public void mostrar() {
-        mostrar = true;
-        stage.getRoot().setTouchable(Touchable.enabled);
-    }
+	        int indice = respuestas.getSelectedIndex();
 
-    public void ocultar() {
-        mostrar = false;
-        stage.getRoot().setTouchable(Touchable.disabled);
-    }
+	        if (indice >= 0 && indice < MundoConfig.locutor.getCharlaActual().respuestas().size()) {
 
-    public void dispose() {
-        stage.dispose();
-    }
+	            Respuesta r = MundoConfig.locutor
+	                    .getCharlaActual()
+	                    .respuestas()
+	                    .get(indice);
 
-    public void actualizarContenido() {
+	            Listeners.setRespuestaElegida(r);
+	        }
+	    }
+	});
+	}
+	
+	
+	public void actualizarCharla() {
+		if(MundoConfig.acutualizarCharla && MundoConfig.locutor != null) {
+//			System.out.println(HelpDebug.debub(getClass())+"interaccion");
+		monologo.setText(MundoConfig.locutor.getCharlaActual().monologo());
+		
+		java.util.List<Respuesta> lista = MundoConfig.locutor.getCharlaActual().respuestas();
 
-        if (locutor == null) return;
+		if(!lista.isEmpty()) {
+		    respuestas.setVisible(true);
+		String[] items = new String[lista.size()];
 
-        Charla charla = locutor.getCharlaActual();
-        if (charla == null) return;
+		for (int i = 0; i < lista.size(); i++) {
+		    items[i] = lista.get(i).texto();
+		}
 
-        if (!charlaActualId.equals(charla.id())) {
+		respuestas.setItems(items);
+		MundoConfig.acutualizarCharla = false;
+	}else {
+	    respuestas.setVisible(false);
+	}
+	}
+		
+	}
+	
+	public void dibujar() {
+		if(visible) {
+	    actualizarCharla();
+	    stage.act(Gdx.graphics.getDeltaTime());
+	    stage.draw();
+		}
+		}
 
-            charlaActualId = charla.id();
 
-            nombre.setText(locutor.getNombre());
-            mensaje.setText(charla.monologo());
-            mensaje.setWrap(true);
+	@Override
+	public void mostrar() {
+		if(!visible) {
+			visible = true;
 
-            reconstruirRespuestas(charla);
-        }
-    }
+		}
+		
+	}
 
-    private void reconstruirRespuestas(Charla charla) {
+	@Override
+	public void ocultar() {
+		if(visible == true) {
+			visible = false;
+		    respuestas.setSelectedIndex(-1);//limpia la respuesta seleccionada al cerrar
+//			  stage.getRoot().setTouchable(Touchable.disabled);
+//			  stage.unfocusAll();//Cuando esta oculto desenfoca el stage para que no procese eventos
+		}
+		
+	}
 
-        // eliminar respuestas anteriores del contenedor
-        for (Label l : respuestas) {
-            l.remove();
-        }
-        respuestas.clear();
 
-        // si no hay respuestas → cerrar diálogo automáticamente
-        if (charla.respuestas().isEmpty()) {
-            //ocultar();
-            return;
-        }
+	@Override
+	public boolean getVisible() {
+		return visible;
+	}
 
-        int index = 0;
+	public Stage getStage() {
+		return stage;
+	}
 
-        for (Respuesta respuesta : charla.respuestas()) {
-
-            final int indiceRespuesta = index;
-
-            Label label = new Label(respuesta.texto(), labelStyle);
-
-            label.addListener(new InputListener() {
-
-                @Override
-                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
-                    MundoConfig.dialogoManager.elegirRespuesta(indiceRespuesta);
-
-                    actualizarContenido();
-                    return true;
-                }
-
-                @Override
-                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                    label.setColor(Color.valueOf(Colores.SELECCIONADO));
-                }
-
-                @Override
-                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                    label.setColor(Color.WHITE);
-                }
-            });
-
-            respuestas.add(label);
-
-            contenedor.row();
-            contenedor.add(label).left().padTop(5);
-
-            index++;
-        }
-    }
-
-    @Override
-    public void crearActores() {
-
-        nombre = new Label("", labelStyle);
-        mensaje = new Label("", labelStyle);
-
-        retrato = new Image(new Texture(Recursos.npc.enanos.portraits.VENDEDOR_AMBULANTE_PORTRAIT));
-
-        fondo = new NinePatchDrawable(
-                new NinePatch(new Texture(Recursos.hud.DIALOGO_HUD))
-        );
-    }
-
-    @Override
-    public void poblarStage() {
-
-        crearFuentes();
-        crearActores();
-
-        screenViewport = new ScreenViewport();
-        stage = new Stage(screenViewport);
-
-        tabla = new Table();
-        tabla.setFillParent(true);
-
-        contenedor = new Table();
-        contenedor.setBackground(fondo);
-
-        contenedor.add(nombre).left().expandX().padLeft(padding * 2.25f);
-        contenedor.row();
-
-        contenedor.add(mensaje).left().expand().fill();
-        contenedor.add(retrato)
-                .size(retrato.getWidth() * 2, retrato.getHeight() * 2);
-
-        contenedor.padLeft(padding);
-        contenedor.padRight(padding);
-        contenedor.padBottom(padding);
-
-        tabla.add(contenedor).bottom().expand();
-        tabla.padBottom(padding);
-
-        stage.addActor(tabla);
-    }
-
-    @Override
-    public void crearFuentes() {
-        labelStyle = EstiloFuente.generarFuente(22, Colores.BLANCO, false);
-    }
-
-    @Override
-    public void reEscalar(int width, int height) {
-        screenViewport.update(width, height, true);
-    }
-
-    @Override
-    public boolean getVisible() {
-        return mostrar;
-    }
-
-    public Stage getStage() {
-        return stage;
-    }
 }

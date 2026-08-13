@@ -13,9 +13,9 @@ import com.mygdx.combinaciones.CargadorRecetas;
 import com.mygdx.combinaciones.IngredientesId;
 import com.mygdx.entidades.InteraccionManager;
 import com.mygdx.entidades.Jugador;
+import com.mygdx.entidades.NPCManager;
 import com.mygdx.entidades.Npc;
 import com.mygdx.entidades.NpcData;
-import com.mygdx.entidades.NpcManager;
 import com.mygdx.entidades.ObjetosDelMapa.AltoHorno;
 import com.mygdx.entidades.ObjetosDelMapa.CajaEntregas;
 import com.mygdx.entidades.ObjetosDelMapa.Carta;
@@ -87,12 +87,12 @@ public class Juego implements Screen{
 	
 	//Managers
 	
-	private InteraccionManager interaccionManager;
-    private NpcManager npcManager;
+    private NPCManager npcManager;
+//    private DialogoManager dialogoManager; creado static en mundoConfig
     private MisionesManager misionesManager;
     
-	private MineralesManager mineralesManager;
-	private ObjetosTallerManager objetosDelTallerManager;
+//	private MineralesManager mineralesManager;
+//	private ObjetosTallerManager objetosDelTallerManager;
 
 	//Camaras
 	private OrthographicCamera camaraJugador, camaraHud;
@@ -122,20 +122,16 @@ public class Juego implements Screen{
 		MundoConfig.altoMundo = helpMapa.getCantTilesAlto();
 		
     	estadoM = new EstadoMundo(); 
-    	MundoConfig.dialogoManager = new DialogoManager(estadoM);
 
-		
 		//camaras
 		camaraJugador = new OrthographicCamera(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		camaraJugador.setToOrtho(false);
 		camaraJugador.zoom = .4f;
 
-		
 		camaraHud = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camaraHud.setToOrtho(false); 
 		camaraHud.zoom = .4f;
 		
-
 		jugador = new Jugador(camaraJugador, world, helpMapa.getJugadorSpawn());
 		organizador = new OrganizadorSpritesIndiceZ();
 
@@ -155,7 +151,8 @@ public class Juego implements Screen{
 		Render.iniciarShapeDrawer();
     	
 		//Interacciones 
-		interaccionManager = new InteraccionManager();
+		
+    	MundoConfig.dialogoManager = new DialogoManager(estadoM, jugador);
 		
 		//Npc
 		npcManagerConfig();
@@ -246,8 +243,8 @@ public class Juego implements Screen{
 		//mineralesManager.renderizar();
 
         npcManager.dibujarNpcs();
-		objetosDelTallerManager.renderizar();
-		interaccionManager.resolver(jugador);
+        npcManager.resolverInteracciones(jugador);
+//		objetosDelTallerManager.renderizar();
 		
 	
 		//carta.draw();
@@ -256,14 +253,14 @@ public class Juego implements Screen{
 
 		
 //		mineralesManager.minar(jugador);
-		mineralesManager.limpiarMinerales();
+//		mineralesManager.limpiarMinerales();
 //		mineralesManager.comprar(jugador);
 
 
 		//jugador.draw(Render.batch);
 		
 		organizador.dibujarYComparar(jugador);
-		
+
 		//AREAS DE INTERACCION
 		//mineralesManager.dibujarAreaInteraccion();
 		//mineralesManager.dibujarAreaMinado();
@@ -335,23 +332,23 @@ public class Juego implements Screen{
 	}
 	
 	private void objetosDleTallerManagerConfig() {
-		objetosDelTallerManager = new ObjetosTallerManager(interaccionManager);
-		objetosDelTallerManager.agregarObjeto(mesa);
-		objetosDelTallerManager.agregarObjeto(yunque);
-		objetosDelTallerManager.agregarObjeto(altoHorno);
-		objetosDelTallerManager.agregarObjeto(cajaEntregas);
-		objetosDelTallerManager.agregarObjeto(soporteArmadura);
+//		objetosDelTallerManager = new ObjetosTallerManager(interaccionManager);
+//		objetosDelTallerManager.agregarObjeto(mesa);
+//		objetosDelTallerManager.agregarObjeto(yunque);
+//		objetosDelTallerManager.agregarObjeto(altoHorno);
+//		objetosDelTallerManager.agregarObjeto(cajaEntregas);
+//		objetosDelTallerManager.agregarObjeto(soporteArmadura);
 		
 		
 	}
 	
 	private void npcManagerConfig() {
-        npcManager = new NpcManager(estadoM, world, interaccionManager);
+        npcManager = new NPCManager(estadoM, world, MundoConfig.dialogoManager);
 	}
 
 	private void mineralesManagerConfig() {
-		mineralesManager = new MineralesManager(world, interaccionManager);
-		mineralesManager.generarVetas(helpMapa.getSitioDeMinado());
+//		mineralesManager = new MineralesManager(world, interaccionManager);
+//		mineralesManager.generarVetas(helpMapa.getSitioDeMinado());
 	}
 	
 	private void misionesMangerConfig() {
@@ -362,9 +359,9 @@ public class Juego implements Screen{
 		return jugador;
 	}
 
-	public MineralesManager getMineralesManager() {
-		return mineralesManager;
-	}
+//	public MineralesManager getMineralesManager() {
+//		return mineralesManager;
+//	}
 
 	public void salirDelJuego() {
 		Recursos.muxJuego.clear();// Pero aca voy a tener un prblema si uso el mismo muxJuego para las otras partes del

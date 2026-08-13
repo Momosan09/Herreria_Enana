@@ -8,6 +8,7 @@ public class HudsRecursos {
 	public final String DIBUJO_RELOJ = "HUD/tiempo.png";
 	public final String CUADRO_HUD = "HUD/cuadro.png";
 	public final String SKIN = "HUD/skin/skin.json";
+	public final String SKIN_DIALOGO_TEMPORAL = "HUD/skinDialogoTemporal/uiskin.json";
 	public final String SKIN_BOTON_ARRIBA = "HUD/skin/botonArriba.json";
 	public final String SKIN_BOTON_ABAJO = "HUD/skin/botonAbajo.json";
 	public final String SKIN_TOOLTIP = "HUD/skin/tooltip.json";

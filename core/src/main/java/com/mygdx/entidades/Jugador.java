@@ -280,6 +280,8 @@ public class Jugador {
 
 	public void resetInteraccion() {
 	    quiereInteractuar = false;
+	    MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
+	    
 	}
 	
 	//INTERACCION -----

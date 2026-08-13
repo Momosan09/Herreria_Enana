@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Json;
 import com.mygdx.entidades.npcs.dialogos.charlas.condiciones.CondicionHora;
 import com.mygdx.entidades.npcs.dialogos.charlas.condiciones.CondicionLluvia;
 import com.mygdx.entidades.npcs.dialogos.charlas.consecuencias.ConsecuenciaAsignarMision;
+import com.mygdx.entidades.npcs.dialogos.charlas.consecuencias.ConsecuenciaFinalizarCharla;
 import com.mygdx.entidades.npcs.dialogos.charlas.consecuencias.ConsecuenciaIniciarCharla;
 import com.mygdx.entidades.npcs.dialogos.charlas.dto.CharlaDTO;
 import com.mygdx.entidades.npcs.dialogos.charlas.dto.CondicionDTO;
@@ -17,6 +18,8 @@ import com.mygdx.entidades.npcs.dialogos.charlas.dto.RespuestaDTO;
 
 public class DialogoLoader {
 
+	private static Respuesta respuestaDeSalida = new Respuesta("Salir.", new ConsecuenciaFinalizarCharla() );
+	
 	public static List<Charla> cargar(String ruta) {
 
 	    Json json = new Json();
@@ -58,6 +61,7 @@ public class DialogoLoader {
                     )
                 );
             }
+            respuestas.add(respuestaDeSalida);
         }
 
         return new Charla(dto.id, dto.monologo, condiciones, respuestas);

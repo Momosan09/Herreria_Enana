@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.entidades.npcs.dialogos.charlas.Charla;
 import com.mygdx.enums.EstadosDelJuego;
 import com.mygdx.enums.Items;
 import com.mygdx.utiles.Colores;
@@ -21,7 +22,7 @@ import com.mygdx.utiles.MundoConfig;
 import com.mygdx.utiles.OrganizadorSpritesIndiceZ;
 import com.mygdx.utiles.Render;
 
-public abstract class Entidad implements Interactuable{
+public abstract class Entidad{
 
 	protected Vector2 posicion;//La necesito en las hijas
 	protected Texture textura;//La necesito en las hijas
@@ -115,7 +116,7 @@ public abstract class Entidad implements Interactuable{
 	
 	public void draw() {
 		sprite.draw(Render.batch);
-//		dibujarAreaInteraccion();
+		dibujarAreaDeInteraccion();
 	}
 	
 	
@@ -129,6 +130,8 @@ public abstract class Entidad implements Interactuable{
 		Render.shapeDr.circle(areaInteraccion.x, areaInteraccion.y, areaInteraccion.radius);
 
 	}
+	
+
 	
 
 	public Vector2 getPosicion() {
@@ -157,15 +160,9 @@ public abstract class Entidad implements Interactuable{
 		textura.dispose();
 	}
 	
-    @Override
-    public void interactuar(Jugador jugador) {
-    	System.out.println(HelpDebug.debub(getClass())+"Interaccion con el jugador");
-    }
+
     
-    @Override
-    public Circle getAreaInteraccion() {
-        return areaInteraccion;
-    }
+
 	
 //	public SpriteOrdenableIndiceZ getSprite() {
 //		return sprite;

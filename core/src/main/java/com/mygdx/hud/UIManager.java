@@ -2,6 +2,7 @@ package com.mygdx.hud;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.entidades.Jugador;
 import com.mygdx.entidades.npcs.dialogos.Mensaje;
@@ -44,7 +45,7 @@ public class UIManager implements EventoRecibirCarta{
 		
 		screenViewport = new ScreenViewport();
 		hud = new HUDPrincipal(jugador, juego);
-		dialogo = new Dialogo(jugador);
+		dialogo = new Dialogo();
 		venta = new VentaHUD(jugador);
 	    pausa = new PausaHUD(juego);
 	    inventario = new InventarioHUD(jugador);
@@ -94,10 +95,12 @@ public class UIManager implements EventoRecibirCarta{
 //		System.out.println(HelpDebug.debub(getClass())+ "Estado actual = " + MundoConfig.estadoJuego);
 		switch (MundoConfig.estadoJuego) {
 		case JUEGO:
+
 			MundoConfig.pausarTiempo = false;
 			hud.mostrar();
 			jugador.puedeMoverse = true;
 			inventario.ocultar();
+			dialogo.ocultar();
 		    activarSolo(hud.getStage());
 			//dialogo.limpiarDatos();//Esto ayuda a que no queden datos del npc anterior en la caja de dialogo cuando se hable con uno nuevo
 			break;
@@ -105,13 +108,9 @@ public class UIManager implements EventoRecibirCarta{
 
 			
 		case DIALOGO:
-
-			if(dialogo.getLocutor() != MundoConfig.locutor) {//se llama solo una vez
-			dialogo.setLocutor(MundoConfig.locutor);				
-			}
-			//dialogo.update();
+			Gdx.input.setInputProcessor(dialogo.getStage());
 			dialogo.mostrar();
-			jugador.puedeMoverse = false;
+			jugador.puedeMoverse = true;
 			ocultar(pausa,inventario, diario);
 			break;
 			
@@ -249,7 +248,7 @@ public class UIManager implements EventoRecibirCarta{
 	public void reEscalar(int width, int height) {
 		screenViewport.update(width, height);
 		hud.reEscalar(width, height);
-		dialogo.reEscalar(width, height);
+		//dialogo.reEscalar(width, height);
 		venta.reEscalar(width, height);
 	    pausa.reEscalar(width, height);
 		inventario.reEscalar(width, height);
@@ -319,7 +318,7 @@ public class UIManager implements EventoRecibirCarta{
 		hud.dispose();
 		pausa.dispose();
 		venta.dispose();
-		dialogo.dispose();
+//		dialogo.dispose();
 		diario.dispose();
 	}
 
@@ -329,6 +328,11 @@ public class UIManager implements EventoRecibirCarta{
 		Recursos.muxJuego.addProcessor(carta.getStage());
 		this.carta = carta;
 		
+	}
+
+
+	public Stage getDialogoStage() {
+		return dialogo.getStage();
 	}
 
 }

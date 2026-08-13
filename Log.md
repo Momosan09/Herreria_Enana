@@ -557,3 +557,6 @@ o
 ## 23 FEB
     - Modifica sistema de dialogos. Ahora usa .json
     - Modifica sistema de interacciones.
+
+## 13 AGO
+    - Modifica el sistema de dialogos, permite consecuencias
