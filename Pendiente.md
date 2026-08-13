@@ -1,3 +1,7 @@
+# Funciones desactivadas temporalmente (y que debo recuperar)
+    - Sistema de cartas
+    - Sistema de misiones
+
 # Resolver en la proxima sentada
     - [x] Alinear y agregar textos en la pantalla del menu
     - [ ] Agregar algunas configuraciones **FUNCIONALES** a la pantalla de configuracion

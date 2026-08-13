@@ -234,10 +234,10 @@ public class Juego implements Screen{
 		Render.batch.end();
 
 		
-		Render.batch.begin();
+
 		camaraJugador.update();
 		Render.batch.setProjectionMatrix(camaraJugador.combined);
-		Render.batch.end();
+
 
 		//Managers
 		Render.batch.begin();

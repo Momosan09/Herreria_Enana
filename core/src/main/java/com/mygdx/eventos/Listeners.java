@@ -82,11 +82,14 @@ public abstract class Listeners {
 		 * @param y la posicion y del click
 		 */
 		public static void minar(Jugador j, int x, int y) {
-			for (EventListener listener : listeners) {
-				if((listener instanceof EventoMinar)) {
-					((EventoMinar)listener).minar(j, x, y);
-				}
-			}
+		    for (EventListener listener : listeners) {
+		        if (listener instanceof EventoMinar evento) {
+		            if (evento.contieneClick(j, x, y)) {
+		                evento.minar(j, x, y);
+		                return;
+		            }
+		        }
+		    }
 		}
 		
 		public static void quitarListener(EventListener listener) {

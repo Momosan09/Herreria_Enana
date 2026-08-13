@@ -166,6 +166,17 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar, Interactuable
 			}
 		}
 		
+		public boolean puedeMinar(Jugador jugador, int x, int y) {
+		    Vector3 worldCoords =
+		        jugador.getCamara().unproject(new Vector3(x, y, 0));
+
+		    return areaMinado.overlaps(jugador.getAreaInteraccion())
+		            && getAreaInteraccion().contains(
+		                worldCoords.x,
+		                worldCoords.y
+		            );
+		}
+		
 		
 		private void recolectar(Jugador j) {
 			if(vida <= 0) {	
@@ -186,26 +197,41 @@ public class Mineral extends ObjetoDelMapa implements EventoMinar, Interactuable
 			}
 		}
 		
+		@Override
+		public boolean contieneClick(Jugador j, int x, int y) {
+
+		    Vector3 worldCoords =
+		        j.getCamara().unproject(new Vector3(x, y, 0));
+
+		    return getJugadorRangoMinado(j)
+		            && sprite.getBoundingRectangle().contains(
+		                worldCoords.x,
+		                worldCoords.y
+		            );
+		}
 		
 		@Override
 		public void minar(Jugador j, int x, int y) {
-			if(vida > 0) { //evita que el mineral se pueda seguir minando post mortem
-			 Vector3 worldCoords = j.getCamara().unproject(new Vector3(x, y, 0));
 
-			
-			 if(getJugadorRangoMinado(j)) {
-		        if (getAreaInteraccion().contains(worldCoords.x, worldCoords.y)) {
-		            // El toque está dentro del rango del mineral
-					vida -= 50;
-					recolectar(j);
-					
-					 //Particulas - Las particulas aca para que no toque en el aire y salgan igual
-					 ParticulasManager.get().spawn(ListaDeParticulas.MINADO_PIEDRA, worldCoords.x, worldCoords.y, false);
-					 SonidosManager.reproducirSonido(ListaSonidos.MINAR);
-					//j.getCamara().update();
-		        }
-			}
-			}
+		    if (vida <= 0) {
+		        return;
+		    }
+
+		    Vector3 worldCoords =
+		        j.getCamara().unproject(new Vector3(x, y, 0));
+
+		    vida -= 50;
+
+		    recolectar(j);
+
+		    ParticulasManager.get().spawn(
+		        ListaDeParticulas.MINADO_PIEDRA,
+		        worldCoords.x,
+		        worldCoords.y,
+		        false
+		    );
+
+		    SonidosManager.reproducirSonido(ListaSonidos.MINAR);
 		}
 		
 		public void dibujarAreaDeMinado() {
