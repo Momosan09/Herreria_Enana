@@ -74,7 +74,7 @@ public class Juego implements Screen{
 	
 	//Entidades
 	private Jugador jugador;
-	//private Carta carta;
+	private Carta carta;
 
 	private Texture jugadorTextura;
 	private AltoHorno altoHorno;
@@ -190,8 +190,8 @@ public class Juego implements Screen{
 		
 		
 		
-		//carta = new Carta(36, 12, world, Recursos.objMapa.CARTA, jugador);
-		//MundoConfig.cartaAMostrar = CartasManager.getPrimeraCarta();
+		carta = new Carta(36, 12, world, Recursos.objMapa.CARTA, jugador);
+		MundoConfig.cartaAMostrar = CartasManager.getPrimeraCarta();
 
 		MundoConfig.estadoJuego = EstadosDelJuego.JUEGO;
 		

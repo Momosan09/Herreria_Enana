@@ -1,0 +1,21 @@
+[
+
+{
+    "id":"CARP_F01",
+    "requisor": "Carpintero",
+    "tiempo_limite":-1,
+    "descripcion":"El carpintero me pidio una sierra circular",
+    "tipo_mision":"FABRICAR",
+    "estado":"PENDIENTE",
+    "recompensa":[
+        {
+            "oro":1,
+            "plata":2,
+            "cobre":3
+        }
+    ]
+
+
+}
+
+]

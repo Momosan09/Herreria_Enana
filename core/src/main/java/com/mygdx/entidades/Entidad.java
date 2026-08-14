@@ -116,7 +116,7 @@ public abstract class Entidad{
 	
 	public void draw() {
 		sprite.draw(Render.batch);
-		dibujarAreaDeInteraccion();
+		//dibujarAreaDeInteraccion();
 	}
 	
 	

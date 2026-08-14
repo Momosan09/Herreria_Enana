@@ -26,7 +26,7 @@ public class ObjetosTallerManager{
     public void renderizar() {
         for (ObjetoDelMapa entidad: objetos) {
         	entidad.draw();
-        	entidad.dibujarAreaDeInteraccion();
+        	//entidad.dibujarAreaDeInteraccion();
         }
     }
 

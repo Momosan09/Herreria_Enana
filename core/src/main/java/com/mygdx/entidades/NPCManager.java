@@ -46,7 +46,7 @@ public class NPCManager {
 	public void dibujarNpcs() {
 		for (Npc npc : npcs) {
 			npc.ejecutarAnimacion();
-			npc.dibujarAreaDeInteraccion();
+			//npc.dibujarAreaDeInteraccion();
 		}
 	}
 	
